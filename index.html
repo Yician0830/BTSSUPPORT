@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ARIRANG 巡演粉絲應援地圖</title>
+<meta name="theme-color" content="#0b72e6">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap">
 <style>
 :root{--bg:#e6f5ff;--card:#fff;--ink:#0b2a5b;--sub:#4a6a96;--line:#b9dcf5;--box:#e9f5ff;--tag:#ffe1ea;--tagInk:#c2255c;--pill:#d6edff;--dark:#0b4fa8;--darkInk:#fff;--ok:#0f8a5f;--okbg:#e3f6ee;
@@ -305,6 +309,8 @@ footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 <footer>本站為非官方整理，資訊以各主辦單位公告為準。</footer>
 <button id="top" type="button" aria-label="回到頂端" title="回到頂端">↑</button>
 <div id="toast" role="status"></div>
+<script src="i18n.js"></script>
+<script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script>
 <script src="data.js"></script>
 <script>
 /* ===== 讀取 Google 試算表（網址設定在 data.js 的 SHEET_CSV_URL；讀不到就用 data.js 內建資料） ===== */
@@ -345,8 +351,9 @@ function parse(t){const R=csv(t);if(R.length<2)return[];const hd=R[0].map(x=>H[x
 const seen=new Set();return R.slice(1).map((r,i)=>{const o={};hd.forEach((k,j)=>{if(k)o[k]=r[j]});return item(o,i)}).filter(d=>{if(!d||seen.has(d.id))return false;seen.add(d.id);return true})}
 function apply(rows){DATA.length=0;rows.forEach(d=>DATA.push(d));
 const u=rows.map(d=>d.upd).filter(Boolean).sort().pop();if(u)UPDATED=u}
-function boot(){const s=document.createElement("script");s.text=document.getElementById("appjs").textContent;document.body.appendChild(s);
-if(document.readyState==="complete")window.dispatchEvent(new Event("load"))}
+function boot(){const run=()=>{try{const s=document.createElement("script");s.text=document.getElementById("appjs").textContent;document.body.appendChild(s);
+if(document.readyState==="complete")window.dispatchEvent(new Event("load"))}catch(e){console.error(e);document.body.insertAdjacentHTML("afterbegin","<p style='padding:16px;font-weight:700'>頁面載入失敗，請重新整理再試一次。</p>")}};
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run,{once:true});else run()}
 async function go(){
 if(typeof SHEET_CSV_URL==="string"&&SHEET_CSV_URL){
 try{const c=new AbortController(),t=setTimeout(()=>c.abort(),4000);
