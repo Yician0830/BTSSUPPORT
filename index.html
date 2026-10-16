@@ -340,7 +340,7 @@ function parse(t){const R=csv(t);if(R.length<2)return[];const hd=R[0].map(x=>H[x
 const seen=new Set();return R.slice(1).map((r,i)=>{const o={};hd.forEach((k,j)=>{if(k)o[k]=r[j]});return item(o,i)}).filter(d=>{if(!d||seen.has(d.id))return false;seen.add(d.id);return true})}
 function apply(rows){DATA.length=0;rows.forEach(d=>DATA.push(d));
 const u=rows.map(d=>d.upd).filter(Boolean).sort().pop();if(u)UPDATED=u}
-function boot(){const s=document.createElement("script");s.text=document.getElementById("app").textContent;document.body.appendChild(s);
+function boot(){const s=document.createElement("script");s.text=document.getElementById("appjs").textContent;document.body.appendChild(s);
 if(document.readyState==="complete")window.dispatchEvent(new Event("load"))}
 async function go(){
 if(typeof SHEET_CSV_URL==="string"&&SHEET_CSV_URL){
@@ -353,7 +353,7 @@ boot()}
 window.SheetLoader={parse};
 go()})();
 </script>
-<script type="text/plain" id="app">
+<script type="text/plain" id="appjs">
 /* 活動資料在 data.js，新增活動請改那個檔案 */
 const CITIES={kh:{name:"高雄",en:"Kaohsiung",days:["11/19","11/20","11/21","11/22"],show:["2026/11/19、11/21、11/22 19:00","高雄國家體育場（世運主場館）・捷運紅線 R17 世運站"]},hk:{name:"香港",en:"Hong Kong",days:["3/4","3/6","3/7"],show:["2027/3/4、3/6、3/7 19:30","啟德主場館（啟德體育園）"]}};
 const MEMBERS=[["BTS",6,13],["RM",9,12],["Jin",12,4],["SUGA",3,9],["j-hope",2,18],["Jimin",10,13],["V",12,30],["Jungkook",9,1]];
