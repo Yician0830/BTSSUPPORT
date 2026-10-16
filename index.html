@@ -275,6 +275,7 @@ footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 <div class="chips cities" id="cities" role="group" aria-label="選擇城市"></div>
 <div class="chips cities" id="days" role="group" aria-label="選擇日期"></div>
 <div class="chips cities" id="members" role="group" aria-label="選擇成員"></div>
+<div class="chips cities" id="regions" role="group" aria-label="選擇地區"></div>
 <div class="next" id="nextBd" hidden></div>
 <div class="book" id="book" hidden></div>
 <div class="tools">
@@ -324,7 +325,7 @@ if(m=s.match(/^(\d{1,2})\/(\d{1,2})\/\d{4}$/))return m[1]*1+"/"+m[2]*1;
 return s}
 function item(o,i){const g=k=>String(o[k]||"").trim();const title=g("title");if(!title)return null;
 const d={id:g("id")||"row"+(i+2),title,by:g("by"),desc:g("desc")};
-const sec=g("sec");if(sec==="生日"||sec.toLowerCase()==="birthday"){d.sec="birthday";d.member=g("member")}
+const sec=g("sec");if(sec==="生日"||sec.toLowerCase()==="birthday"){d.sec="birthday";d.member=g("member");const c0=g("city");d.city=(c0==="香港"||c0.toLowerCase()==="hk")?"hk":"tw"}
 else{const c=g("city");d.city=(c==="香港"||c.toLowerCase()==="hk")?"hk":"kh"}
 d.type=toks(g("type"));if(!d.type.length)d.type=["應援企劃"];
 d.dates=toks(g("dates")).map(nmd);d.tags=toks(g("tags"));
@@ -364,24 +365,26 @@ const rd=k=>{try{return new Set(JSON.parse(localStorage.getItem(k)||"[]"))}catch
 const STATUS=["全部","進行中","即將開始","已結束","待補充"];
 const TAGS=["免費","無領取條件","需填表單","需出示門票","需部分粉絲證明","可另外寄送","可代領","尚待補充","有實體圖"];
 let favs=rd("kh-fav"),done=rd("kh-done"),cur="全部",onlyFav=false,kw="",st="全部",so="soon",tagSel=new Set();
-let lastStamp="",day="全部",city="kh",mem="全部",sec="home";try{const q=new URLSearchParams(location.search);const c=q.get("city");if(c&&CITIES[c]){city=c;sec="tour"}const z=q.get("section");if(z==="tour"||z==="birthday")sec=z}catch(e){}
+let lastStamp="",day="全部",city="kh",mem="全部",reg="全部",sec="home";try{const q=new URLSearchParams(location.search);const c=q.get("city");if(c&&CITIES[c]){city=c;sec="tour"}const z=q.get("section");if(z==="tour"||z==="birthday")sec=z}catch(e){}
 function head(){
 const home=sec==="home",tour=sec==="tour",bd=sec==="birthday";
 $("#homeBox").hidden=!home;$("#notesBox").hidden=!home;$("#app").hidden=home;$("#favBtn").hidden=home;
-$("#cities").hidden=!tour;$("#days").hidden=!tour;$("#members").hidden=!bd;$("#nextBd").hidden=!bd;
+$("#cities").hidden=!tour;$("#days").hidden=!tour;$("#members").hidden=!bd;$("#regions").hidden=!bd;$("#nextBd").hidden=!bd;
 const h=document.querySelector(".hero h1");
 if(home){h.textContent="BTS 應援地圖";$("#scr").textContent="ARMY FAN PROJECTS";$("#show").innerHTML="<span>選擇你想看的應援</span>";document.title="BTS 應援地圖";return}
-if(bd){h.textContent="BTS 生日應援地圖";$("#scr").textContent="Happy Birthday";$("#show").innerHTML="<span>各成員生日與 BTS 出道周年應援整理</span>";document.title="BTS 生日應援地圖";members();return}
+if(bd){h.textContent="BTS 生日應援地圖";$("#scr").textContent="Happy Birthday";$("#show").innerHTML="<span>各成員生日與 BTS 出道周年應援整理</span>";document.title="BTS 生日應援地圖";members();regions();return}
 const c=CITIES[city];h.textContent="ARIRANG 巡演粉絲應援地圖";$("#show").innerHTML=c.show.map(x=>`<span>${x}</span>`).join("");$("#scr").textContent="ARIRANG in "+c.en;document.title="ARIRANG 巡演粉絲應援地圖｜"+c.name;
 $("#cities").innerHTML=Object.keys(CITIES).map(k=>`<button class="chip" aria-pressed="${k===city}" data-city="${k}">${CITIES[k].name}</button>`).join("");days()}
 function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開始"&&d.start)return Math.round((day0(d.start)-today0())/864e5);return t==="即將開始"?9998:9999}
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
 w.innerHTML=`<h2>🏆 回顧紀念牆<small>${a.length} 個已結束的應援</small></h2><div class="wgrid">${a.map(d=>`<div class="tile"><div class="tp">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp">${stamp(DATA.indexOf(d))}</span>`:""}</div><b>${esc(d.title)}</b><span>${esc(d.time)}</span>${d.links&&d.links[0]?`<a href="${esc(d.links[0].u)}" target="_blank" rel="noopener">回顧貼文 ↗</a>`:""}</div>`).join("")}</div>`}
 function inSec(d){return (d.sec||"tour")===sec&&(sec==="birthday"||d.city===city)}
-function gos(z){sec=z;day="全部";cur="全部";mem="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{history.replaceState(null,"",z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:""))}catch(x){}head();chips();render();window.scrollTo(0,0)}
+function gos(z){sec=z;day="全部";cur="全部";mem="全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{history.replaceState(null,"",z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:""))}catch(x){}head();chips();render();window.scrollTo(0,0)}
 function bdDays(m){const t=today0();let d=new Date(t.getFullYear(),m[1]-1,m[2]);if(d<t)d=new Date(t.getFullYear()+1,m[1]-1,m[2]);return Math.round((d-t)/864e5)}
 function members(){$("#members").innerHTML=MEMBERS.map(m=>m[0]).map(x=>`<button class="chip" aria-pressed="${x===mem}" data-mem="${x}">${x}</button>`).join("");
 const n=[...MEMBERS].sort((a,b)=>bdDays(a)-bdDays(b))[0];const k=bdDays(n);const ay=new Date(today0().getTime()+k*864e5).getFullYear()-2013;$("#nextBd").textContent=n[0]==="BTS"?(k===0?`🎉 今天是 BTS 出道 ${ay} 週年！`:`🎉 下一個：BTS 出道 ${ay} 週年 ${n[1]}/${n[2]}，還有 ${k} 天`):(k===0?`🎂 今天是 ${n[0]} 的生日！`:`🎂 下一個生日：${n[0]} ${n[1]}/${n[2]}，還有 ${k} 天`)}
+const REGIONS=[["tw","台灣"],["hk","香港"]];
+function regions(){$("#regions").innerHTML=REGIONS.map(r=>`<button class="chip" aria-pressed="${r[0]===reg}" data-reg="${r[0]}">${r[1]}</button>`).join("")}
 function day0(s){const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
 function today0(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())}
 function stat(d){if(d.start&&d.end){const t=today0();if(t<day0(d.start))return"即將開始";if(t>day0(d.end))return"已結束";return"進行中"}return d.status}
@@ -403,7 +406,7 @@ function typeList(){return sec==="birthday"?TYPES.filter(t=>t!=="咖啡廳"):TYP
 function chips(){if(cur!=="全部"&&!typeList().includes(cur))cur="全部";const o=["全部",...typeList()];$("#cat").innerHTML=o.map(t=>`<option>${t}</option>`).join("");$("#cat").value=cur;$("#chips").innerHTML=o.slice(1).map(t=>`<button class="chip" aria-pressed="${t===cur}" data-t="${t}">${t}</button>`).join("")}
 function render(){
 const dt=d=>d.dates.length?d.dates[0]:"99/99";
-const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
+const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="birthday"||reg==="全部"||(d.city||"tw")===reg)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
 items.sort(so==="soon"?(a,b)=>skey(a)-skey(b)||(b.added||0)-(a.added||0):so==="name"?(a,b)=>a.title.localeCompare(b.title,"zh-Hant"):so==="date"?(a,b)=>dt(a).localeCompare(dt(b)):(a,b)=>(b.added||0)-(a.added||0));
 const live=items.filter(d=>stat(d)!=="已結束"),past=items.filter(d=>stat(d)==="已結束");
 book();window.afterRender&&afterRender(live);$("#n").textContent=`${live.length} 個活動`;wallR(past);
@@ -423,6 +426,8 @@ const go=e.target.closest("[data-go]");
 if(go){gos(go.dataset.go);return}
 const mm=e.target.closest("[data-mem]");
 if(mm){mem=mem===mm.dataset.mem?"全部":mm.dataset.mem;members();render()}
+const rg=e.target.closest("[data-reg]");
+if(rg){reg=reg===rg.dataset.reg?"全部":rg.dataset.reg;regions();render()}
 const dy=e.target.closest("[data-day]");
 if(dy){day=day===dy.dataset.day?"全部":dy.dataset.day;days();render()}
 const ct=e.target.closest("[data-city]");
@@ -442,7 +447,7 @@ $("#tgl").onclick=()=>{const p=$("#panel");p.hidden=!p.hidden;$("#tgl").setAttri
 $("#ap").onclick=()=>{kw=$("#q").value.trim().toLowerCase();cur=$("#cat").value;st=$("#st").value;so=$("#so").value;tagSel=new Set([...document.querySelectorAll("#tags input:checked")].map(i=>i.value));chips();render();$("#panel").hidden=true;$("#tgl").setAttribute("aria-expanded",false)};
 $("#rs").onclick=()=>{resetPanel();cur="全部";chips();render()};
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter")$("#ap").click()});
-$("#clr").onclick=()=>{cur="全部";resetPanel();day="全部";days();mem="全部";if(sec==="birthday")members();onlyFav=false;$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";chips();render()};
+$("#clr").onclick=()=>{cur="全部";resetPanel();day="全部";days();mem="全部";reg="全部";if(sec==="birthday"){members();regions()}onlyFav=false;$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";chips();render()};
 {const[,m,d]=UPDATED.split("-");$("#upd").textContent="資訊更新於 "+(m*1)+"/"+(d*1)}
 
 /* ===== 地圖總覽 / 路線規劃 ===== */
