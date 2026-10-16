@@ -318,6 +318,7 @@ footer{border-top:2px dashed var(--line)}
 #tourBtn{margin-left:auto;border:2px solid var(--line);background:var(--card);color:var(--dark);font:inherit;font-size:13px;font-weight:800;padding:4px 10px;margin-right:8px;cursor:pointer;box-shadow:2px 2px 0 var(--line)}
 .stat{gap:8px}
 body.tr-on{padding-bottom:340px}
+body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .tr-block{position:fixed;inset:0;z-index:9997;background:transparent}
 .tr-hl{position:absolute;z-index:9998;pointer-events:none;border:3px solid #fff;outline:3px solid #2a8cff;box-shadow:0 0 0 9999px rgba(4,16,40,.72);transition:top .2s,left .2s,width .2s,height .2s}
 .tr-card{position:fixed;z-index:9999;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(92vw,440px);box-sizing:border-box;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:5px 5px 0 var(--line);padding:14px 16px}
@@ -347,9 +348,21 @@ body.tr-on{padding-bottom:340px}
 .smode{display:flex;gap:8px;margin:8px 0}
 .yt{position:relative;aspect-ratio:16/9;background:#000;margin:8px 0}.yt iframe{position:absolute;inset:0;width:100%;height:100%}
 .khint{font-size:12px;color:var(--sub);margin:4px 0}
-.ktv{max-height:52vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 0}
-.kl{padding:8px 10px;font-size:17px;line-height:1.5;opacity:.45;border-left:4px solid transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer}
-.kl.h{color:var(--sub)}.kl.on{opacity:1;border-left-color:var(--dark);background:var(--box);font-weight:800}
+.ktv{max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20vh 4px;text-align:center}
+.kb{padding:10px 8px;opacity:.2;transform:scale(.88);transition:opacity .3s,transform .3s;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer}
+.kb.n2{opacity:.32}.kb.n1{opacity:.5;transform:scale(.94)}.kb.on{opacity:1;transform:scale(1)}
+.kl{font-size:19px;line-height:1.55;font-weight:800}
+.kl.h{color:var(--sub);font-size:15px;font-weight:600;margin-top:2px}
+.kl .cl{display:table;margin:6px auto;padding:3px 18px;border-radius:999px;color:#fff;font-weight:900}
+.kl .cl.b{background:#3b6fe0}.kl .cl.r{background:#e0245e}.kl .cl.o{background:#c77a12}
+.kl .ib{color:#1a5fd0}.kl .ir{color:#e0245e}.kl .io{color:#c77a12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kl .ib{color:#8fb4ff}:root:not([data-theme="light"]) .kl .ir{color:#ff9ec0}:root:not([data-theme="light"]) .kl .io{color:#ffc069}}
+:root[data-theme="dark"] .kl .ib{color:#8fb4ff}:root[data-theme="dark"] .kl .ir{color:#ff9ec0}:root[data-theme="dark"] .kl .io{color:#ffc069}
+@media (prefers-reduced-motion:reduce){.kb{transition:none}}
+#bgm{position:fixed;left:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:2px solid var(--dark);background:var(--card);color:var(--dark);font:inherit;font-size:20px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 4px 0 var(--line);z-index:50;padding:0}
+#bgm.off{opacity:.65}#bgm.off::after{content:"";position:absolute;left:10px;right:10px;top:50%;height:3px;background:var(--tagInk);transform:rotate(-40deg)}
+#bgm.on{background:var(--dark);color:var(--darkInk)}
+#bgmp{position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden}
 .a2hs{margin:0 0 12px;background:var(--card);border:2px solid var(--line);box-shadow:3px 3px 0 var(--line);padding:10px 12px;font-size:14px}
 .a2hs-row{display:flex;align-items:center;gap:8px}
 .a2hs-t{flex:1;min-width:0}.a2hs-t b{display:block;font-size:15px;font-weight:900}.a2hs-t span{color:var(--sub);font-size:13px}
@@ -687,7 +700,7 @@ const A2HS=()=>{const L4=a=>`<ol>${a.map(x=>`<li>${x}</li>`).join("")}</ol>`;
 const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享」鈕（方框加向上箭頭）","往下滑，點「加入主畫面」","右上角按「新增」，桌面就會出現圖示"]):L4(["用 Chrome 開啟這個網頁","點右上角的「⋮」選單","點「加到主畫面」或「安裝應用程式」","按「新增」或「安裝」，桌面就會出現圖示"]);
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
-home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
+home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
 songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
 tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]],
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
@@ -766,19 +779,32 @@ function sfmt(t){const inl=x=>esc(x).replace(/\{(藍|紅|橘)\|([^{}]*)\}/g,(m,c
 let SEL="";try{SEL=localStorage.getItem("song-sel")||""}catch(e){}
 let SMODE="n";try{SMODE=localStorage.getItem("song-mode")==="k"?"k":"n"}catch(e){}
 const YTID=u=>{const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);return m?m[1]:""};
-function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2],k,l:l.replace(TL,"")})}));return o.sort((a,b)=>a.s-b.s)}
+function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2],k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
+function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
 function songCard(x){const vid=YTID(x.u),T=vid?songTimed(x):[],k=vid&&SMODE==="k";
 const media=vid?`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>`:"";
-const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${T.map(t=>`<div class="kl ${t.k}" data-s="${t.s}">${sfmt(t.l)}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
+const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map(g=>`<div class="kb" data-s="${g.s}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
 return `<article class="card song"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}${body}${x.u&&/^https?:\/\//.test(x.u)?`<div class="act"><a class="btn" target="_blank" rel="noopener" href="${esc(x.u)}">影片／參考 ↗</a></div>`:""}</article>`}
 let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null;
 function ytLoad(cb){if(window.YT&&YT.Player)return cb();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();cb()};if(!document.getElementById("yt-api")){const e=document.createElement("script");e.id="yt-api";e.src="https://www.youtube.com/iframe_api";document.head.appendChild(e)}}
+/* 背景音樂：預設是下面這個 YouTube 網址；要換歌改這裡，或在 data.js 設定 BGM_URL（YouTube 或 mp3 網址）。瀏覽器不允許自動出聲，所以預設開啟：進站就嘗試播放，被瀏覽器擋掉時第一次點或觸碰畫面就會開始；關掉之後會記住，下次不再自動播。 */
+const BGM=String(window.BGM_URL||"https://youtu.be/H2HQWHKDREI").trim();let BP=null,BON=true,BREADY=false;try{BON=localStorage.getItem("bgm")!=="0"}catch(e){}
+function bgmUI(){const b=document.getElementById("bgm");if(!b)return;b.className=BON?"on":"off";b.setAttribute("aria-pressed",BON);b.title=BON?"關閉背景音樂":"開啟背景音樂"}
+function bgmGo(){try{if(!BP)return;if(BON){BP.play?BP.play().catch(()=>{}):BP.playVideo&&BP.playVideo()}else{BP.pause?BP.pause():BP.pauseVideo&&BP.pauseVideo()}}catch(e){}}
+function bgmSet(v){BON=v;try{localStorage.setItem("bgm",v?"1":"0")}catch(e){}bgmUI();bgmGo()}
+function bgmInit(){if(!BGM||document.getElementById("bgm"))return;const b=document.createElement("button");b.id="bgm";b.type="button";b.textContent="♪";document.body.appendChild(b);bgmUI();
+b.addEventListener("click",e=>{e.stopPropagation();bgmSet(!BON)});
+const vid=YTID(BGM);
+if(vid){const d=document.createElement("div");d.id="bgmp";d.innerHTML='<div id="bgmy"></div>';document.body.appendChild(d);ytLoad(()=>{BP=new YT.Player("bgmy",{videoId:vid,playerVars:{playsinline:1,loop:1,playlist:vid,controls:0},events:{onReady:()=>{BREADY=true;if(BON)bgmGo()},onStateChange:e=>{if(e.data===0&&BON)BP.playVideo()}}})})}
+else{BP=new Audio(BGM);BP.loop=true;BP.preload="auto";BREADY=true;if(BON)bgmGo()}
+const pl=()=>{try{return BP&&(BP.paused===undefined?BP.getPlayerState&&BP.getPlayerState()===1:!BP.paused)}catch(e){return false}};["pointerdown","touchend","keydown"].forEach(ev=>document.addEventListener(ev,()=>{if(BON&&!pl())bgmGo()},{capture:true}))}
+bgmInit();
 function songStop(){PT++;clearInterval(YT_T);try{YP&&YP.destroy()}catch(e){}YP=null}
-function songPlayer(vid){songStop();KA=-1;if(!vid)return;const tk=PT;ytLoad(()=>{const el=document.getElementById("ytp");if(tk!==PT||!el)return;YP=new YT.Player(el,{videoId:vid,playerVars:{playsinline:1,rel:0},events:{onReady:()=>{if(tk===PT)YT_T=setInterval(ktvTick,250)}}})})}
+function songPlayer(vid){songStop();KA=-1;if(!vid)return;if(BON){BON=false;bgmUI();bgmGo()}const tk=PT;ytLoad(()=>{const el=document.getElementById("ytp");if(tk!==PT||!el)return;YP=new YT.Player(el,{videoId:vid,playerVars:{playsinline:1,rel:0},events:{onReady:()=>{if(tk===PT)YT_T=setInterval(ktvTick,250)}}})})}
 function ktvTick(){const k=document.getElementById("ktv");if(!k||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime(),ls=k.children;let a=-1;for(let i=0;i<ls.length;i++){if(+ls[i].dataset.s<=t+.2)a=i;else break}
-if(a===KA)return;KA=a;[...ls].forEach((e,i)=>e.classList.toggle("on",i===a));if(a>=0){const e=ls[a];k.scrollTo({top:e.offsetTop-k.offsetTop-k.clientHeight/2+e.clientHeight/2,behavior:"smooth"})}}
+if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){const e=ls[a];k.scrollTo({top:e.offsetTop-k.offsetTop-k.clientHeight/2+e.clientHeight/2,behavior:"smooth"})}}
 document.getElementById("slist").addEventListener("click",e=>{const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
-const l=e.target.closest(".kl");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
+const l=e.target.closest(".kb");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
 function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs");if(!box)return;songStop();
 const kw=(document.getElementById("sq").value||"").trim().toLowerCase();
 const L=SONGS.filter(x=>!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw));
