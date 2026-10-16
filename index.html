@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ARIRANG 巡演粉絲應援地圖</title>
+<title>BTS 應援地圖</title>
+<script>try{if(/(^|[?&])(section|city)=/.test(location.search))document.documentElement.classList.add("pre-inner");setTimeout(function(){document.documentElement.classList.remove("pre-inner")},6000)}catch(e){}</script>
 <meta name="theme-color" content="#0b72e6">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+TC:wght@500;700;900&display=swap">
 <style>
 :root{--bg:#e6f5ff;--card:#fff;--ink:#0b2a5b;--sub:#4a6a96;--line:#b9dcf5;--box:#e9f5ff;--tag:#ffe1ea;--tagInk:#c2255c;--pill:#d6edff;--dark:#0b4fa8;--darkInk:#fff;--ok:#0f8a5f;--okbg:#e3f6ee;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -247,17 +248,80 @@ footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 /* 「我的收藏」按鈕：放到珊瑚礁圖層上方，不被蓋住 */
 .fav{position:relative;z-index:2}
 @media(min-width:720px){.fav{position:absolute;right:28px;bottom:84px}}
+
+/* ===== 內頁精簡標題區：進入巡演或生日頁（#app 顯示）時，標題區縮成一條 ===== */
+body:has(#app:not([hidden])) .hero{padding:14px 18px 14px;margin:12px 0 14px;border-radius:14px;box-shadow:0 6px 16px rgba(10,61,156,.25),inset 0 0 0 2px rgba(255,255,255,.18)}
+body:has(#app:not([hidden])) .reef,body:has(#app:not([hidden])) .hero p{display:none}
+body:has(#app:not([hidden])) .hero h1{font-size:clamp(20px,5vw,28px);margin:8px 0 6px;line-height:1.25;text-shadow:0 2px 0 rgba(6,40,110,.4)}
+body:has(#app:not([hidden])) .show{margin-top:4px;padding:4px 10px;font-size:13px;display:flex;flex-wrap:wrap;gap:0 14px}
+body:has(#app:not([hidden])) .upd{margin-top:6px;font-size:12px;padding:1px 10px}
+body:has(#app:not([hidden])) .fav{margin-top:8px}
+@media(min-width:720px){body:has(#app:not([hidden])) .fav{bottom:14px;right:18px;margin:0}}
+
+/* ===== 像素復古風：方角、硬陰影、像素標題字（蓋過上方「美化 v2」的圓角柔和設定） ===== */
+:root{--px:"DotGothic16","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+.hero h1,.script,.entry .et b,.card h2,.notes summary,.wall h2,.route h3,.tile b{font-family:var(--px);font-weight:400;letter-spacing:.04em}
+.hero h1{text-shadow:3px 3px 0 rgba(6,40,110,.55)}
+.hero,body:has(#app:not([hidden])) .hero{border-radius:0;border:3px solid #062a6e;box-shadow:6px 6px 0 rgba(6,42,110,.35)}
+.script{border-radius:0;backdrop-filter:none;background:rgba(6,40,110,.45);border:2px solid rgba(255,255,255,.6)}
+.show{border-radius:0}.upd{border-radius:0}
+.card,.entry,.panel,.mapbox,.route,.tile,.next,.notes details{border-radius:0;border:2px solid var(--dark);box-shadow:4px 4px 0 var(--line)}
+.entry.tour{border-left:10px solid #1469d6}.entry.bd{border-left:10px solid #5cc8ff}
+.card:hover,.entry:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line)}
+.card:active,.entry:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.card,.entry,.btn,.chip,.sbtn,.heart,.fav{transition:transform .06s steps(2),box-shadow .06s steps(2),background .1s}
+.notes details[open]{box-shadow:4px 4px 0 var(--line)}
+.pic,.ic,.box,.slot,.tp{border-radius:0}
+.ic{background:var(--box);box-shadow:none;border:2px solid var(--line)}
+.entry::after{border-radius:0;background:var(--dark);color:var(--darkInk)}
+.box{border:2px dashed var(--line);box-shadow:none}
+.btn,.chip,.sbtn,.heart,.fav,.search,.sel select,.route select,.route li,.route li button,#top,#toast,#lang,.tagbox,.tagbox label{border-radius:0}
+.btn.main,.chip[aria-pressed="true"]{background:#0b5fd0;border-color:#062a6e;box-shadow:3px 3px 0 #062a6e}
+.btn.main:active,.chip[aria-pressed="true"]:active{transform:translate(3px,3px);box-shadow:none}
+.chip,.sbtn,.btn{box-shadow:3px 3px 0 var(--line)}
+.btn:hover,.chip:hover{transform:translate(-1px,-1px)}
+.btn:active,.chip:active,.sbtn:active,.heart:active,.fav:active{transform:translate(3px,3px);box-shadow:none}
+.heart{box-shadow:3px 3px 0 var(--line)}.heart[aria-pressed="true"]{box-shadow:3px 3px 0 #e0245e}
+.fav{border:2px solid #062a6e;box-shadow:3px 3px 0 rgba(6,40,110,.6)}
+.tag,.pill,.card .tag{border-radius:0;font-weight:700;letter-spacing:.02em}
+#top{box-shadow:3px 3px 0 #08439a}
+.stamp svg,.slot svg,.ic svg,.ph svg{image-rendering:pixelated}
+footer{border-top:2px dashed var(--line)}
+@media(prefers-reduced-motion:reduce){.card:hover,.entry:hover,.btn:hover,.chip:hover{transform:none}.card:active,.entry:active{transform:none}}
+@media(min-width:720px){.notes{align-items:stretch}}
+
+/* ===== 篩選列吸附在畫面頂端（類型篩選＋地圖／路線／搜尋按鈕） ===== */
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);padding:8px 0;border-bottom:2px dashed var(--line)}
+.mapbox{isolation:isolate}
+@media(max-width:719px){
+.tools{flex-direction:column;align-items:stretch;gap:6px}
+.tools .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
+.tools .chips::-webkit-scrollbar{display:none}
+.tools .tbtns{flex-wrap:nowrap;gap:6px}
+.tools .sbtn{flex:1;padding:7px 8px;font-size:13px;white-space:nowrap}
+}
+.upd:empty{display:none}
+.pre-inner #homeBox,.pre-inner #notesBox{display:none}
+.pre-inner .hero h1,.pre-inner .script,.pre-inner .show{visibility:hidden}
+
+/* ===== 狀態與倒數改成圖片左上角徽章 ===== */
+.badges{position:absolute;left:10px;top:10px;z-index:2;display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100% - 64px)}
+.badges:empty{display:none}
+.badges .pill{font-size:12px;padding:3px 10px;border:2px solid currentColor;box-shadow:2px 2px 0 rgba(6,26,64,.45)}
+.badges .pill.cd{background:var(--card);color:var(--dark);border-color:var(--dark)}
+.badges .pill.st-on{background:var(--okbg);color:var(--ok)}
+.badges .pill.st-soon{border-color:var(--darkInk)}
 </style>
 </head>
 <body>
 <div class="wrap">
 <section class="hero">
-<div class="script" id="scr">ARIRANG in Kaohsiung</div>
-<h1>ARIRANG 巡演粉絲應援地圖</h1>
+<div class="script" id="scr">ARMY FAN PROJECTS</div>
+<h1>BTS 應援地圖</h1>
 <p>本頁為非官方的應援資訊整理與分享。內容與主辦單位立場不代表本站，請依各主辦最新公告與現場規定參加，並自行評估。</p>
-<div class="show" id="show"></div>
+<div class="show" id="show"><span>選擇你想看的應援</span></div>
 <div class="upd" id="upd"></div>
-<button class="fav" id="favBtn" aria-pressed="false">♡ 我的收藏</button>
+<button class="fav" id="favBtn" aria-pressed="false" hidden>♡ 我的收藏</button>
 <svg class="reef" viewBox="0 0 188 14" preserveAspectRatio="xMidYMax slice" shape-rendering="crispEdges" aria-hidden="true"><rect y="11" width="188" height="3" fill="#0d4a7a"/><rect y="10" width="188" height="1" fill="#1a6aa6"/><g fill="#f2c46a"><rect x="6" y="5" width="2" height="6"/><rect x="9" y="3" width="2" height="8"/><rect x="12" y="6" width="2" height="5"/><rect x="104" y="4" width="2" height="7"/><rect x="107" y="2" width="2" height="9"/><rect x="110" y="5" width="2" height="6"/></g><g fill="#ee9bb8"><rect x="24" y="6" width="2" height="5"/><rect x="27" y="4" width="2" height="7"/><rect x="30" y="7" width="2" height="4"/><rect x="126" y="6" width="2" height="5"/><rect x="129" y="3" width="2" height="8"/><rect x="132" y="7" width="2" height="4"/></g><g fill="#2dbf8f"><rect x="44" y="5" width="2" height="6"/><rect x="47" y="3" width="2" height="8"/><rect x="50" y="6" width="2" height="5"/><rect x="148" y="5" width="2" height="6"/><rect x="151" y="3" width="2" height="8"/><rect x="154" y="6" width="2" height="5"/></g><g fill="#8e6fe0"><rect x="64" y="6" width="2" height="5"/><rect x="67" y="4" width="2" height="7"/><rect x="70" y="7" width="2" height="4"/><rect x="168" y="6" width="2" height="5"/><rect x="171" y="4" width="2" height="7"/><rect x="174" y="7" width="2" height="4"/></g><g fill="#ff8a5b"><rect x="84" y="8" width="6" height="3"/><rect x="86" y="6" width="2" height="2"/></g></svg>
 </section>
 <section class="notes" id="notesBox">
@@ -352,16 +416,19 @@ const seen=new Set();return R.slice(1).map((r,i)=>{const o={};hd.forEach((k,j)=>
 function apply(rows){DATA.length=0;rows.forEach(d=>DATA.push(d));
 const u=rows.map(d=>d.upd).filter(Boolean).sort().pop();if(u)UPDATED=u}
 function boot(){const run=()=>{try{const s=document.createElement("script");s.text=document.getElementById("appjs").textContent;document.body.appendChild(s);
-if(document.readyState==="complete")window.dispatchEvent(new Event("load"))}catch(e){console.error(e);document.body.insertAdjacentHTML("afterbegin","<p style='padding:16px;font-weight:700'>頁面載入失敗，請重新整理再試一次。</p>")}};
+window.__appReady=true;document.documentElement.classList.remove("pre-inner");if(document.readyState==="complete")window.dispatchEvent(new Event("load"))}catch(e){document.documentElement.classList.remove("pre-inner");console.error(e);document.body.insertAdjacentHTML("afterbegin","<p style='padding:16px;font-weight:700'>頁面載入失敗，請重新整理再試一次。</p>")}};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",run,{once:true});else run()}
+function refresh(){if(!window.__appReady)return;try{head();chips();render();const u=document.querySelector("#upd"),a=UPDATED.split("-");if(u)u.textContent="資訊更新於 "+(a[1]*1)+"/"+(a[2]*1)}catch(e){console.error(e)}}
 async function go(){
+try{const txt=localStorage.getItem("sheet-cache");if(txt){const rows=parse(txt);if(rows.length)apply(rows)}}catch(x){}
+boot();
 if(typeof SHEET_CSV_URL==="string"&&SHEET_CSV_URL){
-try{const c=new AbortController(),t=setTimeout(()=>c.abort(),4000);
+try{const c=new AbortController(),t=setTimeout(()=>c.abort(),8000);
 const r=await fetch(SHEET_CSV_URL+(SHEET_CSV_URL.includes("?")?"&":"?")+"t="+Date.now(),{signal:c.signal});clearTimeout(t);
-if(!r.ok)throw 0;const txt=await r.text();const rows=parse(txt);if(!rows.length)throw 0;apply(rows);
-try{localStorage.setItem("sheet-cache",txt)}catch(e){}}
-catch(e){try{const txt=localStorage.getItem("sheet-cache");if(txt){const rows=parse(txt);if(rows.length)apply(rows)}}catch(x){}}}
-boot()}
+if(!r.ok)throw 0;const txt=await r.text();const rows=parse(txt);if(!rows.length)throw 0;
+let old="";try{old=localStorage.getItem("sheet-cache")||""}catch(e){}
+try{localStorage.setItem("sheet-cache",txt)}catch(e){}
+if(txt!==old){apply(rows);refresh()}}catch(e){}}}
 window.SheetLoader={parse};
 go()})();
 </script>
@@ -455,8 +522,8 @@ const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="b
 items.sort(so==="soon"?(a,b)=>skey(a)-skey(b)||(b.added||0)-(a.added||0):so==="name"?(a,b)=>a.title.localeCompare(b.title,"zh-Hant"):so==="date"?(a,b)=>dt(a).localeCompare(dt(b)):(a,b)=>(b.added||0)-(a.added||0));
 const live=items.filter(d=>stat(d)!=="已結束"),past=items.filter(d=>stat(d)==="已結束");
 book();window.afterRender&&afterRender(live);$("#n").textContent=`${live.length} 個活動`;wallR(past);
-$("#list").innerHTML=live.length?live.map(d=>`<article class="card ${done.has(d.id)?"done":""}"><div class="pic ${d.img?"has":""}">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp ${lastStamp===d.id?"pop":""}">${stamp(DATA.indexOf(d))}</span>`:""}</div>
-<div class="hd"><div class="top"><div class="tags">${d.type.map(t=>`<span class="tag">${t}</span>`).join("")}${stat(d)?`<span class="pill st st-${{"進行中":"on","即將開始":"soon","已結束":"end"}[stat(d)]||"x"}">${stat(d)}</span>`:""}${cd(d)}${nw(d)}${(d.tags||[]).filter(x=>x!=="免費"&&x!=="須配合店家低銷").map(x=>`<span class="pill">${x}</span>`).join("")}</div>
+$("#list").innerHTML=live.length?live.map(d=>`<article class="card ${done.has(d.id)?"done":""}"><div class="pic ${d.img?"has":""}">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp ${lastStamp===d.id?"pop":""}">${stamp(DATA.indexOf(d))}</span>`:""}<div class="badges">${stat(d)?`<span class="pill st st-${{"進行中":"on","即將開始":"soon","已結束":"end"}[stat(d)]||"x"}">${stat(d)}</span>`:""}${cd(d)}</div></div>
+<div class="hd"><div class="top"><div class="tags">${d.type.map(t=>`<span class="tag">${t}</span>`).join("")}${nw(d)}${(d.tags||[]).filter(x=>x!=="免費"&&x!=="須配合店家低銷").map(x=>`<span class="pill">${x}</span>`).join("")}</div>
 <button class="heart" data-f="${d.id}" aria-pressed="${favs.has(d.id)}" aria-label="收藏">${favs.has(d.id)?"♥":"♡"}</button></div>
 <h2>${esc(d.title)}</h2><div class="by">主辦：${esc(d.by)}</div>${descTxt(d)?`<p class="desc">${esc(descTxt(d))}</p>`:""}</div>
 <div class="box">${[["地點",d.place],["時間",timeTxt(d)],["備註",tipTxt(d)]].filter(r=>r[1]&&r[1]!=="—").map(r=>`<div><span>${r[0]}</span><span>${esc(r[1])}</span></div>`).join("")}</div>
