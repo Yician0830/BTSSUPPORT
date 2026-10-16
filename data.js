@@ -4,7 +4,7 @@ SHEET_CSV_URL：把 Google 試算表「發布到網路」的 CSV 連結貼在引
 注意：下面的 DATA 是從試算表複製出來的「備用資料」（2026-10-16 同步），平常網站以試算表為準，只有試算表讀不到時才會用到；試算表有大改時，需要重新同步一次。
 const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSA6rfBSfMh__qX2Ox4F5EgZsbLODscmo-9jCiczF_S5r0eBsmjSyKuezQyhJ0UU_rRPfgMCVCuCUOe/pub?gid=1813070755&single=true&output=csv";
 /* SUBMIT_URL：投稿應援資訊的連結（Google 表單、Threads 或 IG 私訊網址都可以）。填了之後，「還沒有收錄」的畫面會多一顆「我要提供應援資訊」按鈕；留空 "" 就不顯示。 */
-const SUBMIT_URL="";
+const SUBMIT_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSA6rfBSfMh__qX2Ox4F5EgZsbLODscmo-9jCiczF_S5r0eBsmjSyKuezQyhJ0UU_rRPfgMCVCuCUOe/pub?gid=1813070755&single=true&output=csv";
 
 /* ===== 怎麼新增或修改應援（只需要改這個檔案） =====
 1. 複製下面任一筆 {...}，貼在最後一筆後面（筆與筆之間要有逗號），再改裡面的文字。
