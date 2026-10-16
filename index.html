@@ -243,8 +243,7 @@ footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 
 .card .stamp{width:38px;height:38px;right:8px;top:8px}
 .tile .stamp{width:30px;height:30px;right:6px;bottom:6px}
-.notes summary{cursor:default}
-.notes summary::before{display:none}
+.notes summary{cursor:pointer}
 .notes details>ul{margin-top:8px}
 #regions{margin:10px 0 0}
 .slot.miss{border:2px solid var(--line);background:var(--box);opacity:.75}
@@ -396,6 +395,14 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .badges .pill.cd{background:var(--card);color:var(--dark);border-color:var(--dark)}
 .badges .pill.st-on{background:var(--okbg);color:var(--ok)}
 .badges .pill.st-soon{border-color:var(--darkInk)}
+/* 子頁窄版 hero：只留標題（巡演頁多留一行場次資訊），收藏鈕和標題同一列 */
+:is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;padding:12px 16px;margin:10px 0 12px}
+:is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .hero h1{font-size:clamp(20px,5vw,26px);margin:0;line-height:1.25}
+:is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) :is(.reef,.hero p,.script,.upd,.show){display:none}
+:is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .fav{position:static;margin:0;padding:6px 14px}
+body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;gap:0 14px;margin:0;padding:4px 10px;font-size:13px}
+#members .chip{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 14px;line-height:1.25}
+#members .cdn{font-size:11px;font-weight:600;opacity:.8}
 </style>
 </head>
 <body>
@@ -411,26 +418,26 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 <button class="fav" id="favBtn" aria-pressed="false" hidden>♡ 我的收藏</button>
 <svg class="reef" viewBox="0 0 188 14" preserveAspectRatio="xMidYMax slice" shape-rendering="crispEdges" aria-hidden="true"><rect y="11" width="188" height="3" fill="#0d4a7a"/><rect y="10" width="188" height="1" fill="#1a6aa6"/><g fill="#f2c46a"><rect x="6" y="5" width="2" height="6"/><rect x="9" y="3" width="2" height="8"/><rect x="12" y="6" width="2" height="5"/><rect x="104" y="4" width="2" height="7"/><rect x="107" y="2" width="2" height="9"/><rect x="110" y="5" width="2" height="6"/></g><g fill="#ee9bb8"><rect x="24" y="6" width="2" height="5"/><rect x="27" y="4" width="2" height="7"/><rect x="30" y="7" width="2" height="4"/><rect x="126" y="6" width="2" height="5"/><rect x="129" y="3" width="2" height="8"/><rect x="132" y="7" width="2" height="4"/></g><g fill="#2dbf8f"><rect x="44" y="5" width="2" height="6"/><rect x="47" y="3" width="2" height="8"/><rect x="50" y="6" width="2" height="5"/><rect x="148" y="5" width="2" height="6"/><rect x="151" y="3" width="2" height="8"/><rect x="154" y="6" width="2" height="5"/></g><g fill="#8e6fe0"><rect x="64" y="6" width="2" height="5"/><rect x="67" y="4" width="2" height="7"/><rect x="70" y="7" width="2" height="4"/><rect x="168" y="6" width="2" height="5"/><rect x="171" y="4" width="2" height="7"/><rect x="174" y="7" width="2" height="4"/></g><g fill="#ff8a5b"><rect x="84" y="8" width="6" height="3"/><rect x="86" y="6" width="2" height="2"/></g></svg>
 </section>
+<div class="entries" id="homeBox">
+<button class="entry tour" data-go="tour"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#f2c46a"><rect x="4" y="0" width="2" height="2"/><rect x="3" y="2" width="4" height="1"/><rect x="0" y="3" width="10" height="1"/><rect x="1" y="4" width="8" height="1"/><rect x="2" y="5" width="6" height="2"/><rect x="1" y="7" width="3" height="1"/><rect x="6" y="7" width="3" height="1"/><rect x="0" y="8" width="2" height="1"/><rect x="8" y="8" width="2" height="1"/></svg></i><div class="et"><b>ARIRANG 巡演應援</b><span>高雄、香港場次的應援地圖，附日期分頁與打卡集章</span></div></button>
+<button class="entry bd" data-go="birthday"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="1" fill="#ffd23f"/><rect x="4" y="1" width="2" height="2" fill="#ff8fb3"/><rect x="1" y="3" width="8" height="2" fill="#fff"/><rect x="1" y="5" width="8" height="4" fill="#6fb7ff"/><rect x="1" y="7" width="8" height="1" fill="#2f7be0"/><rect x="0" y="9" width="10" height="1" fill="#9aa3c7"/></svg></i><div class="et"><b>生日應援</b><span>依成員整理的生日與 BTS 出道周年應援，有倒數</span></div></button>
+<button class="entry songs" data-go="songs"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="5" height="1" fill="#2f7be0"/><rect x="4" y="2" width="1" height="5" fill="#2f7be0"/><rect x="8" y="2" width="1" height="4" fill="#2f7be0"/><rect x="2" y="6" width="3" height="3" fill="#ff8fb3"/><rect x="6" y="5" width="3" height="3" fill="#ff8fb3"/></svg></i><div class="et"><b>演唱會歌曲空耳／應援</b><span>整理每首歌的空耳和應援法，現場跟著喊</span></div></button>
+</div>
 <section class="notes" id="notesBox">
-<details open><summary onclick="return false">注意事項</summary><ul>
+<details><summary>注意事項</summary><ul>
 <li>前往應援地點請注意交通安全，不要為了拍照走進車道，或在站牌、人行道停留太久。</li>
 <li>不要佔用通道，也不要擋住其他民眾或店家出入。</li>
 <li>尊重店家和其他粉絲，排隊時保持秩序，需要預約或出示憑證的應援請依主辦規定。</li>
 <li>拍照打卡後請把垃圾帶走，不要破壞或碰撞裝置、貼紙與布置。</li>
 <li>應援內容、時間與地點可能臨時調整，出發前請再確認主辦單位的最新公告。</li>
 </ul></details>
-<details open><summary onclick="return false">使用說明</summary><ul>
+<details><summary>使用說明</summary><ul>
 <li>點卡片右上角的愛心可以收藏，再點標題區的「我的收藏」，就只看收藏的應援。</li>
 <li>到了應援地點後按「💣 我打卡了」，卡片上會蓋章，集章簿也會記錄進度。</li>
 <li>收藏和打卡紀錄只存在你自己手機或電腦的瀏覽器裡，不會上傳。</li>
 <li>換裝置、換瀏覽器、清除瀏覽資料或用無痕模式，紀錄就會看不到。從 Threads、IG、LINE 等 App 內建瀏覽器開啟，也可能跟平常的瀏覽器不同。建議固定用同一個瀏覽器開啟。</li>
 </ul></details>
 </section>
-<div class="entries" id="homeBox">
-<button class="entry tour" data-go="tour"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#f2c46a"><rect x="4" y="0" width="2" height="2"/><rect x="3" y="2" width="4" height="1"/><rect x="0" y="3" width="10" height="1"/><rect x="1" y="4" width="8" height="1"/><rect x="2" y="5" width="6" height="2"/><rect x="1" y="7" width="3" height="1"/><rect x="6" y="7" width="3" height="1"/><rect x="0" y="8" width="2" height="1"/><rect x="8" y="8" width="2" height="1"/></svg></i><div class="et"><b>ARIRANG 巡演應援</b><span>高雄、香港場次的應援地圖，附日期分頁與打卡集章</span></div></button>
-<button class="entry bd" data-go="birthday"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="1" fill="#ffd23f"/><rect x="4" y="1" width="2" height="2" fill="#ff8fb3"/><rect x="1" y="3" width="8" height="2" fill="#fff"/><rect x="1" y="5" width="8" height="4" fill="#6fb7ff"/><rect x="1" y="7" width="8" height="1" fill="#2f7be0"/><rect x="0" y="9" width="10" height="1" fill="#9aa3c7"/></svg></i><div class="et"><b>生日應援</b><span>依成員整理的生日與 BTS 出道周年應援，有倒數</span></div></button>
-<button class="entry songs" data-go="songs"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="5" height="1" fill="#2f7be0"/><rect x="4" y="2" width="1" height="5" fill="#2f7be0"/><rect x="8" y="2" width="1" height="4" fill="#2f7be0"/><rect x="2" y="6" width="3" height="3" fill="#ff8fb3"/><rect x="6" y="5" width="3" height="3" fill="#ff8fb3"/></svg></i><div class="et"><b>演唱會歌曲空耳／應援</b><span>整理每首歌的空耳和應援法，現場跟著喊</span></div></button>
-</div>
 <div id="songs" hidden>
 <button class="back" data-go="home">← 回首頁</button>
 <input class="search" id="sq" type="search" placeholder="搜尋歌名、空耳或應援" aria-label="搜尋歌曲" autocomplete="off">
@@ -554,9 +561,9 @@ function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開�
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
 w.innerHTML=`<h2>🏆 回顧紀念牆<small>${a.length} 個已結束的應援</small></h2><div class="wgrid">${a.map(d=>`<div class="tile"><div class="tp">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp">${stamp(DATA.indexOf(d))}</span>`:""}</div><b>${esc(d.title)}</b><span>${esc(d.time)}</span>${d.links&&d.links[0]?`<a href="${esc(d.links[0].u)}" target="_blank" rel="noopener">回顧貼文 ↗</a>`:""}</div>`).join("")}</div>`}
 function inSec(d){return (d.sec||"tour")===sec&&(sec==="birthday"||d.city===city)}
-function gos(z){sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{history.replaceState(null,"",z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:""))}catch(x){}head();if(z!=="songs"){chips();render()}window.scrollTo(0,0);if(z!=="songs"&&typeof songStop==="function")songStop();if(typeof a2hsSync==="function")a2hsSync();tourAuto(z)}
+function gos(z){sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{const u=z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:"");z==="home"?history.replaceState(null,"",u):history.pushState({in:1},"",u)}catch(x){}head();if(z!=="songs"){chips();render()}window.scrollTo(0,0);if(z!=="songs"&&typeof songStop==="function")songStop();if(typeof a2hsSync==="function")a2hsSync();tourAuto(z)}
 function bdDays(m){const t=today0();let d=new Date(t.getFullYear(),m[1]-1,m[2]);if(d<t)d=new Date(t.getFullYear()+1,m[1]-1,m[2]);return Math.round((d-t)/864e5)}
-function members(){$("#members").innerHTML=MEMBERS.map(m=>m[0]).map(x=>`<button class="chip" aria-pressed="${x===mem}" data-mem="${x}">${x}</button>`).join("");
+function members(){$("#members").innerHTML=MEMBERS.map(m=>{const x=m[0],k=bdDays(m),t=k===0?"🎂 今天":k+" 天";return `<button class="chip" aria-pressed="${x===mem}" data-mem="${x}" aria-label="${x}，${x==="BTS"?"出道周年":"生日"}${k===0?"就是今天":"還有 "+k+" 天"}">${x}<span class="cdn">${t}</span></button>`}).join("");
 const n=[...MEMBERS].sort((a,b)=>bdDays(a)-bdDays(b))[0];const k=bdDays(n);const ay=new Date(today0().getTime()+k*864e5).getFullYear()-2013;$("#nextBd").textContent=n[0]==="BTS"?(k===0?`🎉 今天是 BTS 出道 ${ay} 週年！`:`🎉 下一個：BTS 出道 ${ay} 週年 ${n[1]}/${n[2]}，還有 ${k} 天`):(k===0?`🎂 今天是 ${n[0]} 的生日！`:`🎂 下一個生日：${n[0]} ${n[1]}/${n[2]}，還有 ${k} 天`)}
 /* 預設成員：先看有沒有「進行中」的生日應援（生日已過也算），有就選那位；都沒有才選最近的下一個生日 */
 function nearestMem(){
@@ -607,12 +614,12 @@ return `<b>還沒有收錄 ${esc(mem)} 的${mem==="BTS"?"出道周年":"生日"}
 if(DATA.some(inSec))return "沒有符合的活動，換個條件試試";
 return sec==="birthday"?"還沒有收錄生日應援，歡迎提供資料":"這個城市還沒有收錄應援，歡迎提供資料"}
 /* 把目前的篩選條件寫進網址，方便分享連結或重新整理後保留 */
-function syncUrl(){try{if(sec==="home"){history.replaceState(null,"","?");return}
+function syncUrl(){try{if(sec==="home"){history.replaceState(history.state,"","?");return}
 const p=new URLSearchParams();p.set("section",sec);
 if(sec==="tour"){p.set("city",city);if(day!=="全部")p.set("day",day)}
 else{p.set("member",mem==="全部"?"all":mem);if(reg!=="全部")p.set("region",reg)}
 if(cur!=="全部")p.set("type",cur);
-history.replaceState(null,"","?"+p.toString())}catch(e){}}
+history.replaceState(history.state,"","?"+p.toString())}catch(e){}}
 function render(){syncUrl();
 const dt=d=>d.dates.length?d.dates[0]:"99/99";
 const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="birthday"||reg==="全部"||regOf(d)===reg)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
@@ -633,7 +640,7 @@ document.addEventListener("click",async e=>{
 const t=e.target.closest("[data-t]"),f=e.target.closest("[data-f]"),c=e.target.closest("[data-c]"),s=e.target.closest("[data-s]");
 const go=e.target.closest("[data-go]");
 
-if(go){gos(go.dataset.go);return}
+if(go){const z=go.dataset.go;if(z==="home"&&history.state&&history.state.in){history.back();return}gos(z);return}
 const mm=e.target.closest("[data-mem]");
 if(mm){mem=mem===mm.dataset.mem?"全部":mm.dataset.mem;members();render()}
 const rg=e.target.closest("[data-reg]");
@@ -641,7 +648,7 @@ if(rg){reg=reg===rg.dataset.reg?"全部":rg.dataset.reg;regions();render()}
 const dy=e.target.closest("[data-day]");
 if(dy){day=day===dy.dataset.day?"全部":dy.dataset.day;days();render()}
 const ct=e.target.closest("[data-city]");
-if(ct){city=ct.dataset.city;day="全部";try{history.replaceState(null,"","?section=tour&city="+city)}catch(x){}head();render()}
+if(ct){city=ct.dataset.city;day="全部";try{history.replaceState(history.state,"","?section=tour&city="+city)}catch(x){}head();render()}
 if(t){cur=cur===t.dataset.t?"全部":t.dataset.t;chips();$("#cat").value=cur;render()}
 if(f){const i=f.dataset.f;favs.has(i)?favs.delete(i):favs.add(i);wr("kh-fav",favs);render()}
 if(c){const i=c.dataset.c;if(done.has(i)){done.delete(i);delete dd[i];lastStamp=""}else{done.add(i);const n=new Date();dd[i]=(n.getMonth()+1)+"/"+n.getDate();lastStamp=i}wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(e){}render();lastStamp=""}
@@ -694,6 +701,19 @@ const ty=q.get("type");if(ty&&TYPES.includes(ty))cur=ty}catch(e){if(sec==="birth
 head();if(sec!=="songs"){chips();render()}
 
 
+/* 系統返回鍵／上一頁：依網址還原所在分頁與篩選（切換分頁時用 pushState 留下紀錄） */
+addEventListener("popstate",()=>{try{const q=new URLSearchParams(location.search),z=q.get("section");
+sec=(z==="tour"||z==="birthday"||z==="songs")?z:"home";
+const c=q.get("city");if(c&&CITIES[c])city=c;
+day="全部";cur="全部";reg="全部";mem="全部";onlyFav=false;resetPanel();
+if(sec==="birthday"){const m=q.get("member");mem=m==="all"?"全部":(m&&MEMBERS.some(x=>x[0]===m)?m:nearestMem());const r=q.get("region");if(r)reg=r}
+const dd=q.get("day");if(sec==="tour"&&dd&&CITIES[city].days.includes(dd))day=dd;
+const ty=q.get("type");if(ty&&TYPES.includes(ty))cur=ty;
+$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";
+tourEnd();head();if(sec!=="songs"){chips();render()}
+window.scrollTo(0,0);if(sec!=="songs")songStop();
+a2hsSync();tourAuto(sec)}catch(e){console.error(e)}});
+
 /* 新手導覽（每個頁面第一次進入時自動出現，可用「？導覽」重看） */
 const IA=/Instagram|Barcelona|Threads|\bLine\/|FBAN|FBAV|FB_IAB|MicroMessenger/i.test(navigator.userAgent),IOS=/iPhone|iPad|iPod/.test(navigator.userAgent),STANDALONE=(()=>{try{return navigator.standalone===true||matchMedia("(display-mode: standalone)").matches}catch(e){return false}})();
 const A2HS=()=>{const L4=a=>`<ol>${a.map(x=>`<li>${x}</li>`).join("")}</ol>`;
@@ -732,7 +752,7 @@ requestAnimationFrame(place);setTimeout(place,120);setTimeout(place,350)};
 TR={raf:0,sync:place,key:e=>{if(e.key==="Escape")tourEnd()}};
 window.addEventListener("scroll",place,{passive:true});window.addEventListener("resize",place);document.addEventListener("keydown",TR.key);
 const loop=()=>{if(!TR)return;place();TR.raf=requestAnimationFrame(loop)};TR.raf=requestAnimationFrame(loop);
-bl.onclick=()=>{};
+bl.onclick=e=>{const x=e.clientX,y=e.clientY;tourEnd();const t=document.elementFromPoint(x,y),g=t&&t.closest("[data-go]");if(g)g.click()};
 show()}
 function tourAuto(z){if(!TOURS[z])return;let seen=false;try{seen=localStorage.getItem("kh-tour-"+z)==="1"}catch(e){}if(seen)return;setTimeout(()=>{if(sec===z)tourStart(z)},450)}
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("#tourBtn,.tourBtn2"))tourStart(sec)});
@@ -847,60 +867,57 @@ shop:["..oooo..",".o....o.",".o....o.","oooooooo","orrrrrro","orrwwrro","orrrrrr
 expo:["oooooooo","occccyco","occcyyco","occcyyco","occggcco","ocggggco","oooooooo",".o....o."]};
 async function saveCard(){
 const bd=sec==="birthday",L=bookItems().filter(d=>!bd||mem==="全部"||d.member===mem),n=L.length;if(!n)return;
-let nick="";try{nick=localStorage.getItem("kh-nick")||""}catch(e){}
-try{const r=window.prompt("在集章圖片上顯示的暱稱（可留空，最多 12 字）",nick);if(r!==null){nick=r.trim().slice(0,12);try{localStorage.setItem("kh-nick",nick)}catch(e){}}}catch(e){}
-try{await Promise.all([document.fonts.load('700 40px "Noto Sans TC"'),document.fonts.load('500 40px "Noto Sans TC"')])}catch(e){}
-const F='"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif',W=1080,H=1920,P=56;
+try{await Promise.all([document.fonts.load('700 40px "Noto Sans TC"'),document.fonts.load('500 40px "Noto Sans TC"'),document.fonts.load('40px "DotGothic16"')])}catch(e){}
+const F='"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif',PF='"DotGothic16",'+F,W=1080,H=1920,P=56;
+const cs=getComputedStyle(document.documentElement),V=(n,d)=>cs.getPropertyValue(n).trim()||d;
+const C={bg:V("--bg","#e6f5ff"),card:V("--card","#fff"),ink:V("--ink","#0b2a5b"),sub:V("--sub","#4a6a96"),line:V("--line","#b9dcf5"),dark:V("--dark","#0b4fa8"),ok:V("--ok","#0f8a5f"),okbg:V("--okbg","#e3f6ee"),pill:V("--pill","#d6edff")},HB="#062a6e";
 const c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
 const cnt={};L.forEach(d=>cnt[d.title]=(cnt[d.title]||0)+1);
 const name=d=>cnt[d.title]>1?(d.dates.length===1?d.title+" "+d.dates[0]:d.title+"（"+String(d.place||"").split("（")[0]+"）"):d.title;
 const k=L.filter(d=>done.has(d.id)).length,pct=Math.round(k/n*100);
-x.fillStyle="#e6f5ff";x.fillRect(0,0,W,H);
-x.fillStyle="#c3e2fa";for(let gy=410;gy<H;gy+=48)for(let gx=24;gx<W;gx+=48)x.fillRect(gx,gy,5,5);
-{const g=x.createLinearGradient(0,0,0,380);g.addColorStop(0,"#2a8cff");g.addColorStop(1,"#0a4fb8");x.fillStyle=g;x.fillRect(0,0,W,380);
-x.fillStyle="#08439a";x.fillRect(0,380,W,12);x.fillStyle="#fff";for(let sx=0;sx<W;sx+=48)x.fillRect(sx,392,24,6);
-x.fillStyle="rgba(255,255,255,.28)";[[640,40,12],[760,110,8],[900,60,10],[560,150,6],[980,150,8],[700,330,8]].forEach(([a,b,r])=>{x.fillRect(a-r/2,b-r*1.5,r,r*3);x.fillRect(a-r*1.5,b-r/2,r*3,r)})}
-const bk=nick?nick+"的集章簿":"我的集章簿",tag=bd?bk:"ARIRANG in "+((CITIES[city]||{}).en||""),ttl=bd?"HAPPY "+(mem==="全部"?"BTS":String(mem).toUpperCase())+" DAY":bk;
-x.font="500 36px "+F;const tw=x.measureText(tag).width+56;
-x.strokeStyle="rgba(255,255,255,.55)";x.lineWidth=3;x.beginPath();x.roundRect(P,64,tw,64,32);x.stroke();
-x.fillStyle="#fff";x.textBaseline="middle";x.fillText(tag,P+28,97);
-let tp=92;x.font="700 "+tp+"px "+F;const mw0=W-2*P-230;if(x.measureText(ttl).width>mw0){tp=Math.floor(tp*mw0/x.measureText(ttl).width);x.font="700 "+tp+"px "+F}x.fillText(ttl,P,230);
-x.font="500 48px "+F;x.fillStyle="#d6edff";x.fillText("已打卡 "+k+" / "+n+" 個應援",P,314);
-{const cx=W-P-100,cy2=215,R=96;x.beginPath();x.arc(cx,cy2,R,0,Math.PI*2);x.fillStyle="#fff";x.fill();
-x.lineWidth=16;x.strokeStyle="#d6edff";x.beginPath();x.arc(cx,cy2,R-14,0,Math.PI*2);x.stroke();
-if(pct>0){x.strokeStyle=pct===100?"#f2b600":"#0f8a5f";x.lineCap="round";x.beginPath();x.arc(cx,cy2,R-14,-Math.PI/2,-Math.PI/2+Math.PI*2*pct/100);x.stroke();x.lineCap="butt"}
-x.fillStyle="#0b2a5b";x.textAlign="center";x.font="700 52px "+F;x.fillText(pct+"%",cx,cy2+2);x.textAlign="left"}
-const top=420,bot=1700,cols=n>22?2:1,per=Math.ceil(n/cols),cw=(W-2*P)/cols,rh=Math.min(92,(bot-top)/per);
+x.fillStyle=C.bg;x.fillRect(0,0,W,H);
+x.globalAlpha=.55;x.fillStyle=C.line;for(let gy=430;gy<H;gy+=48)for(let gx=24;gx<W;gx+=48)x.fillRect(gx,gy,5,5);x.globalAlpha=1;
+{const hx=24,hy=24,hw=W-48,hh=356;x.fillStyle="rgba(6,42,110,.35)";x.fillRect(hx+10,hy+10,hw,hh);
+const g=x.createLinearGradient(0,hy,0,hy+hh);g.addColorStop(0,"#2a8cff");g.addColorStop(1,"#0a4fb8");x.fillStyle=g;x.fillRect(hx,hy,hw,hh);
+x.fillStyle="rgba(255,255,255,.28)";[[700,60,12],[820,130,8],[940,84,10],[620,170,6],[990,170,8],[760,330,8]].forEach(([a,b,r])=>{x.fillRect(a-r/2,b-r*1.5,r,r*3);x.fillRect(a-r*1.5,b-r/2,r*3,r)});
+x.lineWidth=6;x.strokeStyle=HB;x.strokeRect(hx+3,hy+3,hw-6,hh-6)}
+const bk="ARMY 應援護照",tag=bd?bk:"ARIRANG in "+((CITIES[city]||{}).en||""),ttl=bd?"HAPPY "+(mem==="全部"?"BTS":String(mem).toUpperCase())+" DAY":bk;
+x.textBaseline="middle";x.font="400 36px "+PF;const tw=x.measureText(tag).width+56;
+x.fillStyle="rgba(6,40,110,.45)";x.fillRect(P,68,tw,64);x.lineWidth=4;x.strokeStyle="rgba(255,255,255,.6)";x.strokeRect(P+2,70,tw-4,60);
+x.fillStyle="#fff";x.fillText(tag,P+28,101);
+let tp=92;x.font="400 "+tp+"px "+PF;const mw0=W-2*P-250;if(x.measureText(ttl).width>mw0){tp=Math.floor(tp*mw0/x.measureText(ttl).width);x.font="400 "+tp+"px "+PF}
+x.fillStyle="rgba(6,40,110,.55)";x.fillText(ttl,P+4,234);x.fillStyle="#fff";x.fillText(ttl,P,230);
+x.font="400 48px "+PF;x.fillStyle="#d6edff";x.fillText("已打卡 "+k+" / "+n+" 個應援",P,314);
+{const bw2=200,bx2=W-P-bw2+10,by2=115;x.fillStyle="rgba(6,42,110,.45)";x.fillRect(bx2+8,by2+8,bw2,bw2);
+x.fillStyle=C.card;x.fillRect(bx2,by2,bw2,bw2);x.lineWidth=8;x.strokeStyle=pct===100?"#f2b600":HB;x.strokeRect(bx2+4,by2+4,bw2-8,bw2-8);
+x.textAlign="center";x.fillStyle=C.ink;x.font="400 72px "+PF;x.fillText(pct+"%",bx2+bw2/2,by2+bw2/2-14);
+x.font="400 30px "+PF;x.fillStyle=C.sub;x.fillText(pct===100?"全部集滿":"完成度",bx2+bw2/2,by2+bw2/2+52);x.textAlign="left"}
+const top=430,bot=1700,cols=n>22?2:1,per=Math.ceil(n/cols),cw=(W-2*P)/cols,rh=Math.min(92,(bot-top)/per);
 const fs=Math.max(26,Math.min(44,Math.round(rh*.48))),ic=Math.round(rh*.78);
-const bomb=(ox,oy,u)=>{const R=(col,a)=>{x.fillStyle=col;a.forEach(([px,py,w,h])=>x.fillRect(ox+px*u,oy+py*u,w*u,h*u))};
-R("#4b3f9e",[[3,3,4,1],[2,4,6,1],[1,5,8,3],[2,8,6,1],[3,9,4,1]]);R("#9aa3c7",[[4,2,2,1]]);R("#fff",[[2,5,2,1],[2,6,1,1]]);R("#c9a06a",[[5,1,1,1],[6,0,1,1]]);R("#ffd23f",[[7,0,1,1],[9,0,1,1],[8,1,1,1],[7,2,1,1],[9,2,1,1]])};
 L.forEach((d,i)=>{const col=Math.floor(i/per),row=i%per,ox=P+col*cw,cy=top+row*rh+rh/2,dn=done.has(d.id);
 const cwid=cw-(cols>1?12:0),chh=rh-12,cxx=ox-16,cyy=cy-chh/2;
-x.globalAlpha=dn?1:.62;x.fillStyle=dn?"#9fd9c2":"#b9dcf5";x.fillRect(cxx+6,cyy+6,cwid,chh);
-x.fillStyle=dn?"#f3fbf7":"#fff";x.fillRect(cxx,cyy,cwid,chh);x.lineWidth=4;x.strokeStyle=dn?"#0f8a5f":"#8fc3ee";x.strokeRect(cxx,cyy,cwid,chh);
+x.globalAlpha=dn?1:.62;x.fillStyle=C.line;x.fillRect(cxx+6,cyy+6,cwid,chh);
+x.fillStyle=dn?C.okbg:C.card;x.fillRect(cxx,cyy,cwid,chh);x.lineWidth=4;x.strokeStyle=dn?C.ok:C.dark;x.strokeRect(cxx+2,cyy+2,cwid-4,chh-4);
 x.globalAlpha=dn?1:.55;
 const bx=ox,by=cy-ic/2;
-if(!dn){x.beginPath();x.roundRect(bx,by,ic,ic,10);x.fillStyle="#fff";x.fill();x.lineWidth=5;x.strokeStyle="#b9dcf5";x.setLineDash([12,10]);x.stroke();x.setLineDash([])}
-if(dn){const sx=bx+ic/2,sy=by+ic/2,R=ic/2+6;x.save();x.translate(sx,sy);x.rotate(-.22);
-x.beginPath();x.arc(0,0,R,0,Math.PI*2);x.fillStyle="rgba(15,138,95,.12)";x.fill();
-x.strokeStyle="#0f8a5f";x.lineWidth=Math.max(4,R*.11);x.beginPath();x.arc(0,0,R-3,0,Math.PI*2);x.stroke();
-x.lineWidth=Math.max(2,R*.05);x.setLineDash([R*.18,R*.12]);x.beginPath();x.arc(0,0,R*.74,0,Math.PI*2);x.stroke();x.setLineDash([]);
-x.lineCap="round";x.lineJoin="round";x.lineWidth=Math.max(5,R*.2);x.beginPath();x.moveTo(-R*.32,R*.02);x.lineTo(-R*.07,R*.28);x.lineTo(R*.36,-R*.26);x.stroke();
-x.fillStyle="#0f8a5f";[[-R*.5,-R*.5],[R*.5,R*.52]].forEach(([qx,qy])=>x.fillRect(qx-R*.05,qy-R*.05,R*.1,R*.1));
-x.restore();x.lineCap="butt";x.lineJoin="miter"}
-else if(stat(d)==="已結束"){x.strokeStyle="#9aa3c7";x.lineWidth=Math.max(4,ic*.1);x.beginPath();x.moveTo(bx+ic*.3,by+ic*.3);x.lineTo(bx+ic*.7,by+ic*.7);x.moveTo(bx+ic*.7,by+ic*.3);x.lineTo(bx+ic*.3,by+ic*.7);x.stroke()}
-x.font=(dn?"700 ":"500 ")+fs+"px "+F;x.fillStyle="#0b2a5b";x.textBaseline="middle";
+if(!dn){x.fillStyle=C.card;x.fillRect(bx,by,ic,ic);x.lineWidth=5;x.strokeStyle=C.line;x.setLineDash([12,10]);x.strokeRect(bx+2.5,by+2.5,ic-5,ic-5);x.setLineDash([])}
+if(dn){x.fillStyle=C.card;x.fillRect(bx,by,ic,ic);x.lineWidth=Math.max(4,ic*.08);x.strokeStyle=C.ok;x.strokeRect(bx+2,by+2,ic-4,ic-4);
+const u=ic/10;x.fillStyle=C.ok;[[2,5],[3,6],[4,7],[5,6],[6,5],[7,4],[8,3]].forEach(([px,py])=>x.fillRect(bx+px*u-u*.5,by+py*u-u*1.4,u,u*1.5));
+x.fillRect(bx+u*1.2,by+u*1.2,u*.7,u*.7);x.fillRect(bx+ic-u*1.9,by+ic-u*1.9,u*.7,u*.7)}
+else if(stat(d)==="已結束"){x.fillStyle="#9aa3c7";const u=ic*.11;for(let j=0;j<5;j++){x.fillRect(bx+ic*.2+j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1);x.fillRect(bx+ic*.8-u*1.1-j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1)}}
+x.font="400 "+fs+"px "+PF;x.fillStyle=C.ink;x.textBaseline="middle";
 const ty=String(d.type||""),em=ty.includes("廣告車")?"truck":ty.includes("公車")?"bus":ty.includes("電視牆")?"tv":ty.includes("咖啡")?"cafe":ty.includes("快閃")?"shop":ty.includes("展覽")?"expo":ty.includes("企劃")?"mega":"",pu=Math.max(2,Math.floor(fs*.95/8)),ew=em?pu*8+16:0;
-const dts=dn&&dd[d.id]?dd[d.id]:"";let dw=0;if(dts){x.font="700 "+Math.max(24,Math.round(fs*.78))+"px "+F;dw=x.measureText(dts).width+28}
-x.font=(dn?"700 ":"500 ")+fs+"px "+F;
+const dts=dn&&dd[d.id]?dd[d.id]:"";let dw=0;if(dts){x.font="400 "+Math.max(24,Math.round(fs*.78))+"px "+PF;dw=x.measureText(dts).width+28}
+x.font="400 "+fs+"px "+PF;
 let t=name(d);const mw=cw-ic-52-(cols>1?24:0)-dw-ew;
 if(x.measureText(t).width>mw){while(t.length>1&&x.measureText(t+"…").width>mw)t=t.slice(0,-1);t+="…"}
 x.fillText(t,bx+ic+20+ew,cy+2);if(em){const g=PIX[em],px0=bx+ic+20,py0=Math.round(cy-pu*4);g.forEach((row,ry)=>{for(let rx=0;rx<8;rx++){const ch=row[rx];if(ch!=="."&&PAL[ch]){x.fillStyle=PAL[ch];x.fillRect(px0+rx*pu,py0+ry*pu,pu,pu)}}})}
-if(dts){const f2=Math.max(24,Math.round(fs*.78)),pw=dw-4,ph=f2+16,px=cxx+cwid-pw-14,py=cy-ph/2;x.fillStyle="#0f8a5f";x.fillRect(px,py,pw,ph);x.fillStyle="#fff";x.font="700 "+f2+"px "+F;x.textAlign="center";x.fillText(dts,px+pw/2,cy+2);x.textAlign="left"}
+if(dts){const f2=Math.max(24,Math.round(fs*.78)),pw=dw-4,ph=f2+16,px=cxx+cwid-pw-14,py=cy-ph/2;x.fillStyle=C.ok;x.fillRect(px,py,pw,ph);x.fillStyle="#fff";x.font="400 "+f2+"px "+PF;x.textAlign="center";x.fillText(dts,px+pw/2,cy+2);x.textAlign="left"}
 x.globalAlpha=1});
-const by=1772,bw=W-2*P;x.beginPath();x.roundRect(P,by,bw,32,16);x.fillStyle="#d6edff";x.fill();x.lineWidth=3;x.strokeStyle="#8fc3ee";x.stroke();
-if(pct>0){x.beginPath();x.roundRect(P,by,Math.max(32,bw*pct/100),32,16);x.fillStyle="#0f8a5f";x.fill()}
-x.fillStyle="#4a6a96";x.font="500 40px "+F;x.textBaseline="alphabetic";x.fillText("完成 "+pct+"%",P,1870);
+const fy=1772,fw=W-2*P;x.fillStyle=C.line;x.fillRect(P+6,fy+6,fw,32);x.fillStyle=C.pill;x.fillRect(P,fy,fw,32);
+if(pct>0){x.fillStyle=C.ok;x.fillRect(P,fy,Math.max(24,fw*pct/100),32);x.fillStyle=C.pill;for(let gx=P+24;gx<P+fw*pct/100;gx+=24)x.fillRect(gx,fy,4,32)}
+x.lineWidth=4;x.strokeStyle=C.dark;x.strokeRect(P+2,fy+2,fw-4,28);
+x.fillStyle=C.sub;x.font="400 40px "+PF;x.textBaseline="alphabetic";x.fillText("完成 "+pct+"%",P,1870);
 x.textAlign="right";x.fillText("BTS 應援地圖",W-P,1870);x.textAlign="left";
 c.toBlob(b=>{if(!b){toast("儲存失敗，請再試一次");return}
 const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="stamp-book.png";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast("已儲存圖片")},"image/png")}
