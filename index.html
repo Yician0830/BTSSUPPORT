@@ -679,7 +679,7 @@ tour:[["#cities","切換城市","先選你要看的城市，每個城市有各�
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
 let TR=null;
 function tourEls(){return document.querySelectorAll(".tr-hl,.tr-block,.tr-card")}
-function tourEnd(){tourEls().forEach(e=>e.remove());if(TR){window.removeEventListener("scroll",TR.sync);window.removeEventListener("resize",TR.sync);document.removeEventListener("keydown",TR.key)}TR=null}
+function tourEnd(){tourEls().forEach(e=>e.remove());if(TR){cancelAnimationFrame(TR.raf);window.removeEventListener("scroll",TR.sync);window.removeEventListener("resize",TR.sync);document.removeEventListener("keydown",TR.key)}TR=null}
 function tourStart(z){
 if(TR)tourEnd();
 const L=(TOURS[z]||[]).filter(t=>{if(!t[0])return !STANDALONE;const e=document.querySelector(t[0]);return e&&e.getClientRects().length&&!e.closest("[hidden]")});
@@ -690,8 +690,9 @@ const bl=document.createElement("div");bl.className="tr-block";
 const cd=document.createElement("div");cd.className="tr-card";cd.setAttribute("role","dialog");cd.setAttribute("aria-live","polite");
 document.body.append(bl,hl,cd);
 let i=0;
-const place=()=>{const e=L[i][0]?document.querySelector(L[i][0]):null;if(!e){hl.style.cssText="top:50%;left:50%;width:0;height:0;border-color:transparent;outline-color:transparent";return}const r=e.getBoundingClientRect(),p=6;
-hl.style.cssText="top:"+(r.top-p)+"px;left:"+(r.left-p)+"px;width:"+(r.width+2*p)+"px;height:"+(r.height+2*p)+"px"};
+let hv="";const setHl=v=>{if(v!==hv){hv=v;hl.style.cssText=v}};
+const place=()=>{const e=L[i][0]?document.querySelector(L[i][0]):null;if(!e){setHl("top:50%;left:50%;width:0;height:0;border-color:transparent;outline-color:transparent");return}const r=e.getBoundingClientRect(),p=6;
+setHl("top:"+(r.top-p)+"px;left:"+(r.left-p)+"px;width:"+(r.width+2*p)+"px;height:"+(r.height+2*p)+"px")};
 const show=()=>{const t=L[i],e=t[0]?document.querySelector(t[0]):null;
 if(e){const r=e.getBoundingClientRect(),vh=innerHeight,cardH=190;
 const want=r.top+scrollY-Math.max(80,(vh-cardH-r.height)/3);
@@ -701,8 +702,9 @@ cd.querySelector(".tr-skip").onclick=tourEnd;
 cd.querySelector(".tr-prev").onclick=()=>{i--;show()};
 cd.querySelector(".tr-next").onclick=()=>{if(i>=L.length-1){tourEnd();return}i++;show()};
 requestAnimationFrame(place);setTimeout(place,120)};
-TR={sync:place,key:e=>{if(e.key==="Escape")tourEnd()}};
+TR={raf:0,sync:place,key:e=>{if(e.key==="Escape")tourEnd()}};
 window.addEventListener("scroll",place,{passive:true});window.addEventListener("resize",place);document.addEventListener("keydown",TR.key);
+const loop=()=>{if(!TR)return;place();TR.raf=requestAnimationFrame(loop)};TR.raf=requestAnimationFrame(loop);
 bl.onclick=()=>{};
 show()}
 function tourAuto(z){if(!TOURS[z])return;let seen=false;try{seen=localStorage.getItem("kh-tour-"+z)==="1"}catch(e){}if(seen)return;setTimeout(()=>{if(sec===z)tourStart(z)},450)}
