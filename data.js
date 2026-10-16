@@ -1,7 +1,7 @@
 /* ===== 網站設定 =====
 SHEET_CSV_URL：把 Google 試算表「發布到網路」的 CSV 連結貼在引號裡，網站就會改讀試算表。
 留空 "" 的話，就用下面這份內建資料（也是試算表讀不到時的備案）。 */
-const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/1DRpyV-K09OkI2sVKZSs6g5WoGN3z13deXfuqXXvDGtE/edit?usp=sharing";
+const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSA6rfBSfMh__qX2Ox4F5EgZsbLODscmo-9jCiczF_S5r0eBsmjSyKuezQyhJ0UU_rRPfgMCVCuCUOe/pub?gid=1813070755&single=true&output=csv";
 
 /* ===== 怎麼新增或修改應援（只需要改這個檔案） =====
 1. 複製下面任一筆 {...}，貼在最後一筆後面（筆與筆之間要有逗號），再改裡面的文字。
