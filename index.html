@@ -238,6 +238,11 @@ footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 .notes summary{cursor:default}
 .notes summary::before{display:none}
 .notes details>ul{margin-top:8px}
+#regions{margin:10px 0 0}
+.slot.miss{border:2px solid var(--line);background:var(--box);opacity:.75}
+/* 「我的收藏」按鈕：放到珊瑚礁圖層上方，不被蓋住 */
+.fav{position:relative;z-index:2}
+@media(min-width:720px){.fav{position:absolute;right:28px;bottom:84px}}
 </style>
 </head>
 <body>
@@ -274,14 +279,13 @@ footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 <button class="back" data-go="home">← 回首頁</button>
 <div class="chips cities" id="cities" role="group" aria-label="選擇城市"></div>
 <div class="chips cities" id="days" role="group" aria-label="選擇日期"></div>
-<div class="chips cities" id="members" role="group" aria-label="選擇成員"></div>
-<div class="chips cities" id="regions" role="group" aria-label="選擇地區"></div>
-<div class="next" id="nextBd" hidden></div>
+<div class="chips cities" id="members" role="group" aria-label="選擇成員"></div><div class="next" id="nextBd" hidden></div>
 <div class="book" id="book" hidden></div>
 <div class="tools">
 <div class="chips" id="chips" role="group" aria-label="依類型篩選"></div>
 <div class="tbtns"><button class="sbtn" id="mapTgl" aria-expanded="false" aria-controls="mapBox">🗺 地圖總覽</button><button class="sbtn" id="routeTgl" aria-expanded="false" aria-controls="route">🧭 路線規劃</button><button class="sbtn" id="tgl" aria-expanded="false" aria-controls="panel">🔍 搜尋及排序</button></div>
 </div>
+<div class="chips cities" id="regions" role="group" aria-label="選擇地區"></div>
 <section class="mapbox" id="mapBox" hidden><div id="map" role="region" aria-label="應援地點地圖"></div><small>地圖顯示目前篩選結果中已有座標的應援，座標為大略位置，實際地點請點「Google 地圖」確認。</small></section>
 <section class="route" id="route" hidden></section>
 <section class="panel" id="panel" hidden>
@@ -325,7 +329,7 @@ if(m=s.match(/^(\d{1,2})\/(\d{1,2})\/\d{4}$/))return m[1]*1+"/"+m[2]*1;
 return s}
 function item(o,i){const g=k=>String(o[k]||"").trim();const title=g("title");if(!title)return null;
 const d={id:g("id")||"row"+(i+2),title,by:g("by"),desc:g("desc")};
-const sec=g("sec");if(sec==="生日"||sec.toLowerCase()==="birthday"){d.sec="birthday";d.member=g("member");const c0=g("city");d.city=(c0==="香港"||c0.toLowerCase()==="hk")?"hk":"tw"}
+const sec=g("sec");if(sec==="生日"||sec.toLowerCase()==="birthday"){d.sec="birthday";d.member=g("member");d.city=g("city")}
 else{const c=g("city");d.city=(c==="香港"||c.toLowerCase()==="hk")?"hk":"kh"}
 d.type=toks(g("type"));if(!d.type.length)d.type=["應援企劃"];
 d.dates=toks(g("dates")).map(nmd);d.tags=toks(g("tags"));
@@ -377,14 +381,28 @@ const c=CITIES[city];h.textContent="ARIRANG 巡演粉絲應援地圖";$("#show")
 $("#cities").innerHTML=Object.keys(CITIES).map(k=>`<button class="chip" aria-pressed="${k===city}" data-city="${k}">${CITIES[k].name}</button>`).join("");days()}
 function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開始"&&d.start)return Math.round((day0(d.start)-today0())/864e5);return t==="即將開始"?9998:9999}
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
-w.innerHTML=`<h2>🏆 回顧紀念牆<small>${a.length} 個已結束的應援</small></h2><div class="wgrid">${a.map(d=>`<div class="tile"><div class="tp">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp">${stamp(DATA.indexOf(d))}</span>`:""}</div><b>${esc(d.title)}</b><span>${esc(d.time)}</span>${d.links&&d.links[0]?`<a href="${esc(d.links[0].u)}" target="_blank" rel="noopener">回顧貼文 ↗</a>`:""}</div>`).join("")}</div>`}
+w.innerHTML=`<h2>🏆 回顧紀念牆<small>${a.length} 個已結束的應援</small></h2><div class="wgrid">${a.map(d=>`<div class="tile"><div class="tp">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp">${stamp(DATA.indexOf(d))}</span>`:""}</div><b>${esc(d.title)}</b><span>${esc(d.time)}</span>${d.links&&d.links[0]?`<a href="${esc(d.links[0].u)}" target="_blank" rel="noopener">回顧貼文 ↗</a>`:""}</div>`).join("")}</div>`}
 function inSec(d){return (d.sec||"tour")===sec&&(sec==="birthday"||d.city===city)}
-function gos(z){sec=z;day="全部";cur="全部";mem="全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{history.replaceState(null,"",z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:""))}catch(x){}head();chips();render();window.scrollTo(0,0)}
+function gos(z){sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{history.replaceState(null,"",z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:""))}catch(x){}head();chips();render();window.scrollTo(0,0)}
 function bdDays(m){const t=today0();let d=new Date(t.getFullYear(),m[1]-1,m[2]);if(d<t)d=new Date(t.getFullYear()+1,m[1]-1,m[2]);return Math.round((d-t)/864e5)}
 function members(){$("#members").innerHTML=MEMBERS.map(m=>m[0]).map(x=>`<button class="chip" aria-pressed="${x===mem}" data-mem="${x}">${x}</button>`).join("");
 const n=[...MEMBERS].sort((a,b)=>bdDays(a)-bdDays(b))[0];const k=bdDays(n);const ay=new Date(today0().getTime()+k*864e5).getFullYear()-2013;$("#nextBd").textContent=n[0]==="BTS"?(k===0?`🎉 今天是 BTS 出道 ${ay} 週年！`:`🎉 下一個：BTS 出道 ${ay} 週年 ${n[1]}/${n[2]}，還有 ${k} 天`):(k===0?`🎂 今天是 ${n[0]} 的生日！`:`🎂 下一個生日：${n[0]} ${n[1]}/${n[2]}，還有 ${k} 天`)}
-const REGIONS=[["tw","台灣"],["hk","香港"]];
-function regions(){$("#regions").innerHTML=REGIONS.map(r=>`<button class="chip" aria-pressed="${r[0]===reg}" data-reg="${r[0]}">${r[1]}</button>`).join("")}
+/* 預設成員：先看有沒有「進行中」的生日應援（生日已過也算），有就選那位；都沒有才選最近的下一個生日 */
+function nearestMem(){
+const act=new Set(DATA.filter(d=>d.sec==="birthday"&&stat(d)==="進行中").map(d=>d.member));
+const cyc=m=>Math.min(bdDays(m),365-bdDays(m));
+const pool=MEMBERS.filter(m=>act.has(m[0]));
+return (pool.length?[...pool].sort((a,b)=>cyc(a)-cyc(b)):[...MEMBERS].sort((a,b)=>bdDays(a)-bdDays(b)))[0][0]}
+/* 生日應援的地區：試算表「城市」欄填城市或國家都可以，下表把常見城市歸到國家；
+   沒列在表裡的，就直接用填的字當成一個地區。不填算台灣。要新增對照，在下面加一行即可 */
+const REG_MAP={};
+[["台灣","tw 台灣 臺灣 台北 臺北 新北 桃園 新竹 台中 臺中 台南 臺南 高雄"],["香港","hk 香港"],["日本","jp 日本 東京 大阪 京都 名古屋 福岡 札幌"],["韓國","kr 韓國 南韓 首爾 釜山"],["新加坡","sg 新加坡"],["泰國","th 泰國 曼谷"],["馬來西亞","my 馬來西亞 吉隆坡"],["澳門","澳門"],["美國","us 美國 紐約 洛杉磯"]].forEach(([n,s])=>s.split(" ").forEach(k=>REG_MAP[k]=n));
+const regOf=d=>{const v=String(d.city||"").trim();return v?(REG_MAP[v.toLowerCase()]||v):"台灣"};
+function regionList(){const a=[];DATA.filter(d=>d.sec==="birthday").forEach(d=>{const r=regOf(d);if(!a.includes(r))a.push(r)});
+const first=["台灣","香港"].filter(r=>a.includes(r));return [...first,...a.filter(r=>!first.includes(r))]}
+function regions(){const L=regionList();if(reg!=="全部"&&!L.includes(reg))reg="全部";
+$("#regions").hidden=!(sec==="birthday"&&L.length>1);
+$("#regions").innerHTML=L.map(r=>`<button class="chip" aria-pressed="${r===reg}" data-reg="${esc(r)}">${esc(r)}</button>`).join("")}
 function day0(s){const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
 function today0(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())}
 function stat(d){if(d.start&&d.end){const t=today0();if(t<day0(d.start))return"即將開始";if(t>day0(d.end))return"已結束";return"進行中"}return d.status}
@@ -396,21 +414,34 @@ function nw(d){if(!d.upd)return"";const n=Math.round((today0()-day0(d.upd))/864e
 function days(){const c=CITIES[city];$("#days").innerHTML=c.days.map(x=>`<button class="chip" aria-pressed="${x===day}" data-day="${x}">${x==="全部"?"全部日期":x}</button>`).join("")}
 function stamp(i,faint){if(DATA[i]&&DATA[i].sec==="birthday"){const c=(x,y)=>faint?"#e6f6ff":x;return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"${faint?' opacity=".5"':""}><rect x="4" y="0" width="2" height="1" fill="${c("#ffd23f")}"/><rect x="4" y="1" width="2" height="2" fill="${c("#6ec6ff")}"/><rect x="1" y="3" width="8" height="2" fill="${c("#ff8fb5")}"/><rect x="1" y="5" width="8" height="3" fill="${c("#e8b27a")}"/><rect x="1" y="6" width="8" height="1" fill="${c("#c2255c")}"/><rect x="0" y="8" width="10" height="1" fill="${c("#4b3f9e")}"/></svg>`}
 const b=faint?"#e6f6ff":"#4b3f9e";return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"${faint?' opacity=".5"':""}><g fill="${b}"><rect x="3" y="3" width="4" height="1"/><rect x="2" y="4" width="6" height="1"/><rect x="1" y="5" width="8" height="3"/><rect x="2" y="8" width="6" height="1"/><rect x="3" y="9" width="4" height="1"/></g><rect x="4" y="2" width="2" height="1" fill="#9aa3c7"/><rect x="2" y="5" width="2" height="1" fill="#fff"/><rect x="2" y="6" width="1" height="1" fill="#fff"/><g fill="#c9a06a"><rect x="5" y="1" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/></g><g fill="#ffd23f"><rect x="7" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/></g></svg>`}
-function bookItems(){return DATA.filter(d=>inSec(d)&&(stat(d)!=="已結束"||done.has(d.id)))}
-function book(){const L=bookItems();$("#book").hidden=!L.length;const k=L.filter(d=>done.has(d.id)).length;$("#book").innerHTML=`<span>集章簿 ${k} / ${L.length}</span><span class="slots">${L.map(d=>`<span class="slot ${done.has(d.id)?"on":""}" title="${esc(d.title)}">${done.has(d.id)?stamp(DATA.indexOf(d)):""}</span>`).join("")}</span><button class="sbtn" id="saveImg" type="button">🖼 存成圖片</button>`}
+/* 生日集章簿：依選到的成員算格數，已結束的也算一格；巡演維持原本只算未結束或已打卡的 */
+function bookItems(){const bd=sec==="birthday";return DATA.filter(d=>inSec(d)&&(bd?(mem==="全部"||d.member===mem):(stat(d)!=="已結束"||done.has(d.id))))}
+function xmark(){return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#9aa3c7">${[1,2,3,4,5,6,7,8].map(i=>`<rect x="${i}" y="${i}" width="1" height="1"/><rect x="${9-i}" y="${i}" width="1" height="1"/>`).join("")}</svg>`}
+function book(){const L=bookItems();$("#book").hidden=!L.length;const k=L.filter(d=>done.has(d.id)).length;$("#book").innerHTML=`<span>集章簿 ${k} / ${L.length}</span><span class="slots">${L.map(d=>`<span class="slot ${done.has(d.id)?"on":stat(d)==="已結束"?"miss":""}" title="${esc(d.title)}${!done.has(d.id)&&stat(d)==="已結束"?"（已結束，未打卡）":""}">${done.has(d.id)?stamp(DATA.indexOf(d)):stat(d)==="已結束"?xmark():""}</span>`).join("")}</span><button class="sbtn" id="saveImg" type="button">🖼 存成圖片</button>`}
 const $=s=>document.querySelector(s);
 const wr=(k,s)=>{try{localStorage.setItem(k,JSON.stringify([...s]))}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1800)}
 function typeList(){return sec==="birthday"?TYPES.filter(t=>t!=="咖啡廳"):TYPES}
 function chips(){if(cur!=="全部"&&!typeList().includes(cur))cur="全部";const o=["全部",...typeList()];$("#cat").innerHTML=o.map(t=>`<option>${t}</option>`).join("");$("#cat").value=cur;$("#chips").innerHTML=o.slice(1).map(t=>`<button class="chip" aria-pressed="${t===cur}" data-t="${t}">${t}</button>`).join("")}
+/* 沒有活動可顯示時的說明文字；生日頁選到還沒收錄任何應援的成員，會顯示距離生日的天數和投稿連結（SUBMIT_URL 在 data.js 設定） */
+function emptyHTML(past){
+if(onlyFav)return "還沒有收藏的活動";
+if(past.length)return "目前沒有進行中或即將開始的應援，可以看看下方的回顧紀念牆";
+if(sec==="birthday"&&mem!=="全部"&&!DATA.some(d=>d.sec==="birthday"&&d.member===mem)){
+const m=MEMBERS.find(x=>x[0]===mem),k=m?bdDays(m):-1;
+const when=m?`${mem==="BTS"?"出道周年":"生日"} ${m[1]}/${m[2]}，${k===0?"就是今天":"還有 "+k+" 天"}。`:"";
+const link=typeof SUBMIT_URL==="string"&&SUBMIT_URL?`<br><a class="btn main" style="margin-top:12px" target="_blank" rel="noopener" href="${esc(SUBMIT_URL)}">我要提供應援資訊</a>`:"";
+return `<b>還沒有收錄 ${esc(mem)} 的${mem==="BTS"?"出道周年":"生日"}應援</b><br>${when}看到應援資訊的話，歡迎提供給我們。${link}`}
+if(DATA.some(inSec))return "沒有符合的活動，換個條件試試";
+return sec==="birthday"?"還沒有收錄生日應援，歡迎提供資料":"這個城市還沒有收錄應援，歡迎提供資料"}
 function render(){
 const dt=d=>d.dates.length?d.dates[0]:"99/99";
-const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="birthday"||reg==="全部"||(d.city||"tw")===reg)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
+const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="birthday"||reg==="全部"||regOf(d)===reg)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
 items.sort(so==="soon"?(a,b)=>skey(a)-skey(b)||(b.added||0)-(a.added||0):so==="name"?(a,b)=>a.title.localeCompare(b.title,"zh-Hant"):so==="date"?(a,b)=>dt(a).localeCompare(dt(b)):(a,b)=>(b.added||0)-(a.added||0));
 const live=items.filter(d=>stat(d)!=="已結束"),past=items.filter(d=>stat(d)==="已結束");
 book();window.afterRender&&afterRender(live);$("#n").textContent=`${live.length} 個活動`;wallR(past);
-$("#list").innerHTML=live.length?live.map(d=>`<article class="card ${done.has(d.id)?"done":""}"><div class="pic ${d.img?"has":""}">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp ${lastStamp===d.id?"pop":""}">${stamp(DATA.indexOf(d))}</span>`:""}</div>
+$("#list").innerHTML=live.length?live.map(d=>`<article class="card ${done.has(d.id)?"done":""}"><div class="pic ${d.img?"has":""}">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp ${lastStamp===d.id?"pop":""}">${stamp(DATA.indexOf(d))}</span>`:""}</div>
 <div class="hd"><div class="top"><div class="tags">${d.type.map(t=>`<span class="tag">${t}</span>`).join("")}${stat(d)?`<span class="pill st st-${{"進行中":"on","即將開始":"soon","已結束":"end"}[stat(d)]||"x"}">${stat(d)}</span>`:""}${cd(d)}${nw(d)}${(d.tags||[]).filter(x=>x!=="免費"&&x!=="須配合店家低銷").map(x=>`<span class="pill">${x}</span>`).join("")}</div>
 <button class="heart" data-f="${d.id}" aria-pressed="${favs.has(d.id)}" aria-label="收藏">${favs.has(d.id)?"♥":"♡"}</button></div>
 <h2>${esc(d.title)}</h2><div class="by">主辦：${esc(d.by)}</div>${descTxt(d)?`<p class="desc">${esc(descTxt(d))}</p>`:""}</div>
@@ -418,7 +449,7 @@ $("#list").innerHTML=live.length?live.map(d=>`<article class="card ${done.has(d.
 <div class="act"><button class="btn ${done.has(d.id)?"ok":"main"}" data-c="${d.id}">${done.has(d.id)?"✔ 已打卡":(d.sec==="birthday"?"🎂 我打卡了":"💣 我打卡了")}</button>
 ${d.map?`<a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.map)}">📍 地圖</a>`:""}
 
-${(d.links||[]).map(l=>`<a class="btn" target="_blank" rel="noopener" href="${esc(l.u)}">${esc(l.t)} ↗</a>`).join("")}</div></article>`).join(""):`<div class="empty">${onlyFav?"還沒有收藏的活動":past.length?"目前沒有進行中或即將開始的應援，可以看看下方的回顧紀念牆":DATA.some(inSec)?"沒有符合的活動，換個條件試試":(sec==="birthday"?"還沒有收錄生日應援，歡迎提供資料":"這個城市還沒有收錄應援，歡迎提供資料")}</div>`}
+${(d.links||[]).map(l=>`<a class="btn" target="_blank" rel="noopener" href="${esc(l.u)}">${esc(l.t)} ↗</a>`).join("")}</div></article>`).join(""):`<div class="empty">${emptyHTML(past)}</div>`}
 document.addEventListener("click",async e=>{
 const t=e.target.closest("[data-t]"),f=e.target.closest("[data-f]"),c=e.target.closest("[data-c]"),s=e.target.closest("[data-s]");
 const go=e.target.closest("[data-go]");
@@ -476,6 +507,7 @@ if(m){const L2=routeItems().map(d=>d.id),i=+m.dataset.rm,j=i+ +m.dataset.dir;if(
 if(e.target.id==="rgo"){const q=[];routeItems().forEach(d=>{if(q[q.length-1]!==d.map)q.push(d.map)});
 if(q.length<2){toast("至少要兩個不同地點才能規劃路線");return}const s=q.slice(0,10),u="https://www.google.com/maps/dir/?api=1&travelmode="+$("#rmode").value+"&origin="+encodeURIComponent(s[0])+"&destination="+encodeURIComponent(s[s.length-1])+(s.length>2?"&waypoints="+s.slice(1,-1).map(encodeURIComponent).join("%7C"):"");window.open(u,"_blank","noopener")}});
 function afterRender(live){lastLive=live;if(!$("#mapBox").hidden)drawMap();routeR()}
+if(sec==="birthday")mem=nearestMem();
 head();chips();render();
 
 /* 回到頂端 */
@@ -509,6 +541,7 @@ const bx=ox,by=cy-ic/2;
 x.beginPath();x.roundRect(bx,by,ic,ic,10);x.fillStyle=dn?"#e3f6ee":"#fff";x.fill();
 x.lineWidth=5;x.strokeStyle=dn?"#0f8a5f":"#b9dcf5";x.setLineDash(dn?[]:[12,10]);x.stroke();x.setLineDash([]);
 if(dn){const p=Math.round(ic*.14),u=(ic-2*p)/10;bomb(bx+p,by+p,u)}
+else if(stat(d)==="已結束"){x.strokeStyle="#9aa3c7";x.lineWidth=Math.max(4,ic*.1);x.beginPath();x.moveTo(bx+ic*.3,by+ic*.3);x.lineTo(bx+ic*.7,by+ic*.7);x.moveTo(bx+ic*.7,by+ic*.3);x.lineTo(bx+ic*.3,by+ic*.7);x.stroke()}
 x.font=(dn?"700 ":"500 ")+fs+"px "+F;x.fillStyle="#0b2a5b";x.textBaseline="middle";
 let t=name(d);const mw=cw-ic-24-(cols>1?24:0);
 if(x.measureText(t).width>mw){while(t.length>1&&x.measureText(t+"…").width>mw)t=t.slice(0,-1);t+="…"}

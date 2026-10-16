@@ -2,6 +2,8 @@
 SHEET_CSV_URL：把 Google 試算表「發布到網路」的 CSV 連結貼在引號裡，網站就會改讀試算表。
 留空 "" 的話，就用下面這份內建資料（也是試算表讀不到時的備案）。 */
 const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSA6rfBSfMh__qX2Ox4F5EgZsbLODscmo-9jCiczF_S5r0eBsmjSyKuezQyhJ0UU_rRPfgMCVCuCUOe/pub?gid=1813070755&single=true&output=csv";
+/* SUBMIT_URL：投稿應援資訊的連結（Google 表單、Threads 或 IG 私訊網址都可以）。填了之後，「還沒有收錄」的畫面會多一顆「我要提供應援資訊」按鈕；留空 "" 就不顯示。 */
+const SUBMIT_URL="";
 
 /* ===== 怎麼新增或修改應援（只需要改這個檔案） =====
 1. 複製下面任一筆 {...}，貼在最後一筆後面（筆與筆之間要有逗號），再改裡面的文字。
@@ -9,7 +11,7 @@ const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSA6rfBSfMh
 3. 最後把檔案最下面的 UPDATED 改成當天日期。
 id      每筆唯一的英文代號，不可重複（打卡紀錄靠它記）
 sec     巡演不用填；生日應援填 "birthday"
-city    巡演："kh" 高雄、"hk" 香港；生日應援："tw" 台灣（不填也算台灣）、"hk" 香港
+city    巡演："kh" 高雄、"hk" 香港；生日應援：填城市或國家都可以，例如 台北、香港、東京、首爾（不填算台灣）
 member  生日應援才需要：BTS（出道周年）/ RM / Jin / SUGA / j-hope / Jimin / V / Jungkook
 type    例如 ["公車站牌"]，可選：應援企劃、LED廣告車、公車站牌、LED電視牆、應援咖啡廳、咖啡廳、快閃店、展覽
 title / by / desc    名稱 / 主辦 / 簡介
