@@ -435,7 +435,14 @@ const link=typeof SUBMIT_URL==="string"&&SUBMIT_URL?`<br><a class="btn main" sty
 return `<b>還沒有收錄 ${esc(mem)} 的${mem==="BTS"?"出道周年":"生日"}應援</b><br>${when}看到應援資訊的話，歡迎提供給我們。${link}`}
 if(DATA.some(inSec))return "沒有符合的活動，換個條件試試";
 return sec==="birthday"?"還沒有收錄生日應援，歡迎提供資料":"這個城市還沒有收錄應援，歡迎提供資料"}
-function render(){
+/* 把目前的篩選條件寫進網址，方便分享連結或重新整理後保留 */
+function syncUrl(){try{if(sec==="home"){history.replaceState(null,"","?");return}
+const p=new URLSearchParams();p.set("section",sec);
+if(sec==="tour"){p.set("city",city);if(day!=="全部")p.set("day",day)}
+else{p.set("member",mem==="全部"?"all":mem);if(reg!=="全部")p.set("region",reg)}
+if(cur!=="全部")p.set("type",cur);
+history.replaceState(null,"","?"+p.toString())}catch(e){}}
+function render(){syncUrl();
 const dt=d=>d.dates.length?d.dates[0]:"99/99";
 const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="birthday"||reg==="全部"||regOf(d)===reg)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
 items.sort(so==="soon"?(a,b)=>skey(a)-skey(b)||(b.added||0)-(a.added||0):so==="name"?(a,b)=>a.title.localeCompare(b.title,"zh-Hant"):so==="date"?(a,b)=>dt(a).localeCompare(dt(b)):(a,b)=>(b.added||0)-(a.added||0));
@@ -507,7 +514,11 @@ if(m){const L2=routeItems().map(d=>d.id),i=+m.dataset.rm,j=i+ +m.dataset.dir;if(
 if(e.target.id==="rgo"){const q=[];routeItems().forEach(d=>{if(q[q.length-1]!==d.map)q.push(d.map)});
 if(q.length<2){toast("至少要兩個不同地點才能規劃路線");return}const s=q.slice(0,10),u="https://www.google.com/maps/dir/?api=1&travelmode="+$("#rmode").value+"&origin="+encodeURIComponent(s[0])+"&destination="+encodeURIComponent(s[s.length-1])+(s.length>2?"&waypoints="+s.slice(1,-1).map(encodeURIComponent).join("%7C"):"");window.open(u,"_blank","noopener")}});
 function afterRender(live){lastLive=live;if(!$("#mapBox").hidden)drawMap();routeR()}
-if(sec==="birthday")mem=nearestMem();
+/* 從網址還原篩選條件：?section=birthday&member=Jimin&region=香港&type=應援咖啡廳（巡演為 city、day、type） */
+try{const q=new URLSearchParams(location.search);
+if(sec==="birthday"){const m=q.get("member");mem=m==="all"?"全部":(m&&MEMBERS.some(x=>x[0]===m)?m:nearestMem());const r=q.get("region");if(r)reg=r}
+const dd=q.get("day");if(sec==="tour"&&dd&&CITIES[city].days.includes(dd))day=dd;
+const ty=q.get("type");if(ty&&TYPES.includes(ty))cur=ty}catch(e){if(sec==="birthday")mem=nearestMem()}
 head();chips();render();
 
 /* 回到頂端 */
