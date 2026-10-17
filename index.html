@@ -344,16 +344,23 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 @media (prefers-reduced-motion:reduce){.ann-t{white-space:normal}.ann-m.run{padding-left:0;animation:none}}
 .ann-l{border:0;background:none;color:var(--dark);font:inherit;font-weight:800;padding:4px 2px;cursor:pointer}
 .ann-x{border:0;background:none;color:var(--sub);font:inherit;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer}
-.smode{display:flex;gap:8px;margin:8px 0}
+.smode{display:flex;gap:8px;margin:8px 0 18px}
 .yt{position:relative;aspect-ratio:16/9;background:#000;margin:8px 0}.yt iframe{position:absolute;inset:0;width:100%;height:100%}
 .khint{font-size:12px;color:var(--sub);margin:4px 0}
-.ktv{max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20vh 4px;text-align:center}
+.ktv{position:relative;max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 4px 0;text-align:center;transition:padding-top .45s ease}
+@media(prefers-reduced-motion:reduce){.ktv{transition:none}}
 .kb{padding:10px 8px;opacity:.2;transform:scale(.88);transition:opacity .3s,transform .3s;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer}
 .kb.n2{opacity:.32}.kb.n1{opacity:.5;transform:scale(.94)}.kb.on{opacity:1;transform:scale(1)}
 .kl{font-size:19px;line-height:1.55;font-weight:800}
 .kl.h{color:var(--sub);font-size:15px;font-weight:600;margin-top:2px}
-.kl .cl{display:table;margin:6px auto;padding:3px 18px;border-radius:999px;color:#fff;font-weight:900}
-.kl .cl.b{background:#3b6fe0}.kl .cl.r{background:#e0245e}.kl .cl.o{background:#c77a12}
+.kl .cl{--t:#fff;display:table;margin:8px auto 10px;padding:4px 16px 4px 12px;border:3px solid var(--c);border-radius:0;background:var(--card);color:var(--c);font-weight:900;box-shadow:4px 4px 0 var(--c);transition:background .3s,color .3s}
+.kl .cl::before{content:"";display:inline-block;width:8px;height:8px;margin-right:9px;vertical-align:middle;background:var(--c);transition:background .3s}
+.kb.on .kl .cl{background:var(--c);color:var(--t)}
+.kb.on .kl .cl::before{background:var(--t)}
+.kl .cl.b{--c:#3b6fe0}.kl .cl.r{--c:#e0245e}.kl .cl.o{--c:#c77a12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kl .cl{--t:#06183a}:root:not([data-theme="light"]) .kl .cl.b{--c:#8fb4ff}:root:not([data-theme="light"]) .kl .cl.r{--c:#ff9ec0}:root:not([data-theme="light"]) .kl .cl.o{--c:#ffc069}}
+:root[data-theme="dark"] .kl .cl{--t:#06183a}:root[data-theme="dark"] .kl .cl.b{--c:#8fb4ff}:root[data-theme="dark"] .kl .cl.r{--c:#ff9ec0}:root[data-theme="dark"] .kl .cl.o{--c:#ffc069}
+@media(prefers-reduced-motion:reduce){.kl .cl,.kl .cl::before{transition:none}}
 .kl .ib{color:#1a5fd0}.kl .ir{color:#e0245e}.kl .io{color:#c77a12}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kl .ib{color:#8fb4ff}:root:not([data-theme="light"]) .kl .ir{color:#ff9ec0}:root:not([data-theme="light"]) .kl .io{color:#ffc069}}
 :root[data-theme="dark"] .kl .ib{color:#8fb4ff}:root[data-theme="dark"] .kl .ir{color:#ff9ec0}:root[data-theme="dark"] .kl .io{color:#ffc069}
@@ -377,19 +384,21 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .sgt{line-height:1.8;padding:4px 12px 12px;font-size:15px}
 #songs .search{max-width:none;width:100%;box-sizing:border-box;margin:8px 0}
 #slist{grid-template-columns:1fr}
-.wall{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 0;padding:8px 0 24px}
+.wall{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 0;padding:8px 0 24px}
 @media(min-width:560px){.wall{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:720px){.wall{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:1200px){.wall{grid-template-columns:repeat(5,1fr)}}
-.wall .alb{position:relative;display:block;border:0;background:none;padding:0 14px;font:inherit;color:inherit;text-align:center;cursor:pointer}
-.wall .alb .cv{display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:3px 3px 0 var(--line);background:var(--card);overflow:hidden;transition:transform .15s}
+.wall .alb{position:relative;display:flex;flex-direction:column;border:0;background:none;padding:0 14px;font:inherit;color:inherit;text-align:center;cursor:pointer}
+.wall .alb .cv{order:1;display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:0 7px 9px -5px rgba(6,26,64,.55);background:var(--card);overflow:hidden;transition:transform .15s;margin-bottom:-1px}
 .wall .alb:hover .cv,.wall .alb:focus-visible .cv{transform:translateY(-6px) rotate(-1.5deg)}
 .wall .alb:active .cv{transform:translateY(-2px)}
 .wall .alb img{display:block;width:100%;height:100%;object-fit:cover}
 .wall .alb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;font-weight:900;font-size:clamp(16px,4.5vw,24px);line-height:1.2;color:#fff;text-shadow:2px 2px 0 rgba(6,26,64,.45);background:linear-gradient(145deg,hsl(var(--h) 75% 55%),hsl(calc(var(--h) + 50) 70% 35%))}
-.wall .alb::after{content:"";display:block;height:12px;margin:0 -14px;background:linear-gradient(var(--box),var(--card));border:2px solid var(--line);border-top-width:4px;box-shadow:0 4px 0 var(--line)}
-.wall .alb b{display:block;margin-top:14px;font-size:15px;font-weight:900;line-height:1.3}
-.wall .alb span.n{display:block;font-size:12px;color:var(--sub);margin-top:2px}
+.wall .alb::after{content:"";order:2;display:block;height:9px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(150,200,245,.5) 60%,rgba(110,170,235,.6));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(90,150,225,.75);border-radius:0 0 5px 5px;box-shadow:0 8px 12px -6px rgba(20,80,160,.45)}
+:root[data-theme="dark"] .wall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}}
+.wall .alb b{order:3;display:block;margin-top:12px;font-size:15px;font-weight:900;line-height:1.3}
+.wall .alb span.n{order:4;display:block;font-size:12px;color:var(--sub);margin-top:2px}
 @media(prefers-reduced-motion:reduce){.wall .alb .cv{transition:none}.wall .alb:hover .cv{transform:none}}
 #sview .back{margin-top:0}
 .swrap{display:block}
@@ -398,10 +407,10 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 #stabs .chip{width:100%;text-align:left;white-space:normal}}
 @media(min-width:1000px){#slist .song{display:grid;grid-template-columns:minmax(320px,40%) 1fr;gap:24px;align-items:start}#slist .sl{position:sticky;top:12px}#slist .sgt{font-size:17px}#slist .ktv{max-height:70vh}}
 #stabs{flex-wrap:wrap;overflow-x:visible}
-.sgt .cl{font-weight:900;padding-left:8px;border-left:5px solid}
-.sgt .cl.b{color:#1a5fd0;border-color:#1a5fd0}
-.sgt .cl.r{color:#e0245e;border-color:#e0245e}
-.sgt .cl.o{color:#c77a12;border-color:#c77a12}
+.sgt .cl{font-weight:900}
+.sgt .cl.b{color:#1a5fd0}
+.sgt .cl.r{color:#e0245e}
+.sgt .cl.o{color:#c77a12}
 .sgt .ib{font-weight:900;color:#1a5fd0}
 .sgt .ir{font-weight:900;color:#e0245e}
 .sgt .io{font-weight:900;color:#c77a12}
@@ -835,7 +844,7 @@ function songCard(x){const vid=songVid(x),T=vid?songTimed(x):[],k=vid&&SMODE==="
 const media=vid?`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>`:"";
 const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map(g=>`<div class="kb" data-s="${g.s}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
 return `<article class="card song"><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr">${body}${songLinks(x)}</div></article>`}
-let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null;
+let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null,KS=false;
 function ytLoad(cb){if(window.YT&&YT.Player)return cb();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();cb()};if(!document.getElementById("yt-api")){const e=document.createElement("script");e.id="yt-api";e.src="https://www.youtube.com/iframe_api";document.head.appendChild(e)}}
 /* 背景音樂：預設是下面這個 YouTube 網址；要換歌改這裡，或在 data.js 設定 BGM_URL（YouTube 或 mp3 網址）。瀏覽器不允許自動出聲，所以預設開啟：進站就嘗試播放，被瀏覽器擋掉時第一次點或觸碰畫面就會開始；關掉之後會記住，下次不再自動播。 */
 const BGM=String(window.BGM_URL||"https://youtu.be/H2HQWHKDREI").trim();let BP=null,BON=true,BREADY=false;try{BON=localStorage.getItem("bgm")!=="0"}catch(e){}
@@ -849,14 +858,21 @@ if(vid){const d=document.createElement("div");d.id="bgmp";d.innerHTML='<div id="
 else{BP=new Audio(BGM);BP.loop=true;BP.preload="auto";BREADY=true;if(BON)bgmGo()}
 const pl=()=>{try{return BP&&(BP.paused===undefined?BP.getPlayerState&&BP.getPlayerState()===1:!BP.paused)}catch(e){return false}};["pointerdown","touchend","keydown"].forEach(ev=>document.addEventListener(ev,()=>{if(BON&&!pl())bgmGo()},{capture:true}))}
 bgmInit();
-function songStop(){PT++;clearInterval(YT_T);try{YP&&YP.destroy()}catch(e){}YP=null}
+function songStop(){PT++;KS=false;clearInterval(YT_T);try{YP&&YP.destroy()}catch(e){}YP=null}
 function songPlayer(vid){songStop();KA=-1;if(!vid)return;if(BON){BON=false;bgmUI();bgmGo()}const tk=PT;ytLoad(()=>{const el=document.getElementById("ytp");if(tk!==PT||!el)return;YP=new YT.Player(el,{videoId:vid,playerVars:{playsinline:1,rel:0},events:{onReady:()=>{if(tk===PT)YT_T=setInterval(ktvTick,250)}}})})}
+function ktvFit(){const k=document.getElementById("ktv");if(!k)return;const yt=document.querySelector("#slist .yt");
+k.style.marginTop="";k.style.height="";k.style.maxHeight="";
+if(yt&&matchMedia("(min-width:1000px)").matches){const dy=yt.getBoundingClientRect().top-k.getBoundingClientRect().top;k.style.marginTop=Math.max(0,dy)+"px";k.style.height=yt.offsetHeight+"px";k.style.maxHeight="none"}
+const h=k.clientHeight;k.style.paddingBottom=(h/2)+"px";k.style.paddingTop=(KS?h/2:6)+"px"}
+window.addEventListener("resize",()=>{try{ktvFit()}catch(e){}});
 function ktvTick(){const k=document.getElementById("ktv");if(!k||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime(),ls=k.children;let a=-1;for(let i=0;i<ls.length;i++){if(+ls[i].dataset.s<=t+.2)a=i;else break}
-if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){const e=ls[a];k.scrollTo({top:e.offsetTop-k.offsetTop-k.clientHeight/2+e.clientHeight/2,behavior:"smooth"})}}
+if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){let add=0;if(!KS){KS=true;const o=parseFloat(k.style.paddingTop)||6;ktvFit();add=(parseFloat(k.style.paddingTop)||o)-o}const e=ls[a];k.scrollTo({top:Math.max(0,e.offsetTop+add-k.clientHeight/2+e.clientHeight/2),behavior:"smooth"})}}
 document.getElementById("slist").addEventListener("click",e=>{const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
 const l=e.target.closest(".kb");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
 function albOf(x){return(x.a||"").trim()||"其他"}
-function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&/^(https?:\/\/|[\w.\/%-]+$)/.test((x.p||"").trim()));return x?x.p.trim():""}
+/* 專輯封面：試算表「封面」欄優先；沒填就用這裡的對照（專輯名: 圖片路徑） */
+const ALBUM_COVERS={"ARIRANG":"IMG/IMG_1293.png"};
+function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&/^(https?:\/\/|[\w.\/%-]+$)/.test((x.p||"").trim()));return x?x.p.trim():(ALBUM_COVERS[n]||"")}
 function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h}
 function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();
 const kw=(document.getElementById("sq").value||"").trim().toLowerCase();
@@ -872,7 +888,7 @@ document.getElementById("sn").textContent=L.length+" 首歌";
 if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不到符合的歌曲":"還沒有收錄歌曲"}</div>`;return}
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
 tabs.innerHTML=L.map(x=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${esc(x.t)}</button>`).join("");
-{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);songPlayer(songVid(x))}}
+{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);ktvFit();songPlayer(songVid(x))}}
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;SEL=b.dataset.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()});
 document.getElementById("swall").addEventListener("click",e=>{const b=e.target.closest(".alb");if(!b)return;ALB=b.dataset.a;songsR();window.scrollTo(0,0)});
 document.getElementById("sback").addEventListener("click",()=>{ALB="";document.getElementById("sq").value="";songsR();window.scrollTo(0,0)});
