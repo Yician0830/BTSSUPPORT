@@ -27,9 +27,16 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 .top{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0 10px;border-bottom:2px dashed var(--line)}
 .yt{position:relative;aspect-ratio:16/9;background:#000}
 .yt iframe{position:absolute;inset:0;width:100%;height:100%}
-.ctl{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:10px}
+.ctl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
 .ctl .btn{padding:10px 4px;text-align:center}
-.stamp{grid-column:1/-1;font-size:22px;padding:16px;background:var(--dark);color:var(--darkInk)}
+.stamps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.st{font-size:18px;padding:16px 4px;text-align:center;color:#fff;border-color:transparent}
+.st.n{background:var(--dark);color:var(--darkInk)}
+.st.b{background:#3b6fe0}.st.r{background:#e0245e}.st.o{background:#c77a12}
+.ln[data-c="藍"] .tx{color:#3b6fe0;font-weight:800}.ln[data-c="紅"] .tx{color:#e0245e;font-weight:800}.ln[data-c="橘"] .tx{color:#c77a12;font-weight:800}
+@media(prefers-color-scheme:dark){.ln[data-c="藍"] .tx{color:#8fb4ff}.ln[data-c="紅"] .tx{color:#ff9ec0}.ln[data-c="橘"] .tx{color:#ffc069}}
+.ln .cm{flex:none;width:22px;height:22px;border:2px solid var(--line);align-self:center;margin-left:-4px}
+.ln[data-c="藍"] .cm{background:#3b6fe0;border-color:#3b6fe0}.ln[data-c="紅"] .cm{background:#e0245e;border-color:#e0245e}.ln[data-c="橘"] .cm{background:#c77a12;border-color:#c77a12}
 .list{margin:12px 0}
 .ln{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border:2px solid transparent;cursor:pointer}
 .ln .tm{flex:none;width:52px;font-variant-numeric:tabular-nums;font-weight:800;color:var(--sub)}
@@ -48,13 +55,13 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 
 <div id="setup">
 <h1>時間碼小工具</h1>
-<p class="sub">邊看影片邊點「打」，每點一下就替下一句記下目前的時間，最後複製貼回試算表。</p>
+<p class="sub">邊看影片邊點按鈕，每點一下就替下一句記下目前的時間；點「藍／紅／橘」還會順便標上顏色，最後複製貼回試算表。</p>
 
 <label for="url">YouTube 網址</label>
 <input id="url" type="text" inputmode="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
 
 <label for="txt">歌詞（一行一句）</label>
-<textarea id="txt" placeholder="貼上試算表「空耳」或「應援法」那一格的內容，一次處理一欄。&#10;可以含 [藍] [紅] [橘] 標記，原本有的時間碼會被重打。&#10;空白行會保留，不會被打時間碼。"></textarea>
+<textarea id="txt" placeholder="貼上試算表「空耳」或「應援法」那一格的內容，一次處理一欄。&#10;可以含 [藍] [紅] [橘] 標記（會保留），原本有的時間碼會被重打。&#10;空白行會保留，不會被打時間碼。"></textarea>
 
 <label for="off">反應補償（秒）</label>
 <input id="off" type="number" step="0.1" min="0" max="2" value="0.3">
@@ -68,8 +75,13 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 <div id="work">
 <div class="top">
 <div class="yt"><div id="ytp"></div></div>
+<div class="stamps">
+<button class="btn st n" data-c="" type="button">打</button>
+<button class="btn st b" data-c="藍" type="button">藍</button>
+<button class="btn st r" data-c="紅" type="button">紅</button>
+<button class="btn st o" data-c="橘" type="button">橘</button>
+</div>
 <div class="ctl">
-<button class="btn stamp" id="stamp" type="button">打</button>
 <button class="btn" id="back5" type="button">⏪ 5 秒</button>
 <button class="btn" id="play" type="button">⏯</button>
 <button class="btn" id="skip" type="button">跳過</button>
@@ -91,7 +103,7 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 <button class="btn pri" id="copy" type="button">複製結果</button>
 <button class="btn" id="edit" type="button">← 回編輯</button>
 </div>
-<div class="hint">貼回試算表時，請先雙擊那一格進入編輯，再貼上，不然換行會被拆成很多列。電腦可以用空白鍵或 Enter 代替「打」。</div>
+<div class="hint">貼回試算表時，請先雙擊那一格進入編輯，再貼上，不然換行會被拆成很多列。電腦快捷鍵：空白鍵／Enter＝打，1＝藍，2＝紅，3＝橘，Backspace＝復原。</div>
 </div>
 
 </div>
@@ -99,7 +111,7 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 
 <script>
 const $=s=>document.querySelector(s);
-const TL=/^\s*\d{1,2}:\d{2}(?:\.\d+)?\s*/;
+const TL=/^\s*\d{1,2}:\d{2}(?:\.\d+)?\s*/,CM=/^\s*\[(藍|紅|橘)\]\s?/;const COLS=["","藍","紅","橘"];
 let lines=[],ptr=0,YP=null,vid="",PT=0;
 
 try{$("#url").value=localStorage.getItem("tc-url")||"";$("#txt").value=localStorage.getItem("tc-txt")||"";$("#off").value=localStorage.getItem("tc-off")||"0.3"}catch(e){}
@@ -121,7 +133,7 @@ function start(){
   if(!id){toast("請貼上正確的 YouTube 網址");return}
   if(!raw.length){toast("請貼上歌詞");return}
   try{localStorage.setItem("tc-url",$("#url").value);localStorage.setItem("tc-txt",$("#txt").value);localStorage.setItem("tc-off",$("#off").value)}catch(e){}
-  lines=raw.map(r=>{const tx=r.replace(TL,"");return{text:tx,blank:!tx.trim(),t:null}});
+  lines=raw.map(r=>{let tx=r.replace(TL,""),c="";const m=tx.match(CM);if(m){c=m[1];tx=tx.replace(CM,"")}return{text:tx,blank:!tx.trim(),t:null,c}});
   ptr=nextIdx(0);vid=id;
   $("#setup").style.display="none";$("#work").style.display="block";
   window.scrollTo(0,0);
@@ -133,20 +145,20 @@ function start(){
 }
 
 function render(){
-  $("#list").innerHTML=lines.map((l,i)=>l.blank?'<div class="gap"></div>':`<div class="ln${i===ptr?" cur":""}${l.t!=null?" done":""}" data-i="${i}"><span class="tm">${l.t!=null?fmt(l.t):"—"}</span><span class="tx"></span></div>`).join("");
+  $("#list").innerHTML=lines.map((l,i)=>l.blank?'<div class="gap"></div>':`<div class="ln${i===ptr?" cur":""}${l.t!=null?" done":""}" data-i="${i}" data-c="${l.c}"><span class="tm">${l.t!=null?fmt(l.t):"—"}</span><span class="cm" title="點一下換顏色"></span><span class="tx"></span></div>`).join("");
   [...$("#list").children].forEach((e,i)=>{if(e.dataset.i!=null)e.querySelector(".tx").textContent=lines[+e.dataset.i].text});
   const tot=lines.filter(l=>!l.blank).length,done=lines.filter(l=>l.t!=null).length;
   $("#prog").textContent=ptr>=lines.length?"全部處理完了":"已打 "+done+" / "+tot+" 句";
   $("#cnt").textContent=done+" 句有時間碼";
-  $("#out").value=lines.map(l=>l.blank?"":(l.t!=null?fmt(l.t)+" ":"")+l.text).join("\n");
+  $("#out").value=lines.map(l=>l.blank?"":(l.t!=null?fmt(l.t)+" ":"")+(l.c?"["+l.c+"] ":"")+l.text).join("\n");
   const c=$("#list .cur");if(c){const top=$(".top").offsetHeight;const r=c.getBoundingClientRect();if(r.top<top+10||r.bottom>innerHeight-20)window.scrollTo({top:scrollY+r.top-top-60,behavior:"smooth"})}
 }
 
-function stamp(){
+function stamp(c){
   if(!YP||!YP.getCurrentTime){toast("影片還沒準備好");return}
   if(ptr>=lines.length){toast("已經打完了");return}
   const off=Math.max(0,parseFloat($("#off").value)||0);
-  lines[ptr].t=Math.max(0,Math.round(YP.getCurrentTime()-off));
+  lines[ptr].t=Math.max(0,Math.round(YP.getCurrentTime()-off));if(c)lines[ptr].c=c;
   ptr=nextIdx(ptr+1);
   render();
 }
@@ -160,7 +172,7 @@ function undo(){
 }
 
 $("#go").addEventListener("click",start);
-$("#stamp").addEventListener("click",stamp);
+document.querySelectorAll(".st").forEach(b=>b.addEventListener("click",()=>stamp(b.dataset.c)));
 $("#skip").addEventListener("click",skip);
 $("#undo").addEventListener("click",undo);
 $("#back5").addEventListener("click",()=>{try{YP.seekTo(Math.max(0,YP.getCurrentTime()-5),true)}catch(e){}});
@@ -169,6 +181,7 @@ $("#rate").addEventListener("change",()=>{try{YP.setPlaybackRate(+$("#rate").val
 $("#list").addEventListener("click",e=>{
   const r=e.target.closest(".ln");if(!r)return;
   const i=+r.dataset.i;
+  if(e.target.closest(".cm")){lines[i].c=COLS[(COLS.indexOf(lines[i].c)+1)%COLS.length];render();return}
   if(e.target.closest(".tm")&&lines[i].t!=null){lines[i].t=null}
   ptr=i;render();
   if(lines[i].t!=null)try{YP.seekTo(Math.max(0,lines[i].t-2),true)}catch(x){}
@@ -185,7 +198,8 @@ $("#edit").addEventListener("click",()=>{
 document.addEventListener("keydown",e=>{
   if($("#work").style.display!=="block")return;
   const tg=e.target.tagName;if(tg==="INPUT"||tg==="TEXTAREA"||tg==="SELECT")return;
-  if(e.code==="Space"||e.key==="Enter"){e.preventDefault();stamp()}
+  if(e.code==="Space"||e.key==="Enter"){e.preventDefault();stamp("")}
+  else if(e.key==="1"||e.key==="2"||e.key==="3"){e.preventDefault();stamp(COLS[+e.key])}
   else if(e.key==="Backspace"){e.preventDefault();undo()}
 });
 </script>
