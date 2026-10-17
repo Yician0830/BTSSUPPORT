@@ -470,8 +470,8 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .song.ktvm .yt{width:100%;margin:0 auto}
 .song.ktvm .ktv{max-height:calc(100vh - 400px);max-height:calc(100dvh - 400px);min-height:200px}
 }
-/* KTV 目前這行加強標示（深色模式）：其他行再調暗、目前行換成白字＋底色框＋左側亮條 */
-:root{--k0:.32;--k1:.72;--k2:.5;--kon-bg:transparent;--kon-ring:none;--kon-kf:#000}
+/* KTV 目前這行加強標示：淺色＝淡藍底＋深藍框＋左側粗條；深色模式其他行再調暗、目前行換成白字＋亮藍框 */
+:root{--k0:.32;--k1:.72;--k2:.5;--kon-bg:rgba(11,79,168,.1);--kon-ring:inset 0 0 0 2px #0b4fa8,inset 6px 0 0 #0b4fa8,0 0 12px rgba(11,79,168,.22);--kon-kf:#000}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--k0:.26;--k1:.5;--k2:.36;--kon-bg:rgba(127,212,255,.2);--kon-ring:inset 0 0 0 2px #7fd4ff,inset 6px 0 0 #7fd4ff,0 0 16px rgba(127,212,255,.35);--kon-kf:#fff}}
 :root[data-theme="dark"]{--k0:.26;--k1:.5;--k2:.36;--kon-bg:rgba(127,212,255,.2);--kon-ring:inset 0 0 0 2px #7fd4ff,inset 6px 0 0 #7fd4ff,0 0 16px rgba(127,212,255,.35);--kon-kf:#fff}
 .kb{opacity:var(--k0)}
@@ -525,7 +525,7 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .kbar i.p{opacity:.3}
 .kbar i.nx{animation:kblink .8s steps(1,end) infinite}
 @keyframes kblink{50%{opacity:.25}}
-.kbar .kn{position:absolute;top:-14px;width:14px;height:22px;margin-left:-7px;pointer-events:none;z-index:2;image-rendering:pixelated;background:url("%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 14' shape-rendering='crispEdges'%3E%3Cg fill='%239b6dff'%3E%3Crect x='3' y='0' width='3' height='1'/%3E%3Crect x='2' y='1' width='5' height='1'/%3E%3Crect x='1' y='2' width='7' height='4'/%3E%3Crect x='2' y='6' width='5' height='1'/%3E%3C/g%3E%3Cg fill='%23e9ddff'%3E%3Crect x='2' y='2' width='1' height='2'/%3E%3Crect x='3' y='1' width='1' height='1'/%3E%3C/g%3E%3Crect x='2' y='7' width='5' height='1' fill='%23ffffff'/%3E%3Crect x='3' y='8' width='3' height='6' fill='%238f86d6'/%3E%3C/svg%3E") no-repeat center/contain}
+.kbar .kn{position:absolute;top:-14px;width:14px;height:22px;margin-left:-7px;pointer-events:none;z-index:2;image-rendering:pixelated;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 14' shape-rendering='crispEdges'%3E%3Cg fill='%239b6dff'%3E%3Crect x='3' y='0' width='3' height='1'/%3E%3Crect x='2' y='1' width='5' height='1'/%3E%3Crect x='1' y='2' width='7' height='4'/%3E%3Crect x='2' y='6' width='5' height='1'/%3E%3C/g%3E%3Cg fill='%23e9ddff'%3E%3Crect x='2' y='2' width='1' height='2'/%3E%3Crect x='3' y='1' width='1' height='1'/%3E%3C/g%3E%3Crect x='2' y='7' width='5' height='1' fill='%23ffffff'/%3E%3Crect x='3' y='8' width='3' height='6' fill='%238f86d6'/%3E%3C/svg%3E") no-repeat center/contain}
 @media(prefers-reduced-motion:reduce){.kbar i.nx{animation:none}}
 @media(max-width:999px){.song.ktvm .ktv{max-height:calc(100vh - 456px);max-height:calc(100dvh - 456px)}}
 /* 集章簿格子、已打卡按鈕也用紫色（「進行中」標籤維持綠色） */
@@ -541,10 +541,10 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .pxc-b .btn{min-width:84px;justify-content:center}
 @keyframes pxcIn{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
 @media(prefers-reduced-motion:reduce){.pxc-box{animation:none}}
-/* 手機版 KTV 歌詞：畫面上的「100%」實際只有原本的 85% 大小，「85%」則再等比縮小 */
-@media(max-width:999px){.kl{font-size:calc(19px*var(--sfs,1)*.85)}.kl.h{font-size:calc(15px*var(--sfs,1)*.85)}
-/* 手機版 [] 整行與 {} 內的字固定 19px（仍跟著字級按鈕縮放，不吃 0.85） */
-.ktv .kb .kl .cl,.ktv .kb.on .kl .cl,.kl .ib,.kl .ir,.kl .io{font-size:calc(19px*var(--sfs,1))}}
+/* 手機版 KTV 歌詞：100% 時歌詞固定 16px，85% 則等比縮小 */
+@media(max-width:999px){.kl{font-size:calc(16px*var(--sfs,1))}.kl.h{font-size:calc(15px*var(--sfs,1)*.85)}
+/* 手機版 [] 整行與 {} 內的字同樣 16px（跟著字級按鈕縮放） */
+.ktv .kb .kl .cl,.ktv .kb.on .kl .cl,.kl .ib,.kl .ir,.kl .io{font-size:calc(16px*var(--sfs,1))}}
 .sgt .cl.b{color:#1a5fd0}
 .sgt .cl.r{color:#e0245e}
 .sgt .cl.o{color:#c77a12}
@@ -1173,7 +1173,7 @@ if(dn){x.fillStyle=C.card;x.fillRect(bx,by,ic,ic);x.lineWidth=Math.max(4,ic*.08)
 const u=ic/10;x.fillStyle=C.ok;[[2,5],[3,6],[4,7],[5,6],[6,5],[7,4],[8,3]].forEach(([px,py])=>x.fillRect(bx+px*u-u*.5,by+py*u-u*1.4,u,u*1.5));
 x.fillRect(bx+u*1.2,by+u*1.2,u*.7,u*.7);x.fillRect(bx+ic-u*1.9,by+ic-u*1.9,u*.7,u*.7)}
 else if(stat(d)==="已結束"){x.fillStyle="#9aa3c7";const u=ic*.11;for(let j=0;j<5;j++){x.fillRect(bx+ic*.2+j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1);x.fillRect(bx+ic*.8-u*1.1-j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1)}}
-x.font="400 "+fs+"px "+PF;x.fillStyle=C.ink;x.textBaseline="middle";
+x.font="400 "+fs+"px "+PF;x.fillStyle=dn?"#0b2a5b":C.ink;x.textBaseline="middle";
 const ty=String(d.type||""),em=ty.includes("廣告車")?"truck":ty.includes("公車")?"bus":ty.includes("電視牆")?"tv":ty.includes("咖啡")?"cafe":ty.includes("快閃")?"shop":ty.includes("展覽")?"expo":ty.includes("企劃")?"mega":"",pu=Math.max(2,Math.floor(fs*.95/8)),ew=em?pu*8+16:0;
 const dts=dn&&dd[d.id]?dd[d.id]:"";let dw=0;if(dts){x.font="400 "+Math.max(24,Math.round(fs*.78))+"px "+PF;dw=x.measureText(dts).width+28}
 x.font="400 "+fs+"px "+PF;
