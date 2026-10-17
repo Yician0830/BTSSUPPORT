@@ -43,6 +43,15 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 .ln.done .tm{color:var(--ok)}
 .ln .tx{flex:1;word-break:break-word}
 .ln.cur{background:var(--hl);border-color:var(--dark)}
+.ln .ed{flex:none;width:30px;text-align:center;color:var(--sub);align-self:center;font-size:15px}
+.ln.editing{cursor:default;align-items:flex-start}
+.ln .edwrap{flex:1;min-width:0}
+.ln textarea.et{min-height:84px;padding:8px 10px;font-weight:400;color:var(--ink)}
+.ln .edwrap .row{margin-top:6px}
+.ln .edwrap .btn{padding:6px 14px}
+.ic.b{color:#3b6fe0;font-weight:800}.ic.r{color:#e0245e;font-weight:800}
+@media(prefers-color-scheme:dark){.ic.b{color:#8fb4ff}.ic.r{color:#ff9ec0}}
+.ln .edwrap .btn.mb{background:#3b6fe0;border-color:#3b6fe0;color:#fff}.ln .edwrap .btn.mr{background:#e0245e;border-color:#e0245e;color:#fff}
 .gap{height:12px}
 #out{min-height:160px;white-space:pre}
 .meta{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:6px 0 2px;font-size:14px;color:var(--sub)}
@@ -103,7 +112,7 @@ textarea{min-height:200px;resize:vertical;line-height:1.7}
 <button class="btn pri" id="copy" type="button">複製結果</button>
 <button class="btn" id="edit" type="button">← 回編輯</button>
 </div>
-<div class="hint">貼回試算表時，請先雙擊那一格進入編輯，再貼上，不然換行會被拆成很多列。電腦快捷鍵：空白鍵／Enter＝打，1＝藍，2＝紅，3＝橘，Backspace＝復原。</div>
+<div class="hint">貼回試算表時，請先雙擊那一格進入編輯，再貼上，不然換行會被拆成很多列。點每句右邊的 ✎ 可以改文字；選取文字後按 {藍|} 或 {紅|} 會變成 {藍|文字} 的標記，文字會顯示成對應顏色；在文字裡按 Enter 換行，按「完成」就會拆成多句（第一句保留時間碼，新的句子要重打）。電腦快捷鍵：空白鍵／Enter＝打，1＝藍，2＝紅，3＝橘，Backspace＝復原。</div>
 </div>
 
 </div>
@@ -144,9 +153,19 @@ function start(){
   ytLoad(()=>{if(tk!==PT)return;YP=new YT.Player("ytp",{videoId:id,playerVars:{playsinline:1,rel:0},events:{onReady:()=>{try{YP.setPlaybackRate(+$("#rate").value)}catch(e){}}}})});
 }
 
+let editing=-1;
+const IC=/\{(藍|紅)\|([^{}]*)\}/g;
+function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function rich(t){return esc(t).replace(IC,(m,c,x)=>'<span class="ic '+(c==="藍"?"b":"r")+'">'+x+'</span>')}
 function render(){
-  $("#list").innerHTML=lines.map((l,i)=>l.blank?'<div class="gap"></div>':`<div class="ln${i===ptr?" cur":""}${l.t!=null?" done":""}" data-i="${i}" data-c="${l.c}"><span class="tm">${l.t!=null?fmt(l.t):"—"}</span><span class="cm" title="點一下換顏色"></span><span class="tx"></span></div>`).join("");
-  [...$("#list").children].forEach((e,i)=>{if(e.dataset.i!=null)e.querySelector(".tx").textContent=lines[+e.dataset.i].text});
+  $("#list").innerHTML=lines.map((l,i)=>{
+    if(l.blank)return'<div class="gap"></div>';
+    const base=`<div class="ln${i===ptr?" cur":""}${l.t!=null?" done":""}${i===editing?" editing":""}" data-i="${i}" data-c="${l.c}"><span class="tm">${l.t!=null?fmt(l.t):"—"}</span><span class="cm" title="點一下換顏色"></span>`;
+    if(i===editing)return base+'<div class="edwrap"><textarea class="et" placeholder="Enter 換行會拆成多句；選取文字後按 {藍|} 或 {紅|} 上色"></textarea><div class="row"><button class="btn pri" type="button" data-act="ok">完成</button><button class="btn" type="button" data-act="cancel">取消</button><button class="btn mb" type="button" data-act="藍">{藍|}</button><button class="btn mr" type="button" data-act="紅">{紅|}</button><button class="btn" type="button" data-act="清">清除色</button></div></div></div>';
+    return base+'<span class="tx"></span><span class="ed" title="編輯文字／換行">✎</span></div>';
+  }).join("");
+  [...$("#list").children].forEach(e=>{if(e.dataset.i!=null&&+e.dataset.i!==editing)e.querySelector(".tx").innerHTML=rich(lines[+e.dataset.i].text)});
+  if(editing>=0){const ta=$("#list .et");if(ta&&ta.dataset.init!=="1"){ta.value=lines[editing].text;ta.dataset.init="1"}}
   const tot=lines.filter(l=>!l.blank).length,done=lines.filter(l=>l.t!=null).length;
   $("#prog").textContent=ptr>=lines.length?"全部處理完了":"已打 "+done+" / "+tot+" 句";
   $("#cnt").textContent=done+" 句有時間碼";
@@ -155,6 +174,7 @@ function render(){
 }
 
 function stamp(c){
+  if(editing>=0){toast("先按「完成」或「取消」");return}
   if(!YP||!YP.getCurrentTime){toast("影片還沒準備好");return}
   if(ptr>=lines.length){toast("已經打完了");return}
   const off=Math.max(0,parseFloat($("#off").value)||0);
@@ -162,13 +182,43 @@ function stamp(c){
   ptr=nextIdx(ptr+1);
   render();
 }
-function skip(){if(ptr>=lines.length)return;ptr=nextIdx(ptr+1);render()}
+function skip(){if(editing>=0||ptr>=lines.length)return;ptr=nextIdx(ptr+1);render()}
 function undo(){
+  if(editing>=0)return;
   const p=prevIdx(Math.min(ptr,lines.length)-1);
   if(p<0)return;
   if(lines[p].t==null){ptr=p;render();return}
   lines[p].t=null;ptr=p;render();
   try{const t=YP.getCurrentTime();YP.seekTo(Math.max(0,t-3),true)}catch(e){}
+}
+
+function openEdit(i){editing=i;ptr=i;render();const ta=$("#list .et");if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}}
+function commitEdit(){
+  const ta=$("#list .et");if(!ta){editing=-1;return}
+  const i=editing;editing=-1;
+  const parts=ta.value.replace(/\r/g,"").split("\n").map(s=>s.trim()).filter(Boolean);
+  if(!parts.length){render();return}
+  const L=lines[i];
+  const extra=parts.slice(1).map(p=>({text:p,blank:false,t:null,c:L.c}));
+  lines.splice(i,1,Object.assign({},L,{text:parts[0]}),...extra);
+  if(ptr>i)ptr+=extra.length;
+  render();
+  if(extra.length)toast("已拆成 "+parts.length+" 句");
+}
+function cancelEdit(){editing=-1;render()}
+function mark(col){
+  const ta=$("#list .et");if(!ta)return;
+  const s=ta.selectionStart,e=ta.selectionEnd,v=ta.value,sel=v.slice(s,e);
+  if(col==="清"){
+    const a=s===e?0:s,b=s===e?v.length:e;
+    const out=v.slice(a,b).replace(IC,"$2");
+    ta.value=v.slice(0,a)+out+v.slice(b);
+    ta.focus();ta.setSelectionRange(a,a+out.length);return;
+  }
+  if(s===e){ta.value=v.slice(0,s)+"{"+col+"|}"+v.slice(e);const p=s+3;ta.focus();ta.setSelectionRange(p,p);return}
+  const out=sel.split("\n").map(p=>p.trim()?"{"+col+"|"+p+"}":p).join("\n");
+  ta.value=v.slice(0,s)+out+v.slice(e);
+  ta.focus();ta.setSelectionRange(s,s+out.length);
 }
 
 $("#go").addEventListener("click",start);
@@ -181,6 +231,11 @@ $("#rate").addEventListener("change",()=>{try{YP.setPlaybackRate(+$("#rate").val
 $("#list").addEventListener("click",e=>{
   const r=e.target.closest(".ln");if(!r)return;
   const i=+r.dataset.i;
+  const act=e.target.closest("[data-act]");
+  if(act){const a=act.dataset.act;if(a==="ok")commitEdit();else if(a==="cancel")cancelEdit();else mark(a);return}
+  if(e.target.closest(".edwrap"))return;
+  if(editing>=0&&editing!==i){commitEdit();return}
+  if(e.target.closest(".ed")){openEdit(i);return}
   if(e.target.closest(".cm")){lines[i].c=COLS[(COLS.indexOf(lines[i].c)+1)%COLS.length];render();return}
   if(e.target.closest(".tm")&&lines[i].t!=null){lines[i].t=null}
   ptr=i;render();
