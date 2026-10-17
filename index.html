@@ -164,6 +164,9 @@ footer{padding:28px 16px 48px;color:var(--sub);font-size:12px;text-align:center}
 .route li i{font-style:normal;font-weight:900;color:var(--dark);min-width:1.5em}
 .route li button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:4px 10px;font:inherit;cursor:pointer}
 .route .rrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.route .rsel{margin:0 0 8px}.route .rall{margin:0 0 10px}.route .rall .btn{padding:6px 12px}
+.route li input[type=checkbox]{flex:none;width:22px;height:22px;margin:0;accent-color:var(--dark);cursor:pointer}
+.route li.off{opacity:.55}
 .route select{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;padding:8px;font:inherit}
 
 /* ===== 美化 v2 ===== */
@@ -335,6 +338,10 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .ann{margin:0 0 12px;background:var(--card);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--line);padding:10px 12px;font-size:14px}
 .ann-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .ann-dot{flex:none;width:10px;height:10px;background:#e0245e;display:inline-block}
+.ann-new{flex:none;display:inline-block;background:#e0245e;color:#fff;font-size:11px;font-weight:900;letter-spacing:.06em;line-height:1;padding:3px 5px;border:2px solid #8f1038;box-shadow:2px 2px 0 var(--line);animation:annblink 1.2s steps(2,start) infinite}
+.ann-i .ann-new{margin-right:4px;vertical-align:1px;animation:none}
+@keyframes annblink{50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){.ann-new{animation:none}}
 .ann{position:sticky;top:env(safe-area-inset-top,0px);z-index:30}
 .ann-t{flex:1 1 140px;font-weight:800;min-width:0;overflow:hidden;white-space:nowrap}
 .ann-m{display:inline-block}
@@ -366,9 +373,9 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kl .cl{--t:#06183a}:root:not([data-theme="light"]) .kl .cl.b{--c:#8fb4ff}:root:not([data-theme="light"]) .kl .cl.r{--c:#ff9ec0}:root:not([data-theme="light"]) .kl .cl.o{--c:#ffc069}}
 :root[data-theme="dark"] .kl .cl{--t:#06183a}:root[data-theme="dark"] .kl .cl.b{--c:#8fb4ff}:root[data-theme="dark"] .kl .cl.r{--c:#ff9ec0}:root[data-theme="dark"] .kl .cl.o{--c:#ffc069}
 @media(prefers-reduced-motion:reduce){.kl .cl,.kl .cl::before{transition:none}}
-/* KTV 逐字填色：--p 是目前這一行唱到的進度，ktvTick 每 250ms 更新，transition 讓它順順掃過 */
+/* KTV：已取消逐字填色（跟影片對不上），整行直接顯示完整顏色，只靠目前行高亮＋自動捲動 */
 @property --p{syntax:"<percentage>";inherits:true;initial-value:0%}
-.kb{--p:0%;--kf:var(--dark);--kb0:color-mix(in srgb,var(--sub) 50%,transparent);transition:opacity .3s,transform .3s,--p .3s linear}
+.kb{--p:100%;--kf:var(--dark);--kb0:color-mix(in srgb,var(--sub) 50%,transparent);transition:opacity .3s,transform .3s}
 .kl>div:not(.cl){background:linear-gradient(90deg,var(--kf) var(--p),var(--kb0) var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 .kl>div:not(.cl) :is(.ib,.ir,.io){-webkit-text-fill-color:transparent;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
 .kb.on .kl.h>div{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--kf) 35%,transparent))}
@@ -447,9 +454,9 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .song.ktvm .sl{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--card);margin:-20px -20px 0;padding:12px 20px 8px;border-bottom:2px solid var(--line)}
 .song.ktvm .sl h2{display:inline;font-size:17px;margin:0}
 .song.ktvm .sl .by{display:inline;margin:0 0 0 8px}
-.song.ktvm .smode{margin:6px 0}
-.song.ktvm .yt{width:min(100%,58vw);margin:4px auto 0}
-.song.ktvm .ktv{max-height:calc(100vh - 300px);max-height:calc(100dvh - 300px);min-height:220px}
+.song.ktvm .smode{margin:8px 0 14px}
+.song.ktvm .yt{width:100%;margin:0 auto}
+.song.ktvm .ktv{max-height:calc(100vh - 400px);max-height:calc(100dvh - 400px);min-height:200px}
 }
 .sgt .cl.b{color:#1a5fd0}
 .sgt .cl.r{color:#e0245e}
@@ -657,7 +664,7 @@ return (pool.length?[...pool].sort((a,b)=>cyc(a)-cyc(b)):[...MEMBERS].sort((a,b)
 const REG_MAP={};
 [["台灣","tw 台灣 臺灣 台北 臺北 新北 桃園 新竹 台中 臺中 台南 臺南 高雄"],["香港","hk 香港"],["日本","jp 日本 東京 大阪 京都 名古屋 福岡 札幌"],["韓國","kr 韓國 南韓 首爾 釜山"],["新加坡","sg 新加坡"],["泰國","th 泰國 曼谷"],["馬來西亞","my 馬來西亞 吉隆坡"],["澳門","澳門"],["美國","us 美國 紐約 洛杉磯"]].forEach(([n,s])=>s.split(" ").forEach(k=>REG_MAP[k]=n));
 const regOf=d=>{const v=String(d.city||"").trim();return v?(REG_MAP[v.toLowerCase()]||v):"台灣"};
-function regionList(){const a=[];DATA.filter(d=>d.sec==="birthday").forEach(d=>{const r=regOf(d);if(!a.includes(r))a.push(r)});
+function regionList(){const a=[];DATA.filter(d=>d.sec==="birthday"&&(mem==="全部"||d.member===mem)).forEach(d=>{const r=regOf(d);if(!a.includes(r))a.push(r)});
 const first=["台灣","香港"].filter(r=>a.includes(r));return [...first,...a.filter(r=>!first.includes(r))]}
 function regions(){const L=regionList();if(reg!=="全部"&&!L.includes(reg))reg="全部";
 $("#regions").hidden=!(sec==="birthday"&&L.length>1);
@@ -674,9 +681,9 @@ function days(){const c=CITIES[city];$("#days").innerHTML=c.days.map(x=>`<button
 function stamp(i,faint){if(DATA[i]&&DATA[i].sec==="birthday"){const c=(x,y)=>faint?"#e6f6ff":x;return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"${faint?' opacity=".5"':""}><rect x="4" y="0" width="2" height="1" fill="${c("#ffd23f")}"/><rect x="4" y="1" width="2" height="2" fill="${c("#6ec6ff")}"/><rect x="1" y="3" width="8" height="2" fill="${c("#ff8fb5")}"/><rect x="1" y="5" width="8" height="3" fill="${c("#e8b27a")}"/><rect x="1" y="6" width="8" height="1" fill="${c("#c2255c")}"/><rect x="0" y="8" width="10" height="1" fill="${c("#4b3f9e")}"/></svg>`}
 const b=faint?"#e6f6ff":"#4b3f9e";return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"${faint?' opacity=".5"':""}><g fill="${b}"><rect x="3" y="3" width="4" height="1"/><rect x="2" y="4" width="6" height="1"/><rect x="1" y="5" width="8" height="3"/><rect x="2" y="8" width="6" height="1"/><rect x="3" y="9" width="4" height="1"/></g><rect x="4" y="2" width="2" height="1" fill="#9aa3c7"/><rect x="2" y="5" width="2" height="1" fill="#fff"/><rect x="2" y="6" width="1" height="1" fill="#fff"/><g fill="#c9a06a"><rect x="5" y="1" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/></g><g fill="#ffd23f"><rect x="7" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/></g></svg>`}
 /* 生日集章簿：依選到的成員算格數，已結束的也算一格；巡演維持原本只算未結束或已打卡的 */
-function bookItems(){const bd=sec==="birthday";return DATA.filter(d=>inSec(d)&&(bd?(mem==="全部"||d.member===mem):(stat(d)!=="已結束"||done.has(d.id))))}
+function bookItems(){const bd=sec==="birthday",r=t=>{const i=TYPES.indexOf(t);return i<0?TYPES.length:i};return DATA.filter(d=>inSec(d)&&(bd?(mem==="全部"||d.member===mem):(stat(d)!=="已結束"||done.has(d.id)))).map((d,i)=>[d,i]).sort((a,b)=>r(a[0].type)-r(b[0].type)||a[1]-b[1]).map(a=>a[0])}
 function xmark(){return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#9aa3c7">${[1,2,3,4,5,6,7,8].map(i=>`<rect x="${i}" y="${i}" width="1" height="1"/><rect x="${9-i}" y="${i}" width="1" height="1"/>`).join("")}</svg>`}
-function book(){const L=bookItems();$("#book").hidden=!L.length;const k=L.filter(d=>done.has(d.id)).length;$("#book").innerHTML=`<span>集章簿 ${k} / ${L.length}</span><span class="slots">${L.map(d=>`<span class="slot ${done.has(d.id)?"on":stat(d)==="已結束"?"miss":""}" title="${esc(d.title)}${!done.has(d.id)&&stat(d)==="已結束"?"（已結束，未打卡）":""}">${done.has(d.id)?stamp(DATA.indexOf(d)):stat(d)==="已結束"?xmark():""}</span>`).join("")}</span><button class="sbtn" id="saveImg" type="button">🖼 存成圖片</button>`}
+function book(){const L=bookItems();$("#book").hidden=!L.length||(sec==="birthday"&&mem==="全部");const k=L.filter(d=>done.has(d.id)).length;$("#book").innerHTML=`<span>集章簿 ${k} / ${L.length}</span><span class="slots">${L.map(d=>`<span class="slot ${done.has(d.id)?"on":stat(d)==="已結束"?"miss":""}" title="${esc(d.title)}${!done.has(d.id)&&stat(d)==="已結束"?"（已結束，未打卡）":""}">${done.has(d.id)?stamp(DATA.indexOf(d)):stat(d)==="已結束"?xmark():""}</span>`).join("")}</span><button class="sbtn" id="allOn" type="button">✔ 一鍵打卡</button><button class="sbtn" id="allOff" type="button">↺ 取消全部打卡</button><button class="sbtn" id="saveImg" type="button">🖼 存成圖片</button>`}
 const $=s=>document.querySelector(s);
 const wr=(k,s)=>{try{localStorage.setItem(k,JSON.stringify([...s]))}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -701,7 +708,7 @@ if(sec==="tour"){p.set("city",city);if(day!=="全部")p.set("day",day)}
 else{p.set("member",mem==="全部"?"all":mem);if(reg!=="全部")p.set("region",reg)}
 if(cur!=="全部")p.set("type",cur);
 history.replaceState(history.state,"","?"+p.toString())}catch(e){}}
-function render(){syncUrl();
+function render(){if(sec==="birthday")regions();syncUrl();
 const dt=d=>d.dates.length?d.dates[0]:"99/99";
 const items=DATA.filter(d=>inSec(d)&&(mem==="全部"||d.member===mem)&&(sec!=="birthday"||reg==="全部"||regOf(d)===reg)&&(day==="全部"||!d.dates.length||d.dates.includes(day))&&(cur==="全部"||d.type.includes(cur))&&(!onlyFav||favs.has(d.id))&&(st==="全部"||stat(d)===st)&&(!tagSel.size||(d.tags||[]).some(x=>tagSel.has(x)))&&(!kw||(d.title+d.by+d.place+d.desc+(d.tags||[]).join("")).toLowerCase().includes(kw)));
 items.sort(so==="soon"?(a,b)=>skey(a)-skey(b)||(b.added||0)-(a.added||0):so==="name"?(a,b)=>a.title.localeCompare(b.title,"zh-Hant"):so==="date"?(a,b)=>dt(a).localeCompare(dt(b)):(a,b)=>(b.added||0)-(a.added||0));
@@ -751,6 +758,8 @@ $("#clr").onclick=()=>{cur="全部";resetPanel();day="全部";days();mem="全部
 /* ===== 地圖總覽 / 路線規劃 ===== */
 let leafletP=null,map=null,layer=null,lastLive=[],rt=[];
 try{rt=JSON.parse(localStorage.getItem("kh-route")||"[]")}catch(e){}
+let rtOff=new Set();try{rtOff=new Set(JSON.parse(localStorage.getItem("kh-route-off")||"[]"))}catch(e){}
+function rtSave(){try{localStorage.setItem("kh-route-off",JSON.stringify([...rtOff]))}catch(e){}}
 function loadLeaflet(){if(window.L)return Promise.resolve();if(leafletP)return leafletP;
 leafletP=new Promise((ok,no)=>{const l=document.createElement("link");l.rel="stylesheet";l.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(l);
 const j=document.createElement("script");j.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";j.onload=ok;j.onerror=()=>{leafletP=null;no()};document.head.appendChild(j)});return leafletP}
@@ -766,12 +775,15 @@ function routeItems(){const L2=DATA.filter(d=>inSec(d)&&favs.has(d.id)&&stat(d)!
 const ord=rt.filter(i=>L2.some(d=>d.id===i));L2.forEach(d=>{if(!ord.includes(d.id))ord.push(d.id)});return ord.map(i=>L2.find(d=>d.id===i))}
 function routeR(){const b=$("#route");if(b.hidden)return;const L2=routeItems();
 if(!L2.length){b.innerHTML="<h3>🧭 路線規劃</h3><small>先在卡片右上角按愛心收藏想去的應援，這裡就會列出來，可以調整順序後一次開啟 Google 地圖路線。</small>";return}
-b.innerHTML=`<h3>🧭 路線規劃（收藏的 ${L2.length} 個地點）</h3><ol>${L2.map((d,i)=>`<li><i>${i+1}</i><b>${esc(d.title)}<br><small>${esc(d.place)}</small></b><button data-rm="${i}" data-dir="-1" aria-label="上移">↑</button><button data-rm="${i}" data-dir="1" aria-label="下移">↓</button></li>`).join("")}</ol>
+let nn=0;const sel=L2.filter(d=>!rtOff.has(d.id)).length;
+b.innerHTML=`<h3>🧭 路線規劃（收藏的 ${L2.length} 個地點）</h3><small class="rsel">勾選要排進路線的地點，沒勾的不會列入。已選 ${sel} / ${L2.length} 個</small><div class="rrow rall"><button type="button" class="btn" data-all="1">全選</button><button type="button" class="btn" data-all="0">全不選</button></div><ol>${L2.map((d,i)=>{const off=rtOff.has(d.id);return `<li${off?' class="off"':''}><input type="checkbox" data-ck="${esc(d.id)}"${off?"":" checked"} aria-label="列入路線"><i>${off?"–":++nn}</i><b>${esc(d.title)}<br><small>${esc(d.place)}</small></b><button data-rm="${i}" data-dir="-1" aria-label="上移">↑</button><button data-rm="${i}" data-dir="1" aria-label="下移">↓</button></li>`}).join("")}</ol>
 <div class="rrow"><select id="rmode" aria-label="交通方式"><option value="walking">步行</option><option value="transit">大眾運輸</option><option value="driving">開車</option></select><button class="btn main" id="rgo">在 Google 地圖開啟路線</button></div><small>依序從第 1 個走到最後一個。相同地點會自動合併；Google 地圖最多支援 10 個停靠點。收藏和順序只存在這個瀏覽器。</small>`}
 $("#routeTgl").onclick=()=>{const b=$("#route");b.hidden=!b.hidden;$("#routeTgl").setAttribute("aria-expanded",!b.hidden);routeR()};
-$("#route").addEventListener("click",e=>{const m=e.target.closest("[data-rm]");
+$("#route").addEventListener("click",e=>{const ck=e.target.closest("[data-ck]");if(ck){if(ck.checked)rtOff.delete(ck.dataset.ck);else rtOff.add(ck.dataset.ck);rtSave();routeR();return}
+const al=e.target.closest("[data-all]");if(al){const ids=routeItems().map(d=>d.id);if(al.dataset.all==="1")ids.forEach(i=>rtOff.delete(i));else ids.forEach(i=>rtOff.add(i));rtSave();routeR();return}
+const m=e.target.closest("[data-rm]");
 if(m){const L2=routeItems().map(d=>d.id),i=+m.dataset.rm,j=i+ +m.dataset.dir;if(j<0||j>=L2.length)return;[L2[i],L2[j]]=[L2[j],L2[i]];rt=L2;try{localStorage.setItem("kh-route",JSON.stringify(rt))}catch(x){}routeR();return}
-if(e.target.id==="rgo"){const q=[];routeItems().forEach(d=>{if(q[q.length-1]!==d.map)q.push(d.map)});
+if(e.target.id==="rgo"){const q=[];routeItems().filter(d=>!rtOff.has(d.id)).forEach(d=>{if(q[q.length-1]!==d.map)q.push(d.map)});
 if(q.length<2){toast("至少要兩個不同地點才能規劃路線");return}const s=q.slice(0,10),u="https://www.google.com/maps/dir/?api=1&travelmode="+$("#rmode").value+"&origin="+encodeURIComponent(s[0])+"&destination="+encodeURIComponent(s[s.length-1])+(s.length>2?"&waypoints="+s.slice(1,-1).map(encodeURIComponent).join("%7C"):"");window.open(u,"_blank","noopener")}});
 function afterRender(live){lastLive=live;if(!$("#mapBox").hidden)drawMap();routeR()}
 /* 從網址還原篩選條件：?section=birthday&member=Jimin&region=香港&type=應援咖啡廳（巡演為 city、day、type） */
@@ -851,7 +863,6 @@ a2hsSync();
 /* 公告列：改下面的 ANN 就能新增公告（新的放最前面，id 不可重複） */
 /* 公告翻譯：每則公告的 tr 放英、韓、日的 [標題, 內容]；新增公告時一起填，沒填的語言就顯示中文原文。 */
 const ANN=[
-{id:"a5",date:"10/17",t:"歌曲頁新增 KTV 逐字填色與字級調整",d:"KTV 模式的歌詞會隨影片從左到右填色，應援行改成更清爽的純色字；每首歌上方可以用 A−／A＋ 調整歌詞大小，現場看不清楚時可以放大。",tr:{en:["Song page: KTV word-by-word fill and text size controls", "In KTV mode, lyrics now fill in from left to right with the video, and chant lines use clean solid-color text. Use A−/A＋ above each song to resize the lyrics — handy when it's hard to read at the venue."],ko:["곡 페이지에 KTV 글자 채우기와 글자 크기 조절 추가", "KTV 모드에서 가사가 영상에 맞춰 왼쪽에서 오른쪽으로 채워지고, 응원 줄은 깔끔한 단색 글자로 바뀌었어요. 각 곡 위의 A−/A＋로 가사 크기를 조절할 수 있어요. 현장에서 잘 안 보일 때 유용해요."],ja:["曲ページにKTVの文字塗りと文字サイズ調整を追加", "KTVモードでは歌詞が動画に合わせて左から右へ塗られ、応援の行はすっきりした単色の文字になりました。各曲の上のA−／A＋で歌詞の大きさを調整できます。会場で見づらいときに便利です。"]}},
 {id:"a4",date:"10/16",t:"新增「演唱會歌曲空耳／應援」，先收錄 Hooligan 官方應援",d:"首頁新增歌曲空耳／應援入口，點歌名按鈕就能切換歌曲；藍色是大聲喊，紅色是跟著唱。",tr:{en:["Added “Concert Songs: Soramimi & Fanchants”, starting with the official Hooligan fanchant", "The home page has a new entrance for song soramimi and fanchants. Tap a song button to switch songs. Blue = shout loudly, red = sing along."],ko:["'콘서트 곡 空耳·응원법' 추가, 먼저 Hooligan 공식 응원법 수록", "홈에 곡별 空耳·응원법 입구가 생겼어요. 곡명 버튼을 눌러 곡을 전환하세요. 파랑은 크게 외치기, 빨강은 따라 부르기예요."],ja:["「コンサート曲 空耳・応援法」を追加。まずHooliganの公式応援を収録", "ホームに曲ごとの空耳・応援法の入口を追加しました。曲名ボタンで曲を切り替えられます。青は大きな声で叫ぶ、赤は一緒に歌う。"]}},
 {id:"a3",date:"10/16",t:"BTS高雄大型應援已更新",d:"高雄的大型應援資訊已更新，出發前可以再看一下各活動的時間與地點。",tr:{en:["BTS Kaohsiung major projects updated", "Info on the major Kaohsiung projects has been updated. Check each project's time and place again before you go."],ko:["BTS 가오슝 대형 응원 업데이트", "가오슝 대형 응원 정보가 업데이트되었어요. 출발 전에 각 응원의 시간과 장소를 다시 확인하세요."],ja:["BTS高雄の大型応援を更新しました", "高雄の大型応援情報を更新しました。出発前に各応援の時間と場所をもう一度ご確認ください。"]}},
 {id:"a2",date:"10/16",t:"應援資訊持續更新中，有異動會標紅色提醒",d:"活動改期或取消時，卡片會出現「⚠ 有異動」或「已取消」。出發前建議再確認一次主辦的貼文。",tr:{en:["Info is updated continuously; changes are flagged in red", "When a project is rescheduled or canceled, its card shows “⚠ Changed” or “Canceled”. Please check the organizer's post once more before you go."],ko:["응원 정보는 계속 업데이트되며 변경 사항은 빨간색으로 표시돼요", "응원이 일정 변경되거나 취소되면 카드에 '⚠ 변경됨' 또는 '취소됨'이 표시돼요. 출발 전 주최측 게시물을 한 번 더 확인하세요."],ja:["応援情報は随時更新中。変更は赤で表示します", "応援の日程変更や中止があると、カードに「⚠ 変更あり」または「中止」と表示されます。出発前に主催者の投稿をもう一度ご確認ください。"]}},
@@ -866,13 +877,13 @@ if(sec!=="home"){box.hidden=true;return}
 let hid="";try{hid=localStorage.getItem("kh-ann")||""}catch(e){}
 const top=ANN[0];if(!top||hid===top.id){box.hidden=true;box.innerHTML="";return}
 box.hidden=false;
-box.innerHTML=`<div class="ann-row"><i class="ann-dot"></i><span class="ann-t"><span class="ann-m">${esc(top.t)}</span></span><button type="button" class="ann-l" data-a="d">詳情 ›</button><button type="button" class="ann-l" data-a="all">全部公告 ›</button><button type="button" class="ann-x" data-a="x" aria-label="關閉公告">×</button></div><div class="ann-more" hidden></div>`;
+box.innerHTML=`<div class="ann-row"><i class="ann-dot"></i><span class="ann-new">NEW</span><span class="ann-t"><span class="ann-m">${esc(top.t)}</span></span><button type="button" class="ann-l" data-a="d">詳情 ›</button><button type="button" class="ann-l" data-a="all">全部公告 ›</button><button type="button" class="ann-x" data-a="x" aria-label="關閉公告">×</button></div><div class="ann-more" hidden></div>`;
 annFit();
 box.onclick=e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,m=box.querySelector(".ann-more");
 if(a==="x"){try{localStorage.setItem("kh-ann",top.id)}catch(x){}annR();return}
 const mode=m.dataset.m;
 if(a==="d"){if(mode==="d"){m.hidden=true;m.dataset.m="";return}m.dataset.m="d";m.hidden=false;m.innerHTML=`<p>${esc(top.d||"")}</p>`}
-if(a==="all"){if(mode==="all"){m.hidden=true;m.dataset.m="";return}m.dataset.m="all";m.hidden=false;m.innerHTML=ANN.map(x=>`<div class="ann-i"><b>${esc(x.date||"")}</b> ${esc(x.t)}<p>${esc(x.d||"")}</p></div>`).join("")}}}
+if(a==="all"){if(mode==="all"){m.hidden=true;m.dataset.m="";return}m.dataset.m="all";m.hidden=false;const hi=ANN.findIndex(y=>y.id===hid),nw=hi>0?hi:1;m.innerHTML=ANN.map((x,xi)=>`<div class="ann-i">${xi<nw?'<span class="ann-new">NEW</span>':""}<b>${esc(x.date||"")}</b> ${esc(x.t)}<p>${esc(x.d||"")}</p></div>`).join("")}}}
 annR();
 
 /* 歌曲空耳／應援：改下面的 SONGS 就能新增歌曲（t 歌名、a 專輯或場次、h 空耳、c 應援法，換行用 \n，u 影片或參考連結） */
@@ -882,7 +893,7 @@ const SONGS=[
 function sfmt(t){const inl=x=>esc(x).replace(/\{(藍|紅|橘)\|([^{}]*)\}/g,(m,c,v)=>`<span class="${c==="藍"?"ib":c==="紅"?"ir":"io"}">${v}</span>`);return String(t).split("\n").map(l=>{l=l.replace(TL,"");const m=l.match(/^\[(藍|紅|橘)\]\s?(.*)$/);if(m)return `<div class="cl ${m[1]==="藍"?"b":m[1]==="紅"?"r":"o"}">${inl(m[2])||"&nbsp;"}</div>`;return `<div>${inl(l)||"&nbsp;"}</div>`}).join("")}
 let SEL="";try{SEL=localStorage.getItem("song-sel")||""}catch(e){}
 let ALB="";
-const FS=[.85,1,1.15,1.3,1.5];let FSI=1;try{const v=+localStorage.getItem("song-fs");if(v>=0&&v<FS.length&&localStorage.getItem("song-fs")!==null)FSI=v}catch(e){}
+const FS=[.85,1];let FSI=1;try{const v=+localStorage.getItem("song-fs");if(v>=0&&v<FS.length&&localStorage.getItem("song-fs")!==null)FSI=v}catch(e){}
 function fsApply(){document.documentElement.style.setProperty("--sfs",FS[FSI]);const o=document.getElementById("fso");if(o)o.textContent=Math.round(FS[FSI]*100)+"%";[["fs-","-1"],["fs+","1"]].forEach(([id,d])=>{const b=document.querySelector('[data-fs="'+d+'"]');if(b)b.disabled=FS[FSI+ +d]===undefined})}
 fsApply();
 let SMODE="n";try{SMODE=localStorage.getItem("song-mode")==="k"?"k":"n"}catch(e){}
@@ -917,8 +928,7 @@ if(yt&&matchMedia("(min-width:1000px)").matches){const dy=yt.getBoundingClientRe
 const h=k.clientHeight;k.style.paddingBottom=(h/2)+"px";k.style.paddingTop=(KS?h/2:6)+"px"}
 window.addEventListener("resize",()=>{try{ktvFit()}catch(e){}});
 function ktvTick(){const k=document.getElementById("ktv");if(!k||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime(),ls=k.children;let a=-1;for(let i=0;i<ls.length;i++){if(+ls[i].dataset.s<=t+.2)a=i;else break}
-if(a>=0){const e=ls[a],s0=+e.dataset.s,dur=Math.max(.5,Math.min((+e.dataset.e||s0+6)-s0,6)),p=Math.max(0,Math.min(1,(t-s0)/dur));e.style.setProperty("--p",(p*100).toFixed(1)+"%")}
-if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{if(i<a)e.style.setProperty("--p","100%");else if(i>a)e.style.setProperty("--p","0%");const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){let add=0;if(!KS){KS=true;const o=parseFloat(k.style.paddingTop)||6;ktvFit();add=(parseFloat(k.style.paddingTop)||o)-o}const e=ls[a];k.scrollTo({top:Math.max(0,e.offsetTop+add-k.clientHeight*.38+e.clientHeight/2),behavior:"smooth"})}}
+if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){let add=0;if(!KS){KS=true;const o=parseFloat(k.style.paddingTop)||6;ktvFit();add=(parseFloat(k.style.paddingTop)||o)-o}const e=ls[a];k.scrollTo({top:Math.max(0,e.offsetTop+add-k.clientHeight*.38+e.clientHeight/2),behavior:"smooth"})}}
 document.getElementById("slist").addEventListener("click",e=>{const fb=e.target.closest("[data-fs]");if(fb){const n=FSI+ +fb.dataset.fs;if(n>=0&&n<FS.length){FSI=n;try{localStorage.setItem("song-fs",n)}catch(x){}fsApply();try{ktvFit();KA=-1}catch(x){}}return}const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
 const l=e.target.closest(".kb");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
 function albOf(x){return(x.a||"").trim()||"其他"}
@@ -1055,6 +1065,12 @@ x.textAlign="right";x.fillText("BTS 應援地圖",W-P,1870);x.textAlign="left";
 c.toBlob(b=>{if(!b){toast("儲存失敗，請再試一次");return}
 const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="stamp-book.png";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast("已儲存圖片")},"image/png")}
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("#saveImg"))saveCard()});
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#allOn,#allOff");if(!t)return;const L=bookItems();
+if(t.id==="allOn"){const n=new Date(),ds=(n.getMonth()+1)+"/"+n.getDate();let c=0;L.forEach(d=>{if(done.has(d.id)||stat(d)==="已結束"||(d.chg&&/^取消/.test(d.chg)))return;done.add(d.id);dd[d.id]=ds;c++});if(!c){toast("沒有可打卡的項目");return}
+wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已一鍵打卡 "+c+" 個")}
+else{const c=L.filter(d=>done.has(d.id));if(!c.length){toast("目前沒有已打卡的項目");return}if(!confirm("確定要取消全部打卡（"+c.length+" 個）？\nClear all "+c.length+" check-ins?"))return;c.forEach(d=>{done.delete(d.id);delete dd[d.id]});
+wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已取消全部打卡")}});
+try{[["✔ 一鍵打卡","✔ Check in all","✔ 한 번에 체크인","✔ ワンタップで全部チェックイン"],["↺ 取消全部打卡","↺ Clear all check-ins","↺ 체크인 전체 취소","↺ チェックインを全部取り消す"],["沒有可打卡的項目","Nothing to check in","체크인할 항목이 없어요","チェックインできる項目がありません"],["目前沒有已打卡的項目","No check-ins to clear","취소할 체크인이 없어요","取り消せるチェックインはありません"],["已取消全部打卡","All check-ins cleared","체크인을 모두 취소했어요","チェックインを全部取り消しました"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
 
 function eq(){const L=document.querySelectorAll("#list .card");L.forEach(c=>{c.querySelector(".hd").style.minHeight="";c.querySelector(".box").style.minHeight="";c.querySelector(".act").style.minHeight=""});if(innerWidth<720)return;
 for(const k of [".hd",".box",".act"]){const g={};L.forEach(c=>{(g[c.offsetTop]=g[c.offsetTop]||[]).push(c)});Object.values(g).forEach(a=>{const m=Math.max(...a.map(c=>c.querySelector(k).offsetHeight));a.forEach(c=>c.querySelector(k).style.minHeight=m+"px")})}}
