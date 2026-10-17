@@ -345,14 +345,19 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .ann-l{border:0;background:none;color:var(--dark);font:inherit;font-weight:800;padding:4px 2px;cursor:pointer}
 .ann-x{border:0;background:none;color:var(--sub);font:inherit;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer}
 .smode{display:flex;gap:8px;margin:8px 0 18px}
+.vtog{display:flex;gap:8px;margin:4px 0 14px}.vtog[hidden]{display:none}
+.fsz{display:flex;align-items:center;gap:6px;margin:10px 0 0;font-size:13px;font-weight:800;color:var(--sub)}
+.fsz .chip{padding:4px 12px;font-size:14px;font-weight:900;min-width:44px}
+.fsz .chip:disabled{opacity:.35;cursor:default}
+.fsz output{min-width:42px;text-align:center;color:var(--ink)}
 .yt{position:relative;aspect-ratio:16/9;background:#000;margin:8px 0}.yt iframe{position:absolute;inset:0;width:100%;height:100%}
 .khint{font-size:12px;color:var(--sub);margin:4px 0}
 .ktv{position:relative;max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 4px 0;text-align:center;transition:padding-top .45s ease}
 @media(prefers-reduced-motion:reduce){.ktv{transition:none}}
 .kb{padding:10px 8px;opacity:.2;transform:scale(.88);transition:opacity .3s,transform .3s;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer}
 .kb.n2{opacity:.32}.kb.n1{opacity:.5;transform:scale(.94)}.kb.on{opacity:1;transform:scale(1)}
-.kl{font-size:19px;line-height:1.55;font-weight:800}
-.kl.h{color:var(--sub);font-size:15px;font-weight:600;margin-top:2px}
+.kl{font-size:calc(19px*var(--sfs,1));line-height:1.55;font-weight:800}
+.kl.h{color:var(--sub);font-size:calc(15px*var(--sfs,1));font-weight:600;margin-top:2px}
 .kl .cl{--t:#fff;display:table;margin:8px auto 10px;padding:4px 16px 4px 12px;border:3px solid var(--c);border-radius:0;background:var(--card);color:var(--c);font-weight:900;box-shadow:4px 4px 0 var(--c);transition:background .3s,color .3s}
 .kl .cl::before{content:"";display:inline-block;width:8px;height:8px;margin-right:9px;vertical-align:middle;background:var(--c);transition:background .3s}
 .kb.on .kl .cl{background:var(--c);color:var(--t)}
@@ -361,6 +366,18 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kl .cl{--t:#06183a}:root:not([data-theme="light"]) .kl .cl.b{--c:#8fb4ff}:root:not([data-theme="light"]) .kl .cl.r{--c:#ff9ec0}:root:not([data-theme="light"]) .kl .cl.o{--c:#ffc069}}
 :root[data-theme="dark"] .kl .cl{--t:#06183a}:root[data-theme="dark"] .kl .cl.b{--c:#8fb4ff}:root[data-theme="dark"] .kl .cl.r{--c:#ff9ec0}:root[data-theme="dark"] .kl .cl.o{--c:#ffc069}
 @media(prefers-reduced-motion:reduce){.kl .cl,.kl .cl::before{transition:none}}
+/* KTV 逐字填色：--p 是目前這一行唱到的進度，ktvTick 每 250ms 更新，transition 讓它順順掃過 */
+@property --p{syntax:"<percentage>";inherits:true;initial-value:0%}
+.kb{--p:0%;--kf:var(--dark);--kb0:color-mix(in srgb,var(--sub) 50%,transparent);transition:opacity .3s,transform .3s,--p .3s linear}
+.kl>div:not(.cl){background:linear-gradient(90deg,var(--kf) var(--p),var(--kb0) var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.kl>div:not(.cl) :is(.ib,.ir,.io){-webkit-text-fill-color:transparent;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px}
+.kb.on .kl.h>div{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--kf) 35%,transparent))}
+@media(prefers-reduced-motion:reduce){.kb{transition:none}}
+/* KTV 應援行：不用方框，純色字＋逐字填色（藍＝大聲喊、紅＝跟著唱、橘＝提醒） */
+.ktv .kb .kl .cl,.ktv .kb.on .kl .cl{display:block;width:fit-content;max-width:100%;margin:2px auto 4px;padding:0;border:0;box-shadow:none;border-radius:0;font-weight:900;font-size:1.08em;letter-spacing:.01em;background:linear-gradient(90deg,var(--c) var(--p),color-mix(in srgb,var(--c) 35%,transparent) var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;transition:none}
+.ktv .kb .kl .cl::before,.ktv .kb.on .kl .cl::before{content:none}
+.ktv .kb .kl .cl :is(.ib,.ir,.io){-webkit-text-fill-color:transparent;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:4px;text-decoration-color:currentColor}
+.ktv .kb.on .kl .cl{filter:drop-shadow(0 0 7px color-mix(in srgb,var(--c) 40%,transparent))}
 .kl .ib{color:#1a5fd0}.kl .ir{color:#e0245e}.kl .io{color:#c77a12}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kl .ib{color:#8fb4ff}:root:not([data-theme="light"]) .kl .ir{color:#ff9ec0}:root:not([data-theme="light"]) .kl .io{color:#ffc069}}
 :root[data-theme="dark"] .kl .ib{color:#8fb4ff}:root[data-theme="dark"] .kl .ir{color:#ff9ec0}:root[data-theme="dark"] .kl .io{color:#ffc069}
@@ -381,33 +398,59 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .song h2{margin-bottom:4px}
 .sg{margin-top:10px;border:2px solid var(--line);background:var(--box)}
 .sg summary{cursor:pointer;font-weight:800;padding:8px 12px}
-.sgt{line-height:1.8;padding:4px 12px 12px;font-size:15px}
+.sgt{line-height:1.8;padding:4px 12px 12px;font-size:calc(15px*var(--sfs,1))}
 #songs .search{max-width:none;width:100%;box-sizing:border-box;margin:8px 0}
 #slist{grid-template-columns:1fr}
-.wall{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 0;padding:8px 0 24px}
-@media(min-width:560px){.wall{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:720px){.wall{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:1200px){.wall{grid-template-columns:repeat(5,1fr)}}
-.wall .alb{position:relative;display:flex;flex-direction:column;border:0;background:none;padding:0 14px;font:inherit;color:inherit;text-align:center;cursor:pointer}
-.wall .alb .cv{order:1;display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:0 7px 9px -5px rgba(6,26,64,.55);background:var(--card);overflow:hidden;transition:transform .15s;margin-bottom:-1px}
-.wall .alb:hover .cv,.wall .alb:focus-visible .cv{transform:translateY(-6px) rotate(-1.5deg)}
-.wall .alb:active .cv{transform:translateY(-2px)}
-.wall .alb img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--card)}
-.wall .alb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;font-weight:900;font-size:clamp(16px,4.5vw,24px);line-height:1.2;color:#fff;text-shadow:2px 2px 0 rgba(6,26,64,.45);background:linear-gradient(145deg,hsl(var(--h) 75% 55%),hsl(calc(var(--h) + 50) 70% 35%))}
-.wall .alb::after{content:"";order:2;display:block;height:9px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(150,200,245,.5) 60%,rgba(110,170,235,.6));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(90,150,225,.75);border-radius:0 0 5px 5px;box-shadow:0 8px 12px -6px rgba(20,80,160,.45)}
-:root[data-theme="dark"] .wall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}}
-.wall .alb b{order:3;display:block;margin-top:12px;font-size:15px;font-weight:900;line-height:1.3}
-.wall .alb span.n{order:4;display:block;font-size:12px;color:var(--sub);margin-top:2px}
-@media(prefers-reduced-motion:reduce){.wall .alb .cv{transition:none}.wall .alb:hover .cv{transform:none}}
+#offb{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:70;text-align:center;font-size:13px;font-weight:800;padding:6px 10px;background:var(--dark);color:var(--darkInk)}
+.albwall{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 0;padding:8px 0 24px}
+@media(min-width:560px){.albwall{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:720px){.albwall{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1200px){.albwall{grid-template-columns:repeat(5,1fr)}}
+.albwall .alb{position:relative;display:flex;flex-direction:column;border:0;background:none;padding:0 14px;font:inherit;color:inherit;text-align:center;cursor:pointer}
+.albwall .alb .cv{order:1;display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:0 7px 9px -5px rgba(6,26,64,.55);background:var(--card);overflow:hidden;transition:transform .15s;margin-bottom:-1px}
+.albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{transform:translateY(-6px) rotate(-1.5deg)}
+.albwall .alb:active .cv{transform:translateY(-2px)}
+.albwall .alb img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--card)}
+.albwall .alb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;font-weight:900;font-size:clamp(16px,4.5vw,24px);line-height:1.2;color:#fff;text-shadow:2px 2px 0 rgba(6,26,64,.45);background:linear-gradient(145deg,hsl(var(--h) 75% 55%),hsl(calc(var(--h) + 50) 70% 35%))}
+.albwall .alb::after{content:"";order:2;display:block;height:9px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(150,200,245,.5) 60%,rgba(110,170,235,.6));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(90,150,225,.75);border-radius:0 0 5px 5px;box-shadow:0 8px 12px -6px rgba(20,80,160,.45)}
+:root[data-theme="dark"] .albwall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .albwall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}}
+.albwall .alb b{order:3;display:block;margin-top:12px;font-size:15px;font-weight:900;line-height:1.3}
+.albwall .alb span.n{order:4;display:block;font-size:12px;color:var(--sub);margin-top:2px}
+@media(prefers-reduced-motion:reduce){.albwall .alb .cv{transition:none}.albwall .alb:hover .cv{transform:none}}
 #sview .back{margin-top:0}
+@keyframes bob{50%{translate:0 -5px}}
+@keyframes sIn{from{opacity:0;transform:translateY(10px)}}
+.albwall .alb .cv{animation:bob 5s ease-in-out infinite}
+.albwall .alb:nth-child(3n+1) .cv{animation-duration:4.6s;animation-delay:-.8s}
+.albwall .alb:nth-child(3n+2) .cv{animation-duration:5.4s;animation-delay:-2.3s}
+.albwall .alb:nth-child(3n) .cv{animation-duration:6.2s;animation-delay:-3.6s}
+.albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{animation-play-state:paused}
+.albwall:not([hidden]),#sview:not([hidden]){animation:sIn .3s ease}
+.albwall.leaving .alb{pointer-events:none}
+.albwall.leaving .alb:not(.pick){opacity:0;transition:opacity .2s}
+.albwall.leaving .alb.pick{z-index:2}
+.albwall.leaving .alb.pick .cv{animation:none;transform:scale(1.35);opacity:0;transition:transform .26s ease,opacity .26s ease .05s}
+.albwall.leaving .alb.pick::after,.albwall.leaving .alb.pick b,.albwall.leaving .alb.pick span.n{opacity:0;transition:opacity .15s}
+@media(prefers-reduced-motion:reduce){.albwall .alb .cv{animation:none}.albwall:not([hidden]),#sview:not([hidden]){animation:none}}
 .swrap{display:block}
 @media(min-width:720px){.swrap{display:grid;grid-template-columns:180px minmax(0,1fr);gap:20px;align-items:start}
 #stabs{flex-direction:column;flex-wrap:nowrap;overflow-x:visible;overflow-y:auto;position:sticky;top:12px;max-height:calc(100vh - 24px);padding:2px 6px 8px 2px}
 #stabs .chip{width:100%;text-align:left;white-space:normal}}
-@media(min-width:1000px){#slist .song{display:grid;grid-template-columns:minmax(320px,40%) 1fr;gap:24px;align-items:start}#slist .sl{position:sticky;top:12px}#slist .sgt{font-size:17px}#slist .ktv{max-height:70vh}}
+@media(min-width:1000px){#slist .song{display:grid;grid-template-columns:minmax(320px,40%) 1fr;gap:24px;align-items:start}#slist .sl{position:sticky;top:12px}#slist .sgt{font-size:calc(17px*var(--sfs,1))}#slist .ktv{max-height:70vh}}
 #stabs{flex-wrap:wrap;overflow-x:visible}
 .sgt .cl{font-weight:900}
+/* KTV 版面：目前這行放在偏上（約 38%），前後行調亮、行距縮小，一個畫面看到更多句；手機上影片固定在最上方並縮小，歌詞區吃滿剩下的高度 */
+.kb{padding:6px 8px;opacity:.32;transform:scale(.92)}
+.kb.n2{opacity:.5}.kb.n1{opacity:.72;transform:scale(.96)}.kb.on{opacity:1;transform:scale(1)}
+@media(max-width:999px){
+.song.ktvm .sl{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--card);margin:-20px -20px 0;padding:12px 20px 8px;border-bottom:2px solid var(--line)}
+.song.ktvm .sl h2{display:inline;font-size:17px;margin:0}
+.song.ktvm .sl .by{display:inline;margin:0 0 0 8px}
+.song.ktvm .smode{margin:6px 0}
+.song.ktvm .yt{width:min(100%,58vw);margin:4px auto 0}
+.song.ktvm .ktv{max-height:calc(100vh - 300px);max-height:calc(100dvh - 300px);min-height:220px}
+}
 .sgt .cl.b{color:#1a5fd0}
 .sgt .cl.r{color:#e0245e}
 .sgt .cl.o{color:#c77a12}
@@ -476,7 +519,8 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <button class="back" data-go="home">← 回首頁</button>
 <input class="search" id="sq" type="search" placeholder="搜尋歌名、空耳或應援" aria-label="搜尋歌曲" autocomplete="off">
 <div class="stat"><span id="sn"></span><button type="button" class="tourBtn2" style="margin-left:auto">？導覽</button></div>
-<div class="wall" id="swall" role="group" aria-label="選擇專輯"></div>
+<div class="vtog" id="svt" hidden><button type="button" class="chip" data-v="a">依專輯</button><button type="button" class="chip" data-v="s">依演唱會</button></div>
+<div class="albwall" id="swall" role="group" aria-label="選擇專輯"></div>
 <div id="sview" hidden><button class="back" id="sback" type="button">← 全部專輯</button>
 <div class="swrap"><div class="chips cities" id="stabs" role="group" aria-label="選擇歌曲"></div>
 <div class="grid" id="slist"></div></div></div>
@@ -511,6 +555,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <footer>本站為非官方整理，資訊以各主辦單位公告為準。 <button type="button" class="tourBtn2">？導覽</button></footer>
 <button id="top" type="button" aria-label="回到頂端" title="回到頂端">↑</button>
 <div id="toast" role="status"></div>
+<div id="offb" hidden>離線中，顯示的是上次存下來的內容</div>
 <script src="i18n.js"></script>
 <script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script>
 <script src="data.js"></script>
@@ -597,7 +642,7 @@ function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開�
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
 w.innerHTML=`<h2>🏆 回顧紀念牆<small>${a.length} 個已結束的應援</small></h2><div class="wgrid">${a.map(d=>`<div class="tile"><div class="tp">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp">${stamp(DATA.indexOf(d))}</span>`:""}</div><b>${esc(d.title)}</b><span>${esc(d.time)}</span>${d.links&&d.links[0]?`<a href="${esc(d.links[0].u)}" target="_blank" rel="noopener">回顧貼文 ↗</a>`:""}</div>`).join("")}</div>`}
 function inSec(d){return (d.sec||"tour")===sec&&(sec==="birthday"||d.city===city)}
-function gos(z){if(z==="songs"){ALB="";try{document.getElementById("sq").value=""}catch(e){}}sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{const u=z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:"");z==="home"?history.replaceState(null,"",u):history.pushState({in:1},"",u)}catch(x){}head();if(z!=="songs"){chips();render()}window.scrollTo(0,0);if(z!=="songs"&&typeof songStop==="function")songStop();if(typeof a2hsSync==="function")a2hsSync();tourAuto(z)}
+function gos(z){if(z==="songs"){ALB="";try{VIEW="a";sessionStorage.setItem("song-view","a")}catch(e){}try{document.getElementById("sq").value=""}catch(e){}}sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{const u=z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:"");z==="home"?history.replaceState(null,"",u):history.pushState({in:1},"",u)}catch(x){}head();if(z!=="songs"){chips();render()}window.scrollTo(0,0);if(z!=="songs"&&typeof songStop==="function")songStop();if(typeof a2hsSync==="function")a2hsSync();tourAuto(z)}
 function bdDays(m){const t=today0();let d=new Date(t.getFullYear(),m[1]-1,m[2]);if(d<t)d=new Date(t.getFullYear()+1,m[1]-1,m[2]);return Math.round((d-t)/864e5)}
 function members(){$("#members").innerHTML=MEMBERS.map(m=>{const x=m[0],k=bdDays(m),t=k===0?"🎂 今天":k+" 天";return `<button class="chip" aria-pressed="${x===mem}" data-mem="${x}" aria-label="${x}，${x==="BTS"?"出道周年":"生日"}${k===0?"就是今天":"還有 "+k+" 天"}">${x}<span class="cdn">${t}</span></button>`}).join("");
 const n=[...MEMBERS].sort((a,b)=>bdDays(a)-bdDays(b))[0];const k=bdDays(n);const ay=new Date(today0().getTime()+k*864e5).getFullYear()-2013;$("#nextBd").textContent=n[0]==="BTS"?(k===0?`🎉 今天是 BTS 出道 ${ay} 週年！`:`🎉 下一個：BTS 出道 ${ay} 週年 ${n[1]}/${n[2]}，還有 ${k} 天`):(k===0?`🎂 今天是 ${n[0]} 的生日！`:`🎂 下一個生日：${n[0]} ${n[1]}/${n[2]}，還有 ${k} 天`)}
@@ -757,7 +802,7 @@ const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享�
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
 home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
-songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#swall","選專輯","點專輯封面進去，就會看到這張專輯的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
+songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#svt","依專輯／依演唱會","切換分類：依專輯看每張專輯的歌，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。"],["#swall","選專輯／演唱會","點封面進去，就會看到那張專輯或那場演唱會的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],["#slist .fsz","字級","按 A− 或 A＋ 調整歌詞大小，現場看不清楚時可以放大。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
 tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]],
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
 let TR=null;
@@ -804,11 +849,14 @@ if(sec==="home")tourAuto("home");
 a2hsSync();
 
 /* 公告列：改下面的 ANN 就能新增公告（新的放最前面，id 不可重複） */
+/* 公告翻譯：每則公告的 tr 放英、韓、日的 [標題, 內容]；新增公告時一起填，沒填的語言就顯示中文原文。 */
 const ANN=[
-{id:"a4",date:"10/16",t:"新增「演唱會歌曲空耳／應援」，先收錄 Hooligan 官方應援",d:"首頁新增歌曲空耳／應援入口，點歌名按鈕就能切換歌曲；藍色是大聲喊，紅色是跟著唱。"},
-{id:"a3",date:"10/16",t:"BTS高雄大型應援已更新",d:"高雄的大型應援資訊已更新，出發前可以再看一下各活動的時間與地點。"},
-{id:"a2",date:"10/16",t:"應援資訊持續更新中，有異動會標紅色提醒",d:"活動改期或取消時，卡片會出現「⚠ 有異動」或「已取消」。出發前建議再確認一次主辦的貼文。"},
-{id:"a1",date:"10/16",t:"新增集章簿、收藏與新手導覽",d:"打卡會記下日期，集章簿可以存成圖片分享。第一次進入各頁會有導覽，之後可按「？導覽」重看。"}];
+{id:"a5",date:"10/17",t:"歌曲頁新增 KTV 逐字填色與字級調整",d:"KTV 模式的歌詞會隨影片從左到右填色，應援行改成更清爽的純色字；每首歌上方可以用 A−／A＋ 調整歌詞大小，現場看不清楚時可以放大。",tr:{en:["Song page: KTV word-by-word fill and text size controls", "In KTV mode, lyrics now fill in from left to right with the video, and chant lines use clean solid-color text. Use A−/A＋ above each song to resize the lyrics — handy when it's hard to read at the venue."],ko:["곡 페이지에 KTV 글자 채우기와 글자 크기 조절 추가", "KTV 모드에서 가사가 영상에 맞춰 왼쪽에서 오른쪽으로 채워지고, 응원 줄은 깔끔한 단색 글자로 바뀌었어요. 각 곡 위의 A−/A＋로 가사 크기를 조절할 수 있어요. 현장에서 잘 안 보일 때 유용해요."],ja:["曲ページにKTVの文字塗りと文字サイズ調整を追加", "KTVモードでは歌詞が動画に合わせて左から右へ塗られ、応援の行はすっきりした単色の文字になりました。各曲の上のA−／A＋で歌詞の大きさを調整できます。会場で見づらいときに便利です。"]}},
+{id:"a4",date:"10/16",t:"新增「演唱會歌曲空耳／應援」，先收錄 Hooligan 官方應援",d:"首頁新增歌曲空耳／應援入口，點歌名按鈕就能切換歌曲；藍色是大聲喊，紅色是跟著唱。",tr:{en:["Added “Concert Songs: Soramimi & Fanchants”, starting with the official Hooligan fanchant", "The home page has a new entrance for song soramimi and fanchants. Tap a song button to switch songs. Blue = shout loudly, red = sing along."],ko:["'콘서트 곡 空耳·응원법' 추가, 먼저 Hooligan 공식 응원법 수록", "홈에 곡별 空耳·응원법 입구가 생겼어요. 곡명 버튼을 눌러 곡을 전환하세요. 파랑은 크게 외치기, 빨강은 따라 부르기예요."],ja:["「コンサート曲 空耳・応援法」を追加。まずHooliganの公式応援を収録", "ホームに曲ごとの空耳・応援法の入口を追加しました。曲名ボタンで曲を切り替えられます。青は大きな声で叫ぶ、赤は一緒に歌う。"]}},
+{id:"a3",date:"10/16",t:"BTS高雄大型應援已更新",d:"高雄的大型應援資訊已更新，出發前可以再看一下各活動的時間與地點。",tr:{en:["BTS Kaohsiung major projects updated", "Info on the major Kaohsiung projects has been updated. Check each project's time and place again before you go."],ko:["BTS 가오슝 대형 응원 업데이트", "가오슝 대형 응원 정보가 업데이트되었어요. 출발 전에 각 응원의 시간과 장소를 다시 확인하세요."],ja:["BTS高雄の大型応援を更新しました", "高雄の大型応援情報を更新しました。出発前に各応援の時間と場所をもう一度ご確認ください。"]}},
+{id:"a2",date:"10/16",t:"應援資訊持續更新中，有異動會標紅色提醒",d:"活動改期或取消時，卡片會出現「⚠ 有異動」或「已取消」。出發前建議再確認一次主辦的貼文。",tr:{en:["Info is updated continuously; changes are flagged in red", "When a project is rescheduled or canceled, its card shows “⚠ Changed” or “Canceled”. Please check the organizer's post once more before you go."],ko:["응원 정보는 계속 업데이트되며 변경 사항은 빨간색으로 표시돼요", "응원이 일정 변경되거나 취소되면 카드에 '⚠ 변경됨' 또는 '취소됨'이 표시돼요. 출발 전 주최측 게시물을 한 번 더 확인하세요."],ja:["応援情報は随時更新中。変更は赤で表示します", "応援の日程変更や中止があると、カードに「⚠ 変更あり」または「中止」と表示されます。出発前に主催者の投稿をもう一度ご確認ください。"]}},
+{id:"a1",date:"10/16",t:"新增集章簿、收藏與新手導覽",d:"打卡會記下日期，集章簿可以存成圖片分享。第一次進入各頁會有導覽，之後可按「？導覽」重看。",tr:{en:["Added stamp book, favorites and a beginner's guide", "Check-ins record the date, and your stamp book can be saved as an image to share. The first time you open each page there's a guide; tap “? Guide” to replay it."],ko:["스탬프북, 즐겨찾기, 초보자 가이드 추가", "체크인하면 날짜가 기록되고, 스탬프북은 이미지로 저장해 공유할 수 있어요. 각 페이지에 처음 들어가면 가이드가 나오고, 이후에는 '? 가이드'를 눌러 다시 볼 수 있어요."],ja:["スタンプ帳・お気に入り・初心者ガイドを追加", "チェックインすると日付が記録され、スタンプ帳は画像で保存してシェアできます。各ページの初回表示ではガイドが出ます。あとから「? ガイド」で見直せます。"]}}];
+try{ANN.forEach(a=>{if(a.tr&&window.I18N){["t","d"].forEach((f,k)=>I18N.add(a[f],a.tr.en[k],a.tr.ko[k],a.tr.ja[k]))}});window.I18N&&I18N.refresh()}catch(e){}
 function annFit(){const t=document.querySelector("#ann .ann-t"),m=t&&t.firstElementChild;if(!m)return;m.classList.remove("run");m.style.animationDuration="";
 if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
 if(m.scrollWidth>t.clientWidth+1){m.classList.add("run");m.style.animationDuration=Math.max(8,(m.scrollWidth+t.clientWidth*2)/55)+"s"}}
@@ -834,16 +882,19 @@ const SONGS=[
 function sfmt(t){const inl=x=>esc(x).replace(/\{(藍|紅|橘)\|([^{}]*)\}/g,(m,c,v)=>`<span class="${c==="藍"?"ib":c==="紅"?"ir":"io"}">${v}</span>`);return String(t).split("\n").map(l=>{l=l.replace(TL,"");const m=l.match(/^\[(藍|紅|橘)\]\s?(.*)$/);if(m)return `<div class="cl ${m[1]==="藍"?"b":m[1]==="紅"?"r":"o"}">${inl(m[2])||"&nbsp;"}</div>`;return `<div>${inl(l)||"&nbsp;"}</div>`}).join("")}
 let SEL="";try{SEL=localStorage.getItem("song-sel")||""}catch(e){}
 let ALB="";
+const FS=[.85,1,1.15,1.3,1.5];let FSI=1;try{const v=+localStorage.getItem("song-fs");if(v>=0&&v<FS.length&&localStorage.getItem("song-fs")!==null)FSI=v}catch(e){}
+function fsApply(){document.documentElement.style.setProperty("--sfs",FS[FSI]);const o=document.getElementById("fso");if(o)o.textContent=Math.round(FS[FSI]*100)+"%";[["fs-","-1"],["fs+","1"]].forEach(([id,d])=>{const b=document.querySelector('[data-fs="'+d+'"]');if(b)b.disabled=FS[FSI+ +d]===undefined})}
+fsApply();
 let SMODE="n";try{SMODE=localStorage.getItem("song-mode")==="k"?"k":"n"}catch(e){}
 const YTID=u=>{const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);return m?m[1]:""};
 function songVid(x){const vu=YTID(x.u),vk=YTID(x.k);return SMODE==="k"?(vk||vu):(vu||vk)}
 function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2],k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
 function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
 function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(ok(v))b.push(`<a class="btn" target="_blank" rel="noopener" href="${esc(v)}">影片／參考 ↗</a>`);if(ok(x.o))b.push(`<a class="btn of" target="_blank" rel="noopener" href="${esc(x.o)}">官方應援歌詞 ↗</a>`);return b.length?`<div class="act">${b.join("")}</div>`:""}
-function songCard(x){const vid=songVid(x),T=vid?songTimed(x):[],k=vid&&SMODE==="k";
-const media=vid?`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>`:"";
-const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map(g=>`<div class="kb" data-s="${g.s}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
-return `<article class="card song"><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr">${body}${songLinks(x)}</div></article>`}
+function songCard(x){const off=navigator.onLine===false,vid=songVid(x),T=vid?songTimed(x):[],k=vid&&!off&&SMODE==="k";
+const media=vid?(off?`<div class="khint">離線中：影片和 KTV 模式要有網路才能用，下面的空耳與應援法還是可以看。</div>`:`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>`):"";
+const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map((g,j,A)=>`<div class="kb" data-s="${g.s}" data-e="${A[j+1]?A[j+1].s:g.s+6}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
+return `<article class="card song${k?" ktvm":""}"><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr"><div class="fsz"><span>字級</span><button type="button" class="chip" data-fs="-1" aria-label="縮小字級" title="縮小字級">A−</button><output id="fso" aria-live="polite"></output><button type="button" class="chip" data-fs="1" aria-label="放大字級" title="放大字級">A＋</button></div>${body}${songLinks(x)}</div></article>`}
 let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null,KS=false;
 function ytLoad(cb){if(window.YT&&YT.Player)return cb();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();cb()};if(!document.getElementById("yt-api")){const e=document.createElement("script");e.id="yt-api";e.src="https://www.youtube.com/iframe_api";document.head.appendChild(e)}}
 /* 背景音樂：預設是下面這個 YouTube 網址；要換歌改這裡，或在 data.js 設定 BGM_URL（YouTube 或 mp3 網址）。瀏覽器不允許自動出聲，所以預設開啟：進站就嘗試播放，被瀏覽器擋掉時第一次點或觸碰畫面就會開始；關掉之後會記住，下次不再自動播。 */
@@ -866,42 +917,62 @@ if(yt&&matchMedia("(min-width:1000px)").matches){const dy=yt.getBoundingClientRe
 const h=k.clientHeight;k.style.paddingBottom=(h/2)+"px";k.style.paddingTop=(KS?h/2:6)+"px"}
 window.addEventListener("resize",()=>{try{ktvFit()}catch(e){}});
 function ktvTick(){const k=document.getElementById("ktv");if(!k||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime(),ls=k.children;let a=-1;for(let i=0;i<ls.length;i++){if(+ls[i].dataset.s<=t+.2)a=i;else break}
-if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){let add=0;if(!KS){KS=true;const o=parseFloat(k.style.paddingTop)||6;ktvFit();add=(parseFloat(k.style.paddingTop)||o)-o}const e=ls[a];k.scrollTo({top:Math.max(0,e.offsetTop+add-k.clientHeight/2+e.clientHeight/2),behavior:"smooth"})}}
-document.getElementById("slist").addEventListener("click",e=>{const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
+if(a>=0){const e=ls[a],s0=+e.dataset.s,dur=Math.max(.5,Math.min((+e.dataset.e||s0+6)-s0,6)),p=Math.max(0,Math.min(1,(t-s0)/dur));e.style.setProperty("--p",(p*100).toFixed(1)+"%")}
+if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{if(i<a)e.style.setProperty("--p","100%");else if(i>a)e.style.setProperty("--p","0%");const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){let add=0;if(!KS){KS=true;const o=parseFloat(k.style.paddingTop)||6;ktvFit();add=(parseFloat(k.style.paddingTop)||o)-o}const e=ls[a];k.scrollTo({top:Math.max(0,e.offsetTop+add-k.clientHeight*.38+e.clientHeight/2),behavior:"smooth"})}}
+document.getElementById("slist").addEventListener("click",e=>{const fb=e.target.closest("[data-fs]");if(fb){const n=FSI+ +fb.dataset.fs;if(n>=0&&n<FS.length){FSI=n;try{localStorage.setItem("song-fs",n)}catch(x){}fsApply();try{ktvFit();KA=-1}catch(x){}}return}const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
 const l=e.target.closest(".kb");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
 function albOf(x){return(x.a||"").trim()||"其他"}
 /* 專輯封面：試算表「封面」欄優先；沒填就用這裡的對照（專輯名: 圖片路徑） */
 const ALBUM_COVERS={"ARIRANG":"IMG/IMG_1293.png"};
 function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&/^(https?:\/\/|[\w.\/%-]+$)/.test((x.p||"").trim()));return x?x.p.trim():(ALBUM_COVERS[n]||"")}
 function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h}
+/* 演唱會歌單（每場演唱會各有自己的歌單，跟專輯分類互不影響）：
+   ① 試算表加一欄「演唱會」，填這首歌有唱的演唱會，用「、」隔開；順序寫在名稱後面，例如「ARIRANG:3、SWIM Tour:12」＝在 ARIRANG 是第 3 首、在 SWIM Tour 是第 12 首；不寫順序就照試算表列的先後排。沒填的歌只出現在專輯。
+   ② 或在 data.js 設定 SETLISTS={"ARIRANG":["歌名1","歌名2"],"SWIM Tour":[…]}，照陣列順序排。可選：CONCERT_COVERS={"ARIRANG":"圖片網址"} 給演唱會封面。 */
+let VIEW="a";try{VIEW=sessionStorage.getItem("song-view")==="s"?"s":"a"}catch(e){}/* 從首頁點進來一律重設成依專輯（見 gos）；沒回首頁之前，切換、重新整理都會記住 */
+const SORTMAX=1e9;
+/* 演唱會封面：試算表「演唱會封面」欄寫「演唱會名稱=圖片網址或路徑」（多場用「、」或換行隔開，填在任一首歌那列就行）；沒填再看 data.js 的 CONCERT_COVERS；都沒有就顯示彩色底加名稱。 */
+function conCover(n){for(const x of SONGS)for(const q of String(x.cc||"").split(/[、\n]+/)){const i=q.indexOf("=");if(i>0&&q.slice(0,i).trim()===n){const u=q.slice(i+1).trim();if(u)return u}}return(window.CONCERT_COVERS||{})[n]||""}
+function songCons(x){const r=[];String(x.s||"").split(/[、，,；;\n]+/).forEach(q=>{q=q.trim();if(!q)return;const m=q.match(/^(.*?)\s*[:：]\s*(\d+(?:\.\d+)?)$/);r.push(m?{n:m[1].trim(),o:+m[2]}:{n:q,o:SORTMAX})});
+const S=window.SETLISTS;if(S&&typeof S==="object")Object.keys(S).forEach(k=>{const i=(Array.isArray(S[k])?S[k]:[]).findIndex(t=>String(t).trim().toLowerCase()===String(x.t).trim().toLowerCase());if(i>=0&&!r.some(c=>c.n===k))r.push({n:k,o:i+1})});return r.filter(c=>c.n)}
 function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();
 const kw=(document.getElementById("sq").value||"").trim().toLowerCase();
 const AL=[];SONGS.forEach(x=>{const a=albOf(x);if(!AL.includes(a))AL.push(a)});
-if(ALB&&!AL.includes(ALB))ALB="";
+const CL=[],CN={};SONGS.forEach(x=>songCons(x).forEach(c=>{CN[c.n]=(CN[c.n]||0)+1;if(!CL.includes(c.n))CL.push(c.n)}));
+if(window.SETLISTS&&typeof SETLISTS==="object")CL.sort((a,b)=>{const k=Object.keys(SETLISTS),x=k.indexOf(a),y=k.indexOf(b);return(x<0?1e3:x)-(y<0?1e3:y)});
+const SV=VIEW==="s"&&CL.length>0,G=SV?CL:AL;
+if(ALB&&!G.includes(ALB))ALB="";
+{const g=document.getElementById("svt");g.hidden=!CL.length;g.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v==="s"?SV:!SV)))}
 const wallOn=!ALB&&!kw;wall.hidden=!wallOn;view.hidden=wallOn;
-document.getElementById("sback").hidden=!ALB;
-if(wallOn){document.getElementById("sn").textContent=AL.length?SONGS.length+" 首歌":"";
-wall.innerHTML=AL.length?AL.map(a=>{const n=SONGS.filter(x=>albOf(x)===a).length,c=albCover(a);return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(a)}">${esc(a)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(a)}</b><span class="n">${n} 首歌</span></button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
+{const sb=document.getElementById("sback");sb.hidden=!ALB;const tx=SV?"← 全部演唱會":"← 全部專輯";if(sb.dataset.t!==tx){sb.textContent=tx;sb.dataset.t=tx}}
+if(wallOn){document.getElementById("sn").textContent=G.length?(SV?SONGS.filter(x=>songCons(x).length).length:SONGS.length)+" 首歌":"";
+wall.innerHTML=G.length?G.map(a=>{const n=SV?CN[a]:SONGS.filter(x=>albOf(x)===a).length,c=SV?conCover(a):albCover(a);return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(a)}">${esc(a)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(a)}</b><span class="n">${n} 首歌</span></button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
 box.innerHTML="";tabs.innerHTML="";return}
-const L=SONGS.filter(x=>(!ALB||albOf(x)===ALB)&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw)));
+const L=SONGS.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
 document.getElementById("sn").textContent=L.length+" 首歌";
 if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不到符合的歌曲":"還沒有收錄歌曲"}</div>`;return}
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
-tabs.innerHTML=L.map(x=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${esc(x.t)}</button>`).join("");
-{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);ktvFit();songPlayer(songVid(x))}}
+tabs.innerHTML=L.map((x,i)=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${SV&&ALB?(i+1)+". ":""}${esc(x.t)}</button>`).join("");
+{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);fsApply();ktvFit();songPlayer(navigator.onLine===false?"":songVid(x))}}
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;SEL=b.dataset.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()});
-document.getElementById("swall").addEventListener("click",e=>{const b=e.target.closest(".alb");if(!b)return;ALB=b.dataset.a;songsR();window.scrollTo(0,0)});
+document.getElementById("swall").addEventListener("click",e=>{const b=e.target.closest(".alb");if(!b)return;const w=document.getElementById("swall");if(w.classList.contains("leaving"))return;
+const go=()=>{w.classList.remove("leaving");b.classList.remove("pick");ALB=b.dataset.a;songsR();window.scrollTo(0,0)};
+let rm=false;try{rm=matchMedia("(prefers-reduced-motion:reduce)").matches}catch(x){}
+if(rm){go();return}
+w.classList.add("leaving");b.classList.add("pick");setTimeout(go,280)});
 document.getElementById("sback").addEventListener("click",()=>{ALB="";document.getElementById("sq").value="";songsR();window.scrollTo(0,0)});
+document.getElementById("svt").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;VIEW=b.dataset.v;ALB="";try{sessionStorage.setItem("song-view",VIEW)}catch(x){}songsR();window.scrollTo(0,0)});
 document.getElementById("sq").addEventListener("input",songsR);
 if(sec==="songs")songsR();
 
 /* KTV 模式：「連結」欄放 YouTube 網址；空耳／應援法的每一行前面加時間碼，例如「0:07 [藍] Kim Namjoon!」，沒時間碼的行只出現在一般模式。 */
 /* 歌曲也可以從試算表讀取：在 data.js 設定 SONGS_CSV_URL（歌曲分頁發布成 CSV 的網址），欄位：歌名、專輯／場次、空耳、應援法、連結。讀不到就用上面的 SONGS */
 function songsParse(t){const R=SheetLoader.csv(t);if(R.length<2)return[];
-const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p"};
+const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p","演唱會":"s","演唱會歌單":"s","巡演":"s","曲序":"tn","專輯曲序":"tn","曲目順序":"tn","演唱會封面":"cc","演唱會封面圖":"cc"};
 const hd=R[0].map(x=>M[x.trim()]||"");
 return R.slice(1).map(r=>{const o={};hd.forEach((k,j)=>{if(k&&!o[k])o[k]=String(r[j]||"").trim()});return o}).filter(o=>o.t)}
-function songsSet(L){SONGS.length=0;L.forEach(x=>SONGS.push(x));songsR()}
+function covPre(){if(navigator.onLine===false)return;try{const seen=new Set();[...new Set(SONGS.map(albOf))].forEach(n=>{const c=albCover(n);if(c&&!/^https?:/i.test(c)&&!seen.has(c)){seen.add(c);fetch(c).catch(()=>{})}})}catch(e){}}
+function songsSet(L){SONGS.length=0;L.forEach(x=>SONGS.push(x));songsR();covPre()}
 async function songsLoad(){if(typeof SONGS_CSV_URL!=="string"||!SONGS_CSV_URL)return;
 try{const c=localStorage.getItem("songs-cache");if(c){const L=songsParse(c);if(L.length)songsSet(L)}}catch(e){}
 try{const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),8000);
@@ -909,6 +980,8 @@ const r=await fetch(SONGS_CSV_URL+(SONGS_CSV_URL.includes("?")?"&":"?")+"t="+Dat
 if(!r.ok)throw 0;const txt=await r.text();const L=songsParse(txt);if(!L.length)throw 0;
 try{localStorage.setItem("songs-cache",txt)}catch(e){}songsSet(L)}catch(e){}}
 songsLoad();
+function offSync(){const b=document.getElementById("offb");if(b)b.hidden=navigator.onLine!==false}
+covPre();offSync();addEventListener("online",()=>{offSync();if(sec==="songs")songsR()});addEventListener("offline",()=>{offSync();if(sec==="songs")songsR()});
 /* 回到頂端 */
 {const t=document.getElementById("top");if(t){const f=()=>t.classList.toggle("on",window.scrollY>400);window.addEventListener("scroll",f,{passive:true});f();t.addEventListener("click",()=>{const r=matchMedia("(prefers-reduced-motion:reduce)").matches;window.scrollTo({top:0,behavior:r?"auto":"smooth"})})}}
 
