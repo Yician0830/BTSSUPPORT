@@ -358,6 +358,13 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 #stampPv img{display:block;max-width:100%;max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px);object-fit:contain;border:3px solid #fff;box-shadow:5px 5px 0 rgba(0,0,0,.35);-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto}
 #stampPv .spv-tip{margin:0;color:#d6edff;font-size:13px;font-weight:700}
 #stampPv .spv-act{display:flex;gap:10px}
+.lgd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:0 0 12px;padding:8px 14px;background:var(--card);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--line);font-size:14px;font-weight:800;line-height:1.5}
+.lgd b{font-family:var(--px);font-weight:400;color:var(--sub)}
+.lgd span{display:inline-flex;align-items:center;gap:6px}
+.lgd i{flex:none;width:14px;height:14px;display:inline-block;background:currentColor}
+.lgd .lb{color:#1a5fd0}.lgd .lr{color:#e0245e}.lgd .lo{color:#c77a12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lgd .lb{color:#8fb4ff}:root:not([data-theme="light"]) .lgd .lr{color:#ff9ec0}:root:not([data-theme="light"]) .lgd .lo{color:#ffc069}}
+:root[data-theme="dark"] .lgd .lb{color:#8fb4ff}:root[data-theme="dark"] .lgd .lr{color:#ff9ec0}:root[data-theme="dark"] .lgd .lo{color:#ffc069}
 .fsz{display:flex;align-items:center;gap:6px;margin:10px 0 0;font-size:13px;font-weight:800;color:var(--sub)}
 .fsz .chip{padding:4px 12px;font-size:14px;font-weight:900;min-width:44px}
 .fsz .chip:disabled{opacity:.35;cursor:default}
@@ -534,6 +541,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <div class="vtog" id="svt" hidden><button type="button" class="chip" data-v="a">依專輯</button><button type="button" class="chip" data-v="s">依演唱會</button></div>
 <div class="albwall" id="swall" role="group" aria-label="選擇專輯"></div>
 <div id="sview" hidden><button class="back" id="sback" type="button">← 全部專輯</button>
+<div class="lgd" role="note"><b>顏色說明</b><span class="lb"><i></i>藍色＝大聲喊</span><span class="lr"><i></i>紅色＝跟著唱</span></div>
 <div class="swrap"><div class="chips cities" id="stabs" role="group" aria-label="選擇歌曲"></div>
 <div class="grid" id="slist"></div></div></div>
 </div>
@@ -873,22 +881,36 @@ const ANN=[
 {id:"a2",date:"10/16",t:"應援資訊持續更新中，有異動會標紅色提醒",d:"活動改期或取消時，卡片會出現「⚠ 有異動」或「已取消」。出發前建議再確認一次主辦的貼文。",tr:{en:["Info is updated continuously; changes are flagged in red", "When a project is rescheduled or canceled, its card shows “⚠ Changed” or “Canceled”. Please check the organizer's post once more before you go."],ko:["응원 정보는 계속 업데이트되며 변경 사항은 빨간색으로 표시돼요", "응원이 일정 변경되거나 취소되면 카드에 '⚠ 변경됨' 또는 '취소됨'이 표시돼요. 출발 전 주최측 게시물을 한 번 더 확인하세요."],ja:["応援情報は随時更新中。変更は赤で表示します", "応援の日程変更や中止があると、カードに「⚠ 変更あり」または「中止」と表示されます。出発前に主催者の投稿をもう一度ご確認ください。"]}},
 {id:"a1",date:"10/16",t:"新增集章簿、收藏與新手導覽",d:"打卡會記下日期，集章簿可以存成圖片分享。第一次進入各頁會有導覽，之後可按「？導覽」重看。",tr:{en:["Added stamp book, favorites and a beginner's guide", "Check-ins record the date, and your stamp book can be saved as an image to share. The first time you open each page there's a guide; tap “? Guide” to replay it."],ko:["스탬프북, 즐겨찾기, 초보자 가이드 추가", "체크인하면 날짜가 기록되고, 스탬프북은 이미지로 저장해 공유할 수 있어요. 각 페이지에 처음 들어가면 가이드가 나오고, 이후에는 '? 가이드'를 눌러 다시 볼 수 있어요."],ja:["スタンプ帳・お気に入り・初心者ガイドを追加", "チェックインすると日付が記録され、スタンプ帳は画像で保存してシェアできます。各ページの初回表示ではガイドが出ます。あとから「? ガイド」で見直せます。"]}}];
 try{ANN.forEach(a=>{if(a.tr&&window.I18N){["t","d"].forEach((f,k)=>I18N.add(a[f],a.tr.en[k],a.tr.ko[k],a.tr.ja[k]))}});window.I18N&&I18N.refresh()}catch(e){}
+/* 成員生日、BTS 出道周年（6/13）當天自動出現的公告，不用手動新增。每則每年各算一次，關掉後當年不會再出現。 */
+function bdT(n){return "HAPPY "+n.toUpperCase()+" DAY！祝 "+n+" 生日快樂"}
+function bdD(n){return "今天是 "+n+" 的生日！一起為 "+n+" 送上祝福，也可以到「生日應援」看各地的應援。"}
+function anT(a){return "HAPPY BTS DAY！祝 BTS 出道 "+a+" 週年快樂"}
+function anD(a){return "今天是 BTS 出道 "+a+" 週年！一起為 BTS 送上祝福，也可以到「生日應援」看各地的應援。"}
+function bdToday(){const t=today0(),mo=t.getMonth()+1,da=t.getDate(),y=t.getFullYear();return MEMBERS.filter(m=>m[1]===mo&&m[2]===da).map(m=>m[0]==="BTS"?{id:"bd"+y+"-BTS",bd:1,date:mo+"/"+da,t:anT(y-2013),d:anD(y-2013)}:{id:"bd"+y+"-"+m[0],bd:1,date:mo+"/"+da,t:bdT(m[0]),d:bdD(m[0])})}
+try{const KO={RM:"RM",Jin:"진",SUGA:"슈가","j-hope":"제이홉",Jimin:"지민",V:"뷔",Jungkook:"정국"},JP={RM:"RM",Jin:"ジン",SUGA:"シュガ","j-hope":"j-hope",Jimin:"ジミン",V:"V",Jungkook:"ジョングク"};
+MEMBERS.forEach(m=>{const n=m[0];if(n==="BTS"||!window.I18N)return;const k=KO[n]||n,j=JP[n]||n,H="HAPPY "+n.toUpperCase()+" DAY";
+I18N.add(bdT(n),H+"! Happy birthday, "+n+"!",H+"! "+k+", 생일 축하해요!",H+"！"+j+"、お誕生日おめでとう！");
+I18N.add(bdD(n),"Today is "+n+"'s birthday! Send him your wishes, and check “Birthday Projects” for fan projects in each city.","오늘은 "+k+"의 생일이에요! 함께 축하해 주세요. '생일 응원'에서 각 지역의 응원도 확인해 보세요.","今日は"+j+"の誕生日です！みんなでお祝いしましょう。「誕生日応援」で各地の応援もご覧ください。")});
+if(window.I18N)for(let a=1;a<=60;a++){const o=a%100>=11&&a%100<=13?"th":({1:"st",2:"nd",3:"rd"})[a%10]||"th";
+I18N.add(anT(a),"HAPPY BTS DAY! Happy "+a+o+" anniversary, BTS!","HAPPY BTS DAY! BTS 데뷔 "+a+"주년 축하해요!","HAPPY BTS DAY！BTSデビュー"+a+"周年おめでとう！");
+I18N.add(anD(a),"Today is BTS's "+a+o+" debut anniversary! Send your wishes, and check “Birthday Projects” for fan projects in each city.","오늘은 BTS 데뷔 "+a+"주년이에요! 함께 축하해 주세요. '생일 응원'에서 각 지역의 응원도 확인해 보세요.","今日はBTSデビュー"+a+"周年です！みんなでお祝いしましょう。「誕生日応援」で各地の応援もご覧ください。")}
+window.I18N&&I18N.refresh()}catch(e){}
 function annFit(){const t=document.querySelector("#ann .ann-t"),m=t&&t.firstElementChild;if(!m)return;m.classList.remove("run");m.style.animationDuration="";
 if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
 if(m.scrollWidth>t.clientWidth+1){m.classList.add("run");m.style.animationDuration=Math.max(8,(m.scrollWidth+t.clientWidth*2)/55)+"s"}}
 addEventListener("resize",()=>{try{annFit()}catch(e){}});try{document.fonts.ready.then(()=>annFit())}catch(e){}
 function annR(){const box=document.getElementById("ann");if(!box)return;
 if(sec!=="home"){box.hidden=true;return}
-let hid="";try{hid=localStorage.getItem("kh-ann")||""}catch(e){}
-const top=ANN[0];if(!top||hid===top.id){box.hidden=true;box.innerHTML="";return}
+let hid="",hb="";try{hid=localStorage.getItem("kh-ann")||"";hb=localStorage.getItem("kh-ann-bd")||""}catch(e){}
+const bl=bdToday(),top=bl.find(x=>x.id!==hb)||(ANN[0]&&ANN[0].id!==hid?ANN[0]:null);if(!top){box.hidden=true;box.innerHTML="";return}
 box.hidden=false;
 box.innerHTML=`<div class="ann-row"><i class="ann-dot"></i><span class="ann-new">NEW</span><span class="ann-t"><span class="ann-m">${esc(top.t)}</span></span><button type="button" class="ann-l" data-a="d">詳情 ›</button><button type="button" class="ann-l" data-a="all">全部公告 ›</button><button type="button" class="ann-x" data-a="x" aria-label="關閉公告">×</button></div><div class="ann-more" hidden></div>`;
 annFit();
 box.onclick=e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,m=box.querySelector(".ann-more");
-if(a==="x"){try{localStorage.setItem("kh-ann",top.id)}catch(x){}annR();return}
+if(a==="x"){try{localStorage.setItem(top.bd?"kh-ann-bd":"kh-ann",top.id)}catch(x){}annR();return}
 const mode=m.dataset.m;
 if(a==="d"){if(mode==="d"){m.hidden=true;m.dataset.m="";return}m.dataset.m="d";m.hidden=false;m.innerHTML=`<p>${esc(top.d||"")}</p>`}
-if(a==="all"){if(mode==="all"){m.hidden=true;m.dataset.m="";return}m.dataset.m="all";m.hidden=false;const hi=ANN.findIndex(y=>y.id===hid),nw=hi>0?hi:1;m.innerHTML=ANN.map((x,xi)=>`<div class="ann-i">${xi<nw?'<span class="ann-new">NEW</span>':""}<b>${esc(x.date||"")}</b> ${esc(x.t)}<p>${esc(x.d||"")}</p></div>`).join("")}}}
+if(a==="all"){if(mode==="all"){m.hidden=true;m.dataset.m="";return}m.dataset.m="all";m.hidden=false;const hi=ANN.findIndex(y=>y.id===hid),nw=hi>0?hi:1;m.innerHTML=bl.concat(ANN).map((x,xi)=>`<div class="ann-i">${(x.bd?x.id!==hb:xi-bl.length<nw)?'<span class="ann-new">NEW</span>':""}<b>${esc(x.date||"")}</b> ${esc(x.t)}<p>${esc(x.d||"")}</p></div>`).join("")}}}
 annR();
 
 /* 歌曲空耳／應援：改下面的 SONGS 就能新增歌曲（t 歌名、a 專輯或場次、h 空耳、c 應援法，換行用 \n，u 影片或參考連結） */
@@ -1094,7 +1116,7 @@ if(t.id==="allOn"){const n=new Date(),ds=(n.getMonth()+1)+"/"+n.getDate();let c=
 wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已一鍵打卡 "+c+" 個")}
 else{const c=L.filter(d=>done.has(d.id));if(!c.length){toast("目前沒有已打卡的項目");return}if(!confirm("確定要取消全部打卡（"+c.length+" 個）？\nClear all "+c.length+" check-ins?"))return;c.forEach(d=>{done.delete(d.id);delete dd[d.id]});
 wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已取消全部打卡")}});
-try{[["✔ 一鍵打卡","✔ Check in all","✔ 한 번에 체크인","✔ ワンタップで全部チェックイン"],["↺ 取消全部打卡","↺ Clear all check-ins","↺ 체크인 전체 취소","↺ チェックインを全部取り消す"],["沒有可打卡的項目","Nothing to check in","체크인할 항목이 없어요","チェックインできる項目がありません"],["目前沒有已打卡的項目","No check-ins to clear","취소할 체크인이 없어요","取り消せるチェックインはありません"],["已取消全部打卡","All check-ins cleared","체크인을 모두 취소했어요","チェックインを全部取り消しました"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
+try{[["✔ 一鍵打卡","✔ Check in all","✔ 한 번에 체크인","✔ ワンタップで全部チェックイン"],["↺ 取消全部打卡","↺ Clear all check-ins","↺ 체크인 전체 취소","↺ チェックインを全部取り消す"],["沒有可打卡的項目","Nothing to check in","체크인할 항목이 없어요","チェックインできる項目がありません"],["目前沒有已打卡的項目","No check-ins to clear","취소할 체크인이 없어요","取り消せるチェックインはありません"],["已取消全部打卡","All check-ins cleared","체크인을 모두 취소했어요","チェックインを全部取り消しました"],["顏色說明","Color guide","색상 안내","色の見方"],["藍色＝大聲喊","Blue = shout loud","파랑 = 크게 외치기","青＝大声で叫ぶ"],["紅色＝跟著唱","Red = sing along","빨강 = 따라 부르기","赤＝一緒に歌う"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
 
 function eq(){const L=document.querySelectorAll("#list .card");L.forEach(c=>{c.querySelector(".hd").style.minHeight="";c.querySelector(".box").style.minHeight="";c.querySelector(".act").style.minHeight=""});if(innerWidth<720)return;
 for(const k of [".hd",".box",".act"]){const g={};L.forEach(c=>{(g[c.offsetTop]=g[c.offsetTop]||[]).push(c)});Object.values(g).forEach(a=>{const m=Math.max(...a.map(c=>c.querySelector(k).offsetHeight));a.forEach(c=>c.querySelector(k).style.minHeight=m+"px")})}}
