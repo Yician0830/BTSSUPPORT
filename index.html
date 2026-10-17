@@ -721,7 +721,7 @@ const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享�
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
 home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
-songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
+songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
 tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]],
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
 let TR=null;
@@ -799,12 +799,14 @@ function sfmt(t){const inl=x=>esc(x).replace(/\{(藍|紅|橘)\|([^{}]*)\}/g,(m,c
 let SEL="";try{SEL=localStorage.getItem("song-sel")||""}catch(e){}
 let SMODE="n";try{SMODE=localStorage.getItem("song-mode")==="k"?"k":"n"}catch(e){}
 const YTID=u=>{const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);return m?m[1]:""};
+function songVid(x){const vu=YTID(x.u),vk=YTID(x.k);return SMODE==="k"?(vk||vu):(vu||vk)}
 function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2],k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
 function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
-function songCard(x){const vid=YTID(x.u),T=vid?songTimed(x):[],k=vid&&SMODE==="k";
+function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(ok(v))b.push(`<a class="btn" target="_blank" rel="noopener" href="${esc(v)}">影片／參考 ↗</a>`);if(ok(x.o))b.push(`<a class="btn of" target="_blank" rel="noopener" href="${esc(x.o)}">官方應援歌詞 ↗</a>`);return b.length?`<div class="act">${b.join("")}</div>`:""}
+function songCard(x){const vid=songVid(x),T=vid?songTimed(x):[],k=vid&&SMODE==="k";
 const media=vid?`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>`:"";
 const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map(g=>`<div class="kb" data-s="${g.s}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
-return `<article class="card song"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}${body}${x.u&&/^https?:\/\//.test(x.u)?`<div class="act"><a class="btn" target="_blank" rel="noopener" href="${esc(x.u)}">影片／參考 ↗</a></div>`:""}</article>`}
+return `<article class="card song"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}${body}${songLinks(x)}</article>`}
 let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null;
 function ytLoad(cb){if(window.YT&&YT.Player)return cb();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();cb()};if(!document.getElementById("yt-api")){const e=document.createElement("script");e.id="yt-api";e.src="https://www.youtube.com/iframe_api";document.head.appendChild(e)}}
 /* 背景音樂：預設是下面這個 YouTube 網址；要換歌改這裡，或在 data.js 設定 BGM_URL（YouTube 或 mp3 網址）。瀏覽器不允許自動出聲，所以預設開啟：進站就嘗試播放，被瀏覽器擋掉時第一次點或觸碰畫面就會開始；關掉之後會記住，下次不再自動播。 */
@@ -832,7 +834,7 @@ document.getElementById("sn").textContent=L.length+" 首歌";
 if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不到符合的歌曲":"還沒有收錄歌曲"}</div>`;return}
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
 tabs.innerHTML=L.map(x=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${esc(x.t)}</button>`).join("");
-{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);songPlayer(YTID(x.u))}}
+{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);songPlayer(songVid(x))}}
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;SEL=b.dataset.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()});
 document.getElementById("sq").addEventListener("input",songsR);
 if(sec==="songs")songsR();
@@ -840,7 +842,7 @@ if(sec==="songs")songsR();
 /* KTV 模式：「連結」欄放 YouTube 網址；空耳／應援法的每一行前面加時間碼，例如「0:07 [藍] Kim Namjoon!」，沒時間碼的行只出現在一般模式。 */
 /* 歌曲也可以從試算表讀取：在 data.js 設定 SONGS_CSV_URL（歌曲分頁發布成 CSV 的網址），欄位：歌名、專輯／場次、空耳、應援法、連結。讀不到就用上面的 SONGS */
 function songsParse(t){const R=SheetLoader.csv(t);if(R.length<2)return[];
-const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u"};
+const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o"};
 const hd=R[0].map(x=>M[x.trim()]||"");
 return R.slice(1).map(r=>{const o={};hd.forEach((k,j)=>{if(k&&!o[k])o[k]=String(r[j]||"").trim()});return o}).filter(o=>o.t)}
 function songsSet(L){SONGS.length=0;L.forEach(x=>SONGS.push(x));songsR()}
