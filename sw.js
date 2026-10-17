@@ -1,6 +1,6 @@
 /* 離線快取：頁面與程式檔「先連網、逾時就用快取」；圖片、字型、地圖函式庫「有快取就先用」。
    更新網站內容後，把下面的 VER 改一個值，舊快取就會被清掉。 */
-const VER="v12",CORE="core-"+VER,RUN="run-"+VER;
+const VER="v13",CORE="core-"+VER,RUN="run-"+VER;
 const FILES=["./","index.html","data.js","i18n.js","manifest.json","icon-192.png","icon-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CORE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CORE&&n!==RUN).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});
