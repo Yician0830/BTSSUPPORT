@@ -5,29 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BTS 應援地圖</title>
 <script>try{if(/(^|[?&])(section|city)=/.test(location.search))document.documentElement.classList.add("pre-inner");setTimeout(function(){document.documentElement.classList.remove("pre-inner")},6000)}catch(e){}</script>
-<meta name="theme-color" content="#0b72e6">
+<meta name="theme-color" content="#0b72e6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#06183a" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icon-192.png?v=2">
 <link rel="apple-touch-icon" href="icon-192.png?v=2">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+TC:wght@500;700;900&display=swap">
 <style>
-:root{--bg:#e6f5ff;--card:#fff;--ink:#0b2a5b;--sub:#4a6a96;--line:#b9dcf5;--box:#e9f5ff;--tag:#ffe1ea;--tagInk:#c2255c;--pill:#d6edff;--dark:#0b4fa8;--darkInk:#fff;--ok:#0f8a5f;--okbg:#e3f6ee;
+:root{--pur:#7b4fd6;--purbg:#efe7ff;--bg:#e6f5ff;--card:#fff;--ink:#0b2a5b;--sub:#4a6a96;--line:#b9dcf5;--box:#e9f5ff;--tag:#ffe1ea;--tagInk:#c2255c;--pill:#d6edff;--dark:#0b4fa8;--darkInk:#fff;--ok:#0a6e4a;--okbg:#e3f6ee;--ctl:#5a97cc;--focus:#c21a55;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#06183a;--card:#0c2a5c;--ink:#e6f4ff;--sub:#8fb4e0;--line:#1d4a8a;--box:#0a2350;--tag:#4a1830;--tagInk:#ff9ec0;--pill:#143a75;--dark:#7fd4ff;--darkInk:#06183a;--ok:#5fd8a6;--okbg:#12362b}}
-:root[data-theme="dark"]{--bg:#06183a;--card:#0c2a5c;--ink:#e6f4ff;--sub:#8fb4e0;--line:#1d4a8a;--box:#0a2350;--tag:#4a1830;--tagInk:#ff9ec0;--pill:#143a75;--dark:#7fd4ff;--darkInk:#06183a;--ok:#5fd8a6;--okbg:#12362b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pur:#b794ff;--purbg:#2b1f5e;--bg:#06183a;--card:#0c2a5c;--ink:#e6f4ff;--sub:#8fb4e0;--line:#1d4a8a;--box:#0a2350;--tag:#4a1830;--tagInk:#ff9ec0;--pill:#143a75;--dark:#7fd4ff;--darkInk:#06183a;--ok:#5fd8a6;--okbg:#12362b;--ctl:#4a86c8;--focus:#ff9ec0}}
+:root[data-theme="dark"]{--pur:#b794ff;--purbg:#2b1f5e;--bg:#06183a;--card:#0c2a5c;--ink:#e6f4ff;--sub:#8fb4e0;--line:#1d4a8a;--box:#0a2350;--tag:#4a1830;--tagInk:#ff9ec0;--pill:#143a75;--dark:#7fd4ff;--darkInk:#06183a;--ok:#5fd8a6;--okbg:#12362b;--ctl:#4a86c8;--focus:#ff9ec0}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
 .wrap{max-width:940px;margin:0 auto;padding:0 16px}
 @media(min-width:1100px){.wrap{max-width:none;padding:0 24px}}
-.hero{margin:20px 0 22px;border-radius:12px;padding:30px 28px 86px;color:#fff;position:relative;overflow:hidden;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 188 14' shape-rendering='crispEdges'%3E%3Cg fill='%23d9f7ff' fill-opacity='.35'%3E%3Crect x='100' y='1' width='20' height='2'/%3E%3Crect x='96' y='3' width='30' height='2'/%3E%3Crect x='104' y='5' width='20' height='2'/%3E%3Crect x='150' y='2' width='18' height='2'/%3E%3Crect x='146' y='4' width='28' height='2'/%3E%3C/g%3E%3C/svg%3E") top/100% auto no-repeat,conic-gradient(rgba(255,255,255,.06) 25%,transparent 0 50%,rgba(255,255,255,.06) 0 75%,transparent 0) 0 0/8px 8px,repeating-linear-gradient(100deg,rgba(255,255,255,0) 0 70px,rgba(255,255,255,.09) 70px 110px),linear-gradient(180deg,#34b4ff 0%,#0b72e6 42%,#0a3d9c 100%)}
+.hero{margin:20px 0 22px;border-radius:12px;padding:30px 28px 86px;color:#fff;position:relative;overflow:hidden;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 188 14' shape-rendering='crispEdges'%3E%3Cg fill='%23d9f7ff' fill-opacity='.35'%3E%3Crect x='100' y='1' width='20' height='2'/%3E%3Crect x='96' y='3' width='30' height='2'/%3E%3Crect x='104' y='5' width='20' height='2'/%3E%3Crect x='150' y='2' width='18' height='2'/%3E%3Crect x='146' y='4' width='28' height='2'/%3E%3C/g%3E%3C/svg%3E") top/100% auto no-repeat,conic-gradient(rgba(255,255,255,.06) 25%,transparent 0 50%,rgba(255,255,255,.06) 0 75%,transparent 0) 0 0/8px 8px,repeating-linear-gradient(100deg,rgba(255,255,255,0) 0 70px,rgba(255,255,255,.09) 70px 110px),linear-gradient(180deg,#1f8ae8 0%,#0b72e6 42%,#0a3d9c 100%)}
 .reef{position:absolute;left:0;right:0;bottom:0;width:100%;height:70px;pointer-events:none}
 .script{font:700 15px/1.4 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;letter-spacing:.06em;color:#e9fbff}
 .hero h1{font-size:clamp(30px,7vw,46px);margin:8px 0 12px;line-height:1.2;font-weight:900;text-shadow:2px 2px 0 rgba(6,40,110,.45)}
 .hero p{margin:0;max-width:34em;font-size:14px;opacity:.92}
 .show{margin-top:14px;font-size:14px;opacity:.9;display:grid;gap:2px}
 .fav{margin-top:18px;border:0;border-radius:99px;background:#fff;color:#17141f;font:inherit;font-weight:700;font-size:14px;padding:10px 20px;cursor:pointer}
-.fav[aria-pressed="true"]{background:#ff7aa5}
+.fav[aria-pressed="true"]{background:#b794ff}
 @media(min-width:720px){.fav{position:absolute;right:28px;bottom:28px;margin:0}}
 .tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
 .chips{display:flex;gap:8px;overflow-x:auto;max-width:100%;padding:2px}
@@ -39,7 +40,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Noto Sans
 .pill.cd{background:var(--tag);color:var(--tagInk);font-weight:700}
 [hidden]{display:none!important}
 .entries{display:grid;gap:16px;grid-template-columns:1fr;margin-bottom:16px}
-@media(min-width:720px){.entries{grid-template-columns:1fr 1fr}}
+@media(min-width:720px){.entries{grid-template-columns:1fr 1fr;grid-auto-rows:1fr;align-items:stretch}.entries>.entry{height:100%}}
 .back{border:0;background:none;color:var(--sub);font:inherit;font-size:14px;font-weight:700;cursor:pointer;padding:4px 0;margin-bottom:10px}
 .next{background:var(--card);border:2px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:14px;font-weight:700}
 .book{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 12px;font-size:13px;font-weight:700}
@@ -58,7 +59,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Noto Sans
 @keyframes pop{from{transform:scale(1.9) rotate(-30deg);opacity:0}to{transform:rotate(-10deg);opacity:1}}
 @media(prefers-reduced-motion:reduce){.stamp.pop{animation:none}}
 .sbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 16px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
-.sbtn:focus-visible,.sel select:focus-visible{outline:3px solid #e0245e;outline-offset:2px}
+.sbtn:focus-visible,.sel select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .panel{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:14px}
 .panel[hidden]{display:none}
 .panel .search{max-width:none;width:100%}
@@ -80,7 +81,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Noto Sans
 .tags{display:flex;flex-wrap:wrap;gap:6px}
 .tag{background:var(--tag);color:var(--tagInk);font-size:12px;font-weight:700;border-radius:4px;padding:2px 10px}
 .heart{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--sub);font-size:18px;cursor:pointer}
-.heart[aria-pressed="true"]{color:#e0245e;border-color:#e0245e}
+.heart[aria-pressed="true"]{color:var(--pur);border-color:var(--pur)}
 .dates{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
 .pill{background:var(--pill);border-radius:4px;font-size:12px;font-weight:600;padding:3px 10px}
 .card h2{font-size:20px;line-height:1.4;margin:0 0 2px;font-weight:900}
@@ -92,7 +93,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Noto Sans
 .btn{font:inherit;font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;cursor:pointer}
 .btn.main{background:var(--dark);color:var(--darkInk);border-color:var(--dark)}
 .btn.ok{background:var(--okbg);color:var(--ok);border-color:var(--ok)}
-.btn:focus-visible,.chip:focus-visible,.heart:focus-visible,.fav:focus-visible,.search:focus-visible{outline:3px solid #e0245e;outline-offset:2px}
+.btn:focus-visible,.chip:focus-visible,.heart:focus-visible,.fav:focus-visible,.search:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .empty{grid-column:1/-1;padding:32px;border:1px dashed var(--line);border-radius:20px;text-align:center;color:var(--sub)}
 footer{padding:28px 16px 48px;color:var(--sub);font-size:12px;text-align:center}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--dark);color:var(--darkInk);padding:10px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -102,19 +103,19 @@ footer{padding:28px 16px 48px;color:var(--sub);font-size:12px;text-align:center}
 .btn{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);border-radius:8px;padding:8px 14px;box-shadow:0 3px 0 var(--line);font-weight:800}
 .btn:hover{transform:translateY(-1px);box-shadow:0 4px 0 var(--line)}
 .btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--line)}
-.btn.main{background:linear-gradient(180deg,#3aa0ff,#0b5fd0);border-color:#08439a;color:#fff;box-shadow:0 3px 0 #08439a}
+.btn.main{background:linear-gradient(180deg,#1875dc,#0b5fd0);border-color:#08439a;color:#fff;box-shadow:0 3px 0 #08439a}
 .btn.main:hover{box-shadow:0 4px 0 #08439a}
 .btn.main:active{box-shadow:0 0 0 #08439a}
 .btn.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok);box-shadow:0 3px 0 var(--ok)}
 .chip{border:2px solid var(--line);border-radius:8px;padding:6px 16px;font-weight:800;box-shadow:0 3px 0 var(--line)}
 .chip:hover{transform:translateY(-1px)}
 .chip:active{transform:translateY(2px);box-shadow:none}
-.chip[aria-pressed="true"]{background:linear-gradient(180deg,#3aa0ff,#0b5fd0);color:#fff;border-color:#08439a;box-shadow:0 3px 0 #08439a}
+.chip[aria-pressed="true"]{background:linear-gradient(180deg,#1875dc,#0b5fd0);color:#fff;border-color:#08439a;box-shadow:0 3px 0 #08439a}
 .sbtn{border:2px solid var(--line);border-radius:8px;font-weight:800;box-shadow:0 3px 0 var(--line)}
 .sbtn:active{transform:translateY(3px);box-shadow:none}
 .heart{border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
 .heart:active{transform:translateY(3px);box-shadow:none}
-.heart[aria-pressed="true"]{background:var(--tag);box-shadow:0 3px 0 #e0245e}
+.heart[aria-pressed="true"]{background:var(--purbg);box-shadow:0 3px 0 var(--pur)}
 .fav{border-radius:8px;border:2px solid #fff;box-shadow:0 3px 0 rgba(6,40,110,.55);font-weight:800}
 .fav:active{transform:translateY(3px);box-shadow:none}
 @media(prefers-reduced-motion:reduce){.btn,.chip,.sbtn,.fav,.heart,.entry{transition:none}.btn:hover,.chip:hover,.entry:hover{transform:none}}
@@ -125,7 +126,7 @@ footer{padding:28px 16px 48px;color:var(--sub);font-size:12px;text-align:center}
 .entry.songs{border-left:8px solid #f08cae}
 .entry:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line)}
 .entry:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
-.entry:focus-visible,.back:focus-visible{outline:3px solid #e0245e;outline-offset:2px}
+.entry:focus-visible,.back:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .ic{flex:none;width:64px;height:64px;display:grid;place-items:center;background:var(--box);border-radius:8px;padding:10px}
 .ic svg{width:100%;height:100%;display:block}
 .et{min-width:0}
@@ -137,7 +138,7 @@ footer{padding:28px 16px 48px;color:var(--sub);font-size:12px;text-align:center}
 @media(min-width:720px){.notes{grid-template-columns:1fr 1fr;align-items:start}}
 .notes details{background:var(--card);border:2px solid var(--line);border-radius:8px;padding:12px 16px}
 .notes summary{cursor:pointer;font-weight:900;font-size:15px}
-.notes summary:focus-visible{outline:3px solid #e0245e;outline-offset:2px}
+.notes summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .notes ul{margin:10px 0 2px;padding-left:20px;font-size:14px;color:var(--sub);line-height:1.7}
 .wall{margin-top:30px}
 .wall h2{font-size:18px;font-weight:900;margin:0 0 12px}
@@ -209,10 +210,10 @@ body{background-image:radial-gradient(color-mix(in srgb,var(--line) 55%,transpar
 footer{border-top:1px dashed var(--line);margin-top:24px;padding-top:22px}
 .fav{padding:6px 16px;font-size:13px;line-height:1.4}
 @media(max-width:719px){.upd{display:block;width:fit-content}.fav{display:block;margin-top:12px}}
-#top{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:2px solid var(--dark);background:linear-gradient(180deg,#3aa0ff,#0b5fd0);color:#fff;font:inherit;font-size:20px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 4px 0 #08439a,0 8px 18px rgba(11,79,168,.3);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+#top{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:2px solid var(--dark);background:linear-gradient(180deg,#1875dc,#0b5fd0);color:#fff;font:inherit;font-size:20px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 4px 0 #08439a,0 8px 18px rgba(11,79,168,.3);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
 #top.on{opacity:1;transform:none;pointer-events:auto}
 #top:active{transform:translateY(3px);box-shadow:0 1px 0 #08439a}
-#top:focus-visible{outline:3px solid #e0245e;outline-offset:2px}
+#top:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){#top{transition:none}}
 .stamp{padding:6px;display:grid;place-items:center}
 .stamp svg{width:100%;height:100%;overflow:visible}
@@ -286,7 +287,7 @@ body:has(#app:not([hidden])) .fav{margin-top:8px}
 .chip,.sbtn,.btn{box-shadow:3px 3px 0 var(--line)}
 .btn:hover,.chip:hover{transform:translate(-1px,-1px)}
 .btn:active,.chip:active,.sbtn:active,.heart:active,.fav:active{transform:translate(3px,3px);box-shadow:none}
-.heart{box-shadow:3px 3px 0 var(--line)}.heart[aria-pressed="true"]{box-shadow:3px 3px 0 #e0245e}
+.heart{box-shadow:3px 3px 0 var(--line)}.heart[aria-pressed="true"]{box-shadow:3px 3px 0 var(--pur)}
 .fav{border:2px solid #062a6e;box-shadow:3px 3px 0 rgba(6,40,110,.6)}
 .tag,.pill,.card .tag{border-radius:0;font-weight:700;letter-spacing:.02em}
 #top{box-shadow:3px 3px 0 #08439a}
@@ -485,6 +486,21 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .kb{--kf:var(--kbase)}
 .kb.on{--kf:var(--kon-kf)}
 .kl>div:not(.cl) :is(.ib,.ir,.io){-webkit-text-fill-color:currentColor;text-decoration:none;font-weight:900}
+/* KTV 應援字更明顯：顏色加深／加亮、加半透明底色塊；有應援的句子不要被調暗 */
+.ktv .kl>div:not(.cl) :is(.ib,.ir,.io){padding:0 .22em;border-radius:4px;background:color-mix(in srgb,currentColor 18%,transparent);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ktv .kb:not(.on):has(.ib,.ir,.io,.cl){opacity:.85}
+/* KTV 目前這句：左側像素箭頭 ▶ 閃爍（暫停時不閃） */
+.ktv .kb{position:relative}
+.ktv .kb.on{padding-left:26px;padding-right:26px}
+.ktv .kb.on::before{content:"";position:absolute;left:14px;top:50%;width:10px;height:14px;margin-top:-7px;background:var(--dark);image-rendering:pixelated;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 7' shape-rendering='crispEdges'%3E%3Cg fill='black'%3E%3Crect x='0' y='0' width='1' height='7'/%3E%3Crect x='1' y='1' width='1' height='5'/%3E%3Crect x='2' y='2' width='1' height='3'/%3E%3Crect x='3' y='3' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 7' shape-rendering='crispEdges'%3E%3Cg fill='black'%3E%3Crect x='0' y='0' width='1' height='7'/%3E%3Crect x='1' y='1' width='1' height='5'/%3E%3Crect x='2' y='2' width='1' height='3'/%3E%3Crect x='3' y='3' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;animation:kar .9s steps(1,end) infinite}
+@keyframes kar{0%{opacity:1}50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.ktv .kb.on::before{animation:none}}
+:root{--kcb:#0b45c4;--kcr:#d00f4e;--kco:#b25f00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kcb:#5cb8ff;--kcr:#ff5c8f;--kco:#ffb02e}}
+:root[data-theme="dark"]{--kcb:#5cb8ff;--kcr:#ff5c8f;--kco:#ffb02e}
+:root .ktv .kl .ib{color:var(--kcb)}:root .ktv .kl .ir{color:var(--kcr)}:root .ktv .kl .io{color:var(--kco)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ktv .kl :is(.ib,.ir,.io){text-shadow:0 0 8px currentColor}}
+:root[data-theme="dark"] .ktv .kl :is(.ib,.ir,.io){text-shadow:0 0 8px currentColor}
 #ktvBack{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:55;display:none;border:2px solid var(--dark);background:var(--dark);color:var(--darkInk);font:inherit;font-size:14px;font-weight:800;padding:8px 14px;box-shadow:3px 3px 0 var(--line);cursor:pointer}
 #ktvBack.on{display:block}
 /* [藍|紅|橘] 整行與 {藍|紅|橘|…} 的字自動放大（用 em，會跟著字級按鈕一起縮放） */
@@ -577,6 +593,21 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 :is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .intro{display:block;flex:1 0 100%;margin:0;font-size:13px;line-height:1.6;opacity:.92}
 #members .chip{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 14px;line-height:1.25}
 #members .cdn{font-size:11px;font-weight:600;opacity:.8}
+/* ===== 對比度修正 ===== */
+.chip,.search,.sbtn,.heart,.btn,.sel select,.route select,.route li button,.tagbox label{border-color:var(--ctl)}
+.btn,.chip,.sbtn,.heart{box-shadow:0 3px 0 var(--ctl)}
+.btn:hover{box-shadow:0 4px 0 var(--ctl)}
+.script{background:rgba(6,40,110,.32)}
+.hero p{opacity:1;text-shadow:0 1px 2px rgba(6,40,110,.5)}
+.snav{display:flex;gap:8px;align-items:center;width:100%}
+.snav select{flex:1;min-width:0;min-height:44px;font:inherit;font-size:15px;font-weight:800;padding:8px 12px;border:2px solid var(--ctl);border-radius:8px;background:var(--card);color:var(--ink);box-shadow:0 3px 0 var(--ctl)}
+.snav select:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.snav .sbtn{flex:none;width:44px;height:44px;padding:0;font-size:18px}
+.snav .sbtn:disabled{opacity:.4;cursor:default;box-shadow:none;transform:none}
+@media(min-width:720px){.snav{display:none}}
+@media(max-width:719.98px){#stabs .chip{display:none}}
+.gm{max-width:420px;margin:0 auto}.ghud{display:flex;justify-content:space-between;font:400 16px "DotGothic16",monospace;margin:6px 2px}.gl{position:relative;height:300px;display:flex;overflow:hidden;background:var(--box);border:3px solid var(--dark)}.gln{position:relative;flex:1;touch-action:manipulation}.gln+.gln{border-left:3px dashed var(--line)}.ghl{position:absolute;left:0;right:0;top:240px;height:4px;background:var(--focus);z-index:2;pointer-events:none}.gn{position:absolute;left:6px;right:6px;top:0;height:36px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;border:3px solid #062a6e;will-change:transform;overflow:hidden}.gn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px}.gn.b{background:#2f7be0}.gn.r{background:#e0245e}.gn.ok{display:none!important}.gn.ms{opacity:.3}.gj{position:absolute;left:0;right:0;top:110px;text-align:center;font:400 22px "DotGothic16",monospace;opacity:0;pointer-events:none;z-index:3;text-shadow:2px 2px 0 #062a6e;color:#fff}.gj.on{opacity:1}.gj.m{color:#9aa3c7}.gres{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(6,42,110,.88);color:#fff;font-size:14px}.chip[aria-pressed="true"] .gsg{color:#ffd23f}.chip .gsg{margin-left:6px;font-style:normal;font-size:11px;font-weight:900;color:#c98f00}.gres .gnew{color:#ffd23f;font-weight:700;font-size:16px}.gres em{font-style:normal;opacity:.8}.gres b{font:400 72px/1 "DotGothic16",monospace;color:#ffd23f}.gb{display:flex;gap:8px;margin-top:8px}.gbtn{flex:1;height:64px;border:3px solid #062a6e;color:#fff;font-weight:700;font-size:16px;line-height:1.2;font-family:inherit;touch-action:manipulation;cursor:pointer;user-select:none}.gbtn.b{background:#2f7be0}.gbtn.r{background:#e0245e}.gbtn.hit,.gbtn:active{transform:translateY(3px);filter:brightness(1.25)}
+.entry.fx{border-left:10px solid #ffd23f}#ftn{position:fixed;inset:0;z-index:999;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.72)}.ftc{width:100%;max-width:360px;max-height:90vh;overflow:auto;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:18px;display:grid;gap:12px}.fth{display:flex;justify-content:space-between;font-size:14px;color:var(--sub)}.fth b{font-family:var(--px);font-weight:400;font-size:16px;color:var(--dark)}.ftm{font-family:var(--px);font-size:44px;line-height:1.1;text-align:center;color:var(--dark);padding:12px 0;border:3px dashed var(--line);background:var(--box)}.ftr{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}.ftr.v{flex-direction:column;align-items:flex-start;gap:2px}.ftr.v b{font-size:15px}.fts{color:#e0a800;letter-spacing:.1em}.ftk{padding:2px 10px;color:#fff;border:2px solid #062a6e;font-size:13px}.ftk.b{background:#2f7be0}.ftk.r{background:#e0245e}.fta{display:flex;gap:8px}.ftc .btn{flex:1;cursor:pointer}.ftb{text-align:center;font-weight:700;font-size:14px;color:var(--tagInk);background:var(--tag);padding:6px 8px;border:2px solid var(--tagInk)}.ftbd{display:block;width:fit-content;margin-top:6px;font-style:normal;font-size:12px;font-weight:700;padding:2px 8px;border:2px solid}.ftbd.todo{color:#d6336c;border-color:#d6336c}.ftbd.done{color:var(--tagInk);border-color:var(--tagInk);background:var(--tag)}.ftsw{display:inline-block;width:14px;height:14px;border:2px solid var(--dark);margin-right:6px;vertical-align:-1px}#ftimg{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;background:rgba(6,24,58,.88)}#ftimg img{max-width:100%;max-height:calc(100vh - 150px);aspect-ratio:9/16;object-fit:contain;border:3px solid #fff;-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto}#ftimg .fth2{color:#fff;font-size:14px;text-align:center;font-weight:700}.ftn2{text-align:center;font-size:12px;color:var(--sub)}.ftg{display:flex;flex-wrap:wrap;gap:6px}.ftl{font-size:12px;padding:3px 8px;border:2px dashed var(--line);color:var(--sub);opacity:.6}button.ftl{font:inherit;font-size:12px;background:none;cursor:pointer}button.ftl.sel{outline:3px solid #e0a800;outline-offset:1px}.ftc.fl .ftm{background:linear-gradient(90deg,#ffd9e6,#fff2b8,#d4ebff,#e6dcff);border-style:solid;border-color:#e0a800}.ftl.on{border-style:solid;border-color:var(--dark);color:var(--dark);opacity:1;font-weight:700;background:var(--pill)}.ftr i{font-style:normal}.fta{flex-wrap:wrap}.fts em{font-style:normal;color:var(--dark);font-size:13px;margin-left:4px}@media(prefers-reduced-motion:no-preference){.ftc.dr{animation:ftsh .45s steps(6)}.ftc.t1{border-color:#2dbf8f}.ftc.t2{border-color:#8e6fe0}.ftc.t3{border-color:#e0a800;box-shadow:6px 6px 0 #ffd23f}.ftdraw{justify-items:center;text-align:center;cursor:pointer;padding:26px 18px}.ftdraw svg{width:112px;height:112px;animation:ftshk .5s steps(2) infinite;transform-origin:50% 90%}.ftdraw b{font-size:20px;color:var(--dark)}.ftdraw small{color:var(--sub);font-size:13px}@keyframes ftshk{0%{transform:rotate(-9deg)}100%{transform:rotate(9deg)}}@media(prefers-reduced-motion:reduce){.ftdraw svg{animation:none}}}@keyframes ftsh{0%{transform:translate(0,12px) rotate(-3deg)}25%{transform:translate(-6px,0) rotate(3deg)}50%{transform:translate(6px,0) rotate(-3deg)}75%{transform:translate(-3px,0) rotate(2deg)}100%{transform:none}}
 </style>
 </head>
 <body>
@@ -597,6 +628,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <button class="entry tour" data-go="tour"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#f2c46a"><rect x="4" y="0" width="2" height="2"/><rect x="3" y="2" width="4" height="1"/><rect x="0" y="3" width="10" height="1"/><rect x="1" y="4" width="8" height="1"/><rect x="2" y="5" width="6" height="2"/><rect x="1" y="7" width="3" height="1"/><rect x="6" y="7" width="3" height="1"/><rect x="0" y="8" width="2" height="1"/><rect x="8" y="8" width="2" height="1"/></svg></i><div class="et"><b>ARIRANG 巡演應援</b><span>高雄、香港場次的應援地圖，附日期分頁與打卡集章</span></div></button>
 <button class="entry bd" data-go="birthday"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="1" fill="#ffd23f"/><rect x="4" y="1" width="2" height="2" fill="#ff8fb3"/><rect x="1" y="3" width="8" height="2" fill="#fff"/><rect x="1" y="5" width="8" height="4" fill="#6fb7ff"/><rect x="1" y="7" width="8" height="1" fill="#2f7be0"/><rect x="0" y="9" width="10" height="1" fill="#9aa3c7"/></svg></i><div class="et"><b>生日應援</b><span>依成員整理的生日與 BTS 出道周年應援，有倒數</span></div></button>
 <button class="entry songs" data-go="songs"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="5" height="1" fill="#2f7be0"/><rect x="4" y="2" width="1" height="5" fill="#2f7be0"/><rect x="8" y="2" width="1" height="4" fill="#2f7be0"/><rect x="2" y="6" width="3" height="3" fill="#ff8fb3"/><rect x="6" y="5" width="3" height="3" fill="#ff8fb3"/></svg></i><div class="et"><b>演唱會歌曲空耳／應援</b><span>整理每首歌的空耳和應援法，現場跟著喊</span></div></button>
+<button class="entry fx" id="ftnBtn" type="button"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="2" fill="#ffd23f"/><rect x="1" y="2" width="8" height="2" fill="#ffd23f"/><rect x="2" y="4" width="6" height="2" fill="#ffd23f"/><rect x="1" y="6" width="3" height="3" fill="#ffd23f"/><rect x="6" y="6" width="3" height="3" fill="#ffd23f"/></svg></i><div class="et"><b>今日應援籤</b><span>每天抽一張，看今天的應援運勢和練習任務</span></div></button>
 </div>
 <section class="notes" id="notesBox">
 <details><summary>注意事項</summary><ul>
@@ -615,7 +647,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 </section>
 <div id="songs" hidden>
 <button class="back" data-go="home">← 回首頁</button>
-<input class="search" id="sq" type="search" placeholder="搜尋歌名、空耳或應援" aria-label="搜尋歌曲" autocomplete="off">
+<input class="search" id="sq" type="search" placeholder="搜尋歌名、專輯、演唱會、空耳或應援" aria-label="搜尋歌曲" autocomplete="off">
 <div class="stat"><span id="sn"></span><button type="button" class="tourBtn2" style="margin-left:auto">？導覽</button></div>
 <div class="vtog" id="svt" hidden><button type="button" class="chip" data-v="a">依專輯</button><button type="button" class="chip" data-v="s">依演唱會</button></div>
 <div class="albwall" id="swall" role="group" aria-label="選擇專輯"></div>
@@ -658,6 +690,19 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <script src="i18n.js"></script>
 <script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script>
 <script src="data.js"></script>
+<script>
+/* data.js 讀不到或有語法錯誤時的保護：不讓整頁空白，改用上次存下來的資料並顯示提示 */
+(function(){
+if(typeof DATA==="undefined"){window.DATA=[];window.__dataFail=true}
+if(typeof UPDATED==="undefined")window.UPDATED=new Date().toISOString().slice(0,10);
+if(!window.__dataFail)return;
+console.error("data.js 載入失敗或內容有誤，請檢查逗號、引號是否漏掉");
+function tip(){setTimeout(function(){var w=document.querySelector(".wrap");if(!w)return;
+var msg=DATA.length?"活動資料暫時讀取失敗，目前顯示的是上次存下來的內容，可能不是最新。":"活動資料暫時讀取失敗，請稍後重新整理再試一次。";
+w.insertAdjacentHTML("afterbegin",'<p role="alert" style="margin:12px 0;padding:12px 16px;border:2px solid var(--tagInk);border-radius:8px;background:var(--tag);color:var(--tagInk);font-size:14px;font-weight:700">'+msg+'</p>')},1500)}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",tip,{once:true});else tip()
+})();
+</script>
 <script>
 /* ===== 讀取 Google 試算表（網址設定在 data.js 的 SHEET_CSV_URL；讀不到就用 data.js 內建資料） ===== */
 (function(){
@@ -905,8 +950,8 @@ const A2HS=()=>{const L4=a=>`<ol>${a.map(x=>`<li>${x}</li>`).join("")}</ol>`;
 const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享」鈕（方框加向上箭頭）","往下滑，點「加入主畫面」","右上角按「新增」，桌面就會出現圖示"]):L4(["用 Chrome 開啟這個網頁","點右上角的「⋮」選單","點「加到主畫面」或「安裝應用程式」","按「新增」或「安裝」，桌面就會出現圖示"]);
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
-home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
-songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#svt","依專輯／依演唱會","切換分類：依專輯看每張專輯的歌，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。"],["#swall","選專輯／演唱會","點封面進去，就會看到那張專輯或那場演唱會的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],["#slist .fsz","字級","按 A− 或 A＋ 調整歌詞大小，現場看不清楚時可以放大。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
+home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#ftnBtn","今日應援籤","每天抽一張，看今天的應援運勢和練習任務。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
+songs:[["#sq","搜尋","輸入歌名、專輯、演唱會、空耳或應援內容，快速找到想看的歌。"],["#svt","依專輯／依演唱會","切換分類：依專輯看每張專輯的歌，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。"],["#swall","選專輯／演唱會","點封面進去，就會看到那張專輯或那場演唱會的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],[".smode [data-m=\"g\"]","應援遊戲","歌詞裡的藍色、紅色段落會變成音符，影片播到哪音符就落到哪；音符到線時點對應的按鈕，結束後會評等級並記下最佳成績。"],["#stabs .gsg","遊戲成績","玩過應援遊戲的歌，歌名旁會顯示最佳等級（S、A、B、C）。"],["#slist .fsz","字級","按 A− 或 A＋ 調整歌詞大小，現場看不清楚時可以放大。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
 tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]],
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
 let TR=null;
@@ -955,6 +1000,7 @@ a2hsSync();
 /* 公告列：改下面的 ANN 就能新增公告（新的放最前面，id 不可重複） */
 /* 公告翻譯：每則公告的 tr 放英、韓、日的 [標題, 內容]；新增公告時一起填，沒填的語言就顯示中文原文。 */
 const ANN=[
+{id:"a5",date:"10/18",t:"新增「今日應援籤」，每天抽一張",d:"首頁點「今日應援籤」，每天抽一張，有運勢、幸運色、練習任務和推薦歌，連續抽籤還能解鎖稱號。抽完可以存成圖片，長按就能儲存或分享。",tr:{en:["Added “Today's Fanchant Fortune” — draw one a day", "Tap “Today's Fanchant Fortune” on the home page to draw one a day: luck, lucky color, a practice mission and a recommended song. Keep a streak to unlock titles. Save it as an image, then press and hold to save or share."],ko:["'오늘의 응원 운세' 추가 — 하루에 한 장 뽑기", "홈에서 '오늘의 응원 운세'를 눌러 하루에 한 장 뽑아 보세요. 운세, 행운의 색, 연습 미션, 추천곡을 볼 수 있고 연속으로 뽑으면 칭호를 얻어요. 이미지로 저장한 뒤 길게 눌러 저장하거나 공유하세요."],ja:["「今日の応援おみくじ」を追加。1日1枚引けます", "ホームの「今日の応援おみくじ」から1日1枚引けます。運勢・ラッキーカラー・練習ミッション・おすすめ曲に加え、連続で引くと称号も獲得。画像として保存したら、長押しで保存・共有できます。"]}},
 {id:"a4",date:"10/16",t:"新增「演唱會歌曲空耳／應援」，先收錄 Hooligan 官方應援",d:"首頁新增歌曲空耳／應援入口，點歌名按鈕就能切換歌曲；藍色是大聲喊，紅色是跟著唱。",tr:{en:["Added “Concert Songs: Soramimi & Fanchants”, starting with the official Hooligan fanchant", "The home page has a new entrance for song soramimi and fanchants. Tap a song button to switch songs. Blue = shout loudly, red = sing along."],ko:["'콘서트 곡 空耳·응원법' 추가, 먼저 Hooligan 공식 응원법 수록", "홈에 곡별 空耳·응원법 입구가 생겼어요. 곡명 버튼을 눌러 곡을 전환하세요. 파랑은 크게 외치기, 빨강은 따라 부르기예요."],ja:["「コンサート曲 空耳・応援法」を追加。まずHooliganの公式応援を収録", "ホームに曲ごとの空耳・応援法の入口を追加しました。曲名ボタンで曲を切り替えられます。青は大きな声で叫ぶ、赤は一緒に歌う。"]}},
 {id:"a3",date:"10/16",t:"BTS高雄大型應援已更新",d:"高雄的大型應援資訊已更新，出發前可以再看一下各活動的時間與地點。",tr:{en:["BTS Kaohsiung major projects updated", "Info on the major Kaohsiung projects has been updated. Check each project's time and place again before you go."],ko:["BTS 가오슝 대형 응원 업데이트", "가오슝 대형 응원 정보가 업데이트되었어요. 출발 전에 각 응원의 시간과 장소를 다시 확인하세요."],ja:["BTS高雄の大型応援を更新しました", "高雄の大型応援情報を更新しました。出発前に各応援の時間と場所をもう一度ご確認ください。"]}},
 {id:"a2",date:"10/16",t:"應援資訊持續更新中，有異動會標紅色提醒",d:"活動改期或取消時，卡片會出現「⚠ 有異動」或「已取消」。出發前建議再確認一次主辦的貼文。",tr:{en:["Info is updated continuously; changes are flagged in red", "When a project is rescheduled or canceled, its card shows “⚠ Changed” or “Canceled”. Please check the organizer's post once more before you go."],ko:["응원 정보는 계속 업데이트되며 변경 사항은 빨간색으로 표시돼요", "응원이 일정 변경되거나 취소되면 카드에 '⚠ 변경됨' 또는 '취소됨'이 표시돼요. 출발 전 주최측 게시물을 한 번 더 확인하세요."],ja:["応援情報は随時更新中。変更は赤で表示します", "応援の日程変更や中止があると、カードに「⚠ 変更あり」または「中止」と表示されます。出発前に主催者の投稿をもう一度ご確認ください。"]}},
@@ -1008,12 +1054,12 @@ function songVid(x){const vu=YTID(x.u),vk=YTID(x.k);return SMODE==="k"?(vk||vu):
 function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2],k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
 function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
 function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(ok(v))b.push(`<a class="btn" target="_blank" rel="noopener" href="${esc(v)}">影片／參考 ↗</a>`);if(ok(x.o))b.push(`<a class="btn of" target="_blank" rel="noopener" href="${esc(x.o)}">官方應援歌詞 ↗</a>`);return b.length?`<div class="act">${b.join("")}</div>`:""}
-function songCard(x){const off=navigator.onLine===false,vid=songVid(x),T=vid?songTimed(x):[],k=vid&&!off&&SMODE==="k";
-const media=vid?(off?`<div class="khint">離線中：影片和 KTV 模式要有網路才能用，下面的空耳與應援法還是可以看。</div>`:`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>${k?`<div class="kinfo"><span id="kt0">0:00</span><span id="knx"></span><span id="kt1">0:00</span></div><div class="kbar" id="kbar" title="點一下跳到那裡；彩色刻度是應援位置"></div>`:""}`):"";
-const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map((g,j,A)=>`<div class="kb" data-s="${g.s}" data-e="${A[j+1]?A[j+1].s:g.s+6}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
+function songCard(x){const off=navigator.onLine===false,vid=songVid(x),T=vid?songTimed(x):[],k=vid&&!off&&SMODE==="k",g=vid&&!off&&SMODE==="g";
+const media=vid?(off?`<div class="khint">離線中：影片和 KTV 模式要有網路才能用，下面的空耳與應援法還是可以看。</div>`:`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k&&!g}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button><button type="button" class="chip" data-m="g" aria-pressed="${g}">應援遊戲</button></div><div class="yt"><div id="ytp"></div></div>${k?`<div class="kinfo"><span id="kt0">0:00</span><span id="knx"></span><span id="kt1">0:00</span></div><div class="kbar" id="kbar" title="點一下跳到那裡；彩色刻度是應援位置"></div>`:""}`):"";
+const body=g?gameHTML(T,x):k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map((g,j,A)=>`<div class="kb" data-s="${g.s}" data-e="${A[j+1]?A[j+1].s:g.s+6}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
 return `<article class="card song${k?" ktvm":""}"><div class="topr"><div class="fsz"><span>字級</span><button type="button" class="chip" data-fs="-1" aria-label="縮小字級" title="縮小字級">A−</button><output id="fso" aria-live="polite"></output><button type="button" class="chip" data-fs="1" aria-label="放大字級" title="放大字級">A＋</button></div>${songLinks(x)}</div><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr">${body}</div></article>`}
-let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null,KS=false,KU=0;
-/* 手動滑動歌詞後，暫停自動捲動 8 秒；按「回到目前這句」或時間到就恢復 */
+let GR=0,GN=[],GL=0,GC=0,GF=false;let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null,KS=false,KU=0;
+/* 手動滑動歌詞後，暫停自動捲動 5 秒；按「回到目前這句」或時間到就恢復 */
 /* 影片下方進度條：彩色刻度＝應援位置（藍/紅/橘），點一下跳到那裡（靠近刻度會吸附到該刻度前 1 秒） */
 function kfmt(t){t=Math.max(0,Math.floor(t));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
 function ktvBarUpd(t){const b=document.getElementById("kbar"),k=document.getElementById("ktv");if(!b||!k||!YP||!YP.getDuration)return;const d=YP.getDuration();if(!d)return;
@@ -1024,7 +1070,7 @@ const ts=b.querySelectorAll("i");let nx=-1;for(let i=0;i<ts.length;i++){if(+ts[i
 if(b._n!==nx){b._n=nx;ts.forEach((el,i)=>{el.classList.toggle("p",nx===-1||i<nx);el.classList.toggle("nx",i===nx)});const x=document.getElementById("knx");if(x){if(nx<0)x.textContent=ts.length?"沒有更多應援了":"";else{const el=ts[nx],c=el.dataset.c,N={b:["藍","大聲喊"],r:["紅","跟著唱"],o:["橘","提醒"]}[c];x.innerHTML=`下一個：<b class="kc-${c}">${N[0]}・${N[1]}</b> ${kfmt(+el.dataset.s)}`}}}}
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("#kbar");if(!b||!YP||!YP.seekTo)return;const d=+b.dataset.d;if(!d)return;const x=e.clientX-b.getBoundingClientRect().left;let t=x/b.clientWidth*d,bd=1e9,bs=null;b.querySelectorAll("i").forEach(i=>{const dd=Math.abs(i.offsetLeft+i.offsetWidth/2-x);if(dd<bd){bd=dd;bs=i}});if(bs&&bd<14)t=Math.max(0,+bs.dataset.s-1);KU=0;ktvBtn(false);KA=-1;YP.seekTo(t,true);YP.playVideo&&YP.playVideo()});
 function ktvBtn(on){let b=document.getElementById("ktvBack");if(!b){if(!on)return;b=document.createElement("button");b.id="ktvBack";b.type="button";b.textContent="↓ 回到目前這句";b.addEventListener("click",e=>{e.stopPropagation();KU=0;KA=-1;ktvBtn(false);try{ktvTick()}catch(x){}});document.body.appendChild(b)}b.classList.toggle("on",!!on)}
-function ktvPause(e){if(!e.target.closest||!e.target.closest("#ktv")||!YP)return;KU=Date.now()+8000;ktvBtn(true)}
+function ktvPause(e){if(!e.target.closest||!e.target.closest("#ktv")||!YP)return;KU=Date.now()+5000;ktvBtn(true)}
 document.addEventListener("wheel",ktvPause,{passive:true});document.addEventListener("touchmove",ktvPause,{passive:true});
 function ytLoad(cb){if(window.YT&&YT.Player)return cb();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();cb()};if(!document.getElementById("yt-api")){const e=document.createElement("script");e.id="yt-api";e.src="https://www.youtube.com/iframe_api";document.head.appendChild(e)}}
 /* 背景音樂：預設是下面這個 YouTube 網址；要換歌改這裡，或在 data.js 設定 BGM_URL（YouTube 或 mp3 網址）。瀏覽器不允許自動出聲，所以預設開啟：進站就嘗試播放，被瀏覽器擋掉時第一次點或觸碰畫面就會開始；關掉之後會記住，下次不再自動播。 */
@@ -1039,7 +1085,7 @@ if(vid){const d=document.createElement("div");d.id="bgmp";d.innerHTML='<div id="
 else{BP=new Audio(BGM);BP.loop=true;BP.preload="auto";BREADY=true;if(BON)bgmGo()}
 const pl=()=>{try{return BP&&(BP.paused===undefined?BP.getPlayerState&&BP.getPlayerState()===1:!BP.paused)}catch(e){return false}};["pointerdown","touchend","keydown"].forEach(ev=>document.addEventListener(ev,()=>{if(BON&&!pl())bgmGo()},{capture:true}))}
 bgmInit();
-function songStop(){PT++;KS=false;KU=0;ktvBtn(false);clearInterval(YT_T);try{YP&&YP.destroy()}catch(e){}YP=null}
+function songStop(){cancelAnimationFrame(GR);GN=[];PT++;KS=false;KU=0;ktvBtn(false);clearInterval(YT_T);try{YP&&YP.destroy()}catch(e){}YP=null}
 function songPlayer(vid){songStop();KA=-1;if(!vid)return;if(BON){BON=false;bgmUI();bgmGo()}const tk=PT;ytLoad(()=>{const el=document.getElementById("ytp");if(tk!==PT||!el)return;YP=new YT.Player(el,{videoId:vid,playerVars:{playsinline:1,rel:0},events:{onReady:()=>{if(tk===PT)YT_T=setInterval(ktvTick,250)}}})})}
 function ktvFit(){const k=document.getElementById("ktv");if(!k)return;const yt=document.querySelector("#slist .yt");
 k.style.marginTop="";k.style.height="";k.style.maxHeight="";
@@ -1050,6 +1096,115 @@ function ktvTick(){const k=document.getElementById("ktv");if(!k||!YP||!YP.getCur
 try{ktvBarUpd(t)}catch(e){}if(KU&&Date.now()>=KU){KU=0;KA=-1;ktvBtn(false)}if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){let add=0;if(!KS){KS=true;const o=parseFloat(k.style.paddingTop)||6;ktvFit();add=(parseFloat(k.style.paddingTop)||o)-o}const e=ls[a];if(Date.now()>=KU)k.scrollTo({top:Math.max(0,e.offsetTop+add-k.clientHeight*.38+e.clientHeight/2),behavior:"smooth"})}}
 document.getElementById("slist").addEventListener("click",e=>{const fb=e.target.closest("[data-fs]");if(fb){const n=FSI+ +fb.dataset.fs;if(n>=0&&n<FS.length){FSI=n;try{localStorage.setItem("song-fs",n)}catch(x){}fsApply();try{ktvFit();KA=-1}catch(x){}}return}const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
 const l=e.target.closest(".kb");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){KU=0;ktvBtn(false);YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
+
+/* 練習模式：用藍／紅色的時間碼當譜面，影片播到哪音符就落到哪；音符到線時點對應按鈕 */
+const GCUE=/^\[(藍|紅)\]\s?(.*)$/;
+/* 應援遊戲成績：每首歌記最高分（命中率）和等級，只存在這台裝置的瀏覽器 */
+function gBest(){try{return JSON.parse(localStorage.getItem("song-best")||"{}")||{}}catch(e){return{}}}
+function gGrade(a){return a>=.95?"S":a>=.85?"A":a>=.7?"B":"C"}
+let GT="";
+function gameHTML(T,x){if(!T.some(t=>GCUE.test(t.l)))return`<div class="empty">這首歌還沒有可以玩的應援遊戲（要有影片和藍／紅色時間碼）</div>`;
+return`<div class="gm" id="gm"><div class="ghud"><span>SCORE <b id="gs">0</b></span><span>COMBO <b id="gc">0</b></span>${x&&gBest()[x.t]?`<span>BEST <b>${gBest()[x.t].g}</b> ${Math.round(gBest()[x.t].a*100)}%</span>`:""}</div><div class="gl" id="gl"><div class="gln b" data-l="b"></div><div class="gln r" data-l="r"></div><i class="ghl"></i><div class="gj" id="gj"></div><div class="gres" id="gres" hidden></div></div><div class="gb"><button type="button" class="gbtn b" data-l="b">藍・大聲喊</button><button type="button" class="gbtn r" data-l="r">紅・跟著唱</button></div><div class="khint">播放影片後，音符落到線上時，點下面對應的按鈕（鍵盤：F／J 或 ←／→）</div></div>`}
+function gameInit(x){const L=document.getElementById("gl");if(!L)return;GT=x.t;
+GN=songTimed(x).map(t=>{const m=t.l.match(GCUE);return m?{s:t.s,c:m[1]==="藍"?"b":"r",x:m[2].replace(/\{(?:藍|紅|橘)\|([^{}]*)\}/g,"$1"),st:0,e:null}:null}).filter(Boolean);
+GL=0;GC=0;GF=false;
+GN.forEach(n=>{const e=document.createElement("div");e.className="gn "+n.c;const p=document.createElement("span");p.textContent=n.x;e.appendChild(p);L.querySelector(".gln."+n.c).appendChild(e);n.e=e});
+gStat();cancelAnimationFrame(GR);GR=requestAnimationFrame(gTick)}
+function gStat(){let sc=0;GN.forEach(n=>{sc+=n.st===1?100:n.st===2?60:0});const a=document.getElementById("gs"),b=document.getElementById("gc");if(a)a.textContent=sc;if(b)b.textContent=GC}
+function gSet(n,st){n.st=st;n.e.classList.toggle("ok",st===1||st===2);n.e.classList.toggle("ms",st===3)}
+function gJ(t,c){const j=document.getElementById("gj");if(!j)return;j.textContent=t;j.className="gj "+c+" on";clearTimeout(gJ.t);gJ.t=setTimeout(()=>j.classList.remove("on"),420)}
+function gMark(t){const g=(gBest()[t]||{}).g;if(!g)return;document.querySelectorAll("#stabs .chip").forEach(c=>{if(c.dataset.t!==t)return;let s=c.querySelector(".gsg");if(!s){s=document.createElement("em");s.className="gsg";c.appendChild(s)}s.textContent=g});const o=[...document.querySelectorAll("#ssel option")].find(o=>o.value===t);if(o)o.textContent=o.textContent.replace(/ ・ [SABC]$/,"")+" ・ "+g}
+function gEnd(){const r=document.getElementById("gres");if(!r)return;let p=0,g=0,m=0;GN.forEach(n=>{n.st===1?p++:n.st===2?g++:m++});const a=GN.length?(p*100+g*60)/(GN.length*100):0,gr=gGrade(a),B=gBest(),old=B[GT],nw=GT&&(!old||a>old.a);if(nw){B[GT]={g:gr,a:Math.round(a*1000)/1000,d:Date.now()};try{localStorage.setItem("song-best",JSON.stringify(B))}catch(e){}gMark(GT)}const bs=B[GT];
+r.innerHTML=`<b>${gr}</b><span>PERFECT ${p}　GOOD ${g}　MISS ${m}</span><span>${Math.round(a*100)}%</span>${nw?`<span class="gnew">${old?"新紀錄！":"首次成績"}</span>`:bs?`<span><em>最佳成績</em> ${bs.g} ${Math.round(bs.a*100)}%</span>`:""}`;r.hidden=false}
+function gHit(c){if(!GN.length||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime();let b=null,bd=9;GN.forEach(n=>{if(n.c===c&&!n.st){const d=Math.abs(n.s-t);if(d<bd){bd=d;b=n}}});
+const btn=document.querySelector('.gbtn[data-l="'+c+'"]');if(btn){btn.classList.add("hit");setTimeout(()=>btn.classList.remove("hit"),90)}
+if(!b||bd>.35)return;if(bd<=.15){gSet(b,1);GC++;gJ("PERFECT",c)}else{gSet(b,2);GC++;gJ("GOOD",c)}gStat()}
+function gTick(){GR=requestAnimationFrame(gTick);if(!YP||!YP.getCurrentTime||!GN.length)return;const t=YP.getCurrentTime();
+if(t<GL-.6){GC=0;GN.forEach(n=>{if(n.st&&n.s>t-.2)gSet(n,0)});GF=false;const r=document.getElementById("gres");if(r)r.hidden=true;gStat()}
+GL=t;let ms=false;
+GN.forEach(n=>{const d=n.s-t;if(!n.st&&d<-.35){gSet(n,3);GC=0;ms=true;gJ("MISS","m")}const y=240-d*220;n.e.style.display=y<-40||y>340?"none":"";n.e.style.transform="translateY("+(y-18)+"px)"});
+if(ms)gStat();
+if(!GF&&t>GN[GN.length-1].s+1.2){GF=true;gEnd()}}
+document.getElementById("slist").addEventListener("pointerdown",e=>{const b=e.target.closest("[data-l]");if(b){e.preventDefault();gHit(b.dataset.l)}});
+document.addEventListener("keydown",e=>{if(!document.getElementById("gm")||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;const k=e.key.toLowerCase();if(k==="f"||k==="arrowleft")gHit("b");else if(k==="j"||k==="arrowright")gHit("r");else return;e.preventDefault()});
+
+/* 今日應援籤：用「日期＋這台裝置的隨機代號」當亂數種子，每個人抽到的不同，同一個人同一天重開還是同一張 */
+const FT_TASKS=["把一首歌的藍色應援全部背熟", "完整練一次應援，不看字幕", "約一位朋友，一起對喊一次", "檢查應援棒的電量和配對", "喝杯水，顧好明天要喊的嗓子", "在應援遊戲拿到 A 以上", "把一首歌的紅色段落完整跟唱一遍", "錄下自己喊應援的聲音，聽聽節奏準不準", "整理好演唱會要帶的東西", "把今天的應援運勢分享給一位 ARMY 朋友", "在歌曲頁找一首沒練過的歌", "睡前再複習一次明天要喊的部分", "挑一首歌，只看歌詞不看影片喊一次", "用應援遊戲挑戰一首新歌", "把今天推薦的歌完整練一遍", "跟著影片，把紅色段落唱兩遍", "戴上耳機，專心練一首歌的應援", "把藍色和紅色的差別，講給朋友聽", "用 KTV 模式唱一首喜歡的歌", "試著把應援棒配對一次", "確認票券、證件和手機電量", "查好從住處到場館的交通方式", "準備好零錢、行動電源和小包包", "看一下天氣，決定要穿什麼", "確認手機有足夠的儲存空間可以拍照", "和朋友約好集合地點", "傳一首今天推薦的歌給朋友", "在收藏裡加入一個想去的應援", "看看生日應援頁，找一位成員的應援", "用「存成圖片」把今天的籤分享出去", "給一位 ARMY 朋友一句鼓勵的話", "做 5 分鐘的伸展，讓身體放鬆", "早點睡，明天才有精神", "出門走一走，順便練體力", "深呼吸三次，再喊一次最大聲的段落", "今天吃好一點，補充體力"];
+/* 和應援資料、演唱會日期連動的任務：有對應情況才會進候選（約 2/3 機率抽到），按鈕帶去對應頁面 */
+function ftCtx(){const L=[],t=today0(),k0=new Date(2026,10,19),k1=new Date(2026,10,22),dt=Math.round((k0-t)/864e5);let live=[],soon=[],bl=[];try{live=DATA.filter(d=>d.sec!=="birthday"&&stat(d)==="進行中");soon=DATA.filter(d=>d.sec!=="birthday"&&stat(d)==="即將開始"&&d.start&&Math.round((day0(d.start)-t)/864e5)<=3);bl=DATA.filter(d=>d.sec==="birthday"&&stat(d)==="進行中")}catch(e){}
+if(live.length)L.push({t:"去今天進行中的應援地點打卡",go:"tour"});if(soon.length)L.push({t:"把快開始的應援加入收藏",go:"tour"});if(bl.length)L.push({t:"去看正在進行的生日應援",go:"bd"});
+if(dt>=1&&dt<=7){L.push({t:"確認演出日的交通和集合時間"});L.push({t:"演唱會就在這週，把應援再複習一次"})}if(dt>=1&&dt<=14)L.push({t:"規劃演唱會前後要去哪些應援",go:"tour"});
+if(t>=k0&&t<=k1)L.push({t:"今天就是演唱會！記得喝水、顧好嗓子"});return L}
+function ftTask(key){const C=ftCtx();if(C.length&&fth(key+"x")%3!==0)return C[fth(key+"u")%C.length];return{t:FT_TASKS[fth(key+"t")%FT_TASKS.length]}}
+const FT_COL=[["粉紅", "#ff8fb3"], ["薰衣草紫", "#8e6fe0"], ["天空藍", "#6fb7ff"], ["薄荷綠", "#2dbf8f"], ["奶油黃", "#ffd23f"], ["蜜桃橘", "#ff8a5b"], ["銀灰", "#b8c0d0"]];
+const FT_WORDS=["今天的你，聲音一定傳得到", "慢慢來，節奏會跟上你", "和大家一起喊，就不會緊張", "今天適合開口大聲喊", "多聽一次，就會多記住一句", "好心情是最棒的應援棒", "今天會遇到一起應援的好夥伴", "不用完美，開心最重要", "出門前再檢查一次口袋", "等待的時間，也是應援的一部分", "今天的你，剛剛好", "把喜歡的歌再聽一遍吧", "今天適合約朋友一起練習", "喉嚨喝點溫水會更舒服", "一點小小的勇氣，就是很大的力量", "今天的幸運，從翻開這一頁開始"];
+let FTID="";function ftId(){if(FTID)return FTID;try{FTID=localStorage.getItem("ftn-id")||""}catch(e){}if(!FTID){FTID=Math.random().toString(36).slice(2,10);try{localStorage.setItem("ftn-id",FTID)}catch(e){}}return FTID}
+function fth(t){let h=2166136261;for(const c of t){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+/* 推薦歌：只從「有影片又有藍／紅時間碼」（能進練習模式）的歌挑，沒有就退回全部；每個人有自己的輪替順序，連續兩天不會抽到同一首，輪完一圈才重複 */
+function ftOK(x){return!!(YTID(x.u)||YTID(x.k))&&songTimed(x).some(t=>GCUE.test(t.l))}
+function ftKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+":"+ftId()}
+function ftPick(d){if(!SONGS.length)return null;let P=SONGS.filter(ftOK);if(!P.length)P=SONGS.slice();const id=ftId();P.sort((a,b)=>fth(id+a.t)-fth(id+b.t));return P[Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)%P.length]}
+function ftSync(){const b=document.getElementById("ftnBtn");if(!b)return;let seen=false;try{const d=new Date(),st=JSON.parse(localStorage.getItem("ftn-st")||"{}")||{};seen=st.last===d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}catch(e){}const et=b.querySelector(".et");if(!et)return;let t=et.querySelector(".ftbd");if(!t){t=document.createElement("em");et.appendChild(t)}t.className="ftbd "+(seen?"done":"todo");t.textContent=seen?"✓ 今日已抽":"● 今天還沒抽"}
+function ftClose(){const o=document.getElementById("ftn");if(o){document.body.style.overflow="";o.remove();const b=document.getElementById("ftnBtn");if(b)b.focus()}ftSync()}
+
+function ftWrap(x,t,px,y,mw,lh){const T=t.match(/[\u3000-\u9fff\uac00-\ud7af\uff00-\uffef]|[^\s\u3000-\u9fff\uac00-\ud7af\uff00-\uffef]+\s*|\s+/g)||[];let l="";for(const k of T){if(l&&x.measureText(l+k).width>mw){x.fillText(l.trim(),px,y);y+=lh;l=k.trimStart()}else l+=k}if(l.trim()){x.fillText(l.trim(),px,y);y+=lh}return y}
+/* 存成圖片：9:16（1080×1920）直式圖卡，直接顯示在畫面上，讓使用者用手機內建選單儲存或分享；內容太多會自動縮小以符合 9:16 */
+const FT_MC={RM:"#8e6fe0",Jin:"#ff8fb3",SUGA:"#5f7aa8","j-hope":"#ff8a5b",Jimin:"#f2c46a",V:"#2dbf8f",Jungkook:"#4a90e2"};
+const FT_SP=[[".##...##.|#oo#.#oo#|#ooo#ooo#|.#oo#oo#.|..##.##..|....#....|....#....|....#....|...###...","#2dbf8f"],["..#####..|.#ooooo#.|#ooooooo#|#ooooooo#|.#ooooo#.|..#####..|...#o#...|...#o#...|...#o#...|..#####..","#8e6fe0"],[".##...##.|#oo#.#oo#|#ooo#ooo#|#ooooooo#|.#ooooo#.|..#ooo#..|...#o#...|....#....","#ff8fb3"],[".....#.....|....#o#....|....#o#....|#####o#####|#ooooooooo#|.#ooooooo#.|..#ooooo#..|..#oo#oo#..|.#oo#.#oo#.|.##.....##.","#ffd23f"],["#....#....#|##..###..##|#o##ooo##o#|#ooooooooo#|#ooooooooo#|#ooo#o#ooo#|###########","#ffd23f"]];
+function ftMix(a,b,t){const f=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),A=f(a),B=f(b);return"#"+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,"0")).join("")}
+function ftImgClose(){const g=document.getElementById("ftimg");if(g){const i=g.querySelector("img");if(i)URL.revokeObjectURL(i.src);g.remove()}const b=document.querySelector('#ftn [data-f="img"]');if(b)b.focus()}
+function ftImgShow(blob){ftImgClose();const g=document.createElement("div");g.id="ftimg";g.setAttribute("role","dialog");g.setAttribute("aria-modal","true");
+g.innerHTML=`<img alt="今日應援籤"><div class="fth2">手機長按圖片可儲存或分享；電腦請按右鍵另存圖片</div><button type="button" class="btn">關閉</button>`;
+g.querySelector("img").src=URL.createObjectURL(blob);g.addEventListener("click",e=>{if(e.target.tagName!=="IMG")ftImgClose()});document.body.appendChild(g);g.querySelector("button").focus()}
+async function ftImg(o){try{await Promise.all([document.fonts.load('400 40px "DotGothic16"'),document.fonts.load('700 30px "Noto Sans TC"')])}catch(e){}
+const W=720,FH=1280,K=1.5,F='"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif',PF='"DotGothic16",'+F,q=s=>(o.querySelector(s)||{}).textContent||"",NV="#0b2a5b",SB="#4a6a96",mem=q(".ftm"),AC=FT_MC[mem]||"#4a90e2",full=o.querySelector(".ftc").classList.contains("fl"),ns=((o.querySelector(".fts")||{}).textContent||"").split("★").length-1,sp=FT_SP[Math.min(4,Math.max(1,ns))-1],DK=ftMix(AC,NV,.5);
+/* 畫卡片本體：回傳卡片需要的高度（含上下 40 的邊） */
+const card=(x,H)=>{x.fillStyle="#fff";x.fillRect(40,40,W-80,H-80);x.lineWidth=8;x.strokeStyle=DK;x.strokeRect(40,40,W-80,H-80);
+x.fillStyle=AC;x.fillRect(44,44,W-88,130);x.textBaseline="top";x.textAlign="center";x.fillStyle="#fff";x.font="400 46px "+PF;x.fillText(q(".fth b"),W/2,66);x.font="500 28px "+F;x.fillText(q(".fth span"),W/2,126);
+const rows=sp[0].split("|"),cw=Math.max(...rows.map(r=>r.length)),ps=13,sx=Math.round((W-cw*ps)/2),sy=196;rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(ch==="."||ch===" ")return;x.fillStyle=ch==="#"?DK:sp[1];x.fillRect(sx+i*ps,sy+j*ps,ps,ps)}));
+const by=sy+10*ps+16,bh=150;let g=ftMix(AC,"#ffffff",.82);if(full){const gr=x.createLinearGradient(80,0,W-80,0);[["0","#ffd9e6"],[".35","#fff2b8"],[".7","#d4ebff"],["1","#e6dcff"]].forEach(a=>gr.addColorStop(+a[0],a[1]));g=gr}
+x.fillStyle=g;x.fillRect(80,by,W-160,bh);x.setLineDash(full?[]:[14,10]);x.lineWidth=6;x.strokeStyle=full?"#e0a800":ftMix(AC,"#ffffff",.3);x.strokeRect(80,by,W-160,bh);x.setLineDash([]);
+x.fillStyle=DK;const big=mem.length>6;x.font="400 "+(big?64:88)+"px "+PF;x.fillText(mem,W/2,by+(big?44:30));
+let y=by+bh+30;o.querySelectorAll(".ftr:not(.ftx)").forEach(r=>{const l=r.children[0].textContent,v=r.children[1].textContent.replace(/\s+/g," ").trim();x.textAlign="left";x.fillStyle=SB;x.font="500 26px "+F;x.fillText(l,90,y);
+x.font="700 30px "+F;const vw=x.measureText(v).width;x.font="500 26px "+F;const st=r.classList.contains("v")||x.measureText(l).width+vw+40>W-180;
+if(st){y+=38;x.fillStyle=NV;x.font="700 32px "+F;y=ftWrap(x,v,90,y,W-180,44)+16}
+else{x.textAlign="right";x.fillStyle=r.querySelector(".fts")?"#e0a800":NV;x.font="700 30px "+F;x.fillText(v,W-90,y-2);const sw=r.querySelector(".ftsw");if(sw){x.fillStyle=sw.style.background;x.fillRect(W-90-vw-34,y+2,24,24);x.lineWidth=3;x.strokeStyle=DK;x.strokeRect(W-90-vw-34,y+2,24,24)}y+=56}});
+x.textAlign="center";x.fillStyle=DK;x.font="700 32px "+F;x.fillText(q(".ftq"),W/2,y+8);x.fillStyle=SB;x.font="500 22px "+F;x.fillText(location.href.replace(/^https?:\/\//,"").split("?")[0],W/2,y+54);return y+54+22+56};
+const t=document.createElement("canvas");t.width=W;t.height=3000;const Hc=card(t.getContext("2d"),3000),s=Math.min(1,FH/Hc),c=document.createElement("canvas");c.width=W*K;c.height=FH*K;const x=c.getContext("2d");x.scale(K,K);
+x.fillStyle=ftMix(AC,"#ffffff",.8);x.fillRect(0,0,W,FH);
+let sd=fth(q(".fth span")+mem)||7;const rnd=()=>(sd=Math.imul(sd,1664525)+1013904223>>>0)/4294967296;x.fillStyle=ftMix(AC,"#ffffff",.55);for(let i=0;i<70;i++){const px=Math.floor(rnd()*W/12)*12,py=Math.floor(rnd()*FH/12)*12;if(px>20&&px<W-44&&py>20&&py<FH-44)continue;x.fillRect(px,py,12,12);if(i%3===0){x.fillRect(px-12,py,12,12);x.fillRect(px+12,py,12,12);x.fillRect(px,py-12,12,12);x.fillRect(px,py+12,12,12)}}
+x.save();x.translate((W-W*s)/2,(FH-Hc*s)/2);x.scale(s,s);card(x,Hc);x.restore();
+c.toBlob(b=>{if(b)ftImgShow(b)},"image/png")}
+function ftBd(d){let r=null;const t0=new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);MEMBERS.forEach(m=>{if(m[0]==="BTS")return;[-1,0,1].forEach(o=>{const k=Math.round((new Date(d.getFullYear()+o,m[1]-1,m[2],12)-t0)/864e5);if(Math.abs(k)<=3&&(!r||Math.abs(k)<Math.abs(r.k)))r={m:m[0],k}})});return r}
+/* 連續抽籤稱號：3／7／30 天各升一階 */
+const FT_TIERS=[[0,"應援新手"],[3,"應援見習生"],[7,"應援達人"],[30,"應援傳說"]];
+function ftTier(n){let i=0;FT_TIERS.forEach((t,k)=>{if(n>=t[0])i=k});return i}
+function ftShow(){const d=new Date(),key=ftKey(d),M=MEMBERS.filter(m=>m[0]!=="BTS"),bd=ftBd(d),mb0=bd?bd.m:M[fth(key+"m")%M.length][0],n=bd?5:1+fth(key+"r")%5,rk=bd?"大吉":["末吉","吉","小吉","中吉","大吉"][fth(key+"r")%5],c=fth(key+"c")%2?"r":"b",tk=bd?{t:"去生日應援頁，看看有哪些應援"}:ftTask(key),t=tk.t,sg=ftPick(d),lc=FT_COL[fth(key+"k")%FT_COL.length],ln=1+fth(key+"n")%99,wd=FT_WORDS[fth(key+"w")%FT_WORDS.length];
+const td=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),yd=new Date(d.getFullYear(),d.getMonth(),d.getDate()-1);let st={};try{st=JSON.parse(localStorage.getItem("ftn-st")||"{}")||{}}catch(e){}
+if(st.last!==td){st.n=st.last===yd.getFullYear()+"-"+(yd.getMonth()+1)+"-"+yd.getDate()?(st.n||0)+1:1;st.last=td}
+st.col=Array.isArray(st.col)?st.col:[];if(!st.col.includes(mb0))st.col.push(mb0);const full=st.col.length>=M.length,mb=(!bd&&full&&st.pk&&st.pk.d===td&&M.some(m=>m[0]===st.pk.m))?st.pk.m:mb0;try{localStorage.setItem("ftn-st",JSON.stringify(st))}catch(e){}
+ftClose();const o=document.createElement("div");o.id="ftn";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
+const sn=st.n||1,ti=ftTier(sn),nx=FT_TIERS[ti+1];
+o.innerHTML=`<div class="ftc dr${ti?" t"+ti:""}${full?" fl":""}"><div class="fth"><b>今日應援籤</b><span>${d.getMonth()+1}/${d.getDate()}</span></div>${bd?`<div class="ftb">${bd.k===0?"🎂 今天是 "+esc(mb)+" 的生日！":"🎂 生日週特別籤"}</div>`:""}<div class="ftm">${esc(mb)}</div><div class="ftr"><span>應援運勢</span><b class="fts">${"★".repeat(n)}${"☆".repeat(5-n)} <em>${rk}</em></b></div><div class="ftr"><span>幸運應援</span><b class="ftk ${c}">${c==="b"?"藍・大聲喊":"紅・跟著唱"}</b></div><div class="ftr"><span>幸運色</span><b><i class="ftsw" style="background:${lc[1]}"></i>${lc[0]}</b></div><div class="ftr"><span>幸運號碼</span><b>${ln}</b></div><div class="ftr v"><span>今日任務</span><b>${t}</b></div><div class="ftr v"><span>今日一句話</span><b>${wd}</b></div><div class="ftr"><span>連續抽籤</span><b><i>${st.n||1}</i> 天</b></div>${FT_TIERS.some((t,k)=>k&&t[0]===sn)?`<div class="ftb">解鎖新稱號！</div>`:""}<div class="ftr"><span>稱號</span><b>${FT_TIERS[ti][1]}</b></div>${nx?`<div class="ftr ftx"><span>下一個稱號</span><b>${nx[1]}・連續 ${nx[0]} 天</b></div>`:""}<div class="ftr ftx"><span>成員圖鑑</span><b>${st.col.length}/${M.length}</b></div><div class="ftg">${M.map(m=>full?`<button type="button" class="ftl on${m[0]===mb?" sel":""}" data-pk="${esc(m[0])}">${esc(m[0])}</button>`:`<span class="ftl${st.col.includes(m[0])?" on":""}">${esc(m[0])}</span>`).join("")}</div>${full?`<div class="ftb">成員圖鑑集滿了！</div><div class="ftn2">點上面的成員，自選今天的籤</div>`:""}${sg?`<div class="ftr v"><span>今日推薦歌</span><b>${esc(sg.t)}</b></div>${gBest()[sg.t]?`<div class="ftr ftx"><span>遊戲最佳成績</span><b>${gBest()[sg.t].g}</b></div>`:""}<button type="button" class="btn" data-f="go">來玩這首</button>`:""}<div class="ftq" hidden>你抽到什麼？</div><div class="fta">${tk.go==="tour"?`<button type="button" class="btn" data-f="gt">去看巡演應援</button>`:tk.go==="bd"?`<button type="button" class="btn" data-f="gb">去看進行中的生日應援</button>`:""}${bd?`<button type="button" class="btn" data-f="bd">去看生日應援</button>`:""}<button type="button" class="btn" data-f="img">存成圖片</button><button type="button" class="btn" data-f="cp">複製文字</button><button type="button" class="btn" data-f="x">關閉</button></div></div>`;
+o.addEventListener("click",e=>{if(e.target===o){ftClose();return}const pk=e.target.closest("[data-pk]");if(pk){try{const z=JSON.parse(localStorage.getItem("ftn-st")||"{}")||{},t=new Date();z.pk={d:t.getFullYear()+"-"+(t.getMonth()+1)+"-"+t.getDate(),m:pk.dataset.pk};localStorage.setItem("ftn-st",JSON.stringify(z))}catch(x){}ftShow();return}const b=e.target.closest("[data-f]");if(!b)return;const f=b.dataset.f;
+if(f==="x")ftClose();
+else if(f==="img")ftImg(o);
+else if(f==="gt"){ftClose();gos("tour");window.scrollTo(0,0)}
+else if(f==="gb"){ftClose();gos("birthday");window.scrollTo(0,0)}
+else if(f==="bd"){ftClose();gos("birthday");try{mem=mb;head();chips();render()}catch(x){}window.scrollTo(0,0)}
+else if(f==="go"&&sg){ftClose();gos("songs");ALB=albOf(sg);SEL=sg.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}if(ftOK(sg))SMODE="g";songsR();window.scrollTo(0,0)}
+else if(f==="cp"){const tx=[...o.querySelectorAll(".ftc>div:not(.fta):not(.ftg):not(.ftn2):not(.ftq)")].map(q=>q.innerText.replace(/\s*\n\s*/g," ").trim()).join("\n")+"\n"+location.href.split("?")[0];
+const ok=()=>{b.textContent="已複製";setTimeout(()=>{b.textContent="複製文字"},1500)};try{navigator.clipboard.writeText(tx).then(ok,()=>{})}catch(x){}}});
+document.body.style.overflow="hidden";document.body.appendChild(o);const x=o.querySelector('[data-f="x"]');if(x)x.focus()}
+/* 今天第一次抽才播抽籤動畫（約 1.3 秒，點一下可略過）；抽過或系統設定減少動態就直接顯示 */
+function ftOpen(){let seen=false,rm=false;try{const d=new Date(),st=JSON.parse(localStorage.getItem("ftn-st")||"{}")||{};seen=st.last===d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}catch(e){}try{rm=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+if(seen||rm){ftShow();return}
+ftClose();const o=document.createElement("div");o.id="ftn";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
+o.innerHTML=`<div class="ftc ftdraw"><svg viewBox="0 0 20 20" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="1" width="1" height="8" fill="#e0a800"/><rect x="9" y="0" width="1" height="9" fill="#ff8fb3"/><rect x="12" y="2" width="1" height="7" fill="#6fb7ff"/><rect x="4" y="9" width="12" height="9" fill="#ffd23f"/><rect x="4" y="9" width="12" height="1" fill="#0b4fa8"/><rect x="4" y="17" width="12" height="1" fill="#0b4fa8"/><rect x="4" y="9" width="1" height="9" fill="#0b4fa8"/><rect x="15" y="9" width="1" height="9" fill="#0b4fa8"/><rect x="8" y="12" width="4" height="3" fill="#fff"/></svg><b>抽籤中…</b><small>點一下可略過</small></div>`;
+document.body.style.overflow="hidden";document.body.appendChild(o);
+let t=0;const go=()=>{clearTimeout(t);if(document.getElementById("ftn")===o)ftShow()};t=setTimeout(go,1300);o.addEventListener("click",go)}
+document.getElementById("ftnBtn").addEventListener("click",ftOpen);ftSync();document.addEventListener("visibilitychange",ftSync);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(document.getElementById("ftimg"))ftImgClose();else if(document.getElementById("ftn"))ftClose()}});
 function albOf(x){return(x.a||"").trim()||"其他"}
 /* 專輯封面：試算表「封面」欄優先；沒填就用這裡的對照（專輯名: 圖片路徑） */
 const ALBUM_COVERS={"ARIRANG":"IMG/IMG_1293.png"};
@@ -1081,16 +1236,20 @@ const SV=VIEW==="s"&&CL.length>0,G=SV?CL:AL;
 if(ALB&&!G.includes(ALB))ALB="";
 {const g=document.getElementById("svt");g.hidden=!CL.length;g.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v==="s"?SV:!SV)))}
 const wallOn=!ALB&&!kw;wall.hidden=!wallOn;view.hidden=wallOn;
-{const sb=document.getElementById("sback");sb.hidden=!ALB;const tx=SV?"← 全部演唱會":"← 全部專輯";if(sb.dataset.t!==tx){sb.textContent=tx;sb.dataset.t=tx}}
+{const sb=document.getElementById("sback");sb.hidden=!(ALB||kw);const tx=SV?"← 全部演唱會":"← 全部專輯";if(sb.dataset.t!==tx){sb.textContent=tx;sb.dataset.t=tx}}
 if(wallOn){document.getElementById("sn").textContent=G.length?(SV?SONGS.filter(x=>songCons(x).length).length:SONGS.length)+" 首歌":"";
 wall.innerHTML=G.length?G.map(a=>{const n=SV?CN[a]:SONGS.filter(x=>albOf(x)===a).length,c=SV?conCover(a):albCover(a);return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(a)}">${esc(a)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(a)}</b><span class="n">${n} 首歌</span></button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
 box.innerHTML="";tabs.innerHTML="";return}
-const L=SONGS.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
+const L=SONGS.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")+" "+songCons(x).map(c=>c.n).join(" ")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
 document.getElementById("sn").textContent=L.length+" 首歌";
 if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不到符合的歌曲":"還沒有收錄歌曲"}</div>`;return}
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
-tabs.innerHTML=L.map((x,i)=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${SV&&ALB?(i+1)+". ":""}${esc(x.t)}</button>`).join("");
-{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);fsApply();ktvFit();songPlayer(navigator.onLine===false?"":songVid(x))}}
+{const ci=Math.max(0,L.findIndex(x=>x.t===SEL)),nm=(x,i)=>(SV&&ALB?(i+1)+". ":"")+esc(x.t),gb=x=>(gBest()[x.t]||{}).g||"";
+tabs.innerHTML=`<div class="snav"><button type="button" class="sbtn" data-sn="-1" aria-label="上一首" title="上一首"${ci<=0?" disabled":""}>←</button><select id="ssel" aria-label="選擇歌曲">${L.map((x,i)=>`<option value="${esc(x.t)}"${i===ci?" selected":""}>${nm(x,i)}${gb(x)?" ・ "+gb(x):""}</option>`).join("")}</select><button type="button" class="sbtn" data-sn="1" aria-label="下一首" title="下一首"${ci>=L.length-1?" disabled":""}>→</button></div>`+L.map((x,i)=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${nm(x,i)}${gb(x)?`<em class="gsg">${gb(x)}</em>`:""}</button>`).join("")}
+{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);fsApply();ktvFit();songPlayer(navigator.onLine===false?"":songVid(x));try{gameInit(x)}catch(e){}}}
+const pickSong=v=>{SEL=v;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()};
+document.getElementById("stabs").addEventListener("change",e=>{if(!e.target.closest("#ssel"))return;pickSong(e.target.value);const s=document.getElementById("ssel");if(s)s.focus()});
+document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest("[data-sn]");if(!b||b.disabled)return;const s=document.getElementById("ssel");if(!s)return;const i=s.selectedIndex+ +b.dataset.sn;if(i<0||i>=s.options.length)return;pickSong(s.options[i].value);const nb=document.querySelector('#stabs [data-sn="'+b.dataset.sn+'"]');(nb&&!nb.disabled?nb:document.getElementById("ssel")).focus()});
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;SEL=b.dataset.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()});
 document.getElementById("swall").addEventListener("click",e=>{const b=e.target.closest(".alb");if(!b)return;const w=document.getElementById("swall");if(w.classList.contains("leaving"))return;
 const go=()=>{w.classList.remove("leaving");b.classList.remove("pick");ALB=b.dataset.a;songsR();window.scrollTo(0,0)};
@@ -1173,7 +1332,7 @@ if(dn){x.fillStyle=C.card;x.fillRect(bx,by,ic,ic);x.lineWidth=Math.max(4,ic*.08)
 const u=ic/10;x.fillStyle=C.ok;[[2,5],[3,6],[4,7],[5,6],[6,5],[7,4],[8,3]].forEach(([px,py])=>x.fillRect(bx+px*u-u*.5,by+py*u-u*1.4,u,u*1.5));
 x.fillRect(bx+u*1.2,by+u*1.2,u*.7,u*.7);x.fillRect(bx+ic-u*1.9,by+ic-u*1.9,u*.7,u*.7)}
 else if(stat(d)==="已結束"){x.fillStyle="#9aa3c7";const u=ic*.11;for(let j=0;j<5;j++){x.fillRect(bx+ic*.2+j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1);x.fillRect(bx+ic*.8-u*1.1-j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1)}}
-x.font="400 "+fs+"px "+PF;x.fillStyle=dn?"#0b2a5b":C.ink;x.textBaseline="middle";
+x.font="400 "+fs+"px "+PF;x.fillStyle=C.ink;x.textBaseline="middle";
 const ty=String(d.type||""),em=ty.includes("廣告車")?"truck":ty.includes("公車")?"bus":ty.includes("電視牆")?"tv":ty.includes("咖啡")?"cafe":ty.includes("快閃")?"shop":ty.includes("展覽")?"expo":ty.includes("企劃")?"mega":"",pu=Math.max(2,Math.floor(fs*.95/8)),ew=em?pu*8+16:0;
 const dts=dn&&dd[d.id]?dd[d.id]:"";let dw=0;if(dts){x.font="400 "+Math.max(24,Math.round(fs*.78))+"px "+PF;dw=x.measureText(dts).width+28}
 x.font="400 "+fs+"px "+PF;
@@ -1218,7 +1377,7 @@ if(t.id==="allOn"){const n=new Date(),ds=(n.getMonth()+1)+"/"+n.getDate();let c=
 wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已一鍵打卡 "+c+" 個")}
 else{const c=L.filter(d=>done.has(d.id));if(!c.length){toast("目前沒有已打卡的項目");return}if(!await pxConfirm("確定要取消全部打卡（"+c.length+" 個）？\nClear all "+c.length+" check-ins?","確定取消","保留"))return;c.forEach(d=>{done.delete(d.id);delete dd[d.id]});
 wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已取消全部打卡")}});
-try{[["✔ 一鍵打卡","✔ Check in all","✔ 한 번에 체크인","✔ ワンタップで全部チェックイン"],["↺ 取消全部打卡","↺ Clear all check-ins","↺ 체크인 전체 취소","↺ チェックインを全部取り消す"],["沒有可打卡的項目","Nothing to check in","체크인할 항목이 없어요","チェックインできる項目がありません"],["目前沒有已打卡的項目","No check-ins to clear","취소할 체크인이 없어요","取り消せるチェックインはありません"],["已取消全部打卡","All check-ins cleared","체크인을 모두 취소했어요","チェックインを全部取り消しました"],["顏色說明","Color guide","색상 안내","色の見方"],["藍色＝大聲喊","Blue = shout loud","파랑 = 크게 외치기","青＝大声で叫ぶ"],["紅色＝跟著唱","Red = sing along","빨강 = 따라 부르기","赤＝一緒に歌う"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
+try{[["✔ 一鍵打卡","✔ Check in all","✔ 한 번에 체크인","✔ ワンタップで全部チェックイン"],["↺ 取消全部打卡","↺ Clear all check-ins","↺ 체크인 전체 취소","↺ チェックインを全部取り消す"],["沒有可打卡的項目","Nothing to check in","체크인할 항목이 없어요","チェックインできる項目がありません"],["目前沒有已打卡的項目","No check-ins to clear","취소할 체크인이 없어요","取り消せるチェックインはありません"],["已取消全部打卡","All check-ins cleared","체크인을 모두 취소했어요","チェックインを全部取り消しました"],["上一首","Previous song","이전 곡","前の曲"],["下一首","Next song","다음 곡","次の曲"],["顏色說明","Color guide","색상 안내","色の見方"],["藍色＝大聲喊","Blue = shout loud","파랑 = 크게 외치기","青＝大声で叫ぶ"],["紅色＝跟著唱","Red = sing along","빨강 = 따라 부르기","赤＝一緒に歌う"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
 
 function eq(){const L=document.querySelectorAll("#list .card");L.forEach(c=>{c.querySelector(".hd").style.minHeight="";c.querySelector(".box").style.minHeight="";c.querySelector(".act").style.minHeight=""});if(innerWidth<720)return;
 for(const k of [".hd",".box",".act"]){const g={};L.forEach(c=>{(g[c.offsetTop]=g[c.offsetTop]||[]).push(c)});Object.values(g).forEach(a=>{const m=Math.max(...a.map(c=>c.querySelector(k).offsetHeight));a.forEach(c=>c.querySelector(k).style.minHeight=m+"px")})}}
