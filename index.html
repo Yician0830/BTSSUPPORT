@@ -392,7 +392,7 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .wall .alb .cv{order:1;display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:0 7px 9px -5px rgba(6,26,64,.55);background:var(--card);overflow:hidden;transition:transform .15s;margin-bottom:-1px}
 .wall .alb:hover .cv,.wall .alb:focus-visible .cv{transform:translateY(-6px) rotate(-1.5deg)}
 .wall .alb:active .cv{transform:translateY(-2px)}
-.wall .alb img{display:block;width:100%;height:100%;object-fit:cover}
+.wall .alb img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--card)}
 .wall .alb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;font-weight:900;font-size:clamp(16px,4.5vw,24px);line-height:1.2;color:#fff;text-shadow:2px 2px 0 rgba(6,26,64,.45);background:linear-gradient(145deg,hsl(var(--h) 75% 55%),hsl(calc(var(--h) + 50) 70% 35%))}
 .wall .alb::after{content:"";order:2;display:block;height:9px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(150,200,245,.5) 60%,rgba(110,170,235,.6));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(90,150,225,.75);border-radius:0 0 5px 5px;box-shadow:0 8px 12px -6px rgba(20,80,160,.45)}
 :root[data-theme="dark"] .wall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}
@@ -881,7 +881,7 @@ if(ALB&&!AL.includes(ALB))ALB="";
 const wallOn=!ALB&&!kw;wall.hidden=!wallOn;view.hidden=wallOn;
 document.getElementById("sback").hidden=!ALB;
 if(wallOn){document.getElementById("sn").textContent=AL.length?SONGS.length+" 首歌":"";
-wall.innerHTML=AL.length?AL.map(a=>{const n=SONGS.filter(x=>albOf(x)===a).length,c=albCover(a);return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv">${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span class="ph" style="--h:${albHue(a)}">${esc(a)}</span></span><b>${esc(a)}</b><span class="n">${n} 首歌</span></button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
+wall.innerHTML=AL.length?AL.map(a=>{const n=SONGS.filter(x=>albOf(x)===a).length,c=albCover(a);return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(a)}">${esc(a)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(a)}</b><span class="n">${n} 首歌</span></button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
 box.innerHTML="";tabs.innerHTML="";return}
 const L=SONGS.filter(x=>(!ALB||albOf(x)===ALB)&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw)));
 document.getElementById("sn").textContent=L.length+" 首歌";
