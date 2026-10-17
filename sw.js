@@ -2,7 +2,9 @@
    更新網站內容後，把下面的 VER 改一個值，舊快取就會被清掉。 */
 const VER="v15",CORE="core-"+VER,RUN="run-"+VER;
 const FILES=["./","index.html","data.js","i18n.js","manifest.json","icon-192.png","icon-512.png"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(CORE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
+/* 選用檔（專輯封面等）：檔案還沒放上去也不會讓安裝失敗。新增封面可以加在這裡，沒加的封面會在第一次看到時自動存起來。 */
+const OPT=["IMG/IMG_1293.png"];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CORE).then(c=>c.addAll(FILES).then(()=>Promise.all(OPT.map(f=>c.add(f).catch(()=>{}))))).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CORE&&n!==RUN).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});
 const put=(name,req,res)=>{if(res&&(res.ok||res.type==="opaque"))caches.open(name).then(c=>c.put(req,res.clone()));return res};
 function netFirst(req,name,ms){return new Promise(ok=>{let done=false;
