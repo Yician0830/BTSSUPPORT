@@ -501,6 +501,7 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .topr .fsz output{min-width:38px}
 .topr .act{margin:0;padding:0;gap:6px;flex-wrap:nowrap}
 .topr .act .btn{padding:5px 9px;font-size:12px;white-space:nowrap}
+.card.song>.sr{padding-top:40px}
 }
 @media(max-width:999px){
 .card.song{display:flex;flex-direction:column}
@@ -510,39 +511,50 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .card.song>.sr>*{order:3}
 .card.song>.topr>.act{order:4}
 }
-/* 影片下方進度條 */
-.kbar{--bb:#3b6fe0;--br:#e0245e;--bo:#c77a12;position:relative;height:24px;margin:6px 0 0;border:2px solid var(--dark);background:var(--box);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kbar{--bb:#8fb4ff;--br:#ff9ec0;--bo:#ffc069}}
-:root[data-theme="dark"] .kbar{--bb:#8fb4ff;--br:#ff9ec0;--bo:#ffc069}
-.kbar .kf{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--dark) 28%,transparent);pointer-events:none}
-.kbar i{position:absolute;top:3px;bottom:3px;width:4px;margin-left:-2px}
+/* 影片下方進度條：像素方塊、ARMY Bomb 播放位置、應援刻度、時間與下一個應援 */
+.kinfo,.kbar{--bb:#3b6fe0;--br:#e0245e;--bo:#c77a12}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.kinfo,.kbar){--bb:#8fb4ff;--br:#ff9ec0;--bo:#ffc069}}
+:root[data-theme="dark"] :is(.kinfo,.kbar){--bb:#8fb4ff;--br:#ff9ec0;--bo:#ffc069}
+.kinfo{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;font-size:12px;font-weight:800;line-height:16px;color:var(--sub);font-variant-numeric:tabular-nums}
+.kinfo #knx{flex:1;min-width:0;text-align:center;color:var(--ink);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.kinfo b{font-weight:900}.kinfo .kc-b{color:var(--bb)}.kinfo .kc-r{color:var(--br)}.kinfo .kc-o{color:var(--bo)}
+.kbar{box-sizing:border-box;position:relative;height:18px;margin:14px 0 0;border:2px solid var(--dark);background-color:var(--box);background-image:repeating-linear-gradient(90deg,color-mix(in srgb,var(--sub) 38%,transparent) 0 6px,transparent 6px 8px);background-repeat:no-repeat;background-size:100% 8px;background-position:0 center;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.kbar .kf{position:absolute;left:0;top:3px;height:8px;width:0;background-image:repeating-linear-gradient(90deg,var(--dark) 0 6px,transparent 6px 8px);pointer-events:none}
+.kbar i{position:absolute;top:-5px;bottom:-5px;width:4px;margin-left:-2px;box-shadow:0 0 0 2px var(--card)}
 .kbar i.b{background:var(--bb)}.kbar i.r{background:var(--br)}.kbar i.o{background:var(--bo)}
-.kbar .kn{position:absolute;top:-3px;bottom:-3px;width:3px;margin-left:-1px;background:var(--ink);pointer-events:none}
-@media(max-width:999px){.song.ktvm .ktv{max-height:calc(100vh - 430px);max-height:calc(100dvh - 430px)}}
-/* 目前行左邊的像素游標 ▶（閃爍） */
-:root{--kcur:var(--dark)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--kcur:#7fd4ff}}
-:root[data-theme="dark"]{--kcur:#7fd4ff}
-.ktv .kb{position:relative;padding-left:24px;padding-right:24px}
-.ktv .kb.on::before{content:"";position:absolute;left:12px;top:50%;width:12px;height:16px;margin-top:-8px;background:var(--kcur);clip-path:polygon(0 0,40% 0,40% 14%,60% 14%,60% 28%,80% 28%,80% 43%,100% 43%,100% 57%,80% 57%,80% 72%,60% 72%,60% 86%,40% 86%,40% 100%,0 100%);animation:kcur 1s steps(1,end) infinite}
-@keyframes kcur{0%{opacity:1}60%{opacity:0}}
-@media(prefers-reduced-motion:reduce){.ktv .kb.on::before{animation:none}}
-/* BTS 紫色輔色：收藏、KTV 目前行外框與游標、集章完成 */
-:root{--pur:#7b4fd6;--purbg:#efe7ff;--kon-bg:var(--purbg);--kon-ring:inset 0 0 0 2px var(--pur),inset 6px 0 0 var(--pur);--kcur:var(--pur)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--pur:#b79cff;--purbg:#2a1d5a;--kon-bg:rgba(183,156,255,.2);--kon-ring:inset 0 0 0 2px #b79cff,inset 6px 0 0 #b79cff,0 0 16px rgba(183,156,255,.4);--kcur:#b79cff}}
-:root[data-theme="dark"]{--pur:#b79cff;--purbg:#2a1d5a;--kon-bg:rgba(183,156,255,.2);--kon-ring:inset 0 0 0 2px #b79cff,inset 6px 0 0 #b79cff,0 0 16px rgba(183,156,255,.4);--kcur:#b79cff}
-.heart[aria-pressed="true"]{color:var(--pur);border-color:var(--pur);background:var(--purbg);box-shadow:3px 3px 0 var(--pur)}
-.fav[aria-pressed="true"]{background:var(--pur);color:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fav[aria-pressed="true"]{color:#1a1030}}
-:root[data-theme="dark"] .fav[aria-pressed="true"]{color:#1a1030}
-.card.done{border-color:var(--pur)}
-.stamp{border-color:var(--pur)}
+.kbar i.p{opacity:.3}
+.kbar i.nx{animation:kblink .8s steps(1,end) infinite}
+@keyframes kblink{50%{opacity:.25}}
+.kbar .kn{position:absolute;top:-14px;width:14px;height:22px;margin-left:-7px;pointer-events:none;z-index:2;image-rendering:pixelated;background:url("%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 14' shape-rendering='crispEdges'%3E%3Cg fill='%239b6dff'%3E%3Crect x='3' y='0' width='3' height='1'/%3E%3Crect x='2' y='1' width='5' height='1'/%3E%3Crect x='1' y='2' width='7' height='4'/%3E%3Crect x='2' y='6' width='5' height='1'/%3E%3C/g%3E%3Cg fill='%23e9ddff'%3E%3Crect x='2' y='2' width='1' height='2'/%3E%3Crect x='3' y='1' width='1' height='1'/%3E%3C/g%3E%3Crect x='2' y='7' width='5' height='1' fill='%23ffffff'/%3E%3Crect x='3' y='8' width='3' height='6' fill='%238f86d6'/%3E%3C/svg%3E") no-repeat center/contain}
+@media(prefers-reduced-motion:reduce){.kbar i.nx{animation:none}}
+@media(max-width:999px){.song.ktvm .ktv{max-height:calc(100vh - 456px);max-height:calc(100dvh - 456px)}}
+/* 集章簿格子、已打卡按鈕也用紫色（「進行中」標籤維持綠色） */
+.slot.on{border-color:var(--pur);background:var(--purbg)}
+.btn.ok{background:var(--purbg);color:var(--pur);border-color:var(--pur);box-shadow:0 3px 0 var(--pur)}
+/* 像素風確認視窗 */
+.pxc{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,24,58,.72)}
+.pxc-box{width:min(92vw,380px);box-sizing:border-box;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:20px 18px 16px;animation:pxcIn .18s steps(3,end)}
+.pxc-ic{width:34px;height:34px;display:grid;place-items:center;margin:0 0 10px;background:var(--pur,#7b4fd6);color:#fff;font-family:var(--px);font-size:22px;font-weight:900;line-height:1;box-shadow:3px 3px 0 var(--line)}
+.pxc-t{font-family:var(--px);font-size:18px;line-height:1.5;letter-spacing:.02em}
+.pxc-s{margin-top:4px;font-size:13px;font-weight:700;color:var(--sub)}
+.pxc-b{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.pxc-b .btn{min-width:84px;justify-content:center}
+@keyframes pxcIn{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.pxc-box{animation:none}}
+/* 手機版 KTV 歌詞：畫面上的「100%」實際只有原本的 85% 大小，「85%」則再等比縮小 */
+@media(max-width:999px){.kl{font-size:calc(19px*var(--sfs,1)*.85)}.kl.h{font-size:calc(15px*var(--sfs,1)*.85)}
+/* 手機版 [] 整行與 {} 內的字固定 19px（仍跟著字級按鈕縮放，不吃 0.85） */
+.ktv .kb .kl .cl,.ktv .kb.on .kl .cl,.kl .ib,.kl .ir,.kl .io{font-size:calc(19px*var(--sfs,1))}}
 .sgt .cl.b{color:#1a5fd0}
 .sgt .cl.r{color:#e0245e}
 .sgt .cl.o{color:#c77a12}
 .sgt .ib{font-weight:900;color:#1a5fd0}
 .sgt .ir{font-weight:900;color:#e0245e}
 .sgt .io{font-weight:900;color:#c77a12}
+/* 一般模式（空耳／應援法）深色模式：換成亮色，深藍底上才看得清楚 */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sgt .cl.b,:root:not([data-theme="light"]) .sgt .ib{color:#6aa5ff}:root:not([data-theme="light"]) .sgt .cl.r,:root:not([data-theme="light"]) .sgt .ir{color:#ff6f9f}:root:not([data-theme="light"]) .sgt .cl.o,:root:not([data-theme="light"]) .sgt .io{color:#ffb347}}
+:root[data-theme="dark"] .sgt .cl.b,:root[data-theme="dark"] .sgt .ib{color:#6aa5ff}:root[data-theme="dark"] .sgt .cl.r,:root[data-theme="dark"] .sgt .ir{color:#ff6f9f}:root[data-theme="dark"] .sgt .cl.o,:root[data-theme="dark"] .sgt .io{color:#ffb347}
+
 .upd:empty{display:none}
 .pre-inner #homeBox,.pre-inner #notesBox{display:none}
 .pre-inner .hero h1,.pre-inner .script,.pre-inner .show{visibility:hidden}
@@ -997,15 +1009,19 @@ function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v
 function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
 function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(ok(v))b.push(`<a class="btn" target="_blank" rel="noopener" href="${esc(v)}">影片／參考 ↗</a>`);if(ok(x.o))b.push(`<a class="btn of" target="_blank" rel="noopener" href="${esc(x.o)}">官方應援歌詞 ↗</a>`);return b.length?`<div class="act">${b.join("")}</div>`:""}
 function songCard(x){const off=navigator.onLine===false,vid=songVid(x),T=vid?songTimed(x):[],k=vid&&!off&&SMODE==="k";
-const media=vid?(off?`<div class="khint">離線中：影片和 KTV 模式要有網路才能用，下面的空耳與應援法還是可以看。</div>`:`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>${k?`<div class="kbar" id="kbar" title="點一下跳到那裡；彩色刻度是應援位置"></div>`:""}`):"";
+const media=vid?(off?`<div class="khint">離線中：影片和 KTV 模式要有網路才能用，下面的空耳與應援法還是可以看。</div>`:`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>${k?`<div class="kinfo"><span id="kt0">0:00</span><span id="knx"></span><span id="kt1">0:00</span></div><div class="kbar" id="kbar" title="點一下跳到那裡；彩色刻度是應援位置"></div>`:""}`):"";
 const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map((g,j,A)=>`<div class="kb" data-s="${g.s}" data-e="${A[j+1]?A[j+1].s:g.s+6}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
 return `<article class="card song${k?" ktvm":""}"><div class="topr"><div class="fsz"><span>字級</span><button type="button" class="chip" data-fs="-1" aria-label="縮小字級" title="縮小字級">A−</button><output id="fso" aria-live="polite"></output><button type="button" class="chip" data-fs="1" aria-label="放大字級" title="放大字級">A＋</button></div>${songLinks(x)}</div><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr">${body}</div></article>`}
 let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null,KS=false,KU=0;
 /* 手動滑動歌詞後，暫停自動捲動 8 秒；按「回到目前這句」或時間到就恢復 */
 /* 影片下方進度條：彩色刻度＝應援位置（藍/紅/橘），點一下跳到那裡（靠近刻度會吸附到該刻度前 1 秒） */
+function kfmt(t){t=Math.max(0,Math.floor(t));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
 function ktvBarUpd(t){const b=document.getElementById("kbar"),k=document.getElementById("ktv");if(!b||!k||!YP||!YP.getDuration)return;const d=YP.getDuration();if(!d)return;
-if(b.dataset.d!==String(d)){let h='<div class="kf"></div>';[...k.children].forEach(el=>{const q=el.querySelector(".cl.b,.cl.r,.cl.o,.ib,.ir,.io");if(!q)return;const c=q.classList.contains("b")||q.classList.contains("ib")?"b":q.classList.contains("r")||q.classList.contains("ir")?"r":"o";h+=`<i class="${c}" style="left:${(+el.dataset.s/d*100).toFixed(2)}%" data-s="${el.dataset.s}"></i>`});b.innerHTML=h+'<div class="kn"></div>';b.dataset.d=String(d)}
-const p=Math.min(100,Math.max(0,t/d*100))+"%";b.querySelector(".kf").style.width=p;b.querySelector(".kn").style.left=p}
+if(b.dataset.d!==String(d)){let h='<div class="kf"></div>';[...k.children].forEach(el=>{const q=el.querySelector(".cl.b,.cl.r,.cl.o,.ib,.ir,.io");if(!q)return;const c=q.classList.contains("b")||q.classList.contains("ib")?"b":q.classList.contains("r")||q.classList.contains("ir")?"r":"o";h+=`<i class="${c}" data-c="${c}" style="left:${(+el.dataset.s/d*100).toFixed(2)}%" data-s="${el.dataset.s}"></i>`});b.innerHTML=h+'<div class="kn"></div>';b.dataset.d=String(d);b._n=-2;const e1=document.getElementById("kt1");if(e1)e1.textContent=kfmt(d)}
+const W=b.clientWidth,pc=Math.min(1,Math.max(0,t/d));b.querySelector(".kf").style.width=Math.round(pc*W/8)*8+"px";b.querySelector(".kn").style.left=pc*100+"%";
+const e0=document.getElementById("kt0");if(e0)e0.textContent=kfmt(t);
+const ts=b.querySelectorAll("i");let nx=-1;for(let i=0;i<ts.length;i++){if(+ts[i].dataset.s>t+.2){nx=i;break}}
+if(b._n!==nx){b._n=nx;ts.forEach((el,i)=>{el.classList.toggle("p",nx===-1||i<nx);el.classList.toggle("nx",i===nx)});const x=document.getElementById("knx");if(x){if(nx<0)x.textContent=ts.length?"沒有更多應援了":"";else{const el=ts[nx],c=el.dataset.c,N={b:["藍","大聲喊"],r:["紅","跟著唱"],o:["橘","提醒"]}[c];x.innerHTML=`下一個：<b class="kc-${c}">${N[0]}・${N[1]}</b> ${kfmt(+el.dataset.s)}`}}}
 document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("#kbar");if(!b||!YP||!YP.seekTo)return;const d=+b.dataset.d;if(!d)return;const x=e.clientX-b.getBoundingClientRect().left;let t=x/b.clientWidth*d,bd=1e9,bs=null;b.querySelectorAll("i").forEach(i=>{const dd=Math.abs(i.offsetLeft+i.offsetWidth/2-x);if(dd<bd){bd=dd;bs=i}});if(bs&&bd<14)t=Math.max(0,+bs.dataset.s-1);KU=0;ktvBtn(false);KA=-1;YP.seekTo(t,true);YP.playVideo&&YP.playVideo()});
 function ktvBtn(on){let b=document.getElementById("ktvBack");if(!b){if(!on)return;b=document.createElement("button");b.id="ktvBack";b.type="button";b.textContent="↓ 回到目前這句";b.addEventListener("click",e=>{e.stopPropagation();KU=0;KA=-1;ktvBtn(false);try{ktvTick()}catch(x){}});document.body.appendChild(b)}b.classList.toggle("on",!!on)}
 function ktvPause(e){if(!e.target.closest||!e.target.closest("#ktv")||!YP)return;KU=Date.now()+8000;ktvBtn(true)}
@@ -1187,10 +1203,20 @@ if(can){try{await navigator.share({files:[file],title:"應援集章"})}catch(x){
 else{const a=document.createElement("a");a.href=url;a.download="stamp-book.png";document.body.appendChild(a);a.click();a.remove();toast("已儲存圖片")}}});
 document.addEventListener("keydown",esc);document.body.appendChild(o)}
 document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("#saveImg"))saveCard()});
-document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#allOn,#allOff");if(!t)return;const L=bookItems();
+/* 像素風確認視窗，取代瀏覽器內建的 confirm() */
+function pxConfirm(msg,okText,noText){return new Promise(res=>{const [a,...r]=String(msg).split("\n"),o=document.createElement("div");o.className="pxc";o.setAttribute("role","alertdialog");o.setAttribute("aria-modal","true");
+const box=document.createElement("div");box.className="pxc-box";
+const ic=document.createElement("div");ic.className="pxc-ic";ic.setAttribute("aria-hidden","true");ic.textContent="!";
+const t=document.createElement("div");t.className="pxc-t";t.textContent=a;box.append(ic,t);
+if(r.length){const q=document.createElement("div");q.className="pxc-s";q.textContent=r.join(" ");box.appendChild(q)}
+const bs=document.createElement("div");bs.className="pxc-b";const no=document.createElement("button"),ok=document.createElement("button");no.type=ok.type="button";no.className="btn";ok.className="btn main";no.textContent=noText||"取消";ok.textContent=okText||"確定";bs.append(no,ok);box.appendChild(bs);o.appendChild(box);
+const fin=v=>{document.removeEventListener("keydown",kd,true);o.remove();res(v)},kd=e=>{if(e.key==="Escape"){e.preventDefault();fin(false)}};
+no.addEventListener("click",()=>fin(false));ok.addEventListener("click",()=>fin(true));o.addEventListener("click",e=>{if(e.target===o)fin(false)});
+document.addEventListener("keydown",kd,true);document.body.appendChild(o);no.focus()})}
+document.addEventListener("click",async e=>{const t=e.target.closest&&e.target.closest("#allOn,#allOff");if(!t)return;const L=bookItems();
 if(t.id==="allOn"){const n=new Date(),ds=(n.getMonth()+1)+"/"+n.getDate();let c=0;L.forEach(d=>{if(done.has(d.id)||stat(d)==="已結束"||(d.chg&&/^取消/.test(d.chg)))return;done.add(d.id);dd[d.id]=ds;c++});if(!c){toast("沒有可打卡的項目");return}
 wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已一鍵打卡 "+c+" 個")}
-else{const c=L.filter(d=>done.has(d.id));if(!c.length){toast("目前沒有已打卡的項目");return}if(!confirm("確定要取消全部打卡（"+c.length+" 個）？\nClear all "+c.length+" check-ins?"))return;c.forEach(d=>{done.delete(d.id);delete dd[d.id]});
+else{const c=L.filter(d=>done.has(d.id));if(!c.length){toast("目前沒有已打卡的項目");return}if(!await pxConfirm("確定要取消全部打卡（"+c.length+" 個）？\nClear all "+c.length+" check-ins?","確定取消","保留"))return;c.forEach(d=>{done.delete(d.id);delete dd[d.id]});
 wr("kh-done",done);try{localStorage.setItem("kh-donedate",JSON.stringify(dd))}catch(x){}render();toast("已取消全部打卡")}});
 try{[["✔ 一鍵打卡","✔ Check in all","✔ 한 번에 체크인","✔ ワンタップで全部チェックイン"],["↺ 取消全部打卡","↺ Clear all check-ins","↺ 체크인 전체 취소","↺ チェックインを全部取り消す"],["沒有可打卡的項目","Nothing to check in","체크인할 항목이 없어요","チェックインできる項目がありません"],["目前沒有已打卡的項目","No check-ins to clear","취소할 체크인이 없어요","取り消せるチェックインはありません"],["已取消全部打卡","All check-ins cleared","체크인을 모두 취소했어요","チェックインを全部取り消しました"],["顏色說明","Color guide","색상 안내","色の見方"],["藍色＝大聲喊","Blue = shout loud","파랑 = 크게 외치기","青＝大声で叫ぶ"],["紅色＝跟著唱","Red = sing along","빨강 = 따라 부르기","赤＝一緒に歌う"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
 
