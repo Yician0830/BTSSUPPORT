@@ -401,6 +401,9 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 :is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) :is(.reef,.hero p,.script,.upd,.show){display:none}
 :is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .fav{position:static;margin:0;padding:6px 14px}
 body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;gap:0 14px;margin:0;padding:4px 10px;font-size:13px}
+.intro{display:none}
+:is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .hero h1{padding-right:112px}
+:is(body:has(#app:not([hidden])),body:has(#songs:not([hidden]))) .intro{display:block;flex:1 0 100%;margin:0;font-size:13px;line-height:1.6;opacity:.92}
 #members .chip{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 14px;line-height:1.25}
 #members .cdn{font-size:11px;font-weight:600;opacity:.8}
 </style>
@@ -412,6 +415,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <section class="hero">
 <div class="script" id="scr">ARMY FAN PROJECTS</div>
 <h1>BTS 應援地圖</h1>
+<div class="intro" id="intro"></div>
 <p>本頁為非官方的應援資訊整理與分享。內容與主辦單位立場不代表本站，請依各主辦最新公告與現場規定參加，並自行評估。</p>
 <div class="show" id="show"><span>選擇你想看的應援</span></div>
 <div class="upd" id="upd"></div>
@@ -552,10 +556,10 @@ const home=sec==="home",tour=sec==="tour",bd=sec==="birthday";
 $("#homeBox").hidden=!home;$("#notesBox").hidden=!home;{const an=$("#ann");if(an){if(!home)an.hidden=true;else try{annR()}catch(e){}}}$("#app").hidden=home||sec==="songs";$("#songs").hidden=sec!=="songs";$("#favBtn").hidden=home||sec==="songs";
 $("#cities").hidden=!tour;$("#days").hidden=!tour;$("#members").hidden=!bd;$("#regions").hidden=!bd;$("#nextBd").hidden=!bd;
 const h=document.querySelector(".hero h1");
-if(home){h.textContent="BTS 應援地圖";$("#scr").textContent="ARMY FAN PROJECTS";$("#show").innerHTML="<span>選擇你想看的應援</span>";document.title="BTS 應援地圖";return}
-if(sec==="songs"){h.textContent="歌曲空耳／應援";$("#scr").textContent="SONG GUIDE";$("#show").innerHTML="<span>演唱會歌曲的空耳與應援法整理</span>";document.title="歌曲空耳／應援｜BTS 應援地圖";try{songsR()}catch(e){}return}
-if(bd){h.textContent="BTS 生日應援地圖";$("#scr").textContent="Happy Birthday";$("#show").innerHTML="<span>各成員生日與 BTS 出道周年應援整理</span>";document.title="BTS 生日應援地圖";members();regions();return}
-const c=CITIES[city];h.textContent="ARIRANG 巡演粉絲應援地圖";$("#show").innerHTML=c.show.map(x=>`<span>${x}</span>`).join("");$("#scr").textContent="ARIRANG in "+c.en;document.title="ARIRANG 巡演粉絲應援地圖｜"+c.name;
+if(home){$("#intro").textContent="";h.textContent="BTS 應援地圖";$("#scr").textContent="ARMY FAN PROJECTS";$("#show").innerHTML="<span>選擇你想看的應援</span>";document.title="BTS 應援地圖";return}
+if(sec==="songs"){h.textContent="歌曲空耳／應援";$("#scr").textContent="SONG GUIDE";$("#intro").textContent="整理每首歌的空耳和應援法，現場跟著喊";$("#show").innerHTML="<span>演唱會歌曲的空耳與應援法整理</span>";document.title="歌曲空耳／應援｜BTS 應援地圖";try{songsR()}catch(e){}return}
+if(bd){h.textContent="BTS 生日應援地圖";$("#scr").textContent="Happy Birthday";$("#intro").textContent="依成員整理的生日與 BTS 出道周年應援，有倒數";$("#show").innerHTML="<span>各成員生日與 BTS 出道周年應援整理</span>";document.title="BTS 生日應援地圖";members();regions();return}
+const c=CITIES[city];h.textContent="ARIRANG 巡演粉絲應援地圖";$("#show").innerHTML=c.show.map(x=>`<span>${x}</span>`).join("");$("#scr").textContent="ARIRANG in "+c.en;$("#intro").textContent="高雄、香港場次的應援地圖，附日期分頁與打卡集章";document.title="ARIRANG 巡演粉絲應援地圖｜"+c.name;
 $("#cities").innerHTML=Object.keys(CITIES).map(k=>`<button class="chip" aria-pressed="${k===city}" data-city="${k}">${CITIES[k].name}</button>`).join("");days()}
 function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開始"&&d.start)return Math.round((day0(d.start)-today0())/864e5);return t==="即將開始"?9998:9999}
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
