@@ -376,6 +376,27 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .sg summary{cursor:pointer;font-weight:800;padding:8px 12px}
 .sgt{line-height:1.8;padding:4px 12px 12px;font-size:15px}
 #songs .search{max-width:none;width:100%;box-sizing:border-box;margin:8px 0}
+#slist{grid-template-columns:1fr}
+.wall{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 0;padding:8px 0 24px}
+@media(min-width:560px){.wall{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:720px){.wall{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1200px){.wall{grid-template-columns:repeat(5,1fr)}}
+.wall .alb{position:relative;display:block;border:0;background:none;padding:0 14px;font:inherit;color:inherit;text-align:center;cursor:pointer}
+.wall .alb .cv{display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:3px 3px 0 var(--line);background:var(--card);overflow:hidden;transition:transform .15s}
+.wall .alb:hover .cv,.wall .alb:focus-visible .cv{transform:translateY(-6px) rotate(-1.5deg)}
+.wall .alb:active .cv{transform:translateY(-2px)}
+.wall .alb img{display:block;width:100%;height:100%;object-fit:cover}
+.wall .alb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;font-weight:900;font-size:clamp(16px,4.5vw,24px);line-height:1.2;color:#fff;text-shadow:2px 2px 0 rgba(6,26,64,.45);background:linear-gradient(145deg,hsl(var(--h) 75% 55%),hsl(calc(var(--h) + 50) 70% 35%))}
+.wall .alb::after{content:"";display:block;height:12px;margin:0 -14px;background:linear-gradient(var(--box),var(--card));border:2px solid var(--line);border-top-width:4px;box-shadow:0 4px 0 var(--line)}
+.wall .alb b{display:block;margin-top:14px;font-size:15px;font-weight:900;line-height:1.3}
+.wall .alb span.n{display:block;font-size:12px;color:var(--sub);margin-top:2px}
+@media(prefers-reduced-motion:reduce){.wall .alb .cv{transition:none}.wall .alb:hover .cv{transform:none}}
+#sview .back{margin-top:0}
+.swrap{display:block}
+@media(min-width:720px){.swrap{display:grid;grid-template-columns:180px minmax(0,1fr);gap:20px;align-items:start}
+#stabs{flex-direction:column;flex-wrap:nowrap;overflow-x:visible;overflow-y:auto;position:sticky;top:12px;max-height:calc(100vh - 24px);padding:2px 6px 8px 2px}
+#stabs .chip{width:100%;text-align:left;white-space:normal}}
+@media(min-width:1000px){#slist .song{display:grid;grid-template-columns:minmax(320px,40%) 1fr;gap:24px;align-items:start}#slist .sl{position:sticky;top:12px}#slist .sgt{font-size:17px}#slist .ktv{max-height:70vh}}
 #stabs{flex-wrap:wrap;overflow-x:visible}
 .sgt .cl{font-weight:900;padding-left:8px;border-left:5px solid}
 .sgt .cl.b{color:#1a5fd0;border-color:#1a5fd0}
@@ -446,8 +467,10 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <button class="back" data-go="home">← 回首頁</button>
 <input class="search" id="sq" type="search" placeholder="搜尋歌名、空耳或應援" aria-label="搜尋歌曲" autocomplete="off">
 <div class="stat"><span id="sn"></span><button type="button" class="tourBtn2" style="margin-left:auto">？導覽</button></div>
-<div class="chips cities" id="stabs" role="group" aria-label="選擇歌曲"></div>
-<div class="grid" id="slist"></div>
+<div class="wall" id="swall" role="group" aria-label="選擇專輯"></div>
+<div id="sview" hidden><button class="back" id="sback" type="button">← 全部專輯</button>
+<div class="swrap"><div class="chips cities" id="stabs" role="group" aria-label="選擇歌曲"></div>
+<div class="grid" id="slist"></div></div></div>
 </div>
 <div id="app" hidden>
 <button class="back" data-go="home">← 回首頁</button>
@@ -565,7 +588,7 @@ function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開�
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
 w.innerHTML=`<h2>🏆 回顧紀念牆<small>${a.length} 個已結束的應援</small></h2><div class="wgrid">${a.map(d=>`<div class="tile"><div class="tp">${d.img?`<img src="${d.img}" alt="${esc(d.title)}" loading="lazy" decoding="async">`:`<span class="ph">${stamp(DATA.indexOf(d),true)}</span>`}${done.has(d.id)?`<span class="stamp">${stamp(DATA.indexOf(d))}</span>`:""}</div><b>${esc(d.title)}</b><span>${esc(d.time)}</span>${d.links&&d.links[0]?`<a href="${esc(d.links[0].u)}" target="_blank" rel="noopener">回顧貼文 ↗</a>`:""}</div>`).join("")}</div>`}
 function inSec(d){return (d.sec||"tour")===sec&&(sec==="birthday"||d.city===city)}
-function gos(z){sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{const u=z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:"");z==="home"?history.replaceState(null,"",u):history.pushState({in:1},"",u)}catch(x){}head();if(z!=="songs"){chips();render()}window.scrollTo(0,0);if(z!=="songs"&&typeof songStop==="function")songStop();if(typeof a2hsSync==="function")a2hsSync();tourAuto(z)}
+function gos(z){if(z==="songs"){ALB="";try{document.getElementById("sq").value=""}catch(e){}}sec=z;day="全部";cur="全部";mem=z==="birthday"?nearestMem():"全部";reg="全部";onlyFav=false;resetPanel();$("#favBtn").setAttribute("aria-pressed",false);$("#favBtn").textContent="♡ 我的收藏";try{const u=z==="home"?"?":"?section="+z+(z==="tour"?"&city="+city:"");z==="home"?history.replaceState(null,"",u):history.pushState({in:1},"",u)}catch(x){}head();if(z!=="songs"){chips();render()}window.scrollTo(0,0);if(z!=="songs"&&typeof songStop==="function")songStop();if(typeof a2hsSync==="function")a2hsSync();tourAuto(z)}
 function bdDays(m){const t=today0();let d=new Date(t.getFullYear(),m[1]-1,m[2]);if(d<t)d=new Date(t.getFullYear()+1,m[1]-1,m[2]);return Math.round((d-t)/864e5)}
 function members(){$("#members").innerHTML=MEMBERS.map(m=>{const x=m[0],k=bdDays(m),t=k===0?"🎂 今天":k+" 天";return `<button class="chip" aria-pressed="${x===mem}" data-mem="${x}" aria-label="${x}，${x==="BTS"?"出道周年":"生日"}${k===0?"就是今天":"還有 "+k+" 天"}">${x}<span class="cdn">${t}</span></button>`}).join("");
 const n=[...MEMBERS].sort((a,b)=>bdDays(a)-bdDays(b))[0];const k=bdDays(n);const ay=new Date(today0().getTime()+k*864e5).getFullYear()-2013;$("#nextBd").textContent=n[0]==="BTS"?(k===0?`🎉 今天是 BTS 出道 ${ay} 週年！`:`🎉 下一個：BTS 出道 ${ay} 週年 ${n[1]}/${n[2]}，還有 ${k} 天`):(k===0?`🎂 今天是 ${n[0]} 的生日！`:`🎂 下一個生日：${n[0]} ${n[1]}/${n[2]}，還有 ${k} 天`)}
@@ -725,7 +748,7 @@ const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享�
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
 home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
-songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
+songs:[["#sq","搜尋","輸入歌名、空耳或應援內容，快速找到想看的歌。"],["#swall","選專輯","點專輯封面進去，就會看到這張專輯的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
 tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]],
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
 let TR=null;
@@ -801,6 +824,7 @@ const SONGS=[
 {t:"Hooligan",a:"官方應援（不含空耳）",h:"",c:"藍色＝大聲喊　紅色＝跟著唱\n\n從 7 秒開始，依序喊成員全名：\n[藍] Kim Namjoon! Kim Seokjin! Min Yoongi! Jeong Hoseok!\n[藍] Park Jimin! Kim Taehyung! Jeon Jungkook! BTS!",u:""}];
 function sfmt(t){const inl=x=>esc(x).replace(/\{(藍|紅|橘)\|([^{}]*)\}/g,(m,c,v)=>`<span class="${c==="藍"?"ib":c==="紅"?"ir":"io"}">${v}</span>`);return String(t).split("\n").map(l=>{l=l.replace(TL,"");const m=l.match(/^\[(藍|紅|橘)\]\s?(.*)$/);if(m)return `<div class="cl ${m[1]==="藍"?"b":m[1]==="紅"?"r":"o"}">${inl(m[2])||"&nbsp;"}</div>`;return `<div>${inl(l)||"&nbsp;"}</div>`}).join("")}
 let SEL="";try{SEL=localStorage.getItem("song-sel")||""}catch(e){}
+let ALB="";
 let SMODE="n";try{SMODE=localStorage.getItem("song-mode")==="k"?"k":"n"}catch(e){}
 const YTID=u=>{const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);return m?m[1]:""};
 function songVid(x){const vu=YTID(x.u),vk=YTID(x.k);return SMODE==="k"?(vk||vu):(vu||vk)}
@@ -810,7 +834,7 @@ function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(
 function songCard(x){const vid=songVid(x),T=vid?songTimed(x):[],k=vid&&SMODE==="k";
 const media=vid?`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button></div><div class="yt"><div id="ytp"></div></div>`:"";
 const body=k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map(g=>`<div class="kb" data-s="${g.s}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
-return `<article class="card song"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}${body}${songLinks(x)}</article>`}
+return `<article class="card song"><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr">${body}${songLinks(x)}</div></article>`}
 let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null;
 function ytLoad(cb){if(window.YT&&YT.Player)return cb();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();cb()};if(!document.getElementById("yt-api")){const e=document.createElement("script");e.id="yt-api";e.src="https://www.youtube.com/iframe_api";document.head.appendChild(e)}}
 /* 背景音樂：預設是下面這個 YouTube 網址；要換歌改這裡，或在 data.js 設定 BGM_URL（YouTube 或 mp3 網址）。瀏覽器不允許自動出聲，所以預設開啟：進站就嘗試播放，被瀏覽器擋掉時第一次點或觸碰畫面就會開始；關掉之後會記住，下次不再自動播。 */
@@ -831,22 +855,34 @@ function ktvTick(){const k=document.getElementById("ktv");if(!k||!YP||!YP.getCur
 if(a===KA)return;KA=a;[...ls].forEach((e,i)=>{const d=Math.abs(i-a);e.classList.toggle("on",d===0);e.classList.toggle("n1",d===1);e.classList.toggle("n2",d===2)});if(a>=0){const e=ls[a];k.scrollTo({top:e.offsetTop-k.offsetTop-k.clientHeight/2+e.clientHeight/2,behavior:"smooth"})}}
 document.getElementById("slist").addEventListener("click",e=>{const m=e.target.closest("[data-m]");if(m){SMODE=m.dataset.m;try{localStorage.setItem("song-mode",SMODE)}catch(x){}songsR();return}
 const l=e.target.closest(".kb");if(!l||!YP||!YP.seekTo)return;const n=Date.now();if(LE===l&&n-LC<400){YP.seekTo(+l.dataset.s,true);YP.playVideo&&YP.playVideo();LE=null}else{LE=l;LC=n}});
-function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs");if(!box)return;songStop();
+function albOf(x){return(x.a||"").trim()||"其他"}
+function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&/^(https?:\/\/|[\w.\/%-]+$)/.test((x.p||"").trim()));return x?x.p.trim():""}
+function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h}
+function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();
 const kw=(document.getElementById("sq").value||"").trim().toLowerCase();
-const L=SONGS.filter(x=>!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw));
+const AL=[];SONGS.forEach(x=>{const a=albOf(x);if(!AL.includes(a))AL.push(a)});
+if(ALB&&!AL.includes(ALB))ALB="";
+const wallOn=!ALB&&!kw;wall.hidden=!wallOn;view.hidden=wallOn;
+document.getElementById("sback").hidden=!ALB;
+if(wallOn){document.getElementById("sn").textContent=AL.length?SONGS.length+" 首歌":"";
+wall.innerHTML=AL.length?AL.map(a=>{const n=SONGS.filter(x=>albOf(x)===a).length,c=albCover(a);return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv">${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}<span class="ph" style="--h:${albHue(a)}">${esc(a)}</span></span><b>${esc(a)}</b><span class="n">${n} 首歌</span></button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
+box.innerHTML="";tabs.innerHTML="";return}
+const L=SONGS.filter(x=>(!ALB||albOf(x)===ALB)&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")).toLowerCase().includes(kw)));
 document.getElementById("sn").textContent=L.length+" 首歌";
 if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不到符合的歌曲":"還沒有收錄歌曲"}</div>`;return}
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
 tabs.innerHTML=L.map(x=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${esc(x.t)}</button>`).join("");
 {const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);songPlayer(songVid(x))}}
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;SEL=b.dataset.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()});
+document.getElementById("swall").addEventListener("click",e=>{const b=e.target.closest(".alb");if(!b)return;ALB=b.dataset.a;songsR();window.scrollTo(0,0)});
+document.getElementById("sback").addEventListener("click",()=>{ALB="";document.getElementById("sq").value="";songsR();window.scrollTo(0,0)});
 document.getElementById("sq").addEventListener("input",songsR);
 if(sec==="songs")songsR();
 
 /* KTV 模式：「連結」欄放 YouTube 網址；空耳／應援法的每一行前面加時間碼，例如「0:07 [藍] Kim Namjoon!」，沒時間碼的行只出現在一般模式。 */
 /* 歌曲也可以從試算表讀取：在 data.js 設定 SONGS_CSV_URL（歌曲分頁發布成 CSV 的網址），欄位：歌名、專輯／場次、空耳、應援法、連結。讀不到就用上面的 SONGS */
 function songsParse(t){const R=SheetLoader.csv(t);if(R.length<2)return[];
-const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o"};
+const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p"};
 const hd=R[0].map(x=>M[x.trim()]||"");
 return R.slice(1).map(r=>{const o={};hd.forEach((k,j)=>{if(k&&!o[k])o[k]=String(r[j]||"").trim()});return o}).filter(o=>o.t)}
 function songsSet(L){SONGS.length=0;L.forEach(x=>SONGS.push(x));songsR()}
