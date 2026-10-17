@@ -931,8 +931,10 @@ function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return 
    ② 或在 data.js 設定 SETLISTS={"ARIRANG":["歌名1","歌名2"],"SWIM Tour":[…]}，照陣列順序排。可選：CONCERT_COVERS={"ARIRANG":"圖片網址"} 給演唱會封面。 */
 let VIEW="a";try{VIEW=sessionStorage.getItem("song-view")==="s"?"s":"a"}catch(e){}/* 從首頁點進來一律重設成依專輯（見 gos）；沒回首頁之前，切換、重新整理都會記住 */
 const SORTMAX=1e9;
-/* 演唱會封面：試算表「演唱會封面」欄寫「演唱會名稱=圖片網址或路徑」（多場用「、」或換行隔開，填在任一首歌那列就行）；沒填再看 data.js 的 CONCERT_COVERS；都沒有就顯示彩色底加名稱。 */
-function conCover(n){for(const x of SONGS)for(const q of String(x.cc||"").split(/[、\n]+/)){const i=q.indexOf("=");if(i>0&&q.slice(0,i).trim()===n){const u=q.slice(i+1).trim();if(u)return u}}return(window.CONCERT_COVERS||{})[n]||""}
+/* 演唱會封面：試算表「演唱會封面」欄，直接填圖片網址或路徑＝給這一列這首歌所屬的演唱會用；一首歌屬於好幾場、要分開指定時寫「演唱會名稱=圖片」（多場用「、」或換行隔開）；沒填再看 data.js 的 CONCERT_COVERS；都沒有就顯示彩色底加名稱。 */
+function conCover(n){for(const x of SONGS)for(const q of String(x.cc||"").split(/[、\n]+/)){const t=q.trim();if(!t)continue;const i=t.indexOf("=");
+if(i>0&&!/^https?:/i.test(t.slice(0,i))&&t.slice(0,i).trim()===n){const u=t.slice(i+1).trim();if(u)return u}
+else if((i<0||/^https?:/i.test(t.slice(0,i)))&&songCons(x).some(c=>c.n===n))return t}return(window.CONCERT_COVERS||{})[n]||""}
 function songCons(x){const r=[];String(x.s||"").split(/[、，,；;\n]+/).forEach(q=>{q=q.trim();if(!q)return;const m=q.match(/^(.*?)\s*[:：]\s*(\d+(?:\.\d+)?)$/);r.push(m?{n:m[1].trim(),o:+m[2]}:{n:q,o:SORTMAX})});
 const S=window.SETLISTS;if(S&&typeof S==="object")Object.keys(S).forEach(k=>{const i=(Array.isArray(S[k])?S[k]:[]).findIndex(t=>String(t).trim().toLowerCase()===String(x.t).trim().toLowerCase());if(i>=0&&!r.some(c=>c.n===k))r.push({n:k,o:i+1})});return r.filter(c=>c.n)}
 function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();
