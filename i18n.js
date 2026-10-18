@@ -283,6 +283,60 @@ I18N.add("一點小小的勇氣，就是很大的力量","A little courage goes 
 I18N.add("今天的幸運，從翻開這一頁開始","Today's luck starts the moment you open this page","오늘의 행운은 이 페이지를 연 순간부터 시작돼요","今日の幸運は、このページを開いた瞬間から");
 I18N.add("手機長按圖片可儲存或分享；電腦請按右鍵另存圖片","On a phone, press and hold the image to save or share it. On a computer, right-click to save.","휴대폰에서는 이미지를 길게 눌러 저장하거나 공유하세요. 컴퓨터에서는 오른쪽 클릭으로 저장하세요.","スマホでは画像を長押しして保存・共有できます。パソコンでは右クリックで保存してください。");
 I18N.add("應援遊戲","Fanchant Game","응원 게임","応援ゲーム");
+I18N.add("獲得新徽章","New badge earned","새 배지 획득","新しいバッジを獲得");
+I18N.add("★ 隱藏徽章解鎖！ ★","★ Hidden badge unlocked! ★","★ 숨겨진 배지 해제! ★","★ 隠しバッジ解除！ ★");
+I18N.add("同時還解鎖了其他徽章","Other badges were unlocked too","다른 배지도 함께 해제됐어요","ほかのバッジも同時に解除されました");
+I18N.add("查看徽章","View badges","배지 보기","バッジを見る");
+I18N.add("演唱會制霸","Concert Conqueror","콘서트 정복","コンサート制覇");
+I18N.add("演唱會分類的徽章全部解鎖","Unlock every Concert badge","콘서트 배지를 모두 해제","コンサートのバッジをすべて解除");
+I18N.add("生日制霸","Birthday Conqueror","생일 정복","誕生日制覇");
+I18N.add("生日分類的徽章全部解鎖","Unlock every Birthday badge","생일 배지를 모두 해제","誕生日のバッジをすべて解除");
+I18N.add("幸運籤制霸","Lucky Draw Conqueror","행운 뽑기 정복","おみくじ制覇");
+I18N.add("幸運籤分類的徽章全部解鎖","Unlock every Lucky Draw badge","행운 뽑기 배지를 모두 해제","おみくじのバッジをすべて解除");
+I18N.add("遊戲制霸","Game Conqueror","게임 정복","ゲーム制覇");
+I18N.add("應援遊戲分類的徽章全部解鎖","Unlock every Cheer Game badge","응원 게임 배지를 모두 해제","応援ゲームのバッジをすべて解除");
+I18N.add("隱藏獵人","Hidden Hunter","숨겨진 배지 헌터","隠しバッジハンター");
+I18N.add("解鎖所有隱藏徽章","Unlock every hidden badge","숨겨진 배지를 모두 해제","隠しバッジをすべて解除");
+I18N.add("開幕第一人","Opening Day Crew","개막 첫 주자","初日の一番乗り");
+I18N.add("在應援開始的第一天打卡","Check in on a project's very first day","응원 시작 첫날에 체크인","応援の初日にチェックイン");
+I18N.add("壓線達陣","Photo Finish","막판 스퍼트","ギリギリセーフ");
+I18N.add("在應援結束的最後一天打卡","Check in on a project's very last day","응원 마지막 날에 체크인","応援の最終日にチェックイン");
+I18N.add("三日全勤","Perfect Attendance","3일 개근","3日皆勤");
+I18N.add("在同一座城市，每一場演唱會日當天都打卡","Check in on every concert day in the same city","같은 도시의 모든 공연일 당일에 체크인","同じ都市の全公演日に当日チェックイン");
+I18N.add("言出必行","Walk the Talk","말한 대로 실천","有言実行");
+I18N.add("收藏的應援全部都打過卡（至少收藏 5 個）","Check in on every project you've favorited (at least 5 saved)","즐겨찾기한 응원을 모두 체크인 (최소 5개)","お気に入りの応援を全部チェックイン（5件以上）");
+I18N.add("收藏家","Collector","수집가","コレクター");
+I18N.add("收藏 10 個應援","Favorite 10 projects","응원 10개 즐겨찾기","応援を10件お気に入り");
+I18N.add("常駐站民","Home Screen Resident","상주 주민","常駐ユーザー");
+I18N.add("把網站加到手機桌面，並從桌面圖示開啟","Add the site to your home screen and open it from the icon","사이트를 홈 화면에 추가하고 아이콘으로 열기","サイトをホーム画面に追加し、アイコンから開く");
+I18N.add("一日制霸","One-Day Sweep","하루 제패","1日制覇");
+I18N.add("把任一天分頁的應援全部打卡","Check in every project on any one day tab","하루 탭의 응원을 모두 체크인","いずれか1日のタブの応援を全部チェックイン");
+I18N.add("連抽三天","3-Day Draw Streak","3일 연속 뽑기","3日連続おみくじ");
+I18N.add("連抽七天","7-Day Draw Streak","7일 연속 뽑기","7日連続おみくじ");
+I18N.add("熱心站民","Helpful Member","열정 멤버","お助けメンバー");
+I18N.add("點開「我要投稿」或「錯誤回報」表單","Open the “Submit a project” or “Report an error” form","'응원 정보 제보' 또는 '오류 신고' 양식 열기","「投稿する」または「エラー報告」フォームを開く");
+I18N.add("普通","Common","일반","ノーマル");
+I18N.add("稀有","Rare","희귀","レア");
+I18N.add("★ 隱藏","★ Hidden","★ 히든","★ 隠し");
+I18N.add("已解鎖","Unlocked","해제됨","解除済み");
+I18N.add("沒有符合的徽章","No matching badges","해당하는 배지가 없어요","該当するバッジはありません");
+I18N.add("分類","Category","분류","カテゴリ");
+I18N.add("進度","Progress","진행도","進み具合");
+I18N.add("銅級","Bronze tier","동 등급","銅ランク");
+I18N.add("銀級","Silver tier","은 등급","銀ランク");
+I18N.add("金級","Gold tier","금 등급","金ランク");
+I18N.add("有新版本，點此更新","New version available — tap to update","새 버전이 있어요. 눌러서 업데이트","新しいバージョンがあります。タップして更新");
+I18N.add("更新中…","Updating…","업데이트 중…","更新中…");
+I18N.add("初次通關","First Clear","첫 클리어","初クリア");
+I18N.add("在應援遊戲通關（B 級以上）1 首歌","Clear 1 song (rank B or higher) in the cheer game","응원 게임에서 1곡 클리어 (B 등급 이상)","応援ゲームで1曲クリア（Bランク以上）");
+I18N.add("通關 3 首","3 Songs Cleared","3곡 클리어","3曲クリア");
+I18N.add("在應援遊戲通關（B 級以上）3 首歌","Clear 3 songs (rank B or higher) in the cheer game","응원 게임에서 3곡 클리어 (B 등급 이상)","応援ゲームで3曲クリア（Bランク以上）");
+I18N.add("零 MISS","Zero MISS","MISS 제로","ノーMISS");
+I18N.add("在應援遊戲打出零 MISS","Finish a song with zero MISS in the cheer game","응원 게임에서 MISS 없이 클리어","応援ゲームでノーMISSを達成");
+I18N.add("全 PERFECT","All PERFECT","올 퍼펙트","オールPERFECT");
+I18N.add("在應援遊戲打出全 PERFECT","Get all PERFECT in the cheer game","응원 게임에서 올 퍼펙트 달성","応援ゲームでオールPERFECTを達成");
+I18N.add("遊戲四星","Four Stars","별 4개","星4つ");
+I18N.add("同一首歌拿滿 4 個 ★ 成就","Earn all 4 ★ achievements on one song","한 곡에서 ★ 업적 4개 모두 달성","1曲で★実績を4つ全部獲得");
 I18N.add("在應援遊戲拿到 A 以上","Get an A or higher in the Fanchant Game","응원 게임에서 A 이상 받기","応援ゲームでA以上を取る");
 I18N.add("用應援遊戲挑戰一首新歌","Try a new song in the Fanchant Game","응원 게임으로 새로운 노래에 도전하세요","応援ゲームで新しい曲に挑戦しよう");
 I18N.add("這首歌還沒有可以玩的應援遊戲（要有影片和藍／紅色時間碼）","This song has no Fanchant Game yet (it needs a video and blue/red timecodes)","이 곡은 아직 응원 게임이 없어요 (영상과 파랑/빨강 타임코드가 필요해요)","この曲にはまだ応援ゲームがありません（動画と青／赤のタイムコードが必要です）");
@@ -499,7 +553,7 @@ const X={
 "稱號看連續抽籤天數，中斷一天會重新計算。":["Titles follow your draw streak. Missing a day resets it.","칭호는 연속 뽑기 일수에 따라 정해져요. 하루 빠지면 다시 계산돼요.","称号は連続で引いた日数で決まります。1日空くとリセットされます。"],
 "集滿閃卡圖鑑":["Complete the shiny collection","샤이니 도감 완성","シャイニー図鑑をコンプリート"],
 "我的徽章":["My badges","내 배지","マイバッジ"],
-"徽章會一直保存在這台裝置，之後取消打卡也不會消失。":["Badges stay on this device even if you un-check an item later.","배지는 이 기기에 저장되며, 나중에 체크인을 취소해도 사라지지 않아요.","バッジはこの端末に保存され、後でチェックインを取り消しても消えません。"],
+"徽章依目前的打卡進度計算，取消打卡後，未達標的徽章會一併收回。":["Badges follow your current check-ins. If you un-check items and no longer meet a badge's goal, that badge is removed.","배지는 현재 체크인 진행도에 따라 정해져요. 체크인을 취소해 조건을 채우지 못하면 해당 배지도 사라져요.","バッジは現在のチェックイン状況で決まります。チェックインを取り消して条件を満たさなくなると、そのバッジも外れます。"],
 "初次打卡":["First check-in","첫 체크인","初チェックイン"],
 "完成第 1 次打卡":["Make your first check-in","첫 체크인 완료","初めてのチェックインをする"],
 "打卡新星":["Rising star","떠오르는 신인","チェックイン新星"],
@@ -509,6 +563,44 @@ const X={
 "每種類型都至少打卡 1 個":["Check in at least 1 of every type","모든 유형에서 1개 이상 체크인","全タイプで1つ以上チェックイン"],
 "遊戲 S 級":["Game rank S","게임 S 등급","ゲームSランク"],
 "在應援遊戲拿到 S 級":["Get rank S in the cheer game","응원 게임에서 S 등급 받기","応援ゲームでSランクを取る"],
+"？？？":["???","???","???"],
+"隱藏徽章，達成後才會揭曉":["Hidden badge — revealed once unlocked","숨겨진 배지 — 달성하면 공개돼요","隠しバッジ。達成すると明らかになります"],
+"未解鎖":["Locked","잠김","未解除"],
+"現場見證":["Live Witness","현장 목격자","現場の目撃者"],
+"在演唱會當天完成打卡":["Check in on a concert day","콘서트 당일에 체크인","コンサート当日にチェックイン"],
+"一日走透透":["Day Tripper","하루 종일 투어","一日まるごと巡り"],
+"同一天完成 3 個打卡":["Check in at 3 places in one day","하루에 3곳 체크인","1日で3か所チェックイン"],
+"準時祝福":["Right on Time","정시 축하","ぴったりのお祝い"],
+"在成員生日（或 BTS 出道周年）當天，打卡他的應援":["Check in a member's project on their birthday (or BTS's debut anniversary)","멤버 생일(또는 BTS 데뷔 기념일) 당일에 해당 응원 체크인","メンバーの誕生日（またはBTSのデビュー記念日）当日に、その応援をチェックイン"],
+"全員到齊":["All Together","전원 집합","全員集合"],
+"BTS 和七位成員的應援都打過卡":["Checked in projects for BTS and all seven members","BTS와 멤버 7명의 응원을 모두 체크인","BTSとメンバー7人の応援をすべてチェックイン"],
+"跨海應援":["Across the Sea","바다 건너 응원","海を越えた応援"],
+"台灣和海外的應援都打過卡":["Checked in projects in both Taiwan and overseas","대만과 해외 응원을 모두 체크인","台湾と海外の応援の両方でチェックイン"],
+"演唱會":["Concert","콘서트","コンサート"],
+"生日":["Birthday","생일","誕生日"],
+"幸運籤":["Lucky Draw","행운 뽑기","おみくじ"],
+"打卡天數":["Check-in Days","체크인 일수","チェックイン日数"],
+"終極挑戰":["Ultimate Challenge","궁극의 도전","究極チャレンジ"],
+"打卡 3 天":["3 Check-in Days","3일 체크인","3日チェックイン"],
+"在 3 個不同的日子打卡":["Check in on 3 different days","서로 다른 3일에 체크인","異なる3日でチェックイン"],
+"打卡 7 天":["7 Check-in Days","7일 체크인","7日チェックイン"],
+"在 7 個不同的日子打卡":["Check in on 7 different days","서로 다른 7일에 체크인","異なる7日でチェックイン"],
+"初次抽籤":["First Draw","첫 뽑기","初めてのおみくじ"],
+"抽一次幸運籤":["Draw a lucky fortune once","행운 뽑기 한 번 하기","おみくじを1回引く"],
+"成員收集家":["Member Collector","멤버 수집가","メンバーコレクター"],
+"集滿幸運籤的成員圖鑑":["Complete the lucky-draw member collection","행운 뽑기 멤버 도감 완성","おみくじのメンバー図鑑をコンプリート"],
+"閃卡收集家":["Shiny Collector","샤이니 카드 수집가","キラカードコレクター"],
+"集滿幸運籤的閃卡圖鑑":["Complete the lucky-draw shiny-card collection","행운 뽑기 샤이니 카드 도감 완성","おみくじのキラカード図鑑をコンプリート"],
+"雙城巡演":["Two-City Tour","두 도시 투어","二都市ツアー"],
+"高雄和香港的巡演應援都打過卡":["Checked in tour projects in both Kaohsiung and Hong Kong","가오슝과 홍콩 투어 응원을 모두 체크인","高雄と香港のツアー応援の両方でチェックイン"],
+"環島應援":["Island Tour","섬 일주 응원","島一周応援"],
+"在 3 個不同的台灣城市打卡":["Check in in 3 different Taiwan cities","대만의 서로 다른 3개 도시에서 체크인","台湾の異なる3都市でチェックイン"],
+"環球應援":["Global Cheer","세계 응원","世界応援"],
+"在 2 個不同的海外城市或地區打卡":["Check in in 2 different overseas cities or regions","해외 2개 도시 또는 지역에서 체크인","海外の異なる2都市・地域でチェックイン"],
+"偏心警告":["Playing Favorites","편애 경보","推し一筋"],
+"同一位成員的應援打卡 5 個以上":["Check in 5+ projects for the same member","같은 멤버의 응원 5곳 이상 체크인","同じメンバーの応援を5か所以上チェックイン"],
+"完美主義者":["Perfectionist","완벽주의자","完璧主義者"],
+"解鎖其他所有徽章":["Unlock every other badge","다른 모든 배지 해제","ほかのすべてのバッジを解除"],
 "BTS 出道周年集滿":["BTS anniversary complete","BTS 데뷔 기념일 완성","BTSデビュー記念日コンプリート"],
 "把 BTS 的出道周年應援全部打卡":["Check in every BTS debut anniversary project","BTS 데뷔 기념일 응원을 모두 체크인","BTSデビュー記念日の応援を全部チェックイン"]
 };
