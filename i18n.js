@@ -257,7 +257,7 @@ I18N.add("今天就是演唱會！記得喝水、顧好嗓子","Show day! Stay h
 I18N.add("你抽到什麼？","What did you draw?","당신은 무엇을 뽑았나요?","あなたは何を引いた？");
 I18N.add("幸運色","Lucky color","행운의 색","ラッキーカラー");
 I18N.add("幸運號碼","Lucky number","행운의 숫자","ラッキーナンバー");
-I18N.add("今日一句話","Word of the day","오늘의 한마디","今日のひとこと");
+I18N.add("今日語錄","Quote of the day","오늘의 한마디","今日のひとこと");
 I18N.add("粉紅","Pink","분홍","ピンク");
 I18N.add("薰衣草紫","Lavender","라벤더","ラベンダー");
 I18N.add("天空藍","Sky blue","하늘색","スカイブルー");
@@ -294,8 +294,48 @@ I18N.add("遊戲最佳成績","Game best","게임 최고 기록","ゲームの�
 I18N.add("遊戲成績","Game results","게임 기록","ゲームの成績");
 I18N.add("歌詞裡的藍色、紅色段落會變成音符，影片播到哪音符就落到哪；音符到線時點對應的按鈕，結束後會評等級並記下最佳成績。","Blue and red parts of the lyrics become notes that fall as the video plays. Tap the matching button when a note reaches the line. You get a grade at the end, and your best result is saved.","가사의 파랑·빨강 구간이 음표가 되어 영상에 맞춰 떨어져요. 음표가 선에 닿으면 해당 버튼을 누르세요. 끝나면 등급이 매겨지고 최고 기록이 저장돼요.","歌詞の青・赤の部分がノーツになり、動画に合わせて落ちてきます。ノーツがラインに来たら対応するボタンをタップ。終了後に評価が出て、ベストが保存されます。");
 I18N.add("玩過應援遊戲的歌，歌名旁會顯示最佳等級（S、A、B、C）。","For songs you've played, the best grade (S, A, B, C) shows next to the song name.","플레이한 곡은 곡명 옆에 최고 등급(S, A, B, C)이 표시돼요.","プレイした曲は、曲名の横にベスト評価（S・A・B・C）が表示されます。");
+I18N.add("通關","Cleared","클리어","クリア");
+I18N.add("全曲通關","All cleared","전곡 클리어","全曲クリア");
+I18N.add("通關進度","Clear progress","클리어 진행도","クリア進行度");
+I18N.add("全曲通關！","All songs cleared!","전곡 클리어!","全曲クリア！");
+I18N.add("B 級以上算通關，只計算有應援遊戲的歌","B rank or higher counts as cleared. Only songs with a Fanchant Game are counted.","B 등급 이상이면 클리어예요. 응원 게임이 있는 곡만 계산돼요.","B評価以上でクリア。応援ゲームのある曲のみ対象です。");
+I18N.add("演唱會全曲通關！","Concert fully cleared!","콘서트 전곡 클리어!","コンサート全曲クリア！");
+I18N.add("演唱會通關","Concert clear","콘서트 클리어","コンサートクリア");
+I18N.add("在演唱會裡，把每首有應援遊戲的歌都玩到 B 級以上，就能全曲通關。","In a concert, get B rank or higher on every song with a Fanchant Game to clear the whole setlist.","콘서트에서 응원 게임이 있는 모든 곡을 B 등급 이상으로 클리어하면 전곡 클리어예요.","コンサートで、応援ゲームのある全曲をB評価以上にするとセットリスト全曲クリアです。");
+I18N.add("選出這次演唱會最期待聽到的三首歌","Pick the three songs you most want to hear at the concert","이번 콘서트에서 가장 듣고 싶은 노래 세 곡을 골라 보세요","今回のコンサートで一番聴きたい曲を3曲選ぼう");
+I18N.add("把演唱會當天的集合資訊整理到手機備忘錄","Save the show-day meet-up info in your phone's notes","공연 당일 모이는 정보를 휴대폰 메모에 정리해 두세요","公演当日の集合情報をスマホのメモにまとめよう");
+I18N.add("演唱會結束後，記錄今天最難忘的一個瞬間","After the show, write down your most unforgettable moment of the day","공연이 끝나면 오늘 가장 잊을 수 없는 순간을 기록하세요","公演後、今日いちばん忘れられない瞬間を記録しよう");
+I18N.add("把這次演唱會的回憶整理成一張照片或一段文字","Turn your concert memories into a photo or a few lines of text","이번 콘서트의 추억을 사진 한 장이나 글로 정리해 보세요","今回のコンサートの思い出を1枚の写真か短い文章にまとめよう");
+I18N.add("分享一首最近最想在演唱會聽到的 BTS 歌曲","Share one BTS song you most want to hear at the concert lately","요즘 콘서트에서 가장 듣고 싶은 BTS 노래 한 곡을 공유하세요","最近コンサートで一番聴きたいBTSの曲を1曲シェアしよう");
+I18N.add("問一位 ARMY 朋友最喜歡哪一首演唱會曲目","Ask an ARMY friend which concert song they love most","ARMY 친구에게 가장 좋아하는 콘서트 곡이 무엇인지 물어보세요","ARMYの友達に、コンサートで一番好きな曲を聞いてみよう");
+I18N.add("回顧一次讓自己印象深刻的追星回憶","Look back on a fan memory that left a deep impression on you","인상 깊었던 팬 활동 추억을 한 번 돌아보세요","印象に残っているファン活動の思い出を振り返ってみよう");
+I18N.add("推薦一首自己認為值得更多人認識的 BTS 歌曲","Recommend a BTS song you think more people should know","더 많은 사람이 알았으면 하는 BTS 노래 한 곡을 추천해 보세요","もっと多くの人に知ってほしいBTSの曲を1曲おすすめしよう");
+I18N.add("新手村村民","Newbie Village Resident","초보 마을 주민","初心者の村の住人");
+I18N.add("阿米棒點燈人","ARMY Bomb Lighter","아미밤 점등자","ARMY BOMB点灯係");
+I18N.add("七色圖鑑解鎖者","Seven-Color Collection Unlocker","일곱 빛깔 도감 해금자","七色図鑑アンロッカー");
+I18N.add("敲碗巡演先鋒","Tour-Craving Pioneer","투어를 애타게 기다리는 선봉","ツアー待望の先鋒");
+I18N.add("紫色狂熱份子","Purple Fanatic","보라빛 광팬","紫の熱狂ファン");
+I18N.add("每日精神糧食獲得者","Daily Soul Food Recipient","매일 마음의 양식을 얻은 사람","毎日の心の糧を得た人");
+I18N.add("Hope World 榮譽永久居民","Hope World Honorary Permanent Resident","Hope World 명예 영구 거주민","Hope World 名誉永住民");
+I18N.add("陪伴彼此的永恆星星","The Eternal Star Beside Each Other","서로의 곁을 지키는 영원한 별","寄り添い合う永遠の星");
+I18N.add("阿米棒點燈人・連續 3 天","ARMY Bomb Lighter · 3-day streak","아미밤 점등자 · 3일 연속","ARMY BOMB点灯係・3日連続");
+I18N.add("七色圖鑑解鎖者・連續 7 天","Seven-Color Collection Unlocker · 7-day streak","일곱 빛깔 도감 해금자 · 7일 연속","七色図鑑アンロッカー・7日連続");
+I18N.add("敲碗巡演先鋒・連續 14 天","Tour-Craving Pioneer · 14-day streak","투어를 애타게 기다리는 선봉 · 14일 연속","ツアー待望の先鋒・14日連続");
+I18N.add("紫色狂熱份子・連續 30 天","Purple Fanatic · 30-day streak","보라빛 광팬 · 30일 연속","紫の熱狂ファン・30日連続");
+I18N.add("每日精神糧食獲得者・連續 50 天","Daily Soul Food Recipient · 50-day streak","매일 마음의 양식을 얻은 사람 · 50일 연속","毎日の心の糧を得た人・50日連続");
+I18N.add("Hope World 榮譽永久居民・連續 100 天","Hope World Honorary Permanent Resident · 100-day streak","Hope World 명예 영구 거주민 · 100일 연속","Hope World 名誉永住民・100日連続");
+I18N.add("陪伴彼此的永恆星星・連續 365 天","The Eternal Star Beside Each Other · 365-day streak","서로의 곁을 지키는 영원한 별 · 365일 연속","寄り添い合う永遠の星・365日連続");
+I18N.add("七色圖鑑解鎖者・連續 7 天且集滿成員圖鑑","Seven-Color Collection Unlocker · 7-day streak and a complete member collection","일곱 빛깔 도감 해금자 · 7일 연속 + 멤버 도감 완성","七色図鑑アンロッカー・7日連続＋メンバー図鑑コンプリート");
 I18N.add("解鎖新稱號！","New title unlocked!","새 칭호 해금!","新しい称号を獲得！");
 I18N.add("稱號","Title","칭호","称号");
+I18N.add("幸運色・號碼","Lucky color & number","행운의 색・숫자","ラッキーカラー・ナンバー");
+I18N.add("今日幸運曲","Lucky song of the day","오늘의 행운의 곡","今日のラッキーソング");
+I18N.add("查看圖鑑","View collection","도감 보기","図鑑を見る");
+I18N.add("大聲喊","Shout loudly","크게 외치기","大きな声で叫ぶ");
+I18N.add("大聲唱","Sing loudly","크게 부르기","大きな声で歌う");
+I18N.add("今日幸運籤","Today's Lucky Fortune","오늘의 행운 운세","今日のラッキーおみくじ");
+I18N.add("★ GOLDEN HOUR・今天是限定大吉 ★","★ GOLDEN HOUR · Today's special Great Luck ★","★ GOLDEN HOUR · 오늘은 한정 대길 ★","★ GOLDEN HOUR・今日は限定大吉 ★");
+I18N.add("我的收藏","My collection","내 컬렉션","マイコレクション");
 I18N.add("下一個稱號","Next title","다음 칭호","次の称号");
 I18N.add("應援新手","Fanchant Rookie","응원 새내기","応援ビギナー");
 I18N.add("應援見習生","Fanchant Trainee","응원 연습생","応援見習い");
@@ -304,6 +344,123 @@ I18N.add("應援傳說","Fanchant Legend","응원 전설","応援レジェンド
 I18N.add("應援見習生・連續 3 天","Fanchant Trainee · 3-day streak","응원 연습생 · 3일 연속","応援見習い・3日連続");
 I18N.add("應援達人・連續 7 天","Fanchant Pro · 7-day streak","응원 달인 · 7일 연속","応援達人・7日連続");
 I18N.add("應援傳說・連續 30 天","Fanchant Legend · 30-day streak","응원 전설 · 30일 연속","応援レジェンド・30日連続");
+/* 今日語錄擴充 */
+I18N.add("今天也辛苦了，喝口水再繼續","Good work today, have some water first","오늘도 수고했어요, 물 한 모금 마시고 이어가요","今日もおつかれさま。水を一口飲んでから続けよう");
+I18N.add("在同一個地方喊出來的聲音，會變成同一首歌","Voices shouted together become one song","같은 곳에서 외친 목소리가 하나의 노래가 돼요","同じ場所で叫んだ声は、ひとつの歌になる");
+I18N.add("今天適合把應援棒擦乾淨","A good day to wipe your light stick clean","오늘은 응원봉을 깨끗이 닦기 좋은 날이에요","今日は応援棒をきれいに拭くのにぴったり");
+I18N.add("先從最熟的那首開始練就對了","Just start with the song you know best","가장 익숙한 노래부터 연습하면 돼요","まずは一番よく知っている曲から練習しよう");
+I18N.add("慢慢跟，總有一個瞬間會突然合拍","Follow slowly, and one moment it all clicks","천천히 따라가면 어느 순간 딱 맞아요","ゆっくりついていけば、ふっと合う瞬間が来る");
+I18N.add("今天的你，值得一首喜歡的歌","You deserve a favorite song today","오늘의 당신은 좋아하는 노래 한 곡을 들을 자격이 있어요","今日のあなたには、好きな曲が似合う");
+I18N.add("緊張也沒關係，大家都是一起的","Nerves are fine, everyone's in this together","긴장해도 괜찮아요, 모두 함께니까요","緊張しても大丈夫、みんな一緒だから");
+I18N.add("今天適合認識一位新的 ARMY 朋友","A good day to meet a new ARMY friend","오늘은 새로운 아미 친구를 만나기 좋은 날이에요","今日は新しいARMYの友だちに出会えそう");
+I18N.add("把想說的話，留給最大聲的那一段","Save what you want to say for the loudest part","하고 싶은 말은 가장 크게 외치는 구간에 담아요","言いたいことは、一番大きな声の場面に取っておこう");
+I18N.add("好好休息，也是準備的一部分","Resting well is part of preparing","잘 쉬는 것도 준비의 일부예요","しっかり休むのも準備のうち");
+I18N.add("今天走過的每一步，都會變成現場的力氣","Every step today becomes strength for the show","오늘 걸은 걸음마다 현장의 힘이 돼요","今日歩いた一歩一歩が、現場の力になる");
+I18N.add("今天適合把心情寫下來","A good day to write your feelings down","오늘은 마음을 적어 두기 좋은 날이에요","今日は気持ちを書き留めるのにぴったり");
+I18N.add("你的喜歡，是別人也看得見的光","Your love is a light others can see","당신의 좋아하는 마음은 다른 사람에게도 보이는 빛이에요","あなたの「好き」は、誰かにも見える光");
+I18N.add("不用跟上所有人，跟上自己的節奏就好","No need to match everyone, just keep your own rhythm","모두를 따라갈 필요 없어요, 내 리듬만 지켜요","みんなに合わせなくていい、自分のリズムでOK");
+I18N.add("今天的好運，藏在一首很久沒聽的歌裡","Today's luck hides in a song you haven't heard in ages","오늘의 행운은 오랫동안 못 들은 노래 속에 숨어 있어요","今日の幸運は、久しぶりに聴く曲の中にある");
+I18N.add("出門前，對自己說一聲加油","Before heading out, cheer yourself on","나가기 전에 스스로에게 파이팅을 외쳐요","出かける前に、自分に「頑張れ」と声をかけよう");
+I18N.add("今天適合把照片整理一下","A good day to sort through your photos","오늘은 사진을 정리하기 좋은 날이에요","今日は写真を整理するのにぴったり");
+I18N.add("再等一下，期待也是一種快樂","Wait a little more, anticipation is joy too","조금만 더 기다려요, 기대하는 것도 즐거움이에요","もう少し待とう、楽しみにする時間も幸せ");
+I18N.add("今天的你，已經很努力了","You've already tried hard today","오늘의 당신은 이미 충분히 노력했어요","今日のあなたは、もう十分頑張ってる");
+I18N.add("今天適合跟朋友聊聊最近的推歌","A good day to share your latest song picks with a friend","오늘은 친구와 요즘 추천곡을 이야기하기 좋은 날이에요","今日は友だちと最近のおすすめ曲を話すのにいい日");
+I18N.add("喊出口的那一刻，緊張就會變成期待","The moment you shout, nerves turn into excitement","소리 내는 순간 긴장이 설렘으로 바뀌어요","声に出した瞬間、緊張はワクワクに変わる");
+I18N.add("今天適合早一點出門，從容一點","A good day to leave a bit early and stay calm","오늘은 조금 일찍 나서서 여유를 가지기 좋은 날이에요","今日は少し早めに出て、余裕を持とう");
+I18N.add("好好照顧自己，才能好好應援","Take care of yourself so you can cheer well","나를 잘 돌봐야 응원도 잘할 수 있어요","自分を大切にしてこそ、いい応援ができる");
+I18N.add("今天適合重聽一次最喜歡的現場","A good day to rewatch your favorite live stage","오늘은 가장 좋아하는 라이브를 다시 보기 좋은 날이에요","今日は一番好きなライブをもう一度見る日");
+I18N.add("一個小小的應援，也會被好好收下","Even a small cheer will be received warmly","작은 응원도 따뜻하게 전해져요","小さな応援でも、ちゃんと届く");
+I18N.add("今天的每一次呼吸，都很適合喊出藍色","Every breath today is a good one for shouting blue","오늘의 모든 숨은 파란색을 외치기 좋아요","今日の呼吸は全部、青を叫ぶのにぴったり");
+/* 今日語錄：一般生活語錄 */
+I18N.add("今天先做好一件小事就好","Just do one small thing well today","오늘은 작은 일 하나만 잘 해내면 돼요","今日は小さなことをひとつやれば十分");
+I18N.add("累了就停一下，路還在那裡","If you're tired, pause. The road will still be there","지치면 잠깐 멈춰요, 길은 그대로 있어요","疲れたら少し休もう、道はそこにあるから");
+I18N.add("你已經走了比想像中更遠","You've come farther than you think","생각보다 훨씬 멀리 왔어요","思っているより、ずっと遠くまで来ている");
+I18N.add("今天的天空，值得抬頭看一眼","Today's sky is worth a glance upward","오늘의 하늘은 한 번 올려다볼 만해요","今日の空は、見上げる価値がある");
+I18N.add("對自己溫柔一點，也是一種勇氣","Being gentle with yourself takes courage too","나에게 다정해지는 것도 용기예요","自分にやさしくするのも、勇気のひとつ");
+I18N.add("不急，好事都會慢慢到","No rush, good things arrive in their own time","서두르지 않아도 좋은 일은 천천히 와요","焦らなくていい、いいことはゆっくり来る");
+I18N.add("今天適合吃一頓喜歡的東西","A good day to eat something you love","오늘은 좋아하는 음식을 먹기 좋은 날이에요","今日は好きなものを食べるのにぴったり");
+I18N.add("把今天的開心記下來，以後會很有用","Write down today's happy moment, it'll help later","오늘의 기쁨을 적어 두면 나중에 큰 힘이 돼요","今日のうれしいことを書き留めておくと、あとで役に立つ");
+I18N.add("沒做完的事，明天還有一次機會","What's unfinished gets another chance tomorrow","못 끝낸 일은 내일 또 기회가 있어요","終わらなかったことは、明日もう一度チャンスがある");
+I18N.add("你不需要一直很厲害，也值得被喜歡","You don't have to be great all the time to deserve love","늘 대단하지 않아도 사랑받을 자격이 있어요","いつもすごくなくても、好きでいてもらっていい");
+I18N.add("今天適合散個步，讓腦袋放空","A good day for a walk to clear your head","오늘은 산책하며 머리를 비우기 좋은 날이에요","今日は散歩して頭を空っぽにするのにいい日");
+I18N.add("一點點進步，也是進步","A little progress is still progress","조금의 발전도 발전이에요","少しの進歩も、ちゃんと進歩");
+I18N.add("難過的時候，先把水喝掉","When you're down, start by drinking some water","속상할 땐 먼저 물부터 마셔요","つらいときは、まず水を飲もう");
+I18N.add("把手機放下十分鐘，看看四周","Put your phone down for ten minutes and look around","휴대폰을 10분만 내려놓고 주위를 둘러봐요","スマホを10分置いて、まわりを見てみよう");
+I18N.add("今天的你，比昨天多懂了一點","Today you understand a little more than yesterday","오늘의 당신은 어제보다 조금 더 알게 됐어요","今日のあなたは、昨日より少しだけ分かっている");
+I18N.add("小小的快樂，累積起來就很大","Small joys add up to something big","작은 기쁨이 모이면 아주 커져요","小さな楽しみも、積み重なれば大きくなる");
+I18N.add("願你今天遇到的人都很溫柔","May everyone you meet today be kind","오늘 만나는 사람들이 모두 다정하길 바라요","今日出会う人が、みんなやさしい人でありますように");
+I18N.add("睡一覺，事情會看起來不一樣","After a good sleep, things look different","푹 자고 나면 일이 다르게 보여요","ひと眠りすれば、物事は違って見える");
+I18N.add("今天適合對自己說一聲辛苦了","A good day to tell yourself you did well","오늘은 스스로에게 수고했다고 말해 주기 좋은 날이에요","今日は自分に「おつかれさま」と言ってあげる日");
+I18N.add("做得不完美，也算做到了","Not perfect still counts as done","완벽하지 않아도 해낸 거예요","完璧じゃなくても、やり遂げたことに変わりはない");
+/* 成員語錄 */
+I18N.add("找到你的名字，找到你的聲音，從說出自己開始","Find your name, find your voice by speaking yourself.","당신의 이름을 찾고, 스스로를 말하며 당신의 목소리를 찾으세요.","あなたの名前を見つけて。自分を語ることで、自分の声を見つけよう。");
+I18N.add("昨天的我，也還是我","Yesterday's me is still me.","어제의 나도 여전히 나예요.","昨日の自分も、やっぱり自分。");
+I18N.add("星星在夜最黑的時候最亮","Stars shine brightest when the night is darkest.","별은 밤이 가장 어두울 때 가장 밝게 빛나요.","星は夜が最も暗いときに一番輝く。");
+I18N.add("七個來自韓國的男孩，因為對音樂的愛而在一起","Seven boys from Korea, united by love for music.","음악에 대한 사랑으로 하나 된 한국의 일곱 소년.","音楽への愛で結ばれた、韓国の7人の少年。");
+I18N.add("好好珍惜自己、鼓勵自己、讓自己開心，是最重要的","Cherishing yourself, encouraging yourself and keeping yourself happy is the most important.","자신을 소중히 여기고, 스스로를 격려하고, 행복하게 지키는 것이 가장 중요해요.","自分を大切にして、励まして、幸せでいさせることが一番大事。");
+I18N.add("面對改變，這一代不是害怕，而是說一聲「歡迎」","instead of fearing change, this generation says 'Welcome!'","변화를 두려워하는 대신 이 세대는 '환영해!'라고 말해요.","変化を恐れる代わりに、この世代は「ウェルカム！」と言う。");
+I18N.add("那是一段珍貴的時光，雖然不是我們想要的，卻值得歡迎","It was a precious time, unwanted but welcome.","원치 않았지만 반가운, 소중한 시간이었어요.","望んだわけではなかったけれど、貴重な時間でした。");
+I18N.add("我們只是相信自己、盡力而為、熱愛自己做的事","trust ourselves, and do my best, and love what I do","우리 자신을 믿고, 최선을 다하고, 하는 일을 사랑했어요.","自分を信じて、ベストを尽くして、していることを愛してきた。");
+I18N.add("你們就是我們的宇宙","You're our universe.","여러분은 우리의 유니버스예요.","あなたたちは私たちのユニバース。");
+I18N.add("我們互相安慰，一起想著可以做些什麼","We comforted each other and talked about what we could do together.","우리는 서로를 위로하며 함께 할 수 있는 일을 이야기했어요.","私たちは慰め合い、一緒にできることを話し合った。");
+I18N.add("如果我在這裡放棄，我就不是自己人生的主角了","If I give up here, then I'm not the star of my life.","여기서 포기하면 나는 내 인생의 주인공이 아니야.","ここで諦めたら、自分の人生の主役じゃなくなる。");
+I18N.add("我們的歌，成了我們想對彼此說的故事","Our songs became the stories we wanted to tell each other.","우리의 노래는 서로에게 하고 싶은 이야기가 됐어요.","私たちの歌は、お互いに伝えたい物語になった。");
+I18N.add("我們只是想用音樂讓大家開心","We just wanted to make people happy with our music.","우리는 그저 음악으로 사람들을 행복하게 하고 싶었어요.","ただ音楽でみんなを幸せにしたかった。");
+I18N.add("— 2018 聯合國演說（意譯）","— 2018 UN speech","— 2018 UN 연설 (의역)","— 2018年 国連スピーチ（意訳）");
+I18N.add("— 2020 聯合國演說（意譯）","— 2020 UN speech","— 2020 UN 연설 (의역)","— 2020年 国連スピーチ（意訳）");
+I18N.add("— 2021 聯合國演說（意譯）","— 2021 UN speech","— 2021 UN 연설 (의역)","— 2021年 国連スピーチ（意訳）");
+I18N.add("— 2021 美國音樂獎（意譯）","— 2021 American Music Awards","— 2021 AMA 수상 소감 (의역)","— 2021年 AMA スピーチ（意訳）");
+/* RM 語錄 */
+I18N.add("也許我昨天犯了錯，但昨天的我還是我。今天，我就是我，帶著我所有的缺點與過錯。","Maybe I made mistakes yesterday, but yesterday's me is still me. Today, I am who I am, with all my faults and mistakes.","어제 실수를 했을지도 모르지만, 어제의 나도 여전히 나예요. 오늘의 나는 모든 결점과 잘못을 안고 있는 그대로의 나예요.","昨日は間違いを犯したかもしれないけれど、昨日の自分も自分。今日の自分は、欠点も過ちもすべて抱えた自分です。");
+I18N.add("我們必須試著記得自己是誰，並正視真正的自己。","We must try to remember who we are, and face who we really are.","우리가 누구인지 기억하고, 진짜 나 자신을 마주하려고 노력해야 해요.","私たちは自分が何者かを思い出し、本当の自分と向き合わなければなりません。");
+I18N.add("生活是有趣的，而活著更美好。","Life is fun, and being alive is even better.","삶은 재미있고, 살아 있다는 건 더 멋져요.","人生は面白い。そして、生きていることはもっと素晴らしい。");
+I18N.add("勇敢說出自己，找回你的名字，也找回你的聲音。","Bravely speak yourself, find your name, and find your voice.","용기 내어 자신을 말하고, 당신의 이름과 목소리를 되찾아요.","勇気を出して自分を語り、あなたの名前を、そしてあなたの声を取り戻そう。");
+/* Jin 語錄 */
+I18N.add("誰知道呢？也許這一刻是給我們的機會。","Who knows? Maybe this moment is a chance for us.","누가 알겠어요? 어쩌면 이 순간이 우리에게 주어진 기회일지도 몰라요.","誰にも分からない。もしかしたら、この瞬間は私たちへのチャンスかもしれない。");
+I18N.add("你的辛苦只要你知道就行了。","It's enough that you know how hard you've worked.","당신이 얼마나 고생했는지는 당신만 알면 충분해요.","あなたの頑張りは、あなた自身が知っていればそれでいい。");
+I18N.add("努力不懈的人會成功的。","Those who keep working hard will succeed.","꾸준히 노력하는 사람은 성공할 거예요.","努力を続ける人は、きっと成功する。");
+I18N.add("I'm the one I should love。","I'm the one I should love.","내가 사랑해야 할 사람은 바로 나예요.","私が愛すべきなのは、私自身。");
+I18N.add("我生活在現在，是為了真實地感受我的感受。","I live in the present to truly feel what I feel.","나는 내 감정을 진짜로 느끼기 위해 지금을 살아요.","私は、自分の気持ちをありのままに感じるために、今を生きている。");
+I18N.add("When something is delicious, it's zero calories.","When something is delicious, it's zero calories.","맛있는 건 0칼로리예요.","おいしいものは、ゼロカロリー。");
+/* SUGA 語錄 */
+I18N.add("沒有夢想也是正常的","It's perfectly normal not to have a dream.","꿈이 없는 것도 정상이에요.","夢がないのも普通のこと。");
+I18N.add("雖害怕墜落，但不畏懼著陸","I may fear the fall, but I'm not afraid of landing.","추락은 두렵지만, 착지는 두렵지 않아요.","落ちるのは怖いけれど、着地は怖くない。");
+I18N.add("因為有結局，所以過程才有意義","Because there's an ending, the journey has meaning.","결말이 있기에 과정에 의미가 있어요.","終わりがあるからこそ、過程に意味がある。");
+I18N.add("害怕看到結局就什麼都做不了","If you fear seeing the ending, you can't do anything.","결말을 볼까 두려워하면 아무것도 할 수 없어요.","結末を見るのが怖くて、何もできなくなってしまう。");
+/* j-hope 語錄 */
+I18N.add("I'm your hope, you're my hope, I'm J-hope!","I'm your hope, you're my hope, I'm J-hope!","나는 너의 희망, 너는 나의 희망, 나는 제이홉!","I'm your hope, you're my hope, I'm J-hope!");
+I18N.add("不要害怕失敗，因為無論何時，隨隨便便放棄的夢想，不是真正的夢想。","Don't be afraid of failure. A dream you can give up on so easily was never a real dream.","실패를 두려워하지 마세요. 아무 때나 쉽게 포기할 수 있는 꿈은 진짜 꿈이 아니에요.","失敗を恐れないで。いつでも簡単に諦められる夢は、本当の夢じゃない。");
+I18N.add("愛自己所愛，愛自己所能！","Love what you love, love what you can do!","내가 사랑하는 것을 사랑하고, 내가 할 수 있는 것을 사랑해요!","自分が好きなものを愛し、自分にできることを愛そう！");
+I18N.add("不努力就不會迎來美好果實","Without effort, there are no sweet fruits.","노력하지 않으면 좋은 열매도 맺지 못해요.","努力しなければ、いい実りは訪れない。");
+/* Jimin 語錄 */
+I18N.add("人生最珍貴的，絕對是緣分！","What's most precious in life is, without a doubt, the bonds we share!","인생에서 가장 소중한 건 단연코 인연이에요!","人生で一番大切なものは、間違いなくご縁！");
+I18N.add("世上沒有白走的路，也沒有白吃的午餐！","No path walked is ever wasted, and there's no such thing as a free lunch!","세상에 헛걸음은 없고, 공짜 점심도 없어요!","この世に無駄な道はなく、タダのランチもない！");
+/* V 語錄 */
+I18N.add("只要是在努力的路上，就不會孤單！","As long as you're on the road of effort, you're never alone!","노력하는 길 위에 있다면 외롭지 않아요!","努力の道の上にいる限り、独りじゃない！");
+I18N.add("I PURPLE YOU","I PURPLE YOU","I PURPLE YOU","I PURPLE YOU");
+I18N.add("不是每天都要閃閃發光，能撐過今天就已經很厲害了。","You don't have to shine every day. Making it through today is already impressive.","매일 반짝일 필요는 없어요. 오늘을 버텨낸 것만으로도 충분히 대단해요.","毎日輝かなくてもいい。今日を乗り越えただけで、もうすごいこと。");
+I18N.add("哪怕不站在高處也沒關係，即使和別人不一樣也沒關係，只要你幸福就好。","It's okay not to stand on high ground, and okay to be different from others. All that matters is that you're happy.","높은 곳에 서 있지 않아도, 남들과 달라도 괜찮아요. 당신이 행복하면 그걸로 충분해요.","高いところに立っていなくても、人と違っても大丈夫。あなたが幸せならそれでいい。");
+/* Jungkook 語錄 */
+I18N.add("如果改變不了，那就去享受，會享受的人是無法被戰勝的。","If you can't change it, enjoy it. Those who enjoy themselves can't be beaten.","바꿀 수 없다면 즐기세요. 즐기는 사람은 이길 수 없어요.","変えられないなら、楽しめばいい。楽しむ人には誰も勝てない。");
+I18N.add("人生的花樣年華終會來臨。","The most beautiful moments of life will surely come.","인생의 화양연화는 반드시 찾아올 거예요.","人生の花様年華は、きっと訪れる。");
+I18N.add("會成為大家的太陽，會成為一直閃閃發光的人！","I'll be everyone's sun, someone who always shines!","모두의 태양이 되고, 늘 반짝이는 사람이 될게요!","みんなの太陽になって、ずっと輝き続ける人になる！");
+I18N.add("一開始我是黃金，然後發現我的身邊成了一片金黃。","At first I was the gold, and then I found everything around me turned golden.","처음엔 내가 황금이었는데, 어느새 내 주변이 온통 황금빛이 되었어요.","最初は自分が金だったのに、気づけば周りが一面の黄金色になっていた。");
+/* 金閃卡 */
+I18N.add("★ 金閃卡！今天是限定大吉 ★","★ Golden Shiny Card! Today's special Great Luck ★","★ 골든 샤이니 카드! 오늘은 한정 대길 ★","★ 金色シャイニーカード！今日は限定の大吉 ★");
+I18N.add("閃卡圖鑑","Shiny collection","샤이니 도감","シャイニー図鑑");
+I18N.add("金閃圖鑑集滿了！","Shiny collection complete!","샤이니 도감을 모두 모았어요!","シャイニー図鑑がそろいました！");
+I18N.add("特別稱號","Special title","특별 칭호","特別称号");
+I18N.add("金閃收藏家","Golden Shiny Collector","골든 샤이니 컬렉터","ゴールデンシャイニーコレクター");
+I18N.add("★ 金閃卡 ★","★ Golden Shiny ★","★ 골든 샤이니 ★","★ ゴールデンシャイニー ★");
+/* 場次限定卡 */
+I18N.add("★ 高雄場限定卡 ★","★ Kaohsiung Show Limited Card ★","★ 가오슝 공연 한정 카드 ★","★ 高雄公演 限定カード ★");
+I18N.add("★ 香港場限定卡 ★","★ Hong Kong Show Limited Card ★","★ 홍콩 공연 한정 카드 ★","★ 香港公演 限定カード ★");
+I18N.add("高雄場限定卡","Kaohsiung limited cards","가오슝 한정 카드","高雄 限定カード");
+I18N.add("香港場限定卡","Hong Kong limited cards","홍콩 한정 카드","香港 限定カード");
+I18N.add("高雄場限定卡集滿了！","Kaohsiung limited cards complete!","가오슝 한정 카드를 모두 모았어요!","高雄の限定カードがそろいました！");
+I18N.add("香港場限定卡集滿了！","Hong Kong limited cards complete!","홍콩 한정 카드를 모두 모았어요!","香港の限定カードがそろいました！");
+I18N.add("高雄場見證者","Kaohsiung Show Witness","가오슝 공연 증인","高雄公演の見届け人");
+I18N.add("香港場見證者","Hong Kong Show Witness","홍콩 공연 증인","香港公演の見届け人");
 
 const PJ=[
 [/^(\d+) 首歌$/,n=>n+"曲"],
