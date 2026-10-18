@@ -232,6 +232,27 @@ I18N.add("把藍色和紅色的差別，講給朋友聽","Explain the blue vs. r
 I18N.add("用 KTV 模式唱一首喜歡的歌","Sing a favorite song in KTV mode","KTV 모드로 좋아하는 노래를 불러 보세요","KTVモードで好きな曲を歌おう");
 I18N.add("試著把應援棒配對一次","Try pairing your lightstick once","응원봉 페어링을 한번 해 보세요","ペンライトのペアリングを一度試そう");
 I18N.add("確認票券、證件和手機電量","Check your ticket, ID, and phone battery","티켓, 신분증, 휴대폰 배터리를 확인하세요","チケット・身分証・スマホの充電を確認しよう");
+I18N.add("投票選明天的音樂","Vote for tomorrow's music","내일의 음악 투표","明日の音楽に投票");
+I18N.add("點「投票」可以選明天要播的背景音樂，也能提名想聽的 YouTube 歌曲。投票時間每天 10:00–23:59（台北時間），00:00 結算，得票最高的就是隔天的歌。","Tap Vote to pick tomorrow's background music, or nominate a YouTube song you want to hear. Voting is open daily 10:00–23:59 (Taipei time), tallied at 00:00; the top song plays the next day.","투표를 눌러 내일의 배경음악을 고르거나 듣고 싶은 YouTube 곡을 추천할 수 있어요. 투표 시간은 매일 10:00–23:59(타이베이 시간), 00:00에 집계하며 최다 득표 곡이 다음 날 재생돼요.","「投票」をタップすると明日のBGMを選べます。聴きたいYouTube曲の推薦もできます。投票時間は毎日10:00〜23:59（台北時間）、00:00に集計し、最多得票の曲が翌日に流れます。");
+I18N.add("投票時間每天 10:00–23:59（台北時間），00:00 結算，得票最高的是隔天的背景音樂。一天一票，可以改投。","Voting is open daily 10:00–23:59 (Taipei time) and tallied at 00:00; the top song plays the next day. One vote per day, and you can change it.","투표 시간은 매일 10:00–23:59(타이베이 시간)이며 00:00에 집계해요. 최다 득표 곡이 다음 날 재생돼요. 하루 한 표, 변경 가능해요.","投票時間は毎日10:00〜23:59（台北時間）、00:00に集計します。最多得票の曲が翌日に流れます。1日1票で、変更もできます。");
+I18N.add("目前不在投票時間，每天 10:00 開放投票。","Voting is closed right now. It opens daily at 10:00.","지금은 투표 시간이 아니에요. 매일 10:00에 열려요.","現在は投票時間外です。毎日10:00に開始します。");
+I18N.add("從歌單選一首","Pick from the song list","노래 목록에서 고르기","曲リストから選ぶ");
+I18N.add("搜尋歌名","Search song title","곡 제목 검색","曲名を検索");
+I18N.add("或貼上 YouTube 網址","Or paste a YouTube link","또는 YouTube 링크 붙여넣기","またはYouTubeのリンクを貼る");
+I18N.add("歌單裡還沒有附影片的歌","No songs with a video in the list yet","영상이 있는 곡이 아직 없어요","動画付きの曲はまだありません");
+I18N.add("已在名單","On the list","목록에 있음","リスト入り");
+I18N.add("再點確認","Tap to confirm","한 번 더 눌러 확인","もう一度タップ");
+I18N.add("再點一次確認，今天只能提名一次","Tap again to confirm; you can only nominate once a day","한 번 더 누르세요. 하루에 한 번만 추천할 수 있어요","もう一度タップして確定。推薦は1日1回です");
+I18N.add("今天播放：BTS 出道周年特別歌曲","Today's music: BTS debut anniversary special","오늘의 음악: BTS 데뷔 기념일 특별곡","今日の曲：BTSデビュー記念日スペシャル");
+I18N.add("生日特別日：今天播放特別歌曲，投票照常進行，結果決定明天的歌。","Birthday special: a special song plays today. Voting goes on as usual and decides tomorrow's song.","생일 특별일: 오늘은 특별곡이 재생돼요. 투표는 그대로 진행되며 결과는 내일의 곡을 정해요.","誕生日スペシャル：今日は特別な曲を流します。投票はいつも通りで、結果は明日の曲を決めます。");
+I18N.add("連投三天","3-Day Vote Streak","3일 연속 투표","3日連続投票");
+I18N.add("連投七天","7-Day Vote Streak","7일 연속 투표","7日連続投票");
+I18N.add("連續 3 天投票","Vote 3 days in a row","3일 연속 투표하기","3日連続で投票する");
+I18N.add("連續 7 天投票","Vote 7 days in a row","7일 연속 투표하기","7日連続で投票する");
+I18N.add("點歌新手","First Request","첫 신청곡","初リクエスト");
+I18N.add("提名一首 YouTube 歌曲當背景音樂","Nominate a YouTube song for the background music","YouTube 곡을 배경음악으로 추천하기","YouTube曲をBGMに推薦する");
+I18N.add("點歌成功","Request Granted","신청곡 선정","リクエスト採用");
+I18N.add("你提名的歌被票選為背景音樂","A song you nominated was voted in as the background music","내가 추천한 곡이 투표로 배경음악에 선정됐어요","あなたが推薦した曲が投票でBGMに選ばれた");
 I18N.add("查好從住處到場館的交通方式","Look up how to get from home to the venue","집에서 공연장까지 가는 교통편을 알아 두세요","自宅から会場までの行き方を調べておこう");
 I18N.add("準備好零錢、行動電源和小包包","Pack coins, a power bank and a small bag","잔돈, 보조배터리, 작은 가방을 챙기세요","小銭・モバイルバッテリー・小さなバッグを準備しよう");
 I18N.add("看一下天氣，決定要穿什麼","Check the weather and plan your outfit","날씨를 확인하고 입을 옷을 정하세요","天気を見て服装を決めよう");
@@ -658,6 +679,7 @@ const TYS="應援企劃|燈箱/看板|LED電視牆|公車站牌|應援咖啡廳|
 const BD=[
 [new RegExp("^("+TYS+")達人$"),x=>[nm(x,0)+" Pro",nm(x,1)+" 달인",nm(x,2)+"の達人"]],
 [/^(高雄|香港)集滿$/,x=>[nm(x,0)+" complete",nm(x,1)+" 완성",nm(x,2)+"コンプリート"]],
+[/^今天播放：(.+) 生日特別歌曲$/,x=>["Today's music: "+x+"'s birthday special","오늘의 음악: "+x+" 생일 특별곡","今日の曲："+x+"の誕生日スペシャル"]],
 [/^(.+) 生日集滿$/,x=>[x+" birthday complete",x+" 생일 완성",x+" 誕生日コンプリート"]],
 [/^累計打卡 (\d+) 個$/,n=>["Check in "+n+" in total","총 "+n+"개 체크인","累計"+n+"か所チェックイン"]],
 [/^把(高雄|香港)的應援全部打卡$/,x=>["Check in every project in "+nm(x,0),nm(x,1)+"의 응원을 모두 체크인",nm(x,2)+"の応援を全部チェックイン"]],
