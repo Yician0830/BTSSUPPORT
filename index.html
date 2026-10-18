@@ -332,7 +332,8 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 .tr-a>span{display:flex;gap:8px}
 .tr-skip{border:0;background:none;color:var(--sub);font:inherit;font-size:14px;padding:8px 4px;cursor:pointer}
 @media(prefers-reduced-motion:reduce){.tr-hl{transition:none}}
-.tourBtn2{border:2px solid var(--line);background:var(--card);color:var(--dark);font:inherit;font-size:13px;font-weight:800;padding:2px 10px;margin-left:8px;cursor:pointer}
+.entry.ach{border-left:8px solid #7b4fd6}.bgt{display:flex;gap:6px;margin-bottom:12px}.bgt button{flex:1;font:inherit;font-size:13px;font-weight:800;padding:6px 4px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.bgt button em{display:block;font-style:normal;font-size:11px;font-weight:700;color:var(--sub)}.bgt button[aria-selected=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.bgt button[aria-selected=true] em{color:var(--darkInk)}.bgt button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}.agh{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 6px;font-size:14px;color:var(--dark)}.agh b{font-size:12px;color:var(--sub)}.agg{display:flex;flex-wrap:wrap;gap:6px}.agc{padding:3px 8px;border:2px solid var(--line);background:var(--box);font-size:12px;opacity:.5;filter:grayscale(1)}.agc.on{opacity:1;filter:none;border-color:var(--dark);font-weight:800}.agr{display:grid;gap:8px}.agt{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border:2px solid var(--line);background:var(--box);opacity:.55;filter:grayscale(1)}.agt.on{opacity:1;filter:none;border-color:var(--dark)}.agt.cur{box-shadow:4px 4px 0 var(--line)}.agt b{font-size:14px}.agt small{font-size:12px;color:var(--sub)}.agt em{font-style:normal;font-size:12px;font-weight:800;color:var(--tagInk)}.bgh{margin-bottom:10px}#bgo{position:fixed;inset:0;z-index:998;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.72)}.bgc{width:100%;max-width:420px;max-height:88vh;max-height:88dvh;display:flex;flex-direction:column;overflow:hidden;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px}.bgh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:12px}.bgh b{font-size:18px;color:var(--dark)}.bgh span{font-size:13px;color:var(--sub)}.bgg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.bgi{border:2px solid var(--line);background:var(--box);padding:10px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.55;filter:grayscale(1)}.bgi.on{opacity:1;filter:none;border-color:var(--dark)}.bgi i{display:block;width:40px;height:40px}.bgi svg{width:100%;height:100%;fill:currentColor}.bgi b{font-size:14px}.bgi small{font-size:12px;color:var(--sub);line-height:1.4}.bgi em{font-style:normal;font-size:12px;font-weight:800;color:var(--dark)}.bgi.m i{color:#e0a800}.bgi.c i{color:#2a7de1}.bgi.t i{color:var(--pur)}.bgi.b i{color:#e0457b}.bgi.g i{color:#d9482f}.bgn{font-size:12px;color:var(--sub);margin:12px 0}.bgx{width:100%;flex:none;margin-top:12px}.bgh,.bgt{flex:none}.bgb{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.ftLink{display:inline-block;border:2px solid var(--line);background:var(--card);color:var(--dark);font-size:13px;font-weight:800;padding:2px 10px;margin:4px 0 0 8px;text-decoration:none}.tourBtn2{border:2px solid var(--line);background:var(--card);color:var(--dark);font:inherit;font-size:13px;font-weight:800;padding:2px 10px;margin-left:8px;cursor:pointer}
 .tr-card{max-height:78vh;overflow-y:auto}
 .tr-note ol{margin:6px 0 0;padding-left:22px}.tr-note li{margin:2px 0;font-weight:800}.tr-note b{font-weight:900}
 .tr-note{margin:0 0 12px;padding:10px 12px;background:var(--box);border:2px dashed var(--line);font-size:14px;line-height:1.6}
@@ -692,6 +693,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <button class="entry bd" data-go="birthday"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="1" fill="#ffd23f"/><rect x="4" y="1" width="2" height="2" fill="#ff8fb3"/><rect x="1" y="3" width="8" height="2" fill="#fff"/><rect x="1" y="5" width="8" height="4" fill="#6fb7ff"/><rect x="1" y="7" width="8" height="1" fill="#2f7be0"/><rect x="0" y="9" width="10" height="1" fill="#9aa3c7"/></svg></i><div class="et"><b>生日應援</b><span>依成員整理的生日與 BTS 出道周年應援，有倒數</span></div></button>
 <button class="entry songs" data-go="songs"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="1" width="5" height="1" fill="#2f7be0"/><rect x="4" y="2" width="1" height="5" fill="#2f7be0"/><rect x="8" y="2" width="1" height="4" fill="#2f7be0"/><rect x="2" y="6" width="3" height="3" fill="#ff8fb3"/><rect x="6" y="5" width="3" height="3" fill="#ff8fb3"/></svg></i><div class="et"><b>演唱會歌曲空耳／應援</b><span>整理每首歌的空耳和應援法，現場跟著喊</span></div></button>
 <button class="entry fx" id="ftnBtn" type="button"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="2" fill="#ffd23f"/><rect x="1" y="2" width="8" height="2" fill="#ffd23f"/><rect x="2" y="4" width="6" height="2" fill="#ffd23f"/><rect x="1" y="6" width="3" height="3" fill="#ffd23f"/><rect x="6" y="6" width="3" height="3" fill="#ffd23f"/></svg></i><div class="et"><b>今日幸運籤</b><span>每天抽一張，看今天的應援運勢和練習任務</span></div></button>
+<button class="entry ach" id="achBtn" type="button"><i class="ic"><svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#b794ff"><rect x="2" y="0" width="2" height="3"/><rect x="6" y="0" width="2" height="3"/><rect x="3" y="3" width="4" height="1"/><rect x="2" y="4" width="6" height="1"/><rect x="1" y="5" width="8" height="3"/><rect x="2" y="8" width="6" height="1"/><rect x="3" y="9" width="4" height="1"/></svg></i><div class="et"><b>成就圖鑑</b><span>徽章、籤卡圖鑑和稱號，收集進度一次看</span></div></button>
 </div>
 <section class="notes" id="notesBox">
 <details><summary>注意事項</summary><ul>
@@ -747,7 +749,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <section class="wall" id="wall" hidden></section>
 </div>
 </div>
-<footer>本站為非官方整理，資訊以各主辦單位公告為準。 <button type="button" class="tourBtn2">？導覽</button></footer>
+<footer>本站為非官方整理，資訊以各主辦單位公告為準。 <button type="button" class="tourBtn2">？導覽</button><a class="ftLink" target="_blank" rel="noopener" href="https://forms.gle/er9iQ4miu4wsfALZ7">我要投稿</a><a class="ftLink" target="_blank" rel="noopener" href="https://forms.gle/Xg1WP6rcexV6iDW69">錯誤回報</a></footer>
 <button id="top" type="button" aria-label="回到頂端" title="回到頂端">↑</button>
 <div id="toast" role="status"></div>
 <div id="offb" hidden>離線中，顯示的是上次存下來的內容</div>
@@ -829,7 +831,7 @@ go()})();
 const CITIES={kh:{name:"高雄",en:"Kaohsiung",days:["11/19","11/20","11/21","11/22"],show:["2026/11/19、11/21、11/22 19:00","高雄國家體育場（世運主場館）・捷運紅線 R17 世運站"]},hk:{name:"香港",en:"Hong Kong",days:["3/4","3/6","3/7"],show:["2027/3/4、3/6、3/7 19:30","啟德主場館（啟德體育園）"]}};
 const MEMBERS=[["BTS",6,13],["RM",9,12],["Jin",12,4],["SUGA",3,9],["j-hope",2,18],["Jimin",10,13],["V",12,30],["Jungkook",9,1]];
 
-const TYPES=["應援企劃","LED廣告車","公車站牌","LED電視牆","應援咖啡廳","咖啡廳","快閃店","展覽"];
+const TYPES=["應援企劃","燈箱/看板","LED電視牆","公車站牌","應援咖啡廳","LED廣告車","咖啡廳","快閃店","展覽"];
 const WD={"11/19":"週四","11/21":"週六","11/22":"週日","3/4":"週四","3/6":"週六","3/7":"週日"};
 const rd=k=>{try{return new Set(JSON.parse(localStorage.getItem(k)||"[]"))}catch(e){return new Set()}};
 const STATUS=["全部","進行中","即將開始","已結束","待補充"];
@@ -882,9 +884,58 @@ function days(){const c=CITIES[city];$("#days").innerHTML=c.days.map(x=>`<button
 function stamp(i,faint){if(DATA[i]&&DATA[i].sec==="birthday"){const c=(x,y)=>faint?"#e6f6ff":x;return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"${faint?' opacity=".5"':""}><rect x="4" y="0" width="2" height="1" fill="${c("#ffd23f")}"/><rect x="4" y="1" width="2" height="2" fill="${c("#6ec6ff")}"/><rect x="1" y="3" width="8" height="2" fill="${c("#ff8fb5")}"/><rect x="1" y="5" width="8" height="3" fill="${c("#e8b27a")}"/><rect x="1" y="6" width="8" height="1" fill="${c("#c2255c")}"/><rect x="0" y="8" width="10" height="1" fill="${c("#4b3f9e")}"/></svg>`}
 const b=faint?"#e6f6ff":"#4b3f9e";return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"${faint?' opacity=".5"':""}><g fill="${b}"><rect x="3" y="3" width="4" height="1"/><rect x="2" y="4" width="6" height="1"/><rect x="1" y="5" width="8" height="3"/><rect x="2" y="8" width="6" height="1"/><rect x="3" y="9" width="4" height="1"/></g><rect x="4" y="2" width="2" height="1" fill="#9aa3c7"/><rect x="2" y="5" width="2" height="1" fill="#fff"/><rect x="2" y="6" width="1" height="1" fill="#fff"/><g fill="#c9a06a"><rect x="5" y="1" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/></g><g fill="#ffd23f"><rect x="7" y="0" width="1" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/></g></svg>`}
 /* 生日集章簿：依選到的成員算格數，已結束的也算一格；巡演維持原本只算未結束或已打卡的 */
-function bookItems(){const bd=sec==="birthday",r=t=>{const i=TYPES.indexOf(t);return i<0?TYPES.length:i};return DATA.filter(d=>inSec(d)&&(bd?(mem==="全部"||d.member===mem):(stat(d)!=="已結束"||done.has(d.id)))).map((d,i)=>[d,i]).sort((a,b)=>r(a[0].type)-r(b[0].type)||a[1]-b[1]).map(a=>a[0])}
+function bookItems(){const bd=sec==="birthday",r=t=>{const i=Math.min(...[].concat(t).map(x=>{const j=TYPES.indexOf(x);return j<0?TYPES.length:j}));return isFinite(i)?i:TYPES.length};return DATA.filter(d=>inSec(d)&&(bd?(mem==="全部"||d.member===mem):(stat(d)!=="已結束"||done.has(d.id)))).map((d,i)=>[d,i]).sort((a,b)=>r(a[0].type)-r(b[0].type)||a[1]-b[1]).map(a=>a[0])}
+/* ===== 護照徽章：打卡達標就解鎖，解鎖後記在這台裝置，之後取消打卡也不會消失（localStorage: kh-badges） ===== */
+function bgRd(){try{const o=JSON.parse(localStorage.getItem("kh-badges")||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}}
+function bgList(){
+const col=f=>DATA.filter(d=>f(d)&&(d.sec==="birthday"||stat(d)!=="已結束"||done.has(d.id)));
+const dn=f=>col(f).filter(d=>done.has(d.id)).length,L=[];
+const add=(id,fam,name,desc,k,n)=>L.push({id,fam,name,desc,k:Math.min(k,n),n});
+const all=DATA.filter(d=>done.has(d.id)).length;
+[[1,"初次打卡","完成第 1 次打卡"],[5,"打卡新星","累計打卡 5 個"],[10,"應援高手","累計打卡 10 個"],[20,"應援大師","累計打卡 20 個"]].forEach(([n,nm,ds])=>add("m"+n,"m",nm,ds,all,n));
+Object.keys(CITIES).forEach(c=>{const f=d=>(d.sec||"tour")==="tour"&&d.city===c,n=col(f).length,nm=CITIES[c].name;if(n>=2)add("c-"+c,"c",nm+"集滿","把"+nm+"的應援全部打卡",dn(f),n)});
+const has=(d,t)=>[].concat(d.type).includes(t);
+TYPES.forEach(t=>{const f=d=>has(d,t),tot=col(f).length;if(tot>=2){const n=Math.min(3,tot);add("t-"+t,"t",t+"達人","「"+t+"」類型打卡 "+n+" 個",dn(f),n)}});
+const pr=TYPES.filter(t=>col(d=>has(d,t)).length>0);
+if(pr.length>=3)add("t-all","t","全類型收集","每種類型都至少打卡 1 個",pr.filter(t=>dn(d=>has(d,t))>0).length,pr.length);
+MEMBERS.forEach(([m])=>{const f=d=>d.sec==="birthday"&&d.member===m,n=col(f).length;if(n>=1)add("b-"+m,"b",m==="BTS"?"BTS 出道周年集滿":m+" 生日集滿",m==="BTS"?"把 BTS 的出道周年應援全部打卡":"把 "+m+" 的生日應援全部打卡",dn(f),n)});
+try{add("g-s","g","遊戲 S 級","在應援遊戲拿到 S 級",Object.values(gBest()).some(x=>x&&x.g==="S")?1:0,1)}catch(e){}
+return L.map(b=>(b.ok=b.k>=b.n,b))}
+function badgeSync(){const st=bgRd(),L=bgList(),nw=[],n=new Date(),ds=(n.getMonth()+1)+"/"+n.getDate();
+L.forEach(b=>{if(b.ok&&!st[b.id]){st[b.id]=ds;nw.push(b)}});
+if(nw.length){try{localStorage.setItem("kh-badges",JSON.stringify(st))}catch(e){}toast(nw.length===1?"獲得新徽章："+nw[0].name:"獲得 "+nw.length+" 個新徽章")}
+return{st,L}}
+function fxSt(){try{const o=JSON.parse(localStorage.getItem("ftn-st")||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}}
+/* 成就圖鑑：把集章徽章（kh-badges）和幸運籤的成員圖鑑、閃卡、場次限定卡、稱號（ftn-st）放在同一個畫面，只讀取，不改幸運籤的資料 */
+function achOpen(tab){if(document.getElementById("bgo"))return;const{st,L}=badgeSync(),f=fxSt(),opener=document.activeElement;
+const M=MEMBERS.filter(m=>m[0]!=="BTS").map(m=>m[0]),ar=k=>Array.isArray(f[k])?f[k]:[],col=ar("col"),sh=ar("sh"),lm=ar("lm");
+const full=M.every(m=>col.includes(m)),n=+f.n||0;
+const TT=FT_TIERS.map(t=>({name:t[1],need:"連續抽籤 "+t[0]+" 天"+(t[2]?"且集滿成員圖鑑":""),on:n>=t[0]&&(!t[2]||full)}));
+TT.push({name:"金閃收藏家",need:"集滿閃卡圖鑑",on:M.every(m=>sh.includes(m)),sp:1});
+FT_LC.forEach(c=>TT.push({name:c[1]+"場見證者",need:"集滿"+c[1]+"場限定卡",on:c[4].every(x=>lm.includes(c[0]+"-"+x)),sp:1}));
+let cur=-1;TT.forEach((t,i)=>{if(!t.sp&&t.on)cur=i});
+const bOn=L.filter(x=>st[x.id]).length,mOn=M.filter(m=>col.includes(m)).length,sOn=M.filter(m=>sh.includes(m)).length,lOn=FT_LC.reduce((s,c)=>s+c[4].filter(x=>lm.includes(c[0]+"-"+x)).length,0),lAll=FT_LC.reduce((s,c)=>s+c[4].length,0),tOn=TT.filter(t=>t.on).length;
+const ico='<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="2" y="0" width="2" height="3"/><rect x="6" y="0" width="2" height="3"/><rect x="3" y="3" width="4" height="1"/><rect x="2" y="4" width="6" height="1"/><rect x="1" y="5" width="8" height="3"/><rect x="2" y="8" width="6" height="1"/><rect x="3" y="9" width="4" height="1"/><rect x="4" y="5" width="2" height="2" fill="#fff" opacity=".75"/></svg>';
+const T=[["b","徽章",bOn+" / "+L.length],["c","籤卡圖鑑",(mOn+sOn+lOn)+" / "+(M.length*2+lAll)],["t","稱號",tOn+" / "+TT.length]];
+const chips=(arr,on,pre)=>`<div class="agg">${arr.map(m=>`<span class="agc${on(m)?" on":""}"${on(m)&&FT_MC[m]?` style="color:${FT_MC[m]}"`:""}>${pre||""}${esc(m)}</span>`).join("")}</div>`;
+const body={
+b:()=>{const S=[...L].sort((x,y)=>(st[y.id]?1:0)-(st[x.id]?1:0));return `<div class="bgg">${S.map(x=>{const on=!!st[x.id];return `<div class="bgi ${x.fam}${on?" on":""}"><i>${ico}</i><b>${esc(x.name)}</b><small>${esc(x.desc)}</small><em>${on?"獲得於 "+esc(st[x.id]):x.k+" / "+x.n}</em></div>`}).join("")}</div><p class="bgn">徽章會一直保存在這台裝置，之後取消打卡也不會消失。</p>`},
+c:()=>`${f.last?"":`<p class="bgn">還沒抽過幸運籤，抽一次就會開始收集圖鑑。</p>`}<h3 class="agh"><span>成員圖鑑</span><b>${mOn} / ${M.length}</b></h3>${chips(M,m=>col.includes(m))}<h3 class="agh"><span>閃卡圖鑑</span><b>${sOn} / ${M.length}</b></h3>${chips(M,m=>sh.includes(m),"★")}${FT_LC.map(c=>{const g=c[4].filter(x=>lm.includes(c[0]+"-"+x)).length;return `<h3 class="agh"><span>${c[1]}場限定卡</span><b>${g} / ${c[4].length}</b></h3>${chips(c[4],x=>lm.includes(c[0]+"-"+x))}`}).join("")}`,
+t:()=>`<p class="bgn">連續抽籤 <b>${n}</b> 天</p><div class="agr">${TT.map((t,i)=>`<div class="agt${t.on?" on":""}${i===cur?" cur":""}"><b>${esc(t.name)}</b><small>${esc(t.need)}</small>${i===cur?"<em>目前稱號</em>":""}</div>`).join("")}</div><p class="bgn">稱號看連續抽籤天數，中斷一天會重新計算。</p>`};
+const ov=document.createElement("div");ov.id="bgo";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-label","成就圖鑑");
+let tb=T.some(x=>x[0]===tab)?tab:"b";
+const draw=()=>{ov.querySelector(".bgt").innerHTML=T.map(x=>`<button type="button" role="tab" data-t="${x[0]}" aria-selected="${x[0]===tb}">${x[1]} <em>${x[2]}</em></button>`).join("");ov.querySelector(".bgb").innerHTML=body[tb]()};
+ov.innerHTML=`<div class="bgc"><div class="bgh"><b>成就圖鑑</b></div><div class="bgt" role="tablist"></div><div class="bgb"></div><button type="button" class="btn main bgx">關閉</button></div>`;
+draw();
+const prev=document.body.style.overflow;document.body.style.overflow="hidden";
+const close=()=>{ov.remove();document.body.style.overflow=prev;document.removeEventListener("keydown",key);opener&&opener.focus&&opener.focus()};
+const key=ev=>{if(ev.key==="Escape"&&!document.getElementById("ftn"))close()};
+ov.addEventListener("click",ev=>{const t=ev.target.closest&&ev.target.closest(".bgt button");if(t){tb=t.dataset.t;draw();return}if(ev.target===ov||ev.target.closest(".bgx"))close()});
+document.addEventListener("keydown",key);document.body.appendChild(ov);ov.querySelector(".bgt [aria-selected=true]").focus()}
+function badgeOpen(){achOpen("b")}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("#badgeBtn,#achBtn");if(t)achOpen("b")});
 function xmark(){return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true" fill="#9aa3c7">${[1,2,3,4,5,6,7,8].map(i=>`<rect x="${i}" y="${i}" width="1" height="1"/><rect x="${9-i}" y="${i}" width="1" height="1"/>`).join("")}</svg>`}
-function book(){const L=bookItems();$("#book").hidden=!L.length||(sec==="birthday"&&mem==="全部");const k=L.filter(d=>done.has(d.id)).length;$("#book").innerHTML=`<span>集章簿 ${k} / ${L.length}</span><span class="slots">${L.map(d=>`<span class="slot ${done.has(d.id)?"on":stat(d)==="已結束"?"miss":""}" title="${esc(d.title)}${!done.has(d.id)&&stat(d)==="已結束"?"（已結束，未打卡）":""}">${done.has(d.id)?stamp(DATA.indexOf(d)):stat(d)==="已結束"?xmark():""}</span>`).join("")}</span><button class="sbtn" id="allOn" type="button">✔ 一鍵打卡</button><button class="sbtn" id="allOff" type="button">↺ 取消全部打卡</button><button class="sbtn" id="saveImg" type="button">🖼 存成圖片</button>`}
+function book(){let bs={st:{},L:[]};try{bs=badgeSync()}catch(x){}const L=bookItems();$("#book").hidden=!L.length||(sec==="birthday"&&mem==="全部");const k=L.filter(d=>done.has(d.id)).length;$("#book").innerHTML=`<span>集章簿 ${k} / ${L.length}</span><span class="slots">${L.map(d=>`<span class="slot ${done.has(d.id)?"on":stat(d)==="已結束"?"miss":""}" title="${esc(d.title)}${!done.has(d.id)&&stat(d)==="已結束"?"（已結束，未打卡）":""}">${done.has(d.id)?stamp(DATA.indexOf(d)):stat(d)==="已結束"?xmark():""}</span>`).join("")}</span><button class="sbtn" id="allOn" type="button">✔ 一鍵打卡</button><button class="sbtn" id="allOff" type="button">↺ 取消全部打卡</button><button class="sbtn" id="saveImg" type="button">🖼 存成圖片</button><button class="sbtn" id="badgeBtn" type="button">🏆 徽章 ${bs.L.filter(b=>bs.st[b.id]).length} / ${bs.L.length}</button>`}
 const $=s=>document.querySelector(s);
 const wr=(k,s)=>{try{localStorage.setItem(k,JSON.stringify([...s]))}catch(e){}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1014,10 +1065,10 @@ const A2HS=()=>{const L4=a=>`<ol>${a.map(x=>`<li>${x}</li>`).join("")}</ol>`;
 const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享」鈕（方框加向上箭頭）","往下滑，點「加入主畫面」","右上角按「新增」，桌面就會出現圖示"]):L4(["用 Chrome 開啟這個網頁","點右上角的「⋮」選單","點「加到主畫面」或「安裝應用程式」","按「新增」或「安裝」，桌面就會出現圖示"]);
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
-home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#ftnBtn","今日幸運籤","每天抽一張，看今天的應援運勢和練習任務。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
+home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#ftnBtn","今日幸運籤","每天抽一張，看今天的應援運勢和練習任務。"],["#achBtn","成就圖鑑","徽章、籤卡圖鑑和稱號都收在這裡，看看自己收集到哪了。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
 songs:[["#sq","搜尋","輸入歌名、專輯、演唱會、空耳或應援內容，快速找到想看的歌。"],["#svt","依專輯／依演唱會","切換分類：依專輯看每張專輯的歌，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。"],["#swall","選專輯／演唱會","點封面進去，就會看到那張專輯或那場演唱會的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],["#sprog","演唱會通關","在演唱會裡，把每首有應援遊戲的歌都玩到 B 級以上，就能全曲通關。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],[".smode [data-m=\"g\"]","應援遊戲","歌詞裡的藍色、紅色段落會變成音符，影片播到哪音符就落到哪；音符到線時點對應的按鈕，結束後會評等級並記下最佳成績。"],["#stabs .gsg","遊戲成績","玩過應援遊戲的歌，歌名旁會顯示最佳等級（S、A、B、C）。"],["#slist .fsz","字級","按 A− 或 A＋ 調整歌詞大小，現場看不清楚時可以放大。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
-tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]],
-birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"]]};
+tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選燈箱/看板、咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#badgeBtn","徽章","集章達標會解鎖徽章，點這裡看全部徽章和進度。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"],["footer","我要投稿／錯誤回報","有新的應援資訊想提供，或發現資料有誤，點頁尾這兩顆按鈕填表單告訴我們。"]],
+birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選燈箱/看板、咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#badgeBtn","徽章","集章達標會解鎖徽章，點這裡看全部徽章和進度。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"],["footer","我要投稿／錯誤回報","有新的應援資訊想提供，或發現資料有誤，點頁尾這兩顆按鈕填表單告訴我們。"]]};
 let TR=null;
 function tourEls(){return document.querySelectorAll(".tr-hl,.tr-block,.tr-card")}
 function tourEnd(){document.body.classList.remove("tr-on");tourEls().forEach(e=>e.remove());if(TR){cancelAnimationFrame(TR.raf);window.removeEventListener("scroll",TR.sync);window.removeEventListener("resize",TR.sync);document.removeEventListener("keydown",TR.key)}TR=null}
@@ -1103,7 +1154,7 @@ if(a==="all"){if(mode==="all"){m.hidden=true;m.dataset.m="";return}m.dataset.m="
 annR();
 
 /* 歌曲空耳／應援：改下面的 SONGS 就能新增歌曲（t 歌名、a 專輯或場次、h 空耳、c 應援法，換行用 \n，u 影片或參考連結） */
-const TL=/^(\d{1,2}):(\d{2})(?:\.\d+)?\s+/;
+const TL=/^(\d{1,2}):(\d{2})(?:(\.\d+))?\s+/;
 const SONGS=[
 {t:"Hooligan",a:"官方應援（不含空耳）",h:"",c:"藍色＝大聲喊　紅色＝跟著唱\n\n從 7 秒開始，依序喊成員全名：\n[藍] Kim Namjoon! Kim Seokjin! Min Yoongi! Jeong Hoseok!\n[藍] Park Jimin! Kim Taehyung! Jeon Jungkook! BTS!",u:""}];
 function sfmt(t){const inl=x=>esc(x).replace(/\{(藍|紅|橘)\|([^{}]*)\}/g,(m,c,v)=>`<span class="${c==="藍"?"ib":c==="紅"?"ir":"io"}">${v}</span>`);return String(t).split("\n").map(l=>{l=l.replace(TL,"");const m=l.match(/^\[(藍|紅|橘|靜)(?:[長名]?[\d.]*)\]\s?(.*)$/);if(m)return `<div class="cl ${m[1]==="藍"?"b":m[1]==="紅"?"r":m[1]==="靜"?"q":"o"}">${inl(m[2])||"&nbsp;"}</div>`;return `<div>${inl(l)||"&nbsp;"}</div>`}).join("")}
@@ -1115,7 +1166,7 @@ fsApply();
 let SMODE="n";try{SMODE=localStorage.getItem("song-mode")==="k"?"k":"n"}catch(e){}
 const YTID=u=>{const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);return m?m[1]:""};
 function songVid(x){const vu=YTID(x.u),vk=YTID(x.k);return SMODE==="k"?(vk||vu):(vu||vk)}
-function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2],k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
+function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2]+(m[3]?+m[3]:0),k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
 function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
 function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(ok(v))b.push(`<a class="btn" target="_blank" rel="noopener" href="${esc(v)}">影片／參考 ↗</a>`);if(ok(x.o))b.push(`<a class="btn of" target="_blank" rel="noopener" href="${esc(x.o)}">官方應援歌詞 ↗</a>`);return b.length?`<div class="act">${b.join("")}</div>`:""}
 function songCard(x){const off=navigator.onLine===false,vid=songVid(x),T=vid?songTimed(x):[],k=vid&&!off&&SMODE==="k",g=vid&&!off&&SMODE==="g";
@@ -1190,7 +1241,7 @@ function gStat(){let sc=0;GN.forEach(n=>{sc+=(n.st===1?100:n.st===2?60:0)*(n.f?2
 function gSet(n,st){n.st=st;if(!st)n.a=0;n.f=(st===1||st===2)&&GC>=20?1:0;n.e.classList.toggle("ok",st===1||st===2);n.e.classList.toggle("ms",st===3)}
 function gJ(t,c){const j=document.getElementById("gj");if(!j)return;j.textContent=t;j.className="gj "+c+" on";clearTimeout(gJ.t);gJ.t=setTimeout(()=>j.classList.remove("on"),420)}
 function gMark(t){const g=(gBest()[t]||{}).g;if(!g)return;document.querySelectorAll("#stabs .chip").forEach(c=>{if(c.dataset.t!==t)return;let s=c.querySelector(".gsg");if(!s){s=document.createElement("em");s.className="gsg";c.appendChild(s)}s.textContent=g});const o=[...document.querySelectorAll("#ssel option")].find(o=>o.value===t);if(o)o.textContent=o.textContent.replace(/ ・ [SABC]$/,"")+" ・ "+g}
-function gEnd(){const r=document.getElementById("gres");if(!r)return;let p=0,g=0,m=0;GN.forEach(n=>{n.st===1?p++:n.st===2?g++:m++});const a=GN.length?(p*100+g*60)/(GN.length*100):0,gr=gGrade(a),B=gBest(),old=B[GT],nw=GT&&(!old||a>old.a);if(nw){B[GT]={g:gr,a:Math.round(a*1000)/1000,d:Date.now()};try{localStorage.setItem("song-best",JSON.stringify(B))}catch(e){}gMark(GT)}const bs=B[GT];let bd="";if(nw){gProgUpd();const x0=SONGS.find(z=>z.t===GT),BG=gBadges();if(x0)songCons(x0).forEach(c=>{const g=gProg(c.n);if(g.n&&g.k>=g.n&&!BG[c.n]){BG[c.n]=Date.now();bd+=`<span class="gnew">演唱會全曲通關！</span><span>${esc(c.n)}</span>`;try{localStorage.setItem("song-badge",JSON.stringify(BG))}catch(e){}}})}
+function gEnd(){const r=document.getElementById("gres");if(!r)return;let p=0,g=0,m=0;GN.forEach(n=>{n.st===1?p++:n.st===2?g++:m++});const a=GN.length?(p*100+g*60)/(GN.length*100):0,gr=gGrade(a),B=gBest(),old=B[GT],nw=GT&&(!old||a>old.a);if(nw){B[GT]={g:gr,a:Math.round(a*1000)/1000,d:Date.now()};try{localStorage.setItem("song-best",JSON.stringify(B))}catch(e){}gMark(GT);try{badgeSync()}catch(x){}}const bs=B[GT];let bd="";if(nw){gProgUpd();const x0=SONGS.find(z=>z.t===GT),BG=gBadges();if(x0)songCons(x0).forEach(c=>{const g=gProg(c.n);if(g.n&&g.k>=g.n&&!BG[c.n]){BG[c.n]=Date.now();bd+=`<span class="gnew">演唱會全曲通關！</span><span>${esc(c.n)}</span>`;try{localStorage.setItem("song-badge",JSON.stringify(BG))}catch(e){}}})}
 const R=gAchRun(),AC=gAch(),hv=AC[GT]||{},an=[],ao=[];Object.keys(R).forEach(k=>{(hv[k]?ao:an).push("★ "+GAN[k]);hv[k]=hv[k]||Date.now()});if(an.length||ao.length){AC[GT]=hv;try{localStorage.setItem("song-ach",JSON.stringify(AC))}catch(e){}}const ah=(an.length?`<span class="gnew">新成就！${an.join("　")}</span>`:"")+(ao.length?`<span>${ao.join("　")}</span>`:"");
 r.innerHTML=`<b>${gr}</b><span>PERFECT ${p}　GOOD ${g}　MISS ${m}</span><span>${Math.round(a*100)}%</span>${nw?`<span class="gnew">${old?"新紀錄！":"首次成績"}</span>`:bs?`<span><em>最佳成績</em> ${bs.g} ${Math.round(bs.a*100)}%</span>`:""}${bd}${ah}`;r.hidden=false}
 function gHit(c){GH[c]=true;GG[c]=performance.now();if(!GN.length||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime();GN.forEach(n=>{if(n.c==="t"&&!n.st&&t>=n.w0&&t<=n.w1){gSet(n,3);GC=0;gJ("別喊！","r");gStat()}});let b=null,bd=9;GN.forEach(n=>{if(n.c===c&&!n.st&&!n.d){const d=Math.abs(n.s-t);if(d<bd){bd=d;b=n}}});

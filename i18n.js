@@ -479,6 +479,65 @@ const PJ=[
 [/^🎉 下一個：BTS 出道 (\d+) 週年 (\S+)，還有 (\d+) 天$/,(y,d,k)=>"🎉 次：BTSデビュー"+y+"周年 "+d+"（あと"+k+"日）"],
 [/^🎉 今天是 BTS 出道 (\d+) 週年！$/,y=>"🎉 今日はBTSデビュー"+y+"周年！"]
 ];
+/* 後加的翻譯集中放在這裡，不要插進上面的 D：日文（JA）是依 D 的順序對應，中間插入會讓後面全部錯位。格式：原文:[英文,韓文,日文] */
+(function(){
+const X={
+"燈箱/看板":["Lightbox / Billboard","라이트박스/보드","ライトボックス／看板"],
+"我要投稿":["Submit info","제보하기","情報を投稿"],
+"錯誤回報":["Report an error","오류 신고","誤りを報告"],
+"我要投稿／錯誤回報":["Submit info / Report an error","제보 / 오류 신고","投稿／誤り報告"],
+"這排可以左右滑，選燈箱/看板、咖啡廳、LED 廣告車等類型。":["Swipe this row sideways to choose lightboxes/billboards, cafés, LED ad trucks and other types.","이 줄은 좌우로 밀 수 있어요. 라이트박스/보드, 카페, LED 광고 차량 등 유형을 고르세요.","この行は左右にスワイプできます。ライトボックス／看板、カフェ、LED広告車などの種類を選べます。"],
+"有新的應援資訊想提供，或發現資料有誤，點頁尾這兩顆按鈕填表單告訴我們。":["Have new project info, or spotted a mistake? Tap these two buttons in the footer to fill in a form.","새 응원 정보를 제보하거나 오류를 발견했다면 하단의 두 버튼으로 양식을 작성해 주세요.","新しい応援情報の提供や誤りに気づいたら、フッターの2つのボタンからフォームでお知らせください。"],
+"徽章":["Badges","배지","バッジ"],
+"集章達標會解鎖徽章，點這裡看全部徽章和進度。":["Hit stamp goals to unlock badges. Tap here to see all badges and your progress.","스탬프 목표를 달성하면 배지가 열려요. 여기서 전체 배지와 진행도를 확인하세요.","スタンプの目標を達成するとバッジが解放されます。ここで全バッジと進み具合を確認できます。"],
+"成就圖鑑":["Achievements","업적 도감","実績図鑑"],
+"徽章、籤卡圖鑑和稱號，收集進度一次看":["Badges, fortune cards and titles — all your progress in one place","배지, 운세 카드, 칭호를 한눈에","バッジ・おみくじカード・称号の収集状況をまとめて確認"],
+"徽章、籤卡圖鑑和稱號都收在這裡，看看自己收集到哪了。":["Badges, fortune cards and titles all live here. See how far you've collected.","배지, 운세 카드, 칭호가 모두 여기에 있어요. 얼마나 모았는지 확인해 보세요.","バッジ・おみくじカード・称号はここにまとまっています。どこまで集めたか確認しましょう。"],
+"籤卡圖鑑":["Fortune cards","운세 카드 도감","おみくじ図鑑"],
+"目前稱號":["Current title","현재 칭호","現在の称号"],
+"還沒抽過幸運籤，抽一次就會開始收集圖鑑。":["You haven't drawn a fortune yet. Draw once to start your collection.","아직 운세를 뽑지 않았어요. 한 번 뽑으면 도감 수집이 시작돼요.","まだおみくじを引いていません。1回引くと図鑑の収集が始まります。"],
+"稱號看連續抽籤天數，中斷一天會重新計算。":["Titles follow your draw streak. Missing a day resets it.","칭호는 연속 뽑기 일수에 따라 정해져요. 하루 빠지면 다시 계산돼요.","称号は連続で引いた日数で決まります。1日空くとリセットされます。"],
+"集滿閃卡圖鑑":["Complete the shiny collection","샤이니 도감 완성","シャイニー図鑑をコンプリート"],
+"我的徽章":["My badges","내 배지","マイバッジ"],
+"徽章會一直保存在這台裝置，之後取消打卡也不會消失。":["Badges stay on this device even if you un-check an item later.","배지는 이 기기에 저장되며, 나중에 체크인을 취소해도 사라지지 않아요.","バッジはこの端末に保存され、後でチェックインを取り消しても消えません。"],
+"初次打卡":["First check-in","첫 체크인","初チェックイン"],
+"完成第 1 次打卡":["Make your first check-in","첫 체크인 완료","初めてのチェックインをする"],
+"打卡新星":["Rising star","떠오르는 신인","チェックイン新星"],
+"應援高手":["Cheer pro","응원 고수","応援の達人"],
+"應援大師":["Cheer master","응원 마스터","応援マスター"],
+"全類型收集":["All types","전 유형 수집","全タイプ収集"],
+"每種類型都至少打卡 1 個":["Check in at least 1 of every type","모든 유형에서 1개 이상 체크인","全タイプで1つ以上チェックイン"],
+"遊戲 S 級":["Game rank S","게임 S 등급","ゲームSランク"],
+"在應援遊戲拿到 S 級":["Get rank S in the cheer game","응원 게임에서 S 등급 받기","応援ゲームでSランクを取る"],
+"BTS 出道周年集滿":["BTS anniversary complete","BTS 데뷔 기념일 완성","BTSデビュー記念日コンプリート"],
+"把 BTS 的出道周年應援全部打卡":["Check in every BTS debut anniversary project","BTS 데뷔 기념일 응원을 모두 체크인","BTSデビュー記念日の応援を全部チェックイン"]
+};
+Object.keys(X).forEach(k=>{D[k]=[X[k][0],X[k][1]];JA[k]=X[k][2]});
+const CN={"高雄":["Kaohsiung","가오슝","高雄"],"香港":["Hong Kong","홍콩","香港"]};
+const nm=(x,k)=>CN[x]?CN[x][k]:(k<2?(D[x]?D[x][k]:x):(JA[x]||x));
+const TYS="應援企劃|燈箱/看板|LED電視牆|公車站牌|應援咖啡廳|LED廣告車|咖啡廳|快閃店|展覽";
+const BD=[
+[new RegExp("^("+TYS+")達人$"),x=>[nm(x,0)+" Pro",nm(x,1)+" 달인",nm(x,2)+"の達人"]],
+[/^(高雄|香港)集滿$/,x=>[nm(x,0)+" complete",nm(x,1)+" 완성",nm(x,2)+"コンプリート"]],
+[/^(.+) 生日集滿$/,x=>[x+" birthday complete",x+" 생일 완성",x+" 誕生日コンプリート"]],
+[/^累計打卡 (\d+) 個$/,n=>["Check in "+n+" in total","총 "+n+"개 체크인","累計"+n+"か所チェックイン"]],
+[/^把(高雄|香港)的應援全部打卡$/,x=>["Check in every project in "+nm(x,0),nm(x,1)+"의 응원을 모두 체크인",nm(x,2)+"の応援を全部チェックイン"]],
+[/^把 (.+) 的生日應援全部打卡$/,x=>["Check in every "+x+" birthday project",x+" 생일 응원을 모두 체크인",x+"の誕生日応援を全部チェックイン"]],
+[/^「(.+)」類型打卡 (\d+) 個$/,(x,n)=>["Check in "+n+" × "+nm(x,0),"「"+nm(x,1)+"」 "+n+"개 체크인","「"+nm(x,2)+"」を"+n+"か所チェックイン"]],
+[/^已獲得 (\d+) \/ (\d+) 個$/,(a,b)=>["Earned "+a+" / "+b,a+" / "+b+"개 획득","獲得 "+a+" / "+b+" 個"]],
+[/^獲得於 (\S+)$/,d=>["Earned "+d,d+" 획득",d+" 獲得"]],
+[/^🏆 徽章 (\d+) \/ (\d+)$/,(a,b)=>["🏆 Badges "+a+" / "+b,"🏆 배지 "+a+" / "+b,"🏆 バッジ "+a+" / "+b]],
+[/^連續抽籤 (\d+) 天$/,n=>["Draw streak: "+n+" days","연속 뽑기 "+n+"일","連続で引く："+n+"日"]],
+[/^連續抽籤 (\d+) 天且集滿成員圖鑑$/,n=>["Draw streak: "+n+" days and a complete member collection","연속 뽑기 "+n+"일 + 멤버 도감 완성","連続で引く："+n+"日＋メンバー図鑑コンプリート"]],
+[/^集滿(高雄|香港)場限定卡$/,x=>["Complete the "+nm(x,0)+" limited cards","완성: "+nm(x,1)+" 한정 카드",nm(x,2)+"の限定カードをコンプリート"]],
+[/^(高雄|香港)場見證者$/,x=>["Show Witness: "+nm(x,0),nm(x,1)+" 공연 증인",nm(x,2)+"公演の見届け人"]],
+[/^獲得 (\d+) 個新徽章$/,n=>[n+" new badges earned","새 배지 "+n+"개 획득","新しいバッジを"+n+"個獲得"]]
+];
+const tn=(x,k)=>{if(k<2&&D[x])return D[x][k];if(k===2&&JA[x])return JA[x];for(const[re,f]of BD){const m=x.match(re);if(m)return f(...m.slice(1))[k]}return x};
+BD.push([/^獲得新徽章：(.+)$/,x=>["New badge: "+tn(x,0),"새 배지: "+tn(x,1),"新しいバッジ："+tn(x,2)]]);
+P.push(...BD.map(([re,f])=>[re,(...a)=>f(...a).slice(0,2)]));
+PJ.push(...BD.map(([re,f])=>[re,(...a)=>f(...a)[2]]));
+})();
 const idx=()=>LANGS.findIndex(x=>x[0]===L)-1;
 function tr(s){const t=s.trim();if(L==="zh"||!t)return s;let v;
 if(L==="ja"){v=JA[t];if(!v)for(const[re,f]of PJ){const m=t.match(re);if(m){v=f(...m.slice(1));break}}}
