@@ -1,6 +1,6 @@
 /* 離線快取：頁面與程式檔「先連網、逾時就用快取」；圖片、字型、地圖函式庫「有快取就先用」。
    更新網站內容後，把下面的 VER 改一個值，舊快取就會被清掉，使用者頁面也會跳出「有新版本」的提示（沒改 VER 就不會提示）。 */
-const VER="v73",CORE="core-"+VER,RUN="run-"+VER;
+const VER="v76",CORE="core-"+VER,RUN="run-"+VER;
 const FILES=["./","index.html","data.js","i18n.js","manifest.json","icon-192.png","icon-512.png"];
 /* 選用檔（專輯封面等）：檔案還沒放上去也不會讓安裝失敗。新增封面可以加在這裡，沒加的封面會在第一次看到時自動存起來。 */
 const OPT=["IMG/IMG_1293.png"];

@@ -504,6 +504,30 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 .albwall .cdb small{font-size:12px;font-weight:800;color:var(--sub)}
 .albwall .cdb b{font-size:17px;font-weight:900;color:var(--ink)}
 .albwall .cdb span{margin-left:auto;font-size:15px;font-weight:900;color:var(--dark)}
+/* ===== 歌單預測：橫幅與彈窗美化 ===== */
+.albwall .cdb.prb{align-items:center;flex-wrap:nowrap;gap:14px;padding:14px 16px;border-width:3px;border-left:10px solid #ffd23f;background:linear-gradient(135deg,var(--box),var(--pill));box-shadow:5px 5px 0 var(--line)}
+.prb .pri{flex:none;width:56px;height:56px;display:grid;place-items:center;padding:9px;background:var(--card);border:2px solid var(--dark);color:var(--pur);box-shadow:3px 3px 0 var(--line)}
+.prb .pri svg{display:block;width:100%;height:100%;animation:prbob 1.6s steps(2) infinite}
+@keyframes prbob{50%{transform:translateY(-3px)}}
+.prb .prt{flex:1;min-width:0;display:grid;gap:3px;justify-items:start}
+.albwall .prb .prt small{padding:0 8px;font-family:var(--px);font-size:12px;font-weight:400;letter-spacing:.12em;color:var(--tagInk);background:var(--tag);border:2px solid var(--tagInk)}
+.albwall .prb .prt b{font-family:var(--px);font-size:20px;font-weight:400;line-height:1.35;letter-spacing:.02em}
+.prb .prt em{font-style:normal;font-size:12px;font-weight:700;color:var(--sub)}
+.albwall .prb .btn{flex:none;margin-left:auto;padding:10px 20px;font-size:15px}
+@media(max-width:560px){.albwall .cdb.prb{flex-wrap:wrap}.prb .prt{flex:1 1 calc(100% - 76px)}.albwall .prb .btn{width:100%;justify-content:center;margin-left:0}}
+@media(prefers-reduced-motion:reduce){.prb .pri svg{animation:none}}
+#bgd .vt h3{font-family:var(--px);font-weight:400;letter-spacing:.04em}
+#bgd .pcs{min-height:48px;padding:8px;border:2px dashed var(--line);background:var(--box)}
+#bgd .pcs button,#bgd .pcs i{padding:4px 10px;border-color:var(--dark);background:var(--pill);box-shadow:2px 2px 0 var(--line)}
+#bgd .pcs button:hover{background:var(--tag);border-color:var(--tagInk);color:var(--tagInk)}
+#bgd .pcs button.unk{background:var(--card);border-color:var(--sub);box-shadow:none}
+#bgd .pcs i.hit{background:var(--okbg);box-shadow:2px 2px 0 var(--dark)}
+#bgd .pcs i.hit::before{content:"✓ "}
+#bgd .pcn{font-weight:900;text-align:center}
+#bgd .pcn::after{content:"";display:block;height:8px;margin-top:6px;border:2px solid var(--dark);background:linear-gradient(90deg,#ffd23f var(--p,0%),var(--box) var(--p,0%))}
+#bgd .pr-h{padding-left:8px;border-left:4px solid var(--dark);font-family:var(--px);font-size:13px;font-weight:400}
+#bgd .pgr .vi2:focus-visible,#bgd .vnk:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+#bgd .vsub{width:100%;justify-content:center;padding:10px;font-size:15px}
 @media(prefers-reduced-motion:reduce){.albwall .alb .cv{transition:none}.albwall .alb:hover .cv{transform:none}}
 #sview .back{margin-top:0}
 @keyframes bob{50%{translate:0 -5px}}
@@ -1379,7 +1403,7 @@ const ios=IOS?L4(["用 Safari 開啟這個網頁","點畫面下方的「分享�
 return `<div class="tr-note">${IA?`<div><b>你現在是在 Threads／IG／LINE 這類 App 裡面開的，這裡不能加到桌面。</b></div><div>先點右上角的選單，選「用瀏覽器開啟」，再照下面做：</div>`:`<div>照下面做就可以：</div>`}${ios}</div>`};
 const TOURS={
 home:[[".entry.tour","巡演應援","ARIRANG 巡演各城市的應援整理，依日期和類型找。"],[".entry.bd","生日應援","各成員生日與出道周年的應援整理。"],[".entry.songs","歌曲空耳／應援","每首歌的應援法，現場照著喊。藍色是大聲喊，紅色是跟著唱。"],["#ftnBtn","今日幸運籤","每天抽一張，看今天的應援運勢和練習任務。"],["#achBtn","成就圖鑑","徽章、籤卡圖鑑和稱號都收在這裡，看看自己收集到哪了。"],["#bgm","背景音樂","進站會自動播放背景音樂（手機要先點一下畫面才會出聲）。不想聽就點這個 ♪ 關掉，之後不會再自動播。"],["#bgv","投票選明天的音樂","點「投票」可以選明天要播的背景音樂，也能提名想聽的 YouTube 歌曲。投票時間每天 10:00–23:59（台北時間），00:00 結算，得票最高的就是隔天的歌。"],[null,"加到手機桌面","像 App 一樣一點就開，全螢幕、沒有網址列。",A2HS]],
-songs:[["#sq","搜尋","輸入歌名、專輯、演唱會、空耳或應援內容，快速找到想看的歌。"],["#svt","依專輯／依演唱會","切換分類：依專輯看每張專輯的歌，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。"],["#swall","選專輯／演唱會","點封面進去，就會看到那張專輯或那場演唱會的歌曲。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],["#sprog","演唱會通關","在演唱會裡，把每首有應援遊戲的歌都玩到 B 級以上，就能全曲通關。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],[".smode [data-m=\"g\"]","應援遊戲","歌詞裡的藍色、紅色段落會變成音符，影片播到哪音符就落到哪；音符到線時點對應的按鈕，結束後會評等級並記下最佳成績。"],["#stabs .gsg","遊戲成績","玩過應援遊戲的歌，歌名旁會顯示最佳等級（S、A、B、C）。"],["#slist .fsz","字級","按 A− 或 A＋ 調整歌詞大小，現場看不清楚時可以放大。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
+songs:[["#sq","搜尋","輸入歌名、專輯、演唱會、空耳或應援內容，快速找到想看的歌。"],["#svt","依專輯／依演唱會","切換分類：依專輯看每張專輯的歌，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。"],["#swall","選專輯／演唱會","點封面進去，就會看到那張專輯或那場演唱會的歌曲。"],[".prb","歌單預測","在「依演唱會」裡，演唱會前先猜會唱哪些歌，公布實際歌單後自動算分，還有排行榜。點「開始猜」就能參加。"],["#stabs","選歌曲","點歌名按鈕切換，一次只顯示一首。"],["#sprog","演唱會通關","在演唱會裡，把每首有應援遊戲的歌都玩到 B 級以上，就能全曲通關。"],[".smode","KTV 模式","有附影片的歌可以切換成 KTV 模式，歌詞會跟著影片自動捲動，點兩下某一句就跳到那裡。"],[".smode [data-m=\"g\"]","應援遊戲","歌詞裡的藍色、紅色段落會變成音符，影片播到哪音符就落到哪；音符到線時點對應的按鈕，結束後會評等級並記下最佳成績。"],["#stabs .gsg","遊戲成績","玩過應援遊戲的歌，歌名旁會顯示最佳等級（S、A、B、C）。"],["#slist .fsz","字級","按 A− 或 A＋ 調整歌詞大小，現場看不清楚時可以放大。"],["#slist .sg","空耳與應援法","點標題可以展開或收合。藍色＝大聲喊，紅色＝跟著唱，橘色是提醒。"],["#slist .act a.of","官方應援歌詞","點這個按鈕開啟官方公布的應援歌詞，會另開新分頁。"],["#slist .act a:not(.of)","影片／參考連結","點這個按鈕開啟影片或參考網址，會另開新分頁。"]],
 tour:[["#cities","切換城市","先選你要看的城市，每個城市有各自的應援清單。"],["#days","選日期","再選演唱會日期，只看當天可以去的應援。"],["#chips","依類型篩選","這排可以左右滑，選燈箱/看板、咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#badgeBtn","徽章","集章達標會解鎖徽章，點這裡看全部徽章和進度。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"],["footer","我要投稿／錯誤回報","有新的應援資訊想提供，或發現資料有誤，點頁尾這兩顆按鈕填表單告訴我們。"]],
 birthday:[["#members","選成員","選要看的成員，預設是最近要生日的那位。"],["#regions","選地區","再依地區縮小範圍。"],["#chips","依類型篩選","這排可以左右滑，選燈箱/看板、咖啡廳、LED 廣告車等類型。"],[".tbtns","地圖、路線、搜尋","地圖總覽看位置，路線規劃排行程，搜尋及排序找特定活動。"],["#list .heart","收藏","點愛心收藏，之後按上方「我的收藏」就能只看這些。"],["#list [data-c]","打卡集章","去過就按打卡，會蓋章，也會記下日期。"],["#badgeBtn","徽章","集章達標會解鎖徽章，點這裡看全部徽章和進度。"],["#saveImg","存成圖片","把集章簿存成圖片，分享到社群。"],["footer","我要投稿／錯誤回報","有新的應援資訊想提供，或發現資料有誤，點頁尾這兩顆按鈕填表單告訴我們。"]]};
 let TR=null;
@@ -1731,7 +1755,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(document.getElem
 function albOf(x){return(x.a||"").trim()||"其他"}
 /* 專輯封面：試算表「封面」欄優先；沒填就用這裡的對照（專輯名: 圖片路徑） */
 const ALBUM_COVERS={"ARIRANG":"IMG/IMG_1293.png"};
-function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&/^(https?:\/\/|[\w.\/%-]+$)/.test((x.p||"").trim()));return x?x.p.trim():(ALBUM_COVERS[n]||"")}
+function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&(x.p||"").trim());if(!x)return ALBUM_COVERS[n]||"";const p=x.p.trim();return /^https?:\/\//i.test(p)||p.includes("%")?p:encodeURI(p)}
 /* 專輯排序：依發行日期。試算表加一欄「發行日」（例如 2026-03-20）優先；沒填就用下面的 ALBUM_DATES 對照（專輯名: "YYYY-MM-DD"）。沒有日期的專輯排在最後。
    ALBUM_ORDER："new"＝新到舊，"old"＝舊到新 */
 const ALBUM_DATES={};
@@ -1770,7 +1794,8 @@ var PRS=null;
 const prN=s=>String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu,"");
 function predGet(){const u=predUrl();return fetch(u+(u.includes("?")?"&":"?")+"uid="+encodeURIComponent(voteUid())).then(r=>r.json()).then(j=>{if(!j||!j.ok)throw 0;PRS=j;return j})}
 function predPost(o){o.uid=voteUid();return fetch(predUrl(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(o)}).then(r=>r.json())}
-function predBar(){return`<div class="cdb prb"><small>歌單預測</small><b>猜猜這次會唱哪些歌</b><button type="button" class="btn" data-pr="1">開始猜</button></div>`}
+function predBar(){return`<div class="cdb prb"><i class="pri" aria-hidden="true"><svg viewBox="0 0 10 10" shape-rendering="crispEdges"><g fill="currentColor"><rect x="3" y="0" width="4" height="1"/><rect x="1" y="1" width="8" height="1"/><rect x="0" y="2" width="10" height="5"/><rect x="1" y="7" width="8" height="1"/><rect x="3" y="8" width="4" height="1"/></g><g fill="#fff" opacity=".75"><rect x="2" y="2" width="2" height="1"/><rect x="2" y="3" width="1" height="1"/></g><rect x="6" y="4" width="2" height="1" fill="#ffd23f"/><rect x="7" y="3" width="1" height="3" fill="#ffd23f"/><rect x="1" y="9" width="8" height="1" fill="#e0a800"/></svg></i><div class="prt"><small>歌單預測</small><b>猜猜這次會唱哪些歌</b><em>演唱會前先猜，公布歌單後算分、排行</em></div><button type="button" class="btn main" data-pr="1">開始猜</button></div>`}
+try{window.I18N&&(I18N.add("在「依演唱會」裡，演唱會前先猜會唱哪些歌，公布實際歌單後自動算分，還有排行榜。點「開始猜」就能參加。","In “By concert”, guess the setlist before the show; it is scored automatically once the real setlist is out, with a leaderboard. Tap “Start guessing” to join.","「공연별」에서 공연 전에 셋리스트를 예측하면, 실제 셋리스트 공개 후 자동으로 채점되고 순위도 나와요. 「시작하기」를 눌러 참여하세요.","「公演別」で公演前にセットリストを予想すると、発表後に自動採点＆ランキングが出ます。「開始猜」をタップして参加しよう。"),I18N.add("演唱會前先猜，公布歌單後算分、排行","Guess before the show; scored once the setlist is out","공연 전에 예측하고, 셋리스트 공개 후 점수와 순위가 나와요","公演前に予想、セットリスト発表後に採点・ランキング"),I18N.refresh())}catch(e){}
 function predOpen(){const old=document.getElementById("bgd");if(old)old.remove();
 const opener=document.activeElement,o=document.createElement("div");o.id="bgd";if(!matchMedia("(prefers-reduced-motion:reduce)").matches)o.style.animation="bgfade .2s ease-out";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","歌單預測");
 let cur=0,busy=false;const pk={},nk={};
@@ -1780,7 +1805,7 @@ const fmt=iso=>{try{return new Intl.DateTimeFormat("zh-TW",{timeZone:"Asia/Taipe
 const shell=h=>`<div class="bgdc vt" style="--bc:#2a7de1"><h3>歌單預測</h3>${h}<em class="vm" role="status" aria-live="polite"></em><button type="button" class="btn bgdx">關閉</button></div>`;
 /* 輸入時的建議歌名：這場有設定候選歌就用候選歌，沒有就用網站上所有的歌；打的字對得上就自動換成標準寫法 */
 const known=e=>{const m=new Map();(e.candidates&&e.candidates.length?e.candidates:SONGS.map(x=>x.t)).forEach(t=>{const k=prN(t);if(k&&!m.has(k))m.set(k,t)});return m};
-const rl=()=>{const e=PRS&&PRS.events[cur];if(!e||!pk[e.id])return;const P=pk[e.id],K=known(e),box=o.querySelector(".pcs"),c=o.querySelector(".pcn");if(box)box.innerHTML=P.length?P.map((t,i)=>`<button type="button" data-x="${i}" class="${K.has(prN(t))?"":"unk"}" title="點一下移除">${esc(t)} ✕</button>`).join(""):`<span class="pr-e">還沒加入任何歌</span>`;if(c)c.textContent="已選 "+P.length+"/"+e.max};
+const rl=()=>{const e=PRS&&PRS.events[cur];if(!e||!pk[e.id])return;const P=pk[e.id],K=known(e),box=o.querySelector(".pcs"),c=o.querySelector(".pcn");if(box)box.innerHTML=P.length?P.map((t,i)=>`<button type="button" data-x="${i}" class="${K.has(prN(t))?"":"unk"}" title="點一下移除">${esc(t)} ✕</button>`).join(""):`<span class="pr-e">還沒加入任何歌</span>`;if(c){c.textContent="已選 "+P.length+"/"+e.max;c.style.setProperty("--p",Math.round(P.length/e.max*100)+"%")}};
 const add=()=>{const e=PRS&&PRS.events[cur],inp=o.querySelector(".vgi");if(!e||!inp)return;const v=inp.value.trim().slice(0,80);if(!v)return;const P=pk[e.id],k=prN(v);if(!k){msg("請輸入歌名");return}if(P.some(t=>prN(t)===k)){msg("這首已經加過了");inp.value="";return}if(P.length>=e.max){msg("最多猜 "+e.max+" 首");return}P.push(known(e).get(k)||v);inp.value="";msg("");rl();inp.focus()};
 const draw=()=>{if(!PRS){o.innerHTML=shell(`<p>載入中…</p>`);return}
 const E=PRS.events||[];if(!E.length){o.innerHTML=shell(`<p>目前沒有進行中的預測活動</p>`);return}
@@ -1788,7 +1813,7 @@ if(cur>=E.length)cur=0;const e=E[cur],m=e.mine,mp=m?m.picks:[];
 const tabs=E.length>1?`<div class="vtb" role="group">${E.map((x,i)=>`<button type="button" class="btn vtab" data-e="${i}" aria-pressed="${i===cur}">${esc(x.name)}</button>`).join("")}</div>`:"";
 let body="";
 if(e.status==="open"){if(!pk[e.id])pk[e.id]=mp.slice();
-body=`<p><b>${esc(e.name)}</b>・${esc(fmt(e.closeAt))} 截止，截止前可以修改。最多猜 ${e.max} 首。</p><div class="pgr"><input class="vi2 vgi" list="prdl" maxlength="80" autocomplete="off" placeholder="輸入歌名，按 Enter 或「加入」" aria-label="輸入歌名"><button type="button" class="btn vadd">加入</button></div><datalist id="prdl">${[...known(e).values()].map(t=>`<option value="${esc(t)}">`).join("")}</datalist><div class="pcs"></div><div class="vnow pcn"></div><p class="pr-n">虛線框的歌不在網站的歌單裡，請確認拼法；拼錯會算沒猜中。大小寫、空格和標點不影響。</p><input class="vi2 vnk" maxlength="12" placeholder="暱稱（選填，排行榜會顯示）" aria-label="暱稱" value="${esc(nk[e.id]||"")}"><button type="button" class="btn vsub">${m?"更新預測":"送出預測"}</button>`}
+body=`<p><b>${esc(e.name)}</b>・${esc(fmt(e.closeAt))} 截止，截止前可以修改。最多猜 ${e.max} 首。</p><div class="pgr"><input class="vi2 vgi" list="prdl" maxlength="80" autocomplete="off" placeholder="輸入歌名，按 Enter 或「加入」" aria-label="輸入歌名"><button type="button" class="btn vadd">加入</button></div><datalist id="prdl">${[...known(e).values()].map(t=>`<option value="${esc(t)}">`).join("")}</datalist><div class="pcs"></div><div class="vnow pcn"></div><p class="pr-n">虛線框的歌不在網站的歌單裡，請確認拼法；拼錯會算沒猜中。大小寫、空格和標點不影響。</p><input class="vi2 vnk" maxlength="12" placeholder="暱稱（選填，排行榜會顯示）" aria-label="暱稱" value="${esc(nk[e.id]||"")}"><button type="button" class="btn main vsub">${m?"更新預測":"送出預測"}</button>`}
 else if(e.status==="upcoming"){body=`<p><b>${esc(e.name)}</b>・尚未開放</p><div class="vnow">⏳ ${esc(fmt(e.openAt))} 開放${e.closeAt?`，${esc(fmt(e.closeAt))} 截止`:""}</div><p>開放後就能輸入歌名，到時再回來猜。</p>`}
 else if(e.status==="settled"){const A=new Set((e.actual||[]).map(prN)),P=new Set(mp.map(prN));
 body=`<p><b>${esc(e.name)}</b>・歌單已公布</p>${m?`<div class="vnow">你猜中 ${m.score}/${e.actual.length} 首${m.rank?`，第 ${m.rank} 名`:""}（共 ${e.total} 人參加）</div>`:`<p>你沒有參加這場預測（共 ${e.total} 人參加）</p>`}<div class="pr-h">實際歌單</div><div class="pcs">${e.actual.map(t=>`<i class="${P.has(prN(t))?"hit":""}">${esc(t)}</i>`).join("")}</div>${m?`<div class="pr-h">你猜的</div><div class="pcs">${mp.map(t=>`<i class="${A.has(prN(t))?"hit":"miss"}">${esc(t)}</i>`).join("")}</div>`:""}<div class="pr-h">排行榜</div><ul class="vl">${(e.top||[]).map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.n)}</span><span class="vn">${x.s} 首</span></li>`).join("")||`<li><p>沒有人參加</p></li>`}</ul>`}
