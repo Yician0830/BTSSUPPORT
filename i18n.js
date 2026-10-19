@@ -619,7 +619,7 @@ const X={
 "每天 00:00（台北時間）結算，得票最高的是隔天的背景音樂。一天一票，可以改投。":["Votes close daily at 00:00 (Taipei time); the top song plays the next day. One vote per day, and you can change it.","매일 00:00(타이베이 시간)에 마감하며 최다 득표 곡이 다음 날 재생됩니다. 하루 한 표, 변경 가능.","毎日0:00（台北時間）に締め切り、最多得票曲が翌日のBGMになります。1日1票、変更可能。"],
 "還沒有候選歌，來提名第一首吧！":["No candidates yet. Nominate the first song!","아직 후보곡이 없어요. 첫 곡을 추천해 보세요!","まだ候補曲がありません。最初の1曲を推薦しよう！"],
 "提名一首 YouTube 歌曲（每天一次，審核通過後才會出現在名單）":["Nominate a YouTube song (once a day; it appears after approval)","YouTube 곡 추천 (하루 한 번, 승인 후 목록에 표시)","YouTube曲を推薦（1日1回、承認後にリストへ表示）"],
-"上午 10:00 後提名的歌，會列入明天的候選名單，不參與今日投票":["Songs nominated after 10:00 AM go into tomorrow's candidate list and are not part of today's vote","오전 10:00 이후에 추천한 곡은 내일 후보 목록에 들어가며 오늘 투표에는 참여하지 않습니다","午前10:00以降に推薦した曲は明日の候補リストに入り、今日の投票には参加しません"],
+"提名的歌只會在隔天的投票出現一次，過了 00:00 就失效，想再投要重新提名":["A nominated song appears in the vote only once, the next day. It expires after 00:00, so nominate it again to vote on it again","추천한 곡은 다음 날 투표에 한 번만 나오며 00:00이 지나면 만료됩니다. 다시 투표하려면 다시 추천해 주세요","推薦した曲は翌日の投票に1回だけ登場し、00:00を過ぎると失効します。もう一度投票するには再度推薦してください"],
 "貼上 YouTube 網址":["Paste a YouTube link","YouTube 링크 붙여넣기","YouTubeのリンクを貼り付け"],
 "提名":["Nominate","추천","推薦"],
 "今天已提名":["Nominated today","오늘 추천 완료","本日は推薦済み"],
