@@ -900,6 +900,11 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 #sheetLoad i{position:absolute;top:0;left:-32px;width:12px;height:6px;background:var(--dark);box-shadow:16px 0 0 var(--accent);animation:sheetld 1.2s steps(24) infinite}
 @keyframes sheetld{to{left:100%}}
 @media(prefers-reduced-motion:reduce){#sheetLoad i{animation:none;left:calc(50% - 14px)}}
+/* 修正手機滑動時版面跑掉：防止整頁橫向被拖動、成員牆欄位不被撐寬、觸控裝置不要卡住 hover 傾斜 */
+html,body{max-width:100%;overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+.albwall.mw .alb{min-width:0}
+@media(hover:none){.albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{transform:none}.albwall.mw .alb:hover .cv::after{transform:translateX(-130%)}}
 </style>
 </head>
 <body>
