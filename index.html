@@ -478,6 +478,7 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .albwall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}}
 .albwall .alb b{order:3;display:block;margin-top:12px;font-size:15px;font-weight:900;line-height:1.3}
 .albwall .alb span.n{order:4;display:block;font-size:12px;color:var(--sub);margin-top:2px}
+.albwall .alb .gp{order:5;margin-top:4px}
 @media(prefers-reduced-motion:reduce){.albwall .alb .cv{transition:none}.albwall .alb:hover .cv{transform:none}}
 #sview .back{margin-top:0}
 @keyframes bob{50%{translate:0 -5px}}
@@ -500,6 +501,7 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 #stabs .chip{width:100%;text-align:left;white-space:normal}}
 @media(min-width:1000px){#slist .song{display:grid;grid-template-columns:minmax(320px,40%) 1fr;gap:24px;align-items:start}#slist .sl{position:sticky;top:12px}#slist .sgt{font-size:calc(17px*var(--sfs,1))}#slist .ktv{max-height:70vh}}
 #stabs{flex-wrap:wrap;overflow-x:visible}
+@media(min-width:720px){#stabs{flex-wrap:nowrap;overflow-x:hidden;overflow-y:auto}#stabs .chip{flex:none;max-width:100%;overflow-wrap:anywhere}}
 .sgt .cl{font-weight:900}
 /* KTV 版面：目前這行放在偏上（約 38%），前後行調亮、行距縮小，一個畫面看到更多句；手機上影片固定在最上方並縮小，歌詞區吃滿剩下的高度 */
 .kb{padding:6px 8px;opacity:.32;transform:scale(.92)}
@@ -556,6 +558,16 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 .ktv .kb .kl .cl,.ktv .kb.on .kl .cl{font-size:1.28em;line-height:1.4}
 .sgt .cl{font-size:1.2em}
 .kl .ib,.kl .ir,.kl .io,.sgt .ib,.sgt .ir,.sgt .io{font-size:1.25em;font-weight:900}
+.sdiff{margin:8px 0;padding:10px 12px;border:2px solid var(--line);background:var(--card);font-size:14px;line-height:1.7}
+.sdiff[hidden]{display:none}
+.sdiff p{margin:2px 0}.sdiff .sdt{display:block;font-size:15px;font-weight:900;margin-bottom:4px;color:var(--dark)}
+.sdiff em{font-style:normal;font-weight:800;color:var(--sub)}
+.sdiff .sdp{margin-top:8px;padding-top:6px;border-top:1px dashed var(--line)}
+.odn{margin-left:6px;padding:0 4px;border:1px solid currentColor;font-style:normal;font-size:11px;font-weight:900}
+/* 一般模式（空耳／應援法）字級縮小一點：電腦版 17px→15px，應援行 1.2em→1.1em，行內彩色字 1.25em→1.1em；KTV 不受影響 */
+.sgt .cl{font-size:1.1em}
+.sgt .ib,.sgt .ir,.sgt .io{font-size:1.1em}
+@media(min-width:1000px){#slist .sgt{font-size:calc(15px*var(--sfs,1))}}
 .cl .ib,.cl .ir,.cl .io{font-size:1em}
 /* 右上角工具列（只在電腦寬螢幕）：字級調整在左，影片／參考、官方應援歌詞按鈕在右；手機版維持原本位置 */
 @media(min-width:1000px){
@@ -811,6 +823,7 @@ body:has(#cities:not([hidden])) .show{display:flex;flex:1 0 100%;flex-wrap:wrap;
 <div class="albwall" id="swall" role="group" aria-label="選擇專輯"></div>
 <div id="sview" hidden><button class="back" id="sback" type="button">← 全部專輯</button>
 <div class="gprog" id="sprog" hidden></div>
+<div class="sdiff" id="sdiff" hidden></div>
 <div class="lgd" role="note"><b>顏色說明</b><span class="lb"><i></i>藍色＝大聲喊</span><span class="lr"><i></i>紅色＝跟著唱</span></div>
 <div class="swrap"><div class="chips cities" id="stabs" role="group" aria-label="選擇歌曲"></div>
 <div class="grid" id="slist"></div></div></div>
@@ -1692,6 +1705,21 @@ function albCover(n){const x=SONGS.find(x=>albOf(x)===n&&/^(https?:\/\/|[\w.\/%-
 const ALBUM_DATES={};
 const ALBUM_ORDER="new";
 function albTime(n){let t=NaN;for(const x of SONGS){if(albOf(x)!==n)continue;const s=String(x.rd||"").trim().replace(/[\/.]/g,"-").replace(/^(\d{4})-(\d{1,2})-(\d{1,2})$/,(m,y,a,b)=>y+"-"+a.padStart(2,"0")+"-"+b.padStart(2,"0")),v=Date.parse(s);if(isFinite(v)){t=v;break}}if(!isFinite(t)&&ALBUM_DATES[n])t=Date.parse(ALBUM_DATES[n]);return t}
+/* 演唱會排序：依舉辦日。試算表加一欄「演唱會日期」，格式「演唱會名稱=2026-11-19」（多場用「、」或換行隔開；多天的演唱會填第一天）；沒填就看 data.js 的 CONCERT_DATES={"ARIRANG":"2026-11-19"}。沒有日期的排在最後，順序維持原本。CONCERT_ORDER："new"＝新到舊，"old"＝舊到新 */
+const CONCERT_ORDER="new";
+function conTime(n){let t=NaN;const nd=s=>Date.parse(String(s||"").trim().replace(/[\/.]/g,"-").replace(/^(\d{4})-(\d{1,2})-(\d{1,2})$/,(m,y,a,b)=>y+"-"+a.padStart(2,"0")+"-"+b.padStart(2,"0")));
+for(const x of SONGS){for(const q of String(x.cd||"").split(/[、\n]+/)){const s=q.trim(),i=s.indexOf("=");if(i>0&&s.slice(0,i).trim()===n){const v=nd(s.slice(i+1));if(isFinite(v)){t=v;break}}}if(isFinite(t))break}
+if(!isFinite(t)&&typeof CONCERT_DATES!=="undefined"&&CONCERT_DATES&&CONCERT_DATES[n])t=nd(CONCERT_DATES[n]);return t}
+/* 同一巡演多天的歌單差異：演唱會名稱最後面的日期（例如「…(12/8)」「… 12/9」）拿掉後相同，就視為同一個巡演的不同天，比對兩天各有哪些歌 */
+const conKey=n=>String(n).replace(/\s*[(（]\s*\d{1,2}\/\d{1,2}\s*[)）]\s*$/,"").replace(/\s+\d{1,2}\/\d{1,2}\s*$/,"").trim();
+const conLab=n=>{const m=String(n).match(/\d{1,2}\/\d{1,2}\s*[)）]?\s*$/);return m?m[0].replace(/[)）\s]/g,""):String(n)};
+function conDiff(name,CL){const key=conKey(name),sibs=CL.filter(c=>c!==name&&conKey(c)===key),r={html:"",only:new Set()};if(!sibs.length||key===name)return r;
+const set=n=>new Set(SONGS.filter(x=>songCons(x).some(c=>c.n===n)).map(x=>x.t)),mine=set(name),ord=n=>x=>{const c=songCons(x).find(c=>c.n===n);return c?c.o:SORTMAX};
+const list=(S,n)=>SONGS.filter(x=>S.has(x.t)).sort((a,b)=>ord(n)(a)-ord(n)(b)).map(x=>esc(x.t)).join("、")||"—";
+let h=`<b class="sdt">歌單差異</b>`;
+sibs.forEach(s=>{const o=set(s),a=new Set([...mine].filter(t=>!o.has(t))),b=new Set([...o].filter(t=>!mine.has(t)));a.forEach(t=>r.only.add(t));
+h+=`<p class="sdp"><em>對照</em> <b>${esc(conLab(s))}</b></p>`+(a.size||b.size?`<p><em>只在這場</em>：${list(a,name)}</p><p><em>只在</em> <b>${esc(conLab(s))}</b>：${list(b,s)}</p>`:`<p><em>歌單完全相同</em></p>`)});
+r.html=h;return r}
 function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h}
 /* 演唱會歌單（每場演唱會各有自己的歌單，跟專輯分類互不影響）：
    ① 試算表加一欄「演唱會」，填這首歌有唱的演唱會，用「、」隔開；順序寫在名稱後面，例如「ARIRANG:3、SWIM Tour:12」＝在 ARIRANG 是第 3 首、在 SWIM Tour 是第 12 首；不寫順序就照試算表列的先後排。沒填的歌只出現在專輯。
@@ -1710,6 +1738,7 @@ const AL=[];SONGS.forEach(x=>{const a=albOf(x);if(!AL.includes(a))AL.push(a)});
 AL.sort((a,b)=>{const x=albTime(a),y=albTime(b),fx=isFinite(x),fy=isFinite(y);if(fx&&fy)return ALBUM_ORDER==="old"?x-y:y-x;return fx?-1:fy?1:0});
 const CL=[],CN={};SONGS.forEach(x=>songCons(x).forEach(c=>{CN[c.n]=(CN[c.n]||0)+1;if(!CL.includes(c.n))CL.push(c.n)}));
 if(window.SETLISTS&&typeof SETLISTS==="object")CL.sort((a,b)=>{const k=Object.keys(SETLISTS),x=k.indexOf(a),y=k.indexOf(b);return(x<0?1e3:x)-(y<0?1e3:y)});
+CL.sort((a,b)=>{const x=conTime(a),y=conTime(b),fx=isFinite(x),fy=isFinite(y);if(fx&&fy)return CONCERT_ORDER==="new"?y-x:x-y;return fx?-1:fy?1:0});
 const SV=VIEW==="s"&&CL.length>0,G=SV?CL:AL;
 if(ALB&&!G.includes(ALB))ALB="";
 {const g=document.getElementById("svt");g.hidden=!CL.length;g.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v==="s"?SV:!SV)))}
@@ -1721,10 +1750,12 @@ box.innerHTML="";tabs.innerHTML="";return}
 const L=SONGS.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")+" "+songCons(x).map(c=>c.n).join(" ")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
 document.getElementById("sn").textContent=L.length+" 首歌";
 {const pr=document.getElementById("sprog");if(pr){const g=SV&&ALB?gProg(ALB):null;if(g&&g.n){pr.hidden=false;pr.innerHTML=gProgHTML(g)}else pr.hidden=true}}
+const CDF=SV&&ALB?conDiff(ALB,CL):{html:"",only:new Set()};
+{const df=document.getElementById("sdiff");if(df){df.hidden=!CDF.html;df.innerHTML=CDF.html}}
 if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不到符合的歌曲":"還沒有收錄歌曲"}</div>`;return}
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
 {const ci=Math.max(0,L.findIndex(x=>x.t===SEL)),nm=(x,i)=>(SV&&ALB?(i+1)+". ":"")+esc(x.t),gb=x=>(gBest()[x.t]||{}).g||"";
-tabs.innerHTML=`<div class="snav"><button type="button" class="sbtn" data-sn="-1" aria-label="上一首" title="上一首"${ci<=0?" disabled":""}>←</button><select id="ssel" aria-label="選擇歌曲">${L.map((x,i)=>`<option value="${esc(x.t)}"${i===ci?" selected":""}>${nm(x,i)}${gb(x)?" ・ "+gb(x):""}</option>`).join("")}</select><button type="button" class="sbtn" data-sn="1" aria-label="下一首" title="下一首"${ci>=L.length-1?" disabled":""}>→</button></div>`+L.map((x,i)=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${nm(x,i)}${gb(x)?`<em class="gsg">${gb(x)}</em>`:""}</button>`).join("")}
+tabs.innerHTML=`<div class="snav"><button type="button" class="sbtn" data-sn="-1" aria-label="上一首" title="上一首"${ci<=0?" disabled":""}>←</button><select id="ssel" aria-label="選擇歌曲">${L.map((x,i)=>`<option value="${esc(x.t)}"${i===ci?" selected":""}>${nm(x,i)}${gb(x)?" ・ "+gb(x):""}</option>`).join("")}</select><button type="button" class="sbtn" data-sn="1" aria-label="下一首" title="下一首"${ci>=L.length-1?" disabled":""}>→</button></div>`+L.map((x,i)=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${nm(x,i)}${gb(x)?`<em class="gsg">${gb(x)}</em>`:""}${CDF.only.has(x.t)?`<em class="odn">僅此場</em>`:""}</button>`).join("")}
 {const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);fsApply();ktvFit();songPlayer(navigator.onLine===false?"":songVid(x));try{gameInit(x)}catch(e){}}}
 const pickSong=v=>{SEL=v;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()};
 document.getElementById("stabs").addEventListener("change",e=>{if(!e.target.closest("#ssel"))return;pickSong(e.target.value);const s=document.getElementById("ssel");if(s)s.focus()});
@@ -1743,7 +1774,7 @@ if(sec==="songs")songsR();
 /* KTV 模式：「連結」欄放 YouTube 網址；空耳／應援法的每一行前面加時間碼，例如「0:07 [藍] Kim Namjoon!」，沒時間碼的行只出現在一般模式。 */
 /* 歌曲也可以從試算表讀取：在 data.js 設定 SONGS_CSV_URL（歌曲分頁發布成 CSV 的網址），欄位：歌名、專輯／場次、空耳、應援法、連結。讀不到就用上面的 SONGS */
 function songsParse(t){const R=SheetLoader.csv(t);if(R.length<2)return[];
-const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p","演唱會":"s","演唱會歌單":"s","巡演":"s","曲序":"tn","專輯曲序":"tn","曲目順序":"tn","演唱會封面":"cc","演唱會封面圖":"cc","發行日":"rd","發行日期":"rd","發售日":"rd","發行":"rd"};
+const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p","演唱會":"s","演唱會歌單":"s","巡演":"s","曲序":"tn","專輯曲序":"tn","曲目順序":"tn","演唱會封面":"cc","演唱會封面圖":"cc","發行日":"rd","發行日期":"rd","發售日":"rd","發行":"rd","演唱會日期":"cd","演唱會舉辦日":"cd","舉辦日":"cd","舉辦日期":"cd"};
 const hd=R[0].map(x=>M[x.trim()]||"");
 return R.slice(1).map(r=>{const o={};hd.forEach((k,j)=>{if(k&&!o[k])o[k]=String(r[j]||"").trim()});return o}).filter(o=>o.t)}
 function covPre(){if(navigator.onLine===false)return;try{const seen=new Set();[...new Set(SONGS.map(albOf))].forEach(n=>{const c=albCover(n);if(c&&!/^https?:/i.test(c)&&!seen.has(c)){seen.add(c);fetch(c).catch(()=>{})}})}catch(e){}}
@@ -1755,6 +1786,7 @@ const r=await fetch(SONGS_CSV_URL+(SONGS_CSV_URL.includes("?")?"&":"?")+"t="+Dat
 if(!r.ok)throw 0;const txt=await r.text();const L=songsParse(txt);if(!L.length)throw 0;
 try{localStorage.setItem("songs-cache",txt)}catch(e){}songsSet(L)}catch(e){}}
 songsLoad();
+try{[["歌單差異","Setlist differences","세트리스트 차이","セットリストの違い"],["對照","Compared with","비교 대상","比較"],["只在這場","Only in this show","이번 공연에만","この公演のみ"],["只在","Only in","에만","のみ"],["歌單完全相同","Identical setlists","세트리스트가 동일해요","セットリストは同じです"],["僅此場","Only here","단독","限定"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]));window.I18N&&I18N.refresh()}catch(e){}
 function offSync(){const b=document.getElementById("offb");if(b)b.hidden=navigator.onLine!==false}
 covPre();offSync();addEventListener("online",()=>{offSync();if(sec==="songs")songsR()});addEventListener("offline",()=>{offSync();if(sec==="songs")songsR()});
 /* 回到頂端 */
