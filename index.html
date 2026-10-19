@@ -955,8 +955,8 @@ $("#cities").hidden=!tour;$("#days").hidden=!tour;$("#members").hidden=!bd;$("#r
 const h=document.querySelector(".hero h1");
 if(home){$("#intro").textContent="";h.textContent="BTS 應援地圖";$("#scr").textContent="ARMY FAN PROJECTS";$("#show").innerHTML="<span>選擇你想看的應援</span>";document.title="BTS 應援地圖";return}
 if(sec==="songs"){h.textContent="歌曲空耳／應援";$("#scr").textContent="SONG GUIDE";$("#intro").textContent="整理每首歌的空耳和應援法，現場跟著喊";$("#show").innerHTML="<span>演唱會歌曲的空耳與應援法整理</span>";document.title="歌曲空耳／應援｜BTS 應援地圖";try{songsR()}catch(e){}return}
-if(bd){h.textContent="BTS 生日應援地圖";$("#scr").textContent="Happy Birthday";$("#intro").textContent="依成員整理的生日與 BTS 出道周年應援，有倒數";$("#show").innerHTML="<span>各成員生日與 BTS 出道周年應援整理</span>";document.title="BTS 生日應援地圖";members();regions();return}
-const c=CITIES[city];h.textContent="ARIRANG 巡演粉絲應援地圖";$("#show").innerHTML=c.show.map(x=>`<span>${x}</span>`).join("");$("#scr").textContent="ARIRANG in "+c.en;$("#intro").textContent="高雄、香港場次的應援地圖，附日期分頁與打卡集章";document.title="ARIRANG 巡演粉絲應援地圖｜"+c.name;
+if(bd){h.textContent="BTS 生日應援地圖";$("#scr").textContent="Happy Birthday";$("#intro").textContent="依成員整理的生日與 BTS 出道周年應援";$("#show").innerHTML="<span>各成員生日與 BTS 出道周年應援整理</span>";document.title="BTS 生日應援地圖";members();regions();return}
+const c=CITIES[city];h.textContent="ARIRANG 巡演粉絲應援地圖";$("#show").innerHTML=c.show.map(x=>`<span>${x}</span>`).join("");$("#scr").textContent="ARIRANG in "+c.en;$("#intro").textContent="ARIRANG場次的應援地圖，附日期分頁與打卡集章";document.title="ARIRANG 巡演粉絲應援地圖｜"+c.name;
 $("#cities").innerHTML=Object.keys(CITIES).map(k=>`<button class="chip" aria-pressed="${k===city}" data-city="${k}">${CITIES[k].name}</button>`).join("");days()}
 function skey(d){const t=stat(d);if(t==="進行中")return -1;if(t==="即將開始"&&d.start)return Math.round((day0(d.start)-today0())/864e5);return t==="即將開始"?9998:9999}
 function wallR(a){const w=$("#wall");w.hidden=!a.length;if(!a.length){w.innerHTML="";return}
