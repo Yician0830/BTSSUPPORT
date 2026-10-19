@@ -6,6 +6,14 @@ const SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSA6rfBSfMh
 const SONGS_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYFXr-s_NJnlAYGhBtZZLs_Ue5skP0Ag0CxkTiPHvK5tBhngeNsnO5A_bCF3vzMg/pub?gid=65916696&single=true&output=csv";
 /* SUBMIT_URL：投稿應援資訊的連結（Google 表單、Threads 或 IG 私訊網址都可以）。填了之後，「還沒有收錄」的畫面會多一顆「我要提供應援資訊」按鈕；留空 "" 就不顯示。 */
 const SUBMIT_URL="https://forms.gle/er9iQ4miu4wsfALZ7";
+/* PRED_URL：歌單預測的 Apps Script 網址（部署方式見 pred-setup.md）。留空 "" 就不顯示「歌單預測」功能。 */
+const PRED_URL="https://script.google.com/macros/s/AKfycbzGyjzIfqne9Ev7fEC6fIA6Otr7UC9ijwubttl7h4BnDOTohTzeIPmpvSUmpSr8E1hg/exec";
+/* 演唱會日期：決定「依演唱會」的排序（新到舊）。名稱要跟試算表「演唱會」欄完全一樣；試算表的「演唱會日期」欄有填的話以試算表為準。沒填日期的排在最後 */
+const CONCERT_DATES={
+  "ARIRANG":"2026-11-19",
+  "2018WORLD TOUR 'LOVE YOURSELF'(12/9)":"2018-12-09",
+  "2018WORLD TOUR 'LOVE YOURSELF'(12/8)":"2018-12-08"
+};
 
 /* ===== 演唱會歌單（選用；平常在歌曲試算表加「演唱會」欄就好，不用改這裡） =====
 SETLISTS：每場演唱會一個歌單，歌名照演出順序排，歌名要跟試算表「歌名」欄一樣（大小寫不拘）。

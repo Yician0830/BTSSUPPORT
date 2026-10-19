@@ -27,6 +27,13 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{--pur:#b794ff;--purbg:#2b1f5e;--bg:#06183a;--card:#0c2a5c;--ink:#e6f4ff;--sub:#8fb4e0;--line:#1d4a8a;--box:#0a2350;--tag:#4a1830;--tagInk:#ff9ec0;--pill:#143a75;--dark:#7fd4ff;--darkInk:#06183a;--ok:#5fd8a6;--okbg:#12362b;--ctl:#4a86c8;--focus:#ff9ec0}
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
+/* 捲軸配合主題：方方的、藍色，跟其他按鈕的框線一致（深色模式自動換色）；Firefox 用 scrollbar-color */
+*::-webkit-scrollbar{width:12px;height:12px}
+*::-webkit-scrollbar-track{background:var(--box);border:1px solid var(--line)}
+*::-webkit-scrollbar-thumb{background:var(--dark);border:2px solid var(--box);min-height:36px;min-width:36px}
+*::-webkit-scrollbar-thumb:hover{background:var(--tagInk)}
+*::-webkit-scrollbar-corner{background:var(--box)}
+@supports not selector(::-webkit-scrollbar){*{scrollbar-color:var(--dark) var(--box)}}
 body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
 .wrap{max-width:940px;margin:0 auto;padding:0 16px}
 @media(min-width:1100px){.wrap{max-width:none;padding:0 24px}}
@@ -433,7 +440,7 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 #bgv{position:fixed;left:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:2px solid var(--dark);background:var(--card);color:var(--dark);font:inherit;font-size:14px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 4px 0 var(--line);z-index:50;padding:0}
 body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 #bgd .bgdc.vt{max-width:380px;max-height:88vh;overflow-y:auto;align-items:stretch;text-align:left}
-#bgd .vt h3{margin:0;font-size:18px;text-align:center}#bgd .vt p{margin:0;font-size:13px;color:var(--sub)}
+#bgd .bgdc.vt{animation:none}@keyframes bgfade{from{opacity:0}} #bgd .vt h3{margin:0;font-size:18px;text-align:center}#bgd .vt p{margin:0;font-size:13px;color:var(--sub)}
 #bgd .vnow{font-size:13px;color:var(--ink);padding:6px 8px;background:var(--box);border:2px solid var(--line)}
 #bgd .vtb{display:flex;gap:8px}#bgd .vtab{flex:1;justify-content:center;padding:6px 8px;font-size:13px;box-shadow:none}#bgd .vtab[aria-pressed="true"]{background:var(--dark);color:var(--card);border-color:var(--dark)}
 #bgd .vclosed{font-weight:800;color:var(--dark)}
@@ -466,19 +473,37 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 .albwall{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 0;padding:8px 0 24px}
 @media(min-width:560px){.albwall{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:720px){.albwall{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:1200px){.albwall{grid-template-columns:repeat(5,1fr)}}
-.albwall .alb{position:relative;display:flex;flex-direction:column;border:0;background:none;padding:0 14px;font:inherit;color:inherit;text-align:center;cursor:pointer}
+@media(min-width:1200px){.albwall{grid-template-columns:repeat(6,1fr)}}
+.albwall .alb{position:relative;display:flex;flex-direction:column;border:0;background:none;padding:0 10px;font:inherit;color:inherit;text-align:center;cursor:pointer}
 .albwall .alb .cv{order:1;display:block;position:relative;aspect-ratio:1;border:2px solid var(--dark);box-shadow:0 7px 9px -5px rgba(6,26,64,.55);background:var(--card);overflow:hidden;transition:transform .15s;margin-bottom:-1px}
 .albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{transform:translateY(-6px) rotate(-1.5deg)}
 .albwall .alb:active .cv{transform:translateY(-2px)}
 .albwall .alb img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;background:var(--card)}
 .albwall .alb .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:10px;font-weight:900;font-size:clamp(16px,4.5vw,24px);line-height:1.2;color:#fff;text-shadow:2px 2px 0 rgba(6,26,64,.45);background:linear-gradient(145deg,hsl(var(--h) 75% 55%),hsl(calc(var(--h) + 50) 70% 35%))}
-.albwall .alb::after{content:"";order:2;display:block;height:9px;margin:0 -14px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(150,200,245,.5) 60%,rgba(110,170,235,.6));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(90,150,225,.75);border-radius:0 0 5px 5px;box-shadow:0 8px 12px -6px rgba(20,80,160,.45)}
+.albwall .alb::after{content:"";order:2;display:block;height:9px;margin:0 -10px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(150,200,245,.5) 60%,rgba(110,170,235,.6));border-top:2px solid rgba(255,255,255,.95);border-bottom:2px solid rgba(90,150,225,.75);border-radius:0 0 5px 5px;box-shadow:0 8px 12px -6px rgba(20,80,160,.45)}
 :root[data-theme="dark"] .albwall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .albwall .alb::after{background:linear-gradient(180deg,rgba(190,225,255,.5),rgba(80,140,220,.3));border-top-color:rgba(200,230,255,.6);border-bottom-color:rgba(120,180,255,.5)}}
-.albwall .alb b{order:3;display:block;margin-top:12px;font-size:15px;font-weight:900;line-height:1.3}
+.albwall .alb b{order:3;display:block;min-height:2.6em;margin-top:12px;font-size:15px;font-weight:900;line-height:1.3}
 .albwall .alb span.n{order:4;display:block;font-size:12px;color:var(--sub);margin-top:2px}
 .albwall .alb .gp{order:5;margin-top:4px}
+.albwall .alb .cd{order:6;display:block;margin-top:4px;font-size:12px;font-weight:800;color:var(--dark)}
+.albwall .alb .cd.end{font-weight:700;color:var(--sub)}
+.albwall .alb.past .cv{opacity:.6}
+.albwall .cdb{grid-column:1/-1;display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;margin:0 10px;padding:10px 14px;border:2px solid var(--dark);background:var(--box);box-shadow:4px 4px 0 var(--line)}
+.albwall .cdb .btn{margin-left:auto}
+#bgd .pcs{display:flex;flex-wrap:wrap;gap:6px;max-height:34vh;overflow-y:auto;padding:2px}
+#bgd .pcs button,#bgd .pcs i{font:inherit;font-size:12px;font-weight:800;font-style:normal;padding:3px 8px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+#bgd .pcs i{cursor:default}
+#bgd .pcs button.unk{border-style:dashed}
+#bgd .pgr{display:flex;gap:6px}#bgd .pgr .vi2{flex:1;min-width:0}#bgd .pgr .btn{flex:none;padding:6px 12px;font-size:13px}
+#bgd .pr-e,#bgd .pr-n{font-size:12px;color:var(--sub)}
+#bgd .pcs button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+#bgd .pcs i.hit{background:var(--okbg);border-color:var(--dark);font-weight:900}
+#bgd .pcs i.miss{opacity:.55;text-decoration:line-through}
+#bgd .pr-h{margin-top:4px;font-size:12px;font-weight:900;color:var(--dark)}
+.albwall .cdb small{font-size:12px;font-weight:800;color:var(--sub)}
+.albwall .cdb b{font-size:17px;font-weight:900;color:var(--ink)}
+.albwall .cdb span{margin-left:auto;font-size:15px;font-weight:900;color:var(--dark)}
 @media(prefers-reduced-motion:reduce){.albwall .alb .cv{transition:none}.albwall .alb:hover .cv{transform:none}}
 #sview .back{margin-top:0}
 @keyframes bob{50%{translate:0 -5px}}
@@ -558,10 +583,17 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 .ktv .kb .kl .cl,.ktv .kb.on .kl .cl{font-size:1.28em;line-height:1.4}
 .sgt .cl{font-size:1.2em}
 .kl .ib,.kl .ir,.kl .io,.sgt .ib,.sgt .ir,.sgt .io{font-size:1.25em;font-weight:900}
-.sdiff{margin:8px 0;padding:10px 12px;border:2px solid var(--line);background:var(--card);font-size:14px;line-height:1.7}
+.sdiff{margin:8px 0;padding:12px 14px;border:2px solid var(--dark);border-left-width:8px;background:var(--box);box-shadow:4px 4px 0 var(--line);font-size:14px;line-height:1.7}
 .sdiff[hidden]{display:none}
-.sdiff p{margin:2px 0}.sdiff .sdt{display:block;font-size:15px;font-weight:900;margin-bottom:4px;color:var(--dark)}
+.sdiff p{margin:2px 0}.sdiff .sdt{display:block;font-size:17px;font-weight:900;margin-bottom:4px;color:var(--dark)}
 .sdiff em{font-style:normal;font-weight:800;color:var(--sub)}
+.sdiff .sdo{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px 10px;margin:8px 0 0}
+.sdiff .sdl{flex:none;padding:2px 10px;font-size:13px;font-weight:900;color:var(--card);background:var(--dark)}
+.sdiff .sdl em,.sdiff .sdl b{color:inherit;font-weight:900}
+.sdiff .sdo.me .sdl{background:var(--tagInk)}
+.sdiff .sdc{display:flex;flex-wrap:wrap;gap:6px;flex:1;min-width:0}
+.sdiff .sdc i{font-style:normal;font-weight:800;padding:1px 10px;border:2px solid var(--dark);background:var(--card);color:var(--ink)}
+.sdiff .sdo.me .sdc i{border-color:var(--tagInk)}
 .sdiff .sdp{margin-top:8px;padding-top:6px;border-top:1px dashed var(--line)}
 .odn{margin-left:6px;padding:0 4px;border:1px solid currentColor;font-style:normal;font-size:11px;font-weight:900}
 /* 一般模式（空耳／應援法）字級縮小一點：電腦版 17px→15px，應援行 1.2em→1.1em，行內彩色字 1.25em→1.1em；KTV 不受影響 */
@@ -1488,7 +1520,7 @@ const BD_BGM={RM:"",Jin:"",SUGA:"","j-hope":"",Jimin:"",V:"",Jungkook:"",BTS:""}
 function bdSpecial(){try{const m=window.BD_BGM||BD_BGM;for(const x of bdToday()){const n=String(x.id).replace(/^bd\d+-/,""),u=String(m[n]||"").trim();if(u&&YTID(u))return{n,u}}}catch(e){}return null}
 function voteDay(){return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei"}).format(new Date())}
 function voteBoot(){if(!VOTE)return Promise.resolve("");try{const c=JSON.parse(localStorage.getItem("kh-vs")||"null");if(c&&c.d===voteDay()&&c.p&&c.p.id){voteGet().catch(()=>{});return Promise.resolve("https://youtu.be/"+c.p.id)}}catch(e){}return Promise.race([voteGet(2500),new Promise((_,r)=>setTimeout(r,2600))]).then(j=>j.playing?"https://youtu.be/"+j.playing.id:"").catch(()=>"")}
-function voteOpen(){const old=document.getElementById("bgd");if(old)old.remove();const opener=document.activeElement,o=document.createElement("div");o.id="bgd";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","投票決定明天的背景音樂");
+function voteOpen(){const old=document.getElementById("bgd");if(old)old.remove();const opener=document.activeElement,o=document.createElement("div");o.id="bgd";if(!matchMedia("(prefers-reduced-motion:reduce)").matches)o.style.animation="bgfade .2s ease-out";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","投票決定明天的背景音樂");
 let iv=0,busy=false;const cl=()=>{clearInterval(iv);o.remove();document.removeEventListener("keydown",ky);opener&&opener.focus&&opener.focus()},ky=ev=>{if(ev.key==="Escape")cl()};
 const msg=t=>{const m=o.querySelector(".vm");if(m)m.textContent=t||""};
 let tab="vote",nv="";
@@ -1715,10 +1747,10 @@ const conKey=n=>String(n).replace(/\s*[(（]\s*\d{1,2}\/\d{1,2}\s*[)）]\s*$/,""
 const conLab=n=>{const m=String(n).match(/\d{1,2}\/\d{1,2}\s*[)）]?\s*$/);return m?m[0].replace(/[)）\s]/g,""):String(n)};
 function conDiff(name,CL){const key=conKey(name),sibs=CL.filter(c=>c!==name&&conKey(c)===key),r={html:"",only:new Set()};if(!sibs.length||key===name)return r;
 const set=n=>new Set(SONGS.filter(x=>songCons(x).some(c=>c.n===n)).map(x=>x.t)),mine=set(name),ord=n=>x=>{const c=songCons(x).find(c=>c.n===n);return c?c.o:SORTMAX};
-const list=(S,n)=>SONGS.filter(x=>S.has(x.t)).sort((a,b)=>ord(n)(a)-ord(n)(b)).map(x=>esc(x.t)).join("、")||"—";
+const list=(S,n)=>SONGS.filter(x=>S.has(x.t)).sort((a,b)=>ord(n)(a)-ord(n)(b)).map(x=>`<i>${esc(x.t)}</i>`).join("")||"<i>—</i>";
 let h=`<b class="sdt">歌單差異</b>`;
 sibs.forEach(s=>{const o=set(s),a=new Set([...mine].filter(t=>!o.has(t))),b=new Set([...o].filter(t=>!mine.has(t)));a.forEach(t=>r.only.add(t));
-h+=`<p class="sdp"><em>對照</em> <b>${esc(conLab(s))}</b></p>`+(a.size||b.size?`<p><em>只在這場</em>：${list(a,name)}</p><p><em>只在</em> <b>${esc(conLab(s))}</b>：${list(b,s)}</p>`:`<p><em>歌單完全相同</em></p>`)});
+h+=`<p class="sdp"><em>對照</em> <b>${esc(conLab(s))}</b></p>`+(a.size||b.size?`<p class="sdo me"><span class="sdl"><em>只在這場</em></span><span class="sdc">${list(a,name)}</span></p><p class="sdo ot"><span class="sdl"><em>只在</em> <b>${esc(conLab(s))}</b></span><span class="sdc">${list(b,s)}</span></p>`:`<p><em>歌單完全相同</em></p>`)});
 r.html=h;return r}
 function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return h}
 /* 演唱會歌單（每場演唱會各有自己的歌單，跟專輯分類互不影響）：
@@ -1732,6 +1764,52 @@ if(i>0&&!/^https?:/i.test(t.slice(0,i))&&t.slice(0,i).trim()===n){const u=t.slic
 else if((i<0||/^https?:/i.test(t.slice(0,i)))&&songCons(x).some(c=>c.n===n))return t}return(window.CONCERT_COVERS||{})[n]||""}
 function songCons(x){const r=[];String(x.s||"").split(/[、，,；;\n]+/).forEach(q=>{q=q.trim();if(!q)return;const m=q.match(/^(.*?)\s*[:：]\s*(\d+(?:\.\d+)?)$/);r.push(m?{n:m[1].trim(),o:+m[2]}:{n:q,o:SORTMAX})});
 const S=window.SETLISTS;if(S&&typeof S==="object")Object.keys(S).forEach(k=>{const i=(Array.isArray(S[k])?S[k]:[]).findIndex(t=>String(t).trim().toLowerCase()===String(x.t).trim().toLowerCase());if(i>=0&&!r.some(c=>c.n===k))r.push({n:k,o:i+1})});return r.filter(c=>c.n)}
+/* 歌單預測：演唱會前猜會唱哪些歌，公布實際歌單後算分、排行（後端是 Apps Script，部署方式見 pred-setup.md；data.js 的 PRED_URL 留空就不顯示這個功能） */
+function predUrl(){return String(typeof PRED_URL!=="undefined"?PRED_URL:"").trim()}
+var PRS=null;
+const prN=s=>String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu,"");
+function predGet(){const u=predUrl();return fetch(u+(u.includes("?")?"&":"?")+"uid="+encodeURIComponent(voteUid())).then(r=>r.json()).then(j=>{if(!j||!j.ok)throw 0;PRS=j;return j})}
+function predPost(o){o.uid=voteUid();return fetch(predUrl(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(o)}).then(r=>r.json())}
+function predBar(){return`<div class="cdb prb"><small>歌單預測</small><b>猜猜這次會唱哪些歌</b><button type="button" class="btn" data-pr="1">開始猜</button></div>`}
+function predOpen(){const old=document.getElementById("bgd");if(old)old.remove();
+const opener=document.activeElement,o=document.createElement("div");o.id="bgd";if(!matchMedia("(prefers-reduced-motion:reduce)").matches)o.style.animation="bgfade .2s ease-out";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","歌單預測");
+let cur=0,busy=false;const pk={},nk={};
+const cl=()=>{o.remove();document.removeEventListener("keydown",ky);opener&&opener.focus&&opener.focus()},ky=ev=>{if(ev.key==="Escape")cl()};
+const msg=t=>{const m=o.querySelector(".vm");if(m)m.textContent=t||""};
+const fmt=iso=>{try{return new Intl.DateTimeFormat("zh-TW",{timeZone:"Asia/Taipei",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).format(new Date(iso))}catch(e){return iso}};
+const shell=h=>`<div class="bgdc vt" style="--bc:#2a7de1"><h3>歌單預測</h3>${h}<em class="vm" role="status" aria-live="polite"></em><button type="button" class="btn bgdx">關閉</button></div>`;
+/* 輸入時的建議歌名：這場有設定候選歌就用候選歌，沒有就用網站上所有的歌；打的字對得上就自動換成標準寫法 */
+const known=e=>{const m=new Map();(e.candidates&&e.candidates.length?e.candidates:SONGS.map(x=>x.t)).forEach(t=>{const k=prN(t);if(k&&!m.has(k))m.set(k,t)});return m};
+const rl=()=>{const e=PRS&&PRS.events[cur];if(!e||!pk[e.id])return;const P=pk[e.id],K=known(e),box=o.querySelector(".pcs"),c=o.querySelector(".pcn");if(box)box.innerHTML=P.length?P.map((t,i)=>`<button type="button" data-x="${i}" class="${K.has(prN(t))?"":"unk"}" title="點一下移除">${esc(t)} ✕</button>`).join(""):`<span class="pr-e">還沒加入任何歌</span>`;if(c)c.textContent="已選 "+P.length+"/"+e.max};
+const add=()=>{const e=PRS&&PRS.events[cur],inp=o.querySelector(".vgi");if(!e||!inp)return;const v=inp.value.trim().slice(0,80);if(!v)return;const P=pk[e.id],k=prN(v);if(!k){msg("請輸入歌名");return}if(P.some(t=>prN(t)===k)){msg("這首已經加過了");inp.value="";return}if(P.length>=e.max){msg("最多猜 "+e.max+" 首");return}P.push(known(e).get(k)||v);inp.value="";msg("");rl();inp.focus()};
+const draw=()=>{if(!PRS){o.innerHTML=shell(`<p>載入中…</p>`);return}
+const E=PRS.events||[];if(!E.length){o.innerHTML=shell(`<p>目前沒有進行中的預測活動</p>`);return}
+if(cur>=E.length)cur=0;const e=E[cur],m=e.mine,mp=m?m.picks:[];
+const tabs=E.length>1?`<div class="vtb" role="group">${E.map((x,i)=>`<button type="button" class="btn vtab" data-e="${i}" aria-pressed="${i===cur}">${esc(x.name)}</button>`).join("")}</div>`:"";
+let body="";
+if(e.status==="open"){if(!pk[e.id])pk[e.id]=mp.slice();
+body=`<p><b>${esc(e.name)}</b>・${esc(fmt(e.closeAt))} 截止，截止前可以修改。最多猜 ${e.max} 首。</p><div class="pgr"><input class="vi2 vgi" list="prdl" maxlength="80" autocomplete="off" placeholder="輸入歌名，按 Enter 或「加入」" aria-label="輸入歌名"><button type="button" class="btn vadd">加入</button></div><datalist id="prdl">${[...known(e).values()].map(t=>`<option value="${esc(t)}">`).join("")}</datalist><div class="pcs"></div><div class="vnow pcn"></div><p class="pr-n">虛線框的歌不在網站的歌單裡，請確認拼法；拼錯會算沒猜中。大小寫、空格和標點不影響。</p><input class="vi2 vnk" maxlength="12" placeholder="暱稱（選填，排行榜會顯示）" aria-label="暱稱" value="${esc(nk[e.id]||"")}"><button type="button" class="btn vsub">${m?"更新預測":"送出預測"}</button>`}
+else if(e.status==="upcoming"){body=`<p><b>${esc(e.name)}</b>・尚未開放</p><div class="vnow">⏳ ${esc(fmt(e.openAt))} 開放${e.closeAt?`，${esc(fmt(e.closeAt))} 截止`:""}</div><p>開放後就能輸入歌名，到時再回來猜。</p>`}
+else if(e.status==="settled"){const A=new Set((e.actual||[]).map(prN)),P=new Set(mp.map(prN));
+body=`<p><b>${esc(e.name)}</b>・歌單已公布</p>${m?`<div class="vnow">你猜中 ${m.score}/${e.actual.length} 首${m.rank?`，第 ${m.rank} 名`:""}（共 ${e.total} 人參加）</div>`:`<p>你沒有參加這場預測（共 ${e.total} 人參加）</p>`}<div class="pr-h">實際歌單</div><div class="pcs">${e.actual.map(t=>`<i class="${P.has(prN(t))?"hit":""}">${esc(t)}</i>`).join("")}</div>${m?`<div class="pr-h">你猜的</div><div class="pcs">${mp.map(t=>`<i class="${A.has(prN(t))?"hit":"miss"}">${esc(t)}</i>`).join("")}</div>`:""}<div class="pr-h">排行榜</div><ul class="vl">${(e.top||[]).map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.n)}</span><span class="vn">${x.s} 首</span></li>`).join("")||`<li><p>沒有人參加</p></li>`}</ul>`}
+else{body=`<p><b>${esc(e.name)}</b>・已截止，公布實際歌單後會算分。（目前 ${e.total} 人參加）</p>${m?`<div class="pr-h">你猜的</div><div class="pcs">${mp.map(t=>`<i>${esc(t)}</i>`).join("")}</div>`:`<p>你沒有參加這場預測</p>`}${(e.hot||[]).length?`<div class="pr-h">大家最常猜的</div><ul class="vl">${e.hot.map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.t)}</span><span class="vn">${x.n} 人</span></li>`).join("")}</ul>`:""}`}
+o.innerHTML=shell(tabs+body);if(e.status==="open")rl()};
+draw();
+o.addEventListener("click",ev=>{if(ev.target===o||ev.target.closest(".bgdx")){cl();return}
+const t=ev.target.closest("[data-e]");if(t){cur=+t.dataset.e;draw();return}
+if(ev.target.closest(".vadd")){add();return}
+const x=ev.target.closest("[data-x]");if(x&&PRS){const e=PRS.events[cur];if(pk[e.id]){pk[e.id].splice(+x.dataset.x,1);msg("");rl()}return}
+const sb=ev.target.closest(".vsub");if(sb&&PRS){if(busy)return;const e=PRS.events[cur],picks=(pk[e.id]||[]).slice();if(!picks.length){msg("至少猜 1 首");return}busy=true;sb.disabled=true;msg("送出中…");const nick=(o.querySelector(".vnk")||{}).value||"";
+predPost({action:"pred_submit",event:e.id,picks,nick}).then(j=>{busy=false;if(j&&j.ok){if(j.state)PRS=j.state;draw();msg("已儲存，截止前可以再改");toast("已送出預測")}else{sb.disabled=false;if(j&&j.state){PRS=j.state;draw()}msg((j&&j.error)||"送出失敗")}}).catch(()=>{busy=false;sb.disabled=false;msg("網路不穩，請稍後再試")})}});
+o.addEventListener("keydown",ev=>{if(ev.key!=="Enter"||ev.isComposing||ev.keyCode===229)return;if(ev.target.closest&&ev.target.closest(".vgi")){ev.preventDefault();setTimeout(add,0)}});
+o.addEventListener("input",ev=>{const n=ev.target.closest&&ev.target.closest(".vnk");if(n&&PRS){const e=PRS.events[cur];if(e)nk[e.id]=n.value}});
+document.addEventListener("keydown",ky);document.body.appendChild(o);o.querySelector(".bgdx").focus();
+predGet().then(()=>{if(document.body.contains(o))draw()}).catch(()=>{if(!PRS&&document.body.contains(o)){const p=o.querySelector("p");if(p)p.textContent="暫時連不上預測服務，請稍後再試"}})}
+/* 演唱會倒數：有日期的演唱會，牆上顯示「倒數 N 天」，最近的一場在最上面放「下一場」卡片，已辦完的標「已結束」並稍微變淡 */
+function cdDays(n){const t=conTime(n);if(!isFinite(t))return NaN;const d=new Date(),u=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate());return Math.round((t-u)/864e5)}
+function cdTxt(d){return d===0?"🎉 就是今天":d===1?"⏳ 明天開始":"⏳ 倒數 "+d+" 天"}
+function cdTag(n){const d=cdDays(n);if(!isFinite(d))return"";return d<0?`<span class="cd end">已結束</span>`:`<span class="cd">${cdTxt(d)}</span>`}
+function cdBanner(G){let best=null,bd=1e9;G.forEach(n=>{const d=cdDays(n);if(isFinite(d)&&d>=0&&d<bd){bd=d;best=n}});if(!best)return"";return`<div class="cdb"><small>下一場</small><b>${esc(best)}</b><span>${cdTxt(bd)}</span></div>`}
 function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();
 const kw=(document.getElementById("sq").value||"").trim().toLowerCase();
 const AL=[];SONGS.forEach(x=>{const a=albOf(x);if(!AL.includes(a))AL.push(a)});
@@ -1745,7 +1823,7 @@ if(ALB&&!G.includes(ALB))ALB="";
 const wallOn=!ALB&&!kw;wall.hidden=!wallOn;view.hidden=wallOn;
 {const sb=document.getElementById("sback");sb.hidden=!(ALB||kw);const tx=SV?"← 全部演唱會":"← 全部專輯";if(sb.dataset.t!==tx){sb.textContent=tx;sb.dataset.t=tx}}
 if(wallOn){document.getElementById("sn").textContent=G.length?(SV?SONGS.filter(x=>songCons(x).length).length:SONGS.length)+" 首歌":"";
-wall.innerHTML=G.length?G.map(a=>{const n=SV?CN[a]:SONGS.filter(x=>albOf(x)===a).length,c=SV?conCover(a):albCover(a),pg=SV?gProg(a):null;return `<button type="button" class="alb" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(a)}">${esc(a)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(a)}</b><span class="n">${n} 首歌</span>${pg&&pg.n?(pg.k>=pg.n?`<span class="gp full">全曲通關</span>`:`<span class="gp"><em>通關</em> ${pg.k}/${pg.n}</span>`):""}</button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
+wall.innerHTML=G.length?(SV?cdBanner(G):"")+(SV&&predUrl()?predBar():"")+G.map(a=>{const n=SV?CN[a]:SONGS.filter(x=>albOf(x)===a).length,c=SV?conCover(a):albCover(a),pg=SV?gProg(a):null;return `<button type="button" class="alb${SV&&cdDays(a)<0?" past":""}" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(a)}">${esc(a)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(a)}</b><span class="n">${n} 首歌</span>${pg&&pg.n?(pg.k>=pg.n?`<span class="gp full">全曲通關</span>`:`<span class="gp"><em>通關</em> ${pg.k}/${pg.n}</span>`):""}${SV?cdTag(a):""}</button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
 box.innerHTML="";tabs.innerHTML="";return}
 const L=SONGS.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")+" "+songCons(x).map(c=>c.n).join(" ")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
 document.getElementById("sn").textContent=L.length+" 首歌";
@@ -1761,6 +1839,7 @@ const pickSong=v=>{SEL=v;try{localStorage.setItem("song-sel",SEL)}catch(x){}song
 document.getElementById("stabs").addEventListener("change",e=>{if(!e.target.closest("#ssel"))return;pickSong(e.target.value);const s=document.getElementById("ssel");if(s)s.focus()});
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest("[data-sn]");if(!b||b.disabled)return;const s=document.getElementById("ssel");if(!s)return;const i=s.selectedIndex+ +b.dataset.sn;if(i<0||i>=s.options.length)return;pickSong(s.options[i].value);const nb=document.querySelector('#stabs [data-sn="'+b.dataset.sn+'"]');(nb&&!nb.disabled?nb:document.getElementById("ssel")).focus()});
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;SEL=b.dataset.t;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()});
+document.getElementById("swall").addEventListener("click",e=>{if(e.target.closest("[data-pr]"))predOpen()});
 document.getElementById("swall").addEventListener("click",e=>{const b=e.target.closest(".alb");if(!b)return;const w=document.getElementById("swall");if(w.classList.contains("leaving"))return;
 const go=()=>{w.classList.remove("leaving");b.classList.remove("pick");ALB=b.dataset.a;songsR();window.scrollTo(0,0)};
 let rm=false;try{rm=matchMedia("(prefers-reduced-motion:reduce)").matches}catch(x){}
