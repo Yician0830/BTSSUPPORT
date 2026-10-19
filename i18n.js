@@ -314,6 +314,22 @@ I18N.add("生日制霸","Birthday Conqueror","생일 정복","誕生日制覇");
 I18N.add("生日分類的徽章全部解鎖","Unlock every Birthday badge","생일 배지를 모두 해제","誕生日のバッジをすべて解除");
 I18N.add("幸運籤制霸","Lucky Draw Conqueror","행운 뽑기 정복","おみくじ制覇");
 I18N.add("幸運籤分類的徽章全部解鎖","Unlock every Lucky Draw badge","행운 뽑기 배지를 모두 해제","おみくじのバッジをすべて解除");
+/* 今日任務新增字串 */
+I18N.add("確認住宿、交通都訂好了","Make sure your accommodation and transport are booked","숙소와 교통편 예약이 모두 끝났는지 확인하기","宿泊と交通の手配がすべて済んでいるか確認しよう");
+I18N.add("開始準備應援手幅、道具或衣服","Start preparing your fan banner, props or outfit","응원 슬로건, 소품, 의상 준비를 시작하기","応援バナーや小道具、衣装の準備を始めよう");
+I18N.add("把想去的應援地點先排成路線","Plan a route through the fan-support spots you want to visit","가고 싶은 응원 장소를 동선으로 짜 두기","行きたい応援スポットをルートにまとめておこう");
+I18N.add("決定演唱會當天的穿搭","Decide what to wear on concert day","콘서트 당일 코디 정하기","コンサート当日のコーデを決めよう");
+I18N.add("回聽一首歌，把喜歡的一句歌詞記下來","Re-listen to a song and note down a lyric line you love","노래 한 곡을 다시 듣고 좋아하는 가사 한 줄 적어 두기","1曲聴き返して、好きな歌詞を1行メモしよう");
+I18N.add("試試背景音樂投票","Try the background music vote","배경음악 투표 해 보기","BGM投票を試してみよう");
+I18N.add("回想第一次喜歡上他們的契機","Think back to what first made you fall for them","처음 그들을 좋아하게 된 계기를 떠올려 보기","彼らを好きになったきっかけを思い出してみよう");
+I18N.add("把手機桌布換成最近喜歡的照片","Switch your phone wallpaper to a photo you've loved lately","휴대폰 배경화면을 요즘 좋아하는 사진으로 바꾸기","スマホの壁紙を最近好きな写真に変えよう");
+I18N.add("完成今日任務","Complete today's mission","오늘의 미션 완료","今日のミッションを完了");
+I18N.add("✓ 今日任務已完成","✓ Today's mission complete","✓ 오늘의 미션 완료됨","✓ 今日のミッション完了");
+I18N.add("今日任務完成！","Today's mission complete!","오늘의 미션 완료!","今日のミッション完了！");
+I18N.add("任務達人","Mission Master","미션 달인","ミッション達人");
+I18N.add("完成今日任務 10 次","Complete today's mission 10 times","오늘의 미션 10회 완료","今日のミッションを10回完了");
+I18N.add("你","You","나","あなた");
+I18N.add("各場得分","Score per show","공연별 점수","公演ごとの得点");I18N.add("總排行榜","Overall leaderboard","종합 순위표","総合ランキング");I18N.add("尚未公布","Not announced yet","아직 미공개","未発表");I18N.add("把這個系列每一場的得分加起來，沒參加的場次算 0 分；只計算已公布結果的場次。","Scores from every show in this series are added up. Shows you skipped count as 0, and only shows with published results are counted.","이 시리즈 모든 공연의 점수를 합산해요. 참여하지 않은 공연은 0점이고, 결과가 공개된 공연만 계산해요.","このシリーズの全公演の得点を合計します。参加しなかった公演は0点で、結果が発表された公演のみ集計します。");
 I18N.add("遊戲制霸","Game Conqueror","게임 정복","ゲーム制覇");
 I18N.add("應援遊戲分類的徽章全部解鎖","Unlock every Cheer Game badge","응원 게임 배지를 모두 해제","応援ゲームのバッジをすべて解除");
 I18N.add("隱藏獵人","Hidden Hunter","숨겨진 배지 헌터","隠しバッジハンター");
@@ -691,10 +707,12 @@ const BD=[
 [/^(\d+) 票$/,n=>[n+(n==="1"?" vote":" votes"),n+"표",n+"票"]],
 [/^今天是 (\S+) 演唱會！$/,c=>["Today is the "+c+" concert!","오늘은 "+c+" 콘서트 날!","今日は"+c+"公演の日！"]],
 [/^🏆 徽章 (\d+) \/ (\d+)$/,(a,b)=>["🏆 Badges "+a+" / "+b,"🏆 배지 "+a+" / "+b,"🏆 バッジ "+a+" / "+b]],
+[/^(\d+) 場$/,n=>[n+(n==="1"?" show":" shows"),n+"회",n+"公演"]],
 [/^連續抽籤 (\d+) 天$/,n=>["Draw streak: "+n+" days","연속 뽑기 "+n+"일","連続で引く："+n+"日"]],
 [/^連續抽籤 (\d+) 天且集滿成員圖鑑$/,n=>["Draw streak: "+n+" days and a complete member collection","연속 뽑기 "+n+"일 + 멤버 도감 완성","連続で引く："+n+"日＋メンバー図鑑コンプリート"]],
 [/^集滿(高雄|香港)場限定卡$/,x=>["Complete the "+nm(x,0)+" limited cards","완성: "+nm(x,1)+" 한정 카드",nm(x,2)+"の限定カードをコンプリート"]],
 [/^(高雄|香港)場見證者$/,x=>["Show Witness: "+nm(x,0),nm(x,1)+" 공연 증인",nm(x,2)+"公演の見届け人"]],
+[/^(.+) 總排行$/,x=>[x+" Overall",x+" 종합 순위",x+" 総合ランキング"]],
 [/^獲得 (\d+) 個新徽章$/,n=>[n+" new badges earned","새 배지 "+n+"개 획득","新しいバッジを"+n+"個獲得"]]
 ];
 const tn=(x,k)=>{if(k<2&&D[x])return D[x][k];if(k===2&&JA[x])return JA[x];for(const[re,f]of BD){const m=x.match(re);if(m)return f(...m.slice(1))[k]}return x};
