@@ -1036,7 +1036,7 @@ return s}
 function item(o,i){const g=k=>String(o[k]||"").trim();const title=g("title");if(!title)return null;
 const d={id:g("id")||"row"+(i+2),title,by:g("by"),desc:g("desc")};
 const sec=g("sec");if(sec==="生日"||sec.toLowerCase()==="birthday"){d.sec="birthday";d.member=g("member");d.city=g("city")}
-else{const c=g("city");d.city=(c==="香港"||c.toLowerCase()==="hk")?"hk":"kh"}
+else{const c=g("city").toLowerCase();let k="kh";try{k=Object.keys(CITIES).find(x=>(CITIES[x].al||[x]).some(a=>a.toLowerCase()===c))||"kh"}catch(e){k=/^(hk|香港)$/.test(c)?"hk":/^(sg|新加坡)$/.test(c)?"sg":"kh"}d.city=k}
 d.type=toks(g("type"));if(!d.type.length)d.type=["應援企劃"];
 d.dates=toks(g("dates")).map(nmd);d.tags=toks(g("tags"));
 const s=nd(g("start")),e=nd(g("end"));if(s&&e){d.start=s;d.end=e}
@@ -1077,7 +1077,8 @@ go()})();
 </script>
 <script type="text/plain" id="appjs">
 /* 活動資料在 data.js，新增活動請改那個檔案 */
-const CITIES={kh:{name:"高雄",en:"Kaohsiung",days:["11/19","11/20","11/21","11/22"],showDays:["11/19","11/21","11/22"],venue:{lat:22.7017,lng:120.2903,r:800},codes:{},show:["2026/11/19、11/21、11/22 19:00","高雄國家體育場（世運主場館）・捷運紅線 R17 世運站"]},hk:{name:"香港",en:"Hong Kong",days:["3/4","3/6","3/7"],showDays:["3/4","3/6","3/7"],venue:null,codes:{},show:["2027/3/4、3/6、3/7 19:30","啟德主場館（啟德體育園）"]}};
+/* 巡演城市只在這裡維護：加一個城市就多一組 {…}。y＝開演年份，al＝試算表「城市」欄可以填的寫法（代碼、中文名都行），showDays＝開演日；演唱會限定卡、成就、歌單預測、試算表判斷都從這份清單自動長出來 */
+const CITIES={kh:{y:2026,al:["kh","高雄"],name:"高雄",en:"Kaohsiung",days:["11/19","11/20","11/21","11/22"],showDays:["11/19","11/21","11/22"],venue:{lat:22.7017,lng:120.2903,r:800},codes:{},show:["2026/11/19、11/21、11/22 19:00","高雄國家體育場（世運主場館）・捷運紅線 R17 世運站"]},sg:{y:2026,al:["sg","新加坡"],name:"新加坡",en:"Singapore",days:["12/17","12/19","12/20","12/22"],showDays:["12/17","12/19","12/20","12/22"],venue:{lat:1.3046,lng:103.8744,r:800},codes:{},show:["2026/12/17、12/19、12/20、12/22 開演時間待公布","新加坡國家體育場（Singapore National Stadium）・捷運 Stadium 站 CC6"]},hk:{y:2027,al:["hk","香港"],name:"香港",en:"Hong Kong",days:["3/4","3/6","3/7"],showDays:["3/4","3/6","3/7"],venue:null,codes:{},show:["2027/3/4、3/6、3/7 19:30","啟德主場館（啟德體育園）"]}};
 const MEMBERS=[["BTS",6,13],["RM",9,12],["Jin",12,4],["SUGA",3,9],["j-hope",2,18],["Jimin",10,13],["V",12,30],["Jungkook",9,1]];
 
 const TYPES=["應援企劃","燈箱/看板","LED電視牆","公車站牌","應援咖啡廳","LED廣告車","咖啡廳","快閃店","展覽"];
@@ -1121,7 +1122,7 @@ return (pool.length?[...pool].sort((a,b)=>cyc(a)-cyc(b)):[...MEMBERS].sort((a,b)
 const REG_MAP={};
 [["台灣","tw 台灣 臺灣 台北 臺北 新北 桃園 新竹 台中 臺中 台南 臺南 高雄"],["香港","hk 香港"],["日本","jp 日本 東京 大阪 京都 名古屋 福岡 札幌"],["韓國","kr 韓國 南韓 首爾 釜山"],["新加坡","sg 新加坡"],["泰國","th 泰國 曼谷"],["馬來西亞","my 馬來西亞 吉隆坡"],["澳門","澳門"],["美國","us 美國 紐約 洛杉磯"]].forEach(([n,s])=>s.split(" ").forEach(k=>REG_MAP[k]=n));
 const regOf=d=>{const v=String(d.city||"").trim();return v?(REG_MAP[v.toLowerCase()]||v):"台灣"};
-function regionList(){const a=[];DATA.filter(d=>d.sec==="birthday"&&(mem==="全部"||d.member===mem)).forEach(d=>{const r=regOf(d);if(!a.includes(r))a.push(r)});
+function regionList(){const a=[];DATA.filter(d=>d.sec==="birthday"&&(mem==="全部"||d.member===mem)&&stat(d)!=="已結束").forEach(d=>{const r=regOf(d);if(!a.includes(r))a.push(r)});
 const first=["台灣","香港"].filter(r=>a.includes(r));return [...first,...a.filter(r=>!first.includes(r))]}
 function regions(){const L=regionList();if(reg!=="全部"&&!L.includes(reg))reg="全部";
 $("#regions").hidden=!(sec==="birthday"&&L.length>1);
@@ -1196,11 +1197,11 @@ add("g-4","g","遊戲四星","同一首歌拿滿 4 個 ★ 成就",has(o=>o.nm&&
 try{const dn2=DATA.filter(d=>done.has(d.id)),dt=d=>dd[d.id]||"",tw=d=>{const v=String(d.city||"").trim();return !v||/^(kh|台|臺|高雄|新北|桃園|新竹|嘉義|彰化|宜蘭|花蓮|基隆|屏東|苗栗|南投|雲林)/.test(v)};
 const addH=(id,name,desc,ok)=>L.push({id,fam:"h",name,desc,k:ok?1:0,n:1,hid:1});
 {const pl=d=>(d.sec||"tour")==="tour"?(CITIES[d.city]?CITIES[d.city].name:String(d.city||"")):regOf(d),
-twS=new Set(dn2.filter(tw).map(pl)),owS=new Set(dn2.filter(d=>!tw(d)).map(pl)),tr=new Set(dn2.filter(d=>(d.sec||"tour")==="tour"&&(d.city==="kh"||d.city==="hk")).map(d=>d.city));
-add("p-two","c","雙城巡演","高雄和香港的巡演應援都打過卡",tr.size,2);
+twS=new Set(dn2.filter(tw).map(pl)),owS=new Set(dn2.filter(d=>!tw(d)).map(pl)),tr=new Set(dn2.filter(d=>(d.sec||"tour")==="tour"&&!!CITIES[d.city]).map(d=>d.city));
+add("p-two","c","多城巡演","每一座巡演城市的應援都打過卡",tr.size,Object.keys(CITIES).length);
 add("p-tw","c","環島應援","在 3 個不同的台灣城市打卡",twS.size,3);
 add("p-ow","c","環球應援","在 2 個不同的海外城市或地區打卡",owS.size,2);
-{const lv=liveRd(),ct=Object.keys(CITIES).filter(c=>(CITIES[c].showDays||[]).length);if(ct.length>=2)add("p-live","c","雙城現場","高雄和香港的演唱會都現場報到過",ct.filter(c=>Object.keys(lv).some(k=>k.startsWith(c+"|"))).length,ct.length)}}
+{const lv=liveRd(),ct=Object.keys(CITIES).filter(c=>(CITIES[c].showDays||[]).length);if(ct.length>=2)add("p-live","c","多城現場","每一座巡演城市的演唱會都現場報到過",ct.filter(c=>Object.keys(lv).some(k=>k.startsWith(c+"|"))).length,ct.length)}}
 {const dS=new Set(dn2.map(dt).filter(Boolean)),fx=fxSt(),Mm=MEMBERS.filter(m=>m[0]!=="BTS").map(m=>m[0]),ar=k=>Array.isArray(fx[k])?fx[k]:[];
 add("d-3","m","打卡 3 天","在 3 個不同的日子打卡",dS.size,3);
 add("d-7","m","打卡 7 天","在 7 個不同的日子打卡",dS.size,7);
@@ -1589,9 +1590,11 @@ function songVid(x){const vu=YTID(x.u),vk=YTID(x.k);return SMODE==="k"||SMODE===
 function songTimed(x){const o=[];[["h",x.h],["c",x.c]].forEach(([k,v])=>String(v||"").split("\n").forEach(l=>{const m=l.match(TL);if(m)o.push({s:+m[1]*60+ +m[2]+(m[3]?+m[3]:0),k,l:l.replace(TL,"")})}));return o.sort((a,b)=>(a.s-b.s)||(a.k<b.k?-1:a.k>b.k?1:0))}
 function songGroups(T){const G=[];T.forEach(t=>{const g=G[G.length-1];if(g&&g.s===t.s)g.i.push(t);else G.push({s:t.s,i:[t]})});return G}
 function songLinks(x){const ok=v=>/^https?:\/\//.test(v||""),b=[],v=x.u||x.k;if(ok(v))b.push(`<a class="btn" target="_blank" rel="noopener" href="${esc(v)}">影片／參考 ↗</a>`);if(ok(x.o))b.push(`<a class="btn of" target="_blank" rel="noopener" href="${esc(x.o)}">官方應援歌詞 ↗</a>`);return b.length?`<div class="act">${b.join("")}</div>`:""}
+function srAlign(){try{const c=document.querySelector("#slist .card.song"),sr=c&&c.querySelector(".sr"),yt=c&&c.querySelector(".yt");if(!sr)return;sr.style.paddingTop="";if(!yt||!matchMedia("(min-width:1000px)").matches||c.classList.contains("ktvm")||sr.querySelector(".gm,#gm"))return;const d=yt.getBoundingClientRect().top-sr.getBoundingClientRect().top-(sr.querySelector(".sg")?10:0);if(d>40)sr.style.paddingTop=d+"px"}catch(e){}}
+addEventListener("resize",srAlign);try{document.fonts&&document.fonts.ready.then(srAlign)}catch(e){}
 function songCard(x){const off=navigator.onLine===false,vid=songVid(x),T=vid?songTimed(x):[],k=vid&&!off&&SMODE==="k",g=vid&&!off&&SMODE==="g";
 const media=vid?(off?`<div class="khint">離線中：影片和 KTV 模式要有網路才能用，下面的空耳與應援法還是可以看。</div>`:`<div class="smode"><button type="button" class="chip" data-m="n" aria-pressed="${!k&&!g}">一般模式</button><button type="button" class="chip" data-m="k" aria-pressed="${k}">KTV 模式</button><button type="button" class="chip" data-m="g" aria-pressed="${g}">應援遊戲</button></div><div class="yt"><div id="ytp"></div></div>${k?`<div class="kinfo"><span id="kt0">0:00</span><span id="knx"></span><span id="kt1">0:00</span></div><div class="kbar" id="kbar" title="點一下跳到那裡；彩色刻度是應援位置"></div>`:""}`):"";
-const body=g?gameHTML(T,x):k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map((g,j,A)=>`<div class="kb" data-s="${g.s}" data-e="${A[j+1]?A[j+1].s:g.s+6}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.h?`<details class="sg"><summary>空耳</summary><div class="sgt">${sfmt(x.h)}</div></details>`:""}${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
+const body=g?gameHTML(T,x):k?(T.length?`<div class="khint">跟著影片自動捲動　點兩下跳到那一句</div><div class="ktv" id="ktv">${songGroups(T).map((g,j,A)=>`<div class="kb" data-s="${g.s}" data-e="${A[j+1]?A[j+1].s:g.s+6}">${g.i.map(t=>`<div class="kl ${t.k}">${sfmt(t.l)}</div>`).join("")}</div>`).join("")}</div>`:`<div class="empty">這首歌還沒有時間碼，暫時無法使用 KTV 模式</div>`):`${x.c?`<details class="sg" open><summary>應援法</summary><div class="sgt">${sfmt(x.c)}</div></details>`:""}`;
 return `<article class="card song${k?" ktvm":""}"><div class="topr"><div class="fsz"><span>字級</span><button type="button" class="chip" data-fs="-1" aria-label="縮小字級" title="縮小字級">A−</button><output id="fso" aria-live="polite"></output><button type="button" class="chip" data-fs="1" aria-label="放大字級" title="放大字級">A＋</button></div>${songLinks(x)}</div><div class="sl"><h2>${esc(x.t)}</h2>${x.a?`<div class="by">${esc(x.a)}</div>`:""}${media}</div><div class="sr">${body}</div></article>`}
 let GR=0,GN=[],GL=0,GC=0,GF=false;let YP=null,YT_T=0,PT=0,KA=-1,LC=0,LE=null,KS=false,KU=0;
 /* 手動滑動歌詞後，暫停自動捲動 5 秒；按「回到目前這句」或時間到就恢復 */
@@ -1804,7 +1807,7 @@ const FT_MQ={"RM": [["也許我昨天犯了錯，但昨天的我還是我。今�
 const FT_TIERS=[[1,"新手村村民"],[3,"阿米棒點燈人"],[7,"七色圖鑑解鎖者",1],[14,"敲碗巡演先鋒"],[30,"紫色狂熱份子"],[50,"每日精神糧食獲得者"],[100,"Hope World 榮譽永久居民"],[365,"陪伴彼此的永恆星星"]];
 function ftTier(n,full){let i=0;FT_TIERS.forEach((t,k)=>{if(n>=t[0]&&(!t[2]||full))i=k});return i}
 /* 演唱會當天限定卡：只在開演日（和各城市場次日期一致）抽到，固定大吉；抽過的場次會記起來，結束後留作回顧 */
-const FT_LC=[["kh","高雄",2026,11,["11/19","11/21","11/22"]],["hk","香港",2027,3,["3/4","3/6","3/7"]]];
+const FT_LC=Object.keys(CITIES).map(k=>{const c=CITIES[k],a=c.showDays||[];return[k,c.name,c.y,+String(a[0]||"1/1").split("/")[0],a]}).filter(x=>x[4].length);
 function ftLM(d){const y=d.getFullYear(),ds=(d.getMonth()+1)+"/"+d.getDate();for(const c of FT_LC)if(c[2]===y&&c[4].includes(ds))return{k:c[0]+"-"+ds,name:c[1]};return null}
 function ftLmHtml(st){let o="";FT_LC.forEach(c=>{const g=c[4].filter(x=>st.lm.includes(c[0]+"-"+x));if(!g.length)return;o+=`<div class="ftr ftx"><span>${c[1]}場限定卡</span><b>${g.length}/${c[4].length}</b></div><div class="ftg">${c[4].map(x=>`<span class="ftl${g.includes(x)?" on":""}">${x}</span>`).join("")}</div>`;if(g.length>=c[4].length)o+=`<div class="ftb lmb">${c[1]}場限定卡集滿了！</div><div class="ftr"><span>特別稱號</span><b>${c[1]}場見證者</b></div>`});return o}
 function ftShow(){const d=new Date(),key=ftKey(d),M=MEMBERS.filter(m=>m[0]!=="BTS"),bd=ftBd(d),mb0=bd?bd.m:M[fth(key+"m")%M.length][0],SH=fth(key+"s")%20===0,LM=ftLM(d),n=(bd||SH||LM)?5:2+fth(key+"r")%4,rk=(bd||SH||LM)?"大吉":["吉","小吉","中吉","大吉"][fth(key+"r")%4],tk=bd?{t:"去生日應援頁，看看有哪些應援"}:ftTaskOf(key,d),t=tk.t,sg=ftPick(d),lc=FT_COL[fth(key+"k")%FT_COL.length],ln=1+fth(key+"n")%99,wd0=FT_WORDS[fth(key+"w")%FT_WORDS.length];
@@ -1865,7 +1868,7 @@ function albHue(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return 
 /* 演唱會歌單（每場演唱會各有自己的歌單，跟專輯分類互不影響）：
    ① 試算表加一欄「演唱會」，填這首歌有唱的演唱會，用「、」隔開；順序寫在名稱後面，例如「ARIRANG:3、SWIM Tour:12」＝在 ARIRANG 是第 3 首、在 SWIM Tour 是第 12 首；不寫順序就照試算表列的先後排。沒填的歌只出現在專輯。
    ② 或在 data.js 設定 SETLISTS={"ARIRANG":["歌名1","歌名2"],"SWIM Tour":[…]}，照陣列順序排。可選：CONCERT_COVERS={"ARIRANG":"圖片網址"} 給演唱會封面。 */
-let VIEW="a",MEM="";try{const v0=sessionStorage.getItem("song-view");VIEW=v0==="s"||v0==="m"?v0:"a"}catch(e){}/* 從首頁點進來一律重設成依專輯（見 gos）；沒回首頁之前，切換、重新整理都會記住 */
+let VIEW="a",MEM="";try{const v0=sessionStorage.getItem("song-view");VIEW=v0==="s"||v0==="m"?v0:"a"}catch(e){}try{ALB=sessionStorage.getItem("song-alb")||"";MEM=sessionStorage.getItem("song-mem")||""}catch(e){}/* 從首頁點進來一律重設成依專輯（見 gos）；沒回首頁之前，切換、重新整理都會記住 */
 const SORTMAX=1e9;
 /* 演唱會封面：試算表「演唱會封面」欄，直接填圖片網址或路徑＝給這一列這首歌所屬的演唱會用；一首歌屬於好幾場、要分開指定時寫「演唱會名稱=圖片」（多場用「、」或換行隔開）；沒填再看 data.js 的 CONCERT_COVERS；都沒有就顯示彩色底加名稱。 */
 function conCover(n){for(const x of SONGS)for(const q of String(x.cc||"").split(/[、\n]+/)){const t=q.trim();if(!t)continue;const i=t.indexOf("=");
@@ -1914,7 +1917,7 @@ const add=()=>{const e=PRS&&PRS.events[cur],inp=o.querySelector(".vgi");if(!e||!
 const draw=()=>{if(!PRS){o.innerHTML=shell(`<div class="pxload"><span class="pxd"></span><span class="pxd"></span><span class="pxd"></span><p>載入中…</p></div>`);return}
 const E=PRS.events||[],SR=PRS.series||[];if(!E.length){o.innerHTML=shell(`<p>目前沒有進行中的預測活動</p>`);return}
 if(cur>=E.length+SR.length)cur=0;
-const tabs=E.length+SR.length>1?`<div class="vtb" role="group" style="--n:${Math.max(1,Math.min(E.length,3))}">${E.map(x=>x.name).concat(SR.map(s=>s.name+" 總排行")).map((nm,i)=>`<button type="button" class="btn vtab${i>=E.length?" vser":""}" data-e="${i}" aria-pressed="${i===cur}">${esc(nm)}</button>`).join("")}</div>`:"";
+const tabs=E.length+SR.length>1?`<div class="vtb" role="group" style="--n:${E.length<=4?Math.max(1,E.length):Math.ceil(E.length/2)}">${E.map(x=>x.name).concat(SR.map(s=>s.name+" 總排行")).map((nm,i)=>`<button type="button" class="btn vtab${i>=E.length?" vser":""}" data-e="${i}" aria-pressed="${i===cur}">${esc(nm)}</button>`).join("")}</div>`:"";
 if(cur>=E.length){o.innerHTML=shell(tabs+prSeries(SR[cur-E.length]));return}
 const e=E[cur],m=e.mine,mp=m?m.picks:[];
 let body="",RK=0;
@@ -1957,7 +1960,7 @@ function memWall(B){const ex=[];B.forEach(x=>{const m=memOf(x);if(!SOLO_M.includ
 return SOLO_M.concat(ex).map((m,i)=>{const mc=typeof FT_MC!=="undefined"&&FT_MC[m]||"#2f7be0",S=B.filter(x=>memOf(x)===m),al=[...new Set(S.map(albOf))],n=S.length,c=(MEMBER_COVERS[m]||"").trim()||(al.length?albCover(al[0]):"");
 return `<button type="button" class="alb${n?"":" past"}" data-mb="${esc(m)}" style="--mc:${mc}"${n?"":" disabled"}><span class="cv" data-no="${String(i+1).padStart(2,"0")}"><span class="ph" style="--h:${albHue(m)}">${esc(m)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(m)}</b>${n?`<span class="n">${al.length} 張專輯</span><span class="n">${n} 首歌</span>`:`<span class="n soon">即將收錄</span>`}</button>`}).join("")}
 try{[["依成員","By member","멤버별","メンバー別"],["依專輯／依成員／依演唱會","By album / By member / By concert","앨범별 / 멤버별 / 콘서트별","アルバム別 / メンバー別 / コンサート別"],["切換分類：依專輯看每張專輯的歌，依成員看各成員的個人專輯，依演唱會看每一場的演出歌單，歌名前面的編號是演出順序。","Switch the grouping: by album, by member for each member's solo albums, or by concert to see each show's setlist. The number before a song is its show order.","분류를 전환해요. 앨범별은 앨범의 곡, 멤버별은 멤버의 솔로 앨범, 콘서트별은 공연별 셋리스트이며 곡명 앞 번호가 공연 순서예요.","分類を切り替えます。アルバム別はアルバムの曲、メンバー別は各メンバーのソロアルバム、コンサート別は公演ごとのセットリストで、曲名の前の番号は演奏順です。"],["← 全部成員","← All members","← 전체 멤버","← 全メンバー"],["即將收錄","Coming soon","수록 예정","収録予定"]].forEach(a=>window.I18N&&I18N.add(a[0],a[1],a[2],a[3]))}catch(e){}
-function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();
+function songsR(){const box=document.getElementById("slist"),tabs=document.getElementById("stabs"),wall=document.getElementById("swall"),view=document.getElementById("sview");if(!box)return;songStop();try{sessionStorage.setItem("song-alb",ALB);sessionStorage.setItem("song-mem",MEM)}catch(e){}
 const kw=(document.getElementById("sq").value||"").trim().toLowerCase();
 const SOLO=VIEW==="m",ABASE=SONGS.filter(x=>SOLO?(MEM?memOf(x)===MEM:!!memOf(x)):!memOf(x));
 const AL=[];ABASE.forEach(x=>{const a=albOf(x);if(!AL.includes(a))AL.push(a)});
@@ -1975,7 +1978,7 @@ const wallOn=!ALB&&!kw;wall.hidden=!wallOn;view.hidden=wallOn;wall.classList.tog
 if(wallOn){document.getElementById("sn").textContent=G.length||SOLO?(SV?SONGS.filter(x=>songCons(x).length).length:ABASE.length)+" 首歌":"";
 wall.innerHTML=SOLO&&!MEM?memWall(ABASE):G.length?(SV?cdBanner(G):"")+(SV&&predUrl()?predBar():"")+(SV?GR:AL).map(g=>{const ds=SV?g.d:null,a=SV?conOpenDay(ds):g,nm=SV?g.k:a,n=SV?conSongsOf(ds).length:ABASE.filter(x=>albOf(x)===a).length,c=SV?conCoverG(ds):albCover(a),pg=SV?gProgG(ds):null;return `<button type="button" class="alb${SV&&cdDaysG(ds)<0?" past":""}" data-a="${esc(a)}"><span class="cv"><span class="ph" style="--h:${albHue(nm)}">${esc(nm)}</span>${c?`<img src="${esc(c)}" alt="" loading="lazy" onerror="this.remove()">`:""}</span><b>${esc(nm)}</b><span class="n">${n} 首歌</span>${SV&&ds.length>1?`<span class="n">${ds.length} 場</span>`:""}${pg&&pg.n?(pg.k>=pg.n?`<span class="gp full">全曲通關</span>`:`<span class="gp"><em>通關</em> ${pg.k}/${pg.n}</span>`):""}${SV?cdTagG(ds):""}</button>`}).join(""):`<div class="empty">還沒有收錄歌曲</div>`;
 box.innerHTML="";tabs.innerHTML="";return}
-const L=LB.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.h||"")+(x.c||"")+" "+songCons(x).map(c=>c.n).join(" ")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
+const L=LB.filter(x=>(SV?(ALB?songCons(x).some(c=>c.n===ALB):songCons(x).length>0):(!ALB||albOf(x)===ALB))&&(!kw||(x.t+(x.a||"")+(x.c||"")+" "+songCons(x).map(c=>c.n).join(" ")).toLowerCase().includes(kw)));if(SV&&ALB){const o=x=>songCons(x).find(c=>c.n===ALB).o;L.sort((a,b)=>o(a)-o(b))}else if(!SV&&ALB){const o=x=>{const n=parseFloat(x.tn);return isFinite(n)?n:SORTMAX};L.sort((a,b)=>o(a)-o(b))}
 document.getElementById("sn").textContent=L.length+" 首歌";
 {const pr=document.getElementById("sprog");if(pr){const g=SV&&ALB?gProg(ALB):null;if(g&&g.n){pr.hidden=false;pr.innerHTML=gProgHTML(g)}else pr.hidden=true}}
 const CDF=SV&&ALB?conDiff(ALB,CL):{html:"",only:new Set()};
@@ -1984,7 +1987,7 @@ if(!L.length){tabs.innerHTML="";box.innerHTML=`<div class="empty">${kw?"找不�
 if(!L.some(x=>x.t===SEL))SEL=L[0].t;
 {const ci=Math.max(0,L.findIndex(x=>x.t===SEL)),nm=(x,i)=>(SV&&ALB?(i+1)+". ":"")+esc(x.t),gb=x=>(gBest()[x.t]||{}).g||"";
 tabs.innerHTML=`<div class="snav"><button type="button" class="sbtn" data-sn="-1" aria-label="上一首" title="上一首"${ci<=0?" disabled":""}>←</button><select id="ssel" aria-label="選擇歌曲">${L.map((x,i)=>`<option value="${esc(x.t)}"${i===ci?" selected":""}>${nm(x,i)}${gb(x)?" ・ "+gb(x):""}</option>`).join("")}</select><button type="button" class="sbtn" data-sn="1" aria-label="下一首" title="下一首"${ci>=L.length-1?" disabled":""}>→</button></div>`+L.map((x,i)=>`<button type="button" class="chip" data-t="${esc(x.t)}" aria-pressed="${x.t===SEL}">${nm(x,i)}${gb(x)?`<em class="gsg">${gb(x)}</em>`:""}${CDF.only.has(x.t)?`<em class="odn">僅此場</em>`:""}</button>`).join("")}
-{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);fsApply();ktvFit();songPlayer(navigator.onLine===false?"":songVid(x));try{gameInit(x)}catch(e){}}}
+{const x=L.find(x=>x.t===SEL);box.innerHTML=songCard(x);fsApply();ktvFit();srAlign();songPlayer(navigator.onLine===false?"":songVid(x));try{gameInit(x)}catch(e){}}}
 const pickSong=v=>{SEL=v;try{localStorage.setItem("song-sel",SEL)}catch(x){}songsR()};
 document.getElementById("stabs").addEventListener("change",e=>{if(!e.target.closest("#ssel"))return;pickSong(e.target.value);const s=document.getElementById("ssel");if(s)s.focus()});
 document.getElementById("stabs").addEventListener("click",e=>{const b=e.target.closest("[data-sn]");if(!b||b.disabled)return;const s=document.getElementById("ssel");if(!s)return;const i=s.selectedIndex+ +b.dataset.sn;if(i<0||i>=s.options.length)return;pickSong(s.options[i].value);const nb=document.querySelector('#stabs [data-sn="'+b.dataset.sn+'"]');(nb&&!nb.disabled?nb:document.getElementById("ssel")).focus()});
@@ -2004,7 +2007,7 @@ if(sec==="songs")songsR();
 /* KTV 模式：「連結」欄放 YouTube 網址；空耳／應援法的每一行前面加時間碼，例如「0:07 [藍] Kim Namjoon!」，沒時間碼的行只出現在一般模式。 */
 /* 歌曲也可以從試算表讀取：在 data.js 設定 SONGS_CSV_URL（歌曲分頁發布成 CSV 的網址），欄位：歌名、專輯／場次、空耳、應援法、連結。讀不到就用上面的 SONGS */
 function songsParse(t){const R=SheetLoader.csv(t);if(R.length<2)return[];
-const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","空耳":"h","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p","演唱會":"s","演唱會歌單":"s","巡演":"s","曲序":"tn","專輯曲序":"tn","曲目順序":"tn","演唱會封面":"cc","演唱會封面圖":"cc","發行日":"rd","發行日期":"rd","發售日":"rd","發行":"rd","演唱會日期":"cd","演唱會舉辦日":"cd","舉辦日":"cd","舉辦日期":"cd","成員":"m","歌手":"m","Solo成員":"m","solo成員":"m","Solo 成員":"m"};
+const M={"歌名":"t","專輯":"a","場次":"a","專輯／場次":"a","應援":"c","應援法":"c","連結":"u","KTV連結":"k","KTV":"k","官方應援歌詞連結":"o","官方應援歌詞":"o","官方歌詞連結":"o","官方歌詞":"o","封面":"p","專輯封面":"p","封面圖":"p","演唱會":"s","演唱會歌單":"s","巡演":"s","曲序":"tn","專輯曲序":"tn","曲目順序":"tn","演唱會封面":"cc","演唱會封面圖":"cc","發行日":"rd","發行日期":"rd","發售日":"rd","發行":"rd","演唱會日期":"cd","演唱會舉辦日":"cd","舉辦日":"cd","舉辦日期":"cd","成員":"m","歌手":"m","Solo成員":"m","solo成員":"m","Solo 成員":"m"};
 const hd=R[0].map(x=>M[x.trim()]||"");
 return R.slice(1).map(r=>{const o={};hd.forEach((k,j)=>{if(k&&!o[k])o[k]=String(r[j]||"").trim()});return o}).filter(o=>o.t)}
 function covPre(){if(navigator.onLine===false)return;try{const seen=new Set();[...new Set(SONGS.map(albOf))].forEach(n=>{const c=albCover(n);if(c&&!/^https?:/i.test(c)&&!seen.has(c)){seen.add(c);fetch(c).catch(()=>{})}})}catch(e){}}

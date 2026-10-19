@@ -348,8 +348,12 @@ I18N.add("收藏 10 個應援","Favorite 10 projects","응원 10개 즐겨찾기
 I18N.add("常駐站民","Home Screen Resident","상주 주민","常駐ユーザー");
 I18N.add("把網站加到手機桌面，並從桌面圖示開啟","Add the site to your home screen and open it from the icon","사이트를 홈 화면에 추가하고 아이콘으로 열기","サイトをホーム画面に追加し、アイコンから開く");
 I18N.add("在同一座城市，每一場演唱會日都現場報到","Check in on-site on every concert day in the same city","같은 도시의 모든 공연일에 현장 체크인","同じ都市のすべての公演日に現地でチェックイン");
-I18N.add("雙城現場","Both Cities Live","두 도시 현장","二都市現場");
-I18N.add("高雄和香港的演唱會都現場報到過","Checked in on-site at both the Kaohsiung and Hong Kong concerts","가오슝과 홍콩 콘서트 모두 현장 체크인","高雄と香港のコンサートの両方で現地チェックイン");
+I18N.add("多城現場","All Cities Live","모든 도시 현장","全都市現場");
+I18N.add("每一座巡演城市的演唱會都現場報到過","Checked in on-site at every tour city's concert","모든 투어 도시 콘서트에서 현장 체크인","すべてのツアー都市のコンサートで現地チェックイン");
+I18N.add("新加坡場限定卡","Singapore limited cards","싱가포르 한정 카드","シンガポール 限定カード");
+I18N.add("新加坡場限定卡集滿了！","Singapore limited cards complete!","싱가포르 한정 카드를 모두 모았어요!","シンガポールの限定カードがそろいました！");
+I18N.add("新加坡場見證者","Singapore Show Witness","싱가포르 공연 증인","シンガポール公演の見届け人");
+I18N.add("★ 新加坡場限定卡 ★","★ Singapore Show Limited Card ★","★ 싱가포르 공연 한정 카드 ★","★ シンガポール公演 限定カード ★");
 I18N.add("一日制霸","One-Day Sweep","하루 제패","1日制覇");
 I18N.add("把任一天分頁的應援全部打卡","Check in every project on any one day tab","하루 탭의 응원을 모두 체크인","いずれか1日のタブの応援を全部チェックイン");
 I18N.add("連抽三天","3-Day Draw Streak","3일 연속 뽑기","3日連続おみくじ");
@@ -677,8 +681,8 @@ const X={
 "集滿幸運籤的成員圖鑑":["Complete the lucky-draw member collection","행운 뽑기 멤버 도감 완성","おみくじのメンバー図鑑をコンプリート"],
 "閃卡收集家":["Shiny Collector","샤이니 카드 수집가","キラカードコレクター"],
 "集滿幸運籤的閃卡圖鑑":["Complete the lucky-draw shiny-card collection","행운 뽑기 샤이니 카드 도감 완성","おみくじのキラカード図鑑をコンプリート"],
-"雙城巡演":["Two-City Tour","두 도시 투어","二都市ツアー"],
-"高雄和香港的巡演應援都打過卡":["Checked in tour projects in both Kaohsiung and Hong Kong","가오슝과 홍콩 투어 응원을 모두 체크인","高雄と香港のツアー応援の両方でチェックイン"],
+"多城巡演":["All-City Tour","모든 도시 투어","全都市ツアー"],
+"每一座巡演城市的應援都打過卡":["Checked in tour projects in every tour city","모든 투어 도시의 응원을 체크인","すべてのツアー都市の応援をチェックイン"],
 "環島應援":["Island Tour","섬 일주 응원","島一周応援"],
 "在 3 個不同的台灣城市打卡":["Check in in 3 different Taiwan cities","대만의 서로 다른 3개 도시에서 체크인","台湾の異なる3都市でチェックイン"],
 "環球應援":["Global Cheer","세계 응원","世界応援"],
@@ -691,16 +695,16 @@ const X={
 "把 BTS 的出道周年應援全部打卡":["Check in every BTS debut anniversary project","BTS 데뷔 기념일 응원을 모두 체크인","BTSデビュー記念日の応援を全部チェックイン"]
 };
 Object.keys(X).forEach(k=>{D[k]=[X[k][0],X[k][1]];JA[k]=X[k][2]});
-const CN={"高雄":["Kaohsiung","가오슝","高雄"],"香港":["Hong Kong","홍콩","香港"]};
+const CN={"高雄":["Kaohsiung","가오슝","高雄"],"香港":["Hong Kong","홍콩","香港"],"新加坡":["Singapore","싱가포르","シンガポール"]};
 const nm=(x,k)=>CN[x]?CN[x][k]:(k<2?(D[x]?D[x][k]:x):(JA[x]||x));
 const TYS="應援企劃|燈箱/看板|LED電視牆|公車站牌|應援咖啡廳|LED廣告車|咖啡廳|快閃店|展覽";
 const BD=[
 [new RegExp("^("+TYS+")達人$"),x=>[nm(x,0)+" Pro",nm(x,1)+" 달인",nm(x,2)+"の達人"]],
-[/^(高雄|香港)集滿$/,x=>[nm(x,0)+" complete",nm(x,1)+" 완성",nm(x,2)+"コンプリート"]],
+[/^(高雄|新加坡|香港)集滿$/,x=>[nm(x,0)+" complete",nm(x,1)+" 완성",nm(x,2)+"コンプリート"]],
 [/^今天播放：(.+) 生日特別歌曲$/,x=>["Today's music: "+x+"'s birthday special","오늘의 음악: "+x+" 생일 특별곡","今日の曲："+x+"の誕生日スペシャル"]],
 [/^(.+) 生日集滿$/,x=>[x+" birthday complete",x+" 생일 완성",x+" 誕生日コンプリート"]],
 [/^累計打卡 (\d+) 個$/,n=>["Check in "+n+" in total","총 "+n+"개 체크인","累計"+n+"か所チェックイン"]],
-[/^把(高雄|香港)的應援全部打卡$/,x=>["Check in every project in "+nm(x,0),nm(x,1)+"의 응원을 모두 체크인",nm(x,2)+"の応援を全部チェックイン"]],
+[/^把(高雄|新加坡|香港)的應援全部打卡$/,x=>["Check in every project in "+nm(x,0),nm(x,1)+"의 응원을 모두 체크인",nm(x,2)+"の応援を全部チェックイン"]],
 [/^把 (.+) 的生日應援全部打卡$/,x=>["Check in every "+x+" birthday project",x+" 생일 응원을 모두 체크인",x+"の誕生日応援を全部チェックイン"]],
 [/^「(.+)」類型打卡 (\d+) 個$/,(x,n)=>["Check in "+n+" × "+nm(x,0),"「"+nm(x,1)+"」 "+n+"개 체크인","「"+nm(x,2)+"」を"+n+"か所チェックイン"]],
 [/^已獲得 (\d+) \/ (\d+) 個$/,(a,b)=>["Earned "+a+" / "+b,a+" / "+b+"개 획득","獲得 "+a+" / "+b+" 個"]],
@@ -712,8 +716,8 @@ const BD=[
 [/^(\d+) 場$/,n=>[n+(n==="1"?" show":" shows"),n+"회",n+"公演"]],
 [/^連續抽籤 (\d+) 天$/,n=>["Draw streak: "+n+" days","연속 뽑기 "+n+"일","連続で引く："+n+"日"]],
 [/^連續抽籤 (\d+) 天且集滿成員圖鑑$/,n=>["Draw streak: "+n+" days and a complete member collection","연속 뽑기 "+n+"일 + 멤버 도감 완성","連続で引く："+n+"日＋メンバー図鑑コンプリート"]],
-[/^集滿(高雄|香港)場限定卡$/,x=>["Complete the "+nm(x,0)+" limited cards","완성: "+nm(x,1)+" 한정 카드",nm(x,2)+"の限定カードをコンプリート"]],
-[/^(高雄|香港)場見證者$/,x=>["Show Witness: "+nm(x,0),nm(x,1)+" 공연 증인",nm(x,2)+"公演の見届け人"]],
+[/^集滿(高雄|新加坡|香港)場限定卡$/,x=>["Complete the "+nm(x,0)+" limited cards","완성: "+nm(x,1)+" 한정 카드",nm(x,2)+"の限定カードをコンプリート"]],
+[/^(高雄|新加坡|香港)場見證者$/,x=>["Show Witness: "+nm(x,0),nm(x,1)+" 공연 증인",nm(x,2)+"公演の見届け人"]],
 [/^(.+) 總排行$/,x=>[x+" Overall",x+" 종합 순위",x+" 総合ランキング"]],
 [/^獲得 (\d+) 個新徽章$/,n=>[n+" new badges earned","새 배지 "+n+"개 획득","新しいバッジを"+n+"個獲得"]]
 ];
