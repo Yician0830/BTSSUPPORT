@@ -522,7 +522,14 @@ body.tr-on #bgv{bottom:auto;top:calc(72px + env(safe-area-inset-top,0px))}
 #bgd .pcs button:hover{background:var(--tag);border-color:var(--tagInk);color:var(--tagInk)}
 #bgd .pcs button.unk{background:var(--card);border-color:var(--sub);box-shadow:none}
 #bgd .pcs i.hit{background:var(--okbg);box-shadow:2px 2px 0 var(--dark)}
+#bgd .pcs{align-items:flex-start;align-content:flex-start}
+#bgd .pcs button,#bgd .pcs i{line-height:1.35;max-width:100%;overflow-wrap:anywhere}
 #bgd .pcs i.hit::before{content:"✓ "}
+#bgd .pcs.pc-m{counter-reset:pm;gap:8px;padding:10px;border-style:solid;border-width:2px;background:linear-gradient(180deg,var(--box),var(--card))}
+#bgd .pcs.pc-m i{counter-increment:pm;display:inline-flex;align-items:center;gap:7px;padding:3px 10px 3px 4px;font-size:13px;white-space:nowrap}
+#bgd .pcs.pc-m i::before{content:counter(pm);display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 3px;font-family:var(--px);font-size:11px;font-weight:400;color:var(--darkInk,#fff);background:var(--dark)}
+#bgd .pcs.pc-m i.hit::before{content:"✓";background:#2e9b5a;color:#fff}
+#bgd .pcs.pc-m i.miss::before{content:counter(pm);background:var(--sub)}
 #bgd .pcn{font-weight:900;text-align:center}
 #bgd .pcn::after{content:"";display:block;height:8px;margin-top:6px;border:2px solid var(--dark);background:linear-gradient(90deg,#ffd23f var(--p,0%),var(--box) var(--p,0%))}
 #bgd .pr-h{padding-left:8px;border-left:4px solid var(--dark);font-family:var(--px);font-size:13px;font-weight:400}
@@ -1166,6 +1173,12 @@ add("x-app","m","常駐站民","把網站加到手機桌面，並從桌面圖示
 {let nm=[],nw=0;try{nm=JSON.parse(localStorage.getItem("kh-nom")||"[]");nw=localStorage.getItem("kh-nomwin")==="1"?1:0}catch(e){}
 add("s-nom","c","點歌新手","提名一首 YouTube 歌曲當背景音樂",Array.isArray(nm)&&nm.length?1:0,1);
 add("s-win","c","點歌成功","你提名的歌被票選為背景音樂",nw,1)}
+/* 歌單預測徽章：參加過的活動、單場最高猜中數、是否拿過第 1 名都記在 localStorage kh-pred（predRec 寫入），解鎖後保留 */
+{let pr={j:[],b:0,t:0};try{const o=JSON.parse(localStorage.getItem("kh-pred")||"{}");if(o&&typeof o==="object")pr={j:Array.isArray(o.j)?o.j:[],b:+o.b||0,t:+o.t||0}}catch(e){}
+add("r-1","c","初次預測","送出一次歌單預測",Math.min(pr.j.length,1),1);
+add("r-3","c","預測常客","參加 3 場歌單預測",Math.min(pr.j.length,3),3);
+add("r-hit","c","神預測","單場歌單預測猜中 5 首以上",Math.min(pr.b,5),5);
+add("r-top","c","預測王","在歌單預測拿到第 1 名（至少 2 人參加）",pr.t?1:0,1)}
 /* 連投徽章：投票成功當天記在 kh-vstk（台北日期）；解鎖後保留 */
 {const S1=bgRd(),vn=voteStkN();[[3,"連投三天"],[7,"連投七天"]].forEach(([n,nm])=>add("s-v"+n,"c",nm,"連續 "+n+" 天投票",S1["s-v"+n]?n:Math.min(vn,n),n))}
 {const vis=c=>L.filter(b=>!b.hid&&bgCat(b.id)===c),okn=a=>a.filter(b=>b.k>=b.n).length;
@@ -1174,10 +1187,10 @@ const H=L.filter(b=>b.hid);if(H.length)L.push({id:"h-hunt",fam:"h",name:"隱藏�
 addH("h-final","完美主義者","解鎖其他所有徽章",L.length>0&&L.every(b=>b.k>=b.n))}catch(e){}
 return L.map(b=>(b.ok=b.k>=b.n,b))}
 /* 徽章分類：圖鑑的徽章分頁依這裡分組。新增徽章時，如果代號沒對到，會放進「打卡天數」 */
-const BG_TIER={"s-v3":1,"s-v7":2,m5:1,m10:2,m20:3,"d-3":1,"d-7":2,"g-1":1,"g-3":2,"f-s3":1,"f-s7":2};
-function bgRar(b){return b.hid?["h","★ 隱藏"]:(BG_TIER[b.id]>=2||/^(u-|p-live$|g-ap$|g-4$|f-col$|f-sh$|s-win$)/.test(b.id))?["r","稀有"]:["n","普通"]}
-const BG_CATS=["演唱會","生日","幸運籤","應援遊戲","打卡天數","收藏","背景音樂","終極挑戰"];
-function bgCat(id){return id==="h-final"||id==="h-hunt"||/^u-/.test(id)?"終極挑戰":/^(v-|h-vow)/.test(id)?"收藏":/^(c-|t-|p-two|p-live|h-live|h-w3)/.test(id)?"演唱會":/^g-/.test(id)?"應援遊戲":/^(b-|p-tw|p-ow|h-bd|h-mem|h-bias|h-sea)/.test(id)?"生日":/^f-/.test(id)?"幸運籤":/^s-/.test(id)?"背景音樂":"打卡天數"}
+const BG_TIER={"r-3":1,"s-v3":1,"s-v7":2,m5:1,m10:2,m20:3,"d-3":1,"d-7":2,"g-1":1,"g-3":2,"f-s3":1,"f-s7":2};
+function bgRar(b){return b.hid?["h","★ 隱藏"]:(BG_TIER[b.id]>=2||/^(u-|p-live$|g-ap$|g-4$|f-col$|f-sh$|s-win$|r-hit$|r-top$)/.test(b.id))?["r","稀有"]:["n","普通"]}
+const BG_CATS=["演唱會","生日","幸運籤","應援遊戲","打卡天數","收藏","背景音樂","歌單預測","終極挑戰"];
+function bgCat(id){return id==="h-final"||id==="h-hunt"||/^u-/.test(id)?"終極挑戰":/^r-/.test(id)?"歌單預測":/^(v-|h-vow)/.test(id)?"收藏":/^(c-|t-|p-two|p-live|h-live|h-w3)/.test(id)?"演唱會":/^g-/.test(id)?"應援遊戲":/^(b-|p-tw|p-ow|h-bd|h-mem|h-bias|h-sea)/.test(id)?"生日":/^f-/.test(id)?"幸運籤":/^s-/.test(id)?"背景音樂":"打卡天數"}
 /* 解鎖徽章時跳出的獲得卡片；隱藏徽章用金色版本。點空白處、按關閉，或 7 秒後自動關閉 */
 /* 每枚徽章各自的像素圖示：BG_PX 是 10×10 的圖案（# 是主色，+ 是亮點）；BG_MAP 依徽章代號挑圖案，對不到就用兔子 */
 const BG_PX={
@@ -1210,7 +1223,7 @@ q:["..######..",".##....##.",".##....##.","......###.","....###...","....##...."
 phone:["...####...","..######..","..#....#..","..#....#..","..#....#..","..#....#..","..#....#..","..######..","..##++##..","..######.."],
 bookmark:["..######..","..######..","..######..","..######..","..######..","..######..","..######..","..##..##..","..#....#..",".........."],
 ribbon:["..######..", ".########.", ".###++###.", "..######..", "...####...", "..##..##..", "..##..##..", ".##....##.", ".#......#.", "##......##"]};
-const BG_MAP=[[/^s-v3$/,"flame"],[/^s-v7$/,"crown"],[/^s-nom$/,"note"],[/^s-win$/,"trophy"],[/^c-day$/,"target"],[/^f-s3$/,"flame"],[/^f-s7$/,"crown"],[/^x-help$/,"mail"],[/^x-app$/,"phone"],[/^h-open$/,"bolt"],[/^h-last$/,"hourglass"],[/^h-w3$/,"cal"],[/^h-vow$/,"check"],[/^v-fav$/,"bookmark"],[/^m1$/,"flag"],[/^m5$/,"star"],[/^m10$/,"trophy"],[/^m20$/,"crown"],[/^c-/,"pin"],[/^t-all$/,"gem"],[/^t-/,"ribbon"],[/^p-two$/,"pin"],[/^p-live$/,"mic"],[/^p-tw$/,"foot"],[/^p-ow$/,"globe"],[/^b-/,"heart"],[/^d-/,"cal"],[/^f-1$/,"clover"],[/^f-col$/,"star"],[/^f-sh$/,"spark"],[/^g-s$/,"trophy"],[/^g-1$/,"flag"],[/^g-3$/,"star"],[/^g-nm$/,"shield"],[/^g-ap$/,"target"],[/^g-4$/,"pad"],[/^h-live$/,"mic"],[/^h-day3$/,"foot"],[/^h-bd$/,"cake"],[/^h-mem$/,"people"],[/^h-sea$/,"globe"],[/^h-bias$/,"spark"],[/^h-final$/,"crown"],[/^u-/,"trophy"],[/^h-hunt$/,"gem"]];
+const BG_MAP=[[/^r-1$/,"pad"],[/^r-3$/,"star"],[/^r-hit$/,"target"],[/^r-top$/,"crown"],[/^s-v3$/,"flame"],[/^s-v7$/,"crown"],[/^s-nom$/,"note"],[/^s-win$/,"trophy"],[/^c-day$/,"target"],[/^f-s3$/,"flame"],[/^f-s7$/,"crown"],[/^x-help$/,"mail"],[/^x-app$/,"phone"],[/^h-open$/,"bolt"],[/^h-last$/,"hourglass"],[/^h-w3$/,"cal"],[/^h-vow$/,"check"],[/^v-fav$/,"bookmark"],[/^m1$/,"flag"],[/^m5$/,"star"],[/^m10$/,"trophy"],[/^m20$/,"crown"],[/^c-/,"pin"],[/^t-all$/,"gem"],[/^t-/,"ribbon"],[/^p-two$/,"pin"],[/^p-live$/,"mic"],[/^p-tw$/,"foot"],[/^p-ow$/,"globe"],[/^b-/,"heart"],[/^d-/,"cal"],[/^f-1$/,"clover"],[/^f-col$/,"star"],[/^f-sh$/,"spark"],[/^g-s$/,"trophy"],[/^g-1$/,"flag"],[/^g-3$/,"star"],[/^g-nm$/,"shield"],[/^g-ap$/,"target"],[/^g-4$/,"pad"],[/^h-live$/,"mic"],[/^h-day3$/,"foot"],[/^h-bd$/,"cake"],[/^h-mem$/,"people"],[/^h-sea$/,"globe"],[/^h-bias$/,"spark"],[/^h-final$/,"crown"],[/^u-/,"trophy"],[/^h-hunt$/,"gem"]];
 function bgIco(id){const m=BG_MAP.find(a=>a[0].test(id)),g=BG_PX[id==="?"?"q":(m?m[1]:"bunny")];let r="";g.forEach((row,y)=>{const re=/#+|\++/g;let q;while(q=re.exec(row))r+=`<rect x="${q.index}" y="${y}" width="${q[0].length}" height="1"${q[0][0]==="+"?' fill="#fff" opacity=".75"':""}/>`});return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 let BGP_T=0;
 function badgePop(nw){if(!nw.length)return;const b=nw.find(x=>x.hid)||nw[0],hd=!!b.hid,C={m:"#e0a800",c:"#2a7de1",t:"#7b4fd6",b:"#e0457b",g:"#d9482f",h:"#7b4fd6"},col=b.col||({1:"#b87333",2:"#9aa7b4",3:"#e0a800"})[BG_TIER[b.id]]||C[b.fam]||"#2a7de1";
@@ -1792,10 +1805,15 @@ const S=window.SETLISTS;if(S&&typeof S==="object")Object.keys(S).forEach(k=>{con
 function predUrl(){return String(typeof PRED_URL!=="undefined"?PRED_URL:"").trim()}
 var PRS=null;
 const prN=s=>String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu,"");
-function predGet(){const u=predUrl();return fetch(u+(u.includes("?")?"&":"?")+"uid="+encodeURIComponent(voteUid())).then(r=>r.json()).then(j=>{if(!j||!j.ok)throw 0;PRS=j;return j})}
+function predRec(j){try{if(!j||!Array.isArray(j.events))return;let o={j:[],b:0,t:0};try{const x=JSON.parse(localStorage.getItem("kh-pred")||"{}");if(x&&typeof x==="object")o={j:Array.isArray(x.j)?x.j:[],b:+x.b||0,t:+x.t||0}}catch(e){}
+let ch=false;j.events.forEach(e=>{const m=e.mine;if(!m)return;if(!o.j.includes(e.id)){o.j.push(e.id);ch=true}
+if(e.status==="settled"){const sc=+m.score||0;if(sc>o.b){o.b=sc;ch=true}if(m.rank===1&&sc>0&&(+e.total||0)>=2&&!o.t){o.t=1;ch=true}}});
+if(ch){o.j=o.j.slice(-50);localStorage.setItem("kh-pred",JSON.stringify(o));setTimeout(()=>{try{badgeSync()}catch(e){}},300)}}catch(e){}}
+function predGet(){const u=predUrl();return fetch(u+(u.includes("?")?"&":"?")+"uid="+encodeURIComponent(voteUid())).then(r=>r.json()).then(j=>{if(!j||!j.ok)throw 0;PRS=j;predRec(j);return j})}
 function predPost(o){o.uid=voteUid();return fetch(predUrl(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(o)}).then(r=>r.json())}
 function predBar(){return`<div class="cdb prb"><i class="pri" aria-hidden="true"><svg viewBox="0 0 10 10" shape-rendering="crispEdges"><g fill="currentColor"><rect x="3" y="0" width="4" height="1"/><rect x="1" y="1" width="8" height="1"/><rect x="0" y="2" width="10" height="5"/><rect x="1" y="7" width="8" height="1"/><rect x="3" y="8" width="4" height="1"/></g><g fill="#fff" opacity=".75"><rect x="2" y="2" width="2" height="1"/><rect x="2" y="3" width="1" height="1"/></g><rect x="6" y="4" width="2" height="1" fill="#ffd23f"/><rect x="7" y="3" width="1" height="3" fill="#ffd23f"/><rect x="1" y="9" width="8" height="1" fill="#e0a800"/></svg></i><div class="prt"><small>歌單預測</small><b>猜猜這次會唱哪些歌</b><em>演唱會前先猜，公布歌單後算分、排行</em></div><button type="button" class="btn main" data-pr="1">開始猜</button></div>`}
-try{window.I18N&&(I18N.add("在「依演唱會」裡，演唱會前先猜會唱哪些歌，公布實際歌單後自動算分，還有排行榜。點「開始猜」就能參加。","In “By concert”, guess the setlist before the show; it is scored automatically once the real setlist is out, with a leaderboard. Tap “Start guessing” to join.","「공연별」에서 공연 전에 셋리스트를 예측하면, 실제 셋리스트 공개 후 자동으로 채점되고 순위도 나와요. 「시작하기」를 눌러 참여하세요.","「公演別」で公演前にセットリストを予想すると、発表後に自動採点＆ランキングが出ます。「開始猜」をタップして参加しよう。"),I18N.add("演唱會前先猜，公布歌單後算分、排行","Guess before the show; scored once the setlist is out","공연 전에 예측하고, 셋리스트 공개 후 점수와 순위가 나와요","公演前に予想、セットリスト発表後に採点・ランキング"),I18N.refresh())}catch(e){}
+try{if(window.I18N){I18N.add("在「依演唱會」裡，演唱會前先猜會唱哪些歌，公布實際歌單後自動算分，還有排行榜。點「開始猜」就能參加。","In “By concert”, guess the setlist before the show; it is scored automatically once the real setlist is out, with a leaderboard. Tap “Start guessing” to join.","「공연별」에서 공연 전에 셋리스트를 예측하면, 실제 셋리스트 공개 후 자동으로 채점되고 순위도 나와요. 「시작하기」를 눌러 참여하세요.","「公演別」で公演前にセットリストを予想すると、発表後に自動採点＆ランキングが出ます。「予想する」をタップして参加しよう。");I18N.add("歌名寫法不同（例如中文翻譯）的猜測，會由主辦人人工確認後計分。","Guesses written differently (e.g. a translated title) are checked and scored manually by the organizer.","표기가 다른 예측(예: 번역된 곡명)은 운영자가 직접 확인해 채점해요.","表記が異なる予想（例：翻訳タイトル）は主催者が確認して採点します。");I18N.add("歌單預測","Setlist Prediction","셋리스트 예측","セットリスト予想");I18N.add("初次預測","First Prediction","첫 예측","初予想");I18N.add("送出一次歌單預測","Submit a setlist prediction once","셋리스트 예측을 한 번 제출","セットリスト予想を1回送信");I18N.add("預測常客","Regular Predictor","예측 단골","予想常連");I18N.add("參加 3 場歌單預測","Join 3 setlist predictions","셋리스트 예측 3회 참여","セットリスト予想に3回参加");I18N.add("神預測","Oracle","신의 예측","神予想");I18N.add("單場歌單預測猜中 5 首以上","Get 5 or more songs right in one prediction","한 번의 예측에서 5곡 이상 적중","1回の予想で5曲以上的中");I18N.add("預測王","Prediction King","예측왕","予想王");I18N.add("在歌單預測拿到第 1 名（至少 2 人參加）","Rank #1 in a setlist prediction (2+ participants)","셋리스트 예측 1위 달성(참가자 2명 이상)","セットリスト予想で1位（参加者2人以上）");I18N.add("這個暱稱已經有人用了，請換一個","This nickname is already taken. Please pick another.","이미 사용 중인 닉네임이에요. 다른 닉네임을 써 주세요.","このニックネームは既に使われています。別のものにしてください。");I18N.add("演唱會前先猜，公布歌單後算分、排行","Guess before the show; scored once the setlist is out","공연 전에 예측하고, 셋리스트 공개 후 점수와 순위가 나와요","公演前に予想、セットリスト発表後に採点・ランキング");I18N.refresh&&I18N.refresh()}}catch(e){}
+window.addEventListener("load",()=>setTimeout(()=>{try{if(predUrl()&&localStorage.getItem("kh-pred"))predGet().catch(()=>{})}catch(e){}},4000));
 function predOpen(){const old=document.getElementById("bgd");if(old)old.remove();
 const opener=document.activeElement,o=document.createElement("div");o.id="bgd";if(!matchMedia("(prefers-reduced-motion:reduce)").matches)o.style.animation="bgfade .2s ease-out";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");o.setAttribute("aria-label","歌單預測");
 let cur=0,busy=false;const pk={},nk={};
@@ -1815,9 +1833,9 @@ let body="";
 if(e.status==="open"){if(!pk[e.id])pk[e.id]=mp.slice();
 body=`<p><b>${esc(e.name)}</b>・${esc(fmt(e.closeAt))} 截止，截止前可以修改。最多猜 ${e.max} 首。</p><div class="pgr"><input class="vi2 vgi" list="prdl" maxlength="80" autocomplete="off" placeholder="輸入歌名，按 Enter 或「加入」" aria-label="輸入歌名"><button type="button" class="btn vadd">加入</button></div><datalist id="prdl">${[...known(e).values()].map(t=>`<option value="${esc(t)}">`).join("")}</datalist><div class="pcs"></div><div class="vnow pcn"></div><p class="pr-n">虛線框的歌不在網站的歌單裡，請確認拼法；拼錯會算沒猜中。大小寫、空格和標點不影響。</p><input class="vi2 vnk" maxlength="12" placeholder="暱稱（選填，排行榜會顯示）" aria-label="暱稱" value="${esc(nk[e.id]||"")}"><button type="button" class="btn main vsub">${m?"更新預測":"送出預測"}</button>`}
 else if(e.status==="upcoming"){body=`<p><b>${esc(e.name)}</b>・尚未開放</p><div class="vnow">⏳ ${esc(fmt(e.openAt))} 開放${e.closeAt?`，${esc(fmt(e.closeAt))} 截止`:""}</div><p>開放後就能輸入歌名，到時再回來猜。</p>`}
-else if(e.status==="settled"){const A=new Set((e.actual||[]).map(prN)),P=new Set(mp.map(prN));
-body=`<p><b>${esc(e.name)}</b>・歌單已公布</p>${m?`<div class="vnow">你猜中 ${m.score}/${e.actual.length} 首${m.rank?`，第 ${m.rank} 名`:""}（共 ${e.total} 人參加）</div>`:`<p>你沒有參加這場預測（共 ${e.total} 人參加）</p>`}<div class="pr-h">實際歌單</div><div class="pcs">${e.actual.map(t=>`<i class="${P.has(prN(t))?"hit":""}">${esc(t)}</i>`).join("")}</div>${m?`<div class="pr-h">你猜的</div><div class="pcs">${mp.map(t=>`<i class="${A.has(prN(t))?"hit":"miss"}">${esc(t)}</i>`).join("")}</div>`:""}<div class="pr-h">排行榜</div><ul class="vl">${(e.top||[]).map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.n)}</span><span class="vn">${x.s} 首</span></li>`).join("")||`<li><p>沒有人參加</p></li>`}</ul>`}
-else{body=`<p><b>${esc(e.name)}</b>・已截止，公布實際歌單後會算分。（目前 ${e.total} 人參加）</p>${m?`<div class="pr-h">你猜的</div><div class="pcs">${mp.map(t=>`<i>${esc(t)}</i>`).join("")}</div>`:`<p>你沒有參加這場預測</p>`}${(e.hot||[]).length?`<div class="pr-h">大家最常猜的</div><ul class="vl">${e.hot.map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.t)}</span><span class="vn">${x.n} 人</span></li>`).join("")}</ul>`:""}`}
+else if(e.status==="settled"){const A=new Set((e.actual||[]).map(prN)),P=new Set(mp.map(prN)),HP=m&&m.hit?new Set(m.hit.map(prN)):null,HA=m&&m.hitA?new Set(m.hitA.map(prN)):null;
+body=`<p><b>${esc(e.name)}</b>・歌單已公布</p>${m?`<div class="vnow">你猜中 ${m.score}/${e.actual.length} 首${m.rank?`，第 ${m.rank} 名`:""}（共 ${e.total} 人參加）</div>`:`<p>你沒有參加這場預測（共 ${e.total} 人參加）</p>`}<p class="pr-n">歌名寫法不同（例如中文翻譯）的猜測，會由主辦人人工確認後計分。</p><div class="pr-h">實際歌單</div><div class="pcs">${e.actual.map(t=>`<i class="${(HA?HA.has(prN(t)):P.has(prN(t)))?"hit":""}">${esc(t)}</i>`).join("")}</div>${m?`<div class="pr-h">你猜的</div><div class="pcs pc-m">${mp.map(t=>`<i class="${(HP?HP.has(prN(t)):A.has(prN(t)))?"hit":"miss"}">${esc(t)}</i>`).join("")}</div>`:""}<div class="pr-h">排行榜</div><ul class="vl">${(e.top||[]).map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.n)}</span><span class="vn">${x.s} 首</span></li>`).join("")||`<li><p>沒有人參加</p></li>`}</ul>`}
+else{body=`<p><b>${esc(e.name)}</b>・已截止，公布實際歌單後會算分。（目前 ${e.total} 人參加）</p>${m?`<div class="pr-h">你猜的</div><div class="pcs pc-m">${mp.map(t=>`<i>${esc(t)}</i>`).join("")}</div>`:`<p>你沒有參加這場預測</p>`}${(e.hot||[]).length?`<div class="pr-h">大家最常猜的</div><ul class="vl">${e.hot.map((x,i)=>`<li class="vr"><span class="vk">${i+1}</span><span class="vt1">${esc(x.t)}</span><span class="vn">${x.n} 人</span></li>`).join("")}</ul>`:""}`}
 o.innerHTML=shell(tabs+body);if(e.status==="open")rl()};
 draw();
 o.addEventListener("click",ev=>{if(ev.target===o||ev.target.closest(".bgdx")){cl();return}
@@ -1825,7 +1843,7 @@ const t=ev.target.closest("[data-e]");if(t){cur=+t.dataset.e;draw();return}
 if(ev.target.closest(".vadd")){add();return}
 const x=ev.target.closest("[data-x]");if(x&&PRS){const e=PRS.events[cur];if(pk[e.id]){pk[e.id].splice(+x.dataset.x,1);msg("");rl()}return}
 const sb=ev.target.closest(".vsub");if(sb&&PRS){if(busy)return;const e=PRS.events[cur],picks=(pk[e.id]||[]).slice();if(!picks.length){msg("至少猜 1 首");return}busy=true;sb.disabled=true;msg("送出中…");const nick=(o.querySelector(".vnk")||{}).value||"";
-predPost({action:"pred_submit",event:e.id,picks,nick}).then(j=>{busy=false;if(j&&j.ok){if(j.state)PRS=j.state;draw();msg("已儲存，截止前可以再改");toast("已送出預測")}else{sb.disabled=false;if(j&&j.state){PRS=j.state;draw()}msg((j&&j.error)||"送出失敗")}}).catch(()=>{busy=false;sb.disabled=false;msg("網路不穩，請稍後再試")})}});
+predPost({action:"pred_submit",event:e.id,picks,nick}).then(j=>{busy=false;if(j&&j.ok){if(j.state){PRS=j.state;predRec(j.state)}draw();msg("已儲存，截止前可以再改");toast("已送出預測")}else{sb.disabled=false;if(j&&j.state){PRS=j.state;draw()}msg((j&&j.error)||"送出失敗")}}).catch(()=>{busy=false;sb.disabled=false;msg("網路不穩，請稍後再試")})}});
 o.addEventListener("keydown",ev=>{if(ev.key!=="Enter"||ev.isComposing||ev.keyCode===229)return;if(ev.target.closest&&ev.target.closest(".vgi")){ev.preventDefault();setTimeout(add,0)}});
 o.addEventListener("input",ev=>{const n=ev.target.closest&&ev.target.closest(".vnk");if(n&&PRS){const e=PRS.events[cur];if(e)nk[e.id]=n.value}});
 document.addEventListener("keydown",ky);document.body.appendChild(o);o.querySelector(".bgdx").focus();
