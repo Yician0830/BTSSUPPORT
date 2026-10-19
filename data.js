@@ -70,4 +70,29 @@ const DATA=[
 {id:"jimin-cafe",img:"IMG/848587197_17989838727108317_2408629795203620199_n.jpg",sec:"birthday",city:"香港",member:"Jimin",type:["應援咖啡廳"],title:"SERENDIPITY W/ ST JIMIN",by:"@_mikoyiyut_",desc:"JIMIN 生日應援咖啡廳",dates:[],status:"進行中",start:"2026-10-11",end:"2026-10-17",tags:["須配合店家低銷"],added:102,ll:[[22.306687182815704,114.16852340408352]],place:"Pastime Cafe Jordan（香港九龍佐敦炮台街 29-31 號地下，G/F, 29-31 Battery Street, Jordan）",time:"10/11-10/17 09:00 – 22:00",tip:"—",map:"香港九龍佐敦炮台街",links:[{t:"公告",u:"https://www.threads.com/share/GfB5jZP5i/"},{t:"主辦 Threads",u:"https://www.threads.com/@_mikoyiyut_"}]},
 {id:"jimin-cafe1",img:"IMG/825815365_17907641433515197_6374730516099589552_n.jpg",sec:"birthday",city:"台中",member:"Jimin",type:["應援咖啡廳"],title:"WHO IS HEART WAITING FOR?",by:"@btsfswt_0613",desc:"JIMIN 生日應援咖啡廳",dates:["10/9","10/10","10/11","10/12","10/13"],status:"已結束",start:"2026-10-09",end:"2026-10-13",tags:["須配合店家低銷"],added:103,ll:[[24.148399966941284,120.65206018785456]],place:"MIO_未央生花研(403臺中市西區公正里大昌街245號)",time:"10/9-10/13 10:00~20:00",tip:"—",map:"403臺中市西區公正里大昌街245號",links:[{t:"公告",u:"https://www.threads.com/share/HD-ZDb1o8/"},{t:"主辦 Threads",u:"https://www.threads.com/@btsfswt_0613"}]}
 ];
-let UPDATED="2026-10-16"; /* 每次更新內容後，把這個日期改成當天 */
+/* FOOT_CSV_URL：「藝人同款足跡」的試算表（跟巡演應援一樣：新增一列，網站就更新）。
+把足跡試算表「發布到網路」→ 選那一個分頁、格式選 CSV，網址貼在引號裡。留空 "" 就只用下面 FOOTPRINTS 的內建資料。
+試算表欄位（第一列標題照抄）：id、成員、類別、名稱、國家、城市、地點、地圖、日期、出處、簡介、備註、連結、圖片、營業狀態（選填：營業中／暫停營業／已歇業／已搬遷）、歌曲（選填：相關歌曲的歌名，多首用「、」分開；要和歌曲頁的歌名一模一樣，卡片上才會出現可點的連結）
+注意：試算表讀得到而且有資料時，以試算表為準；讀不到才用下面 FOOTPRINTS 當備用。 */
+const FOOT_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vS6ONMelK-gCUxRGOPofiBRErENIDs6E4aF5MFQOvw9zST5Fe0KTo-aknTcNgBYCJVuMS03CnkYb8PH/pub?gid=1220771351&single=true&output=csv";
+
+/* ===== 藝人同款足跡（備用資料；平常在試算表加一列就好，這裡只有試算表讀不到時才會用到） =====
+複製下面註解裡的範例 {...}，貼在最後一筆後面（筆與筆之間要有逗號），改成真實資料。
+id      每筆唯一的英文代號，不可重複（「我去過了」靠它記）
+country 國家（首頁會變成國家大按鈕，例如 韓國、日本、台灣；沒填的話會依城市猜，猜不到就歸在「其他」）
+member  BTS / RM / Jin / SUGA / j-hope / Jimin / V / Jungkook
+cat     類別，自己決定，例如 餐廳 / 咖啡廳 / 甜點 / 景點 / 購物 / 展覽（有填的類別會自動變成篩選按鈕）
+title / city / place / map   店名或景點名 / 城市 / 地址說明 / 地圖搜尋用的地址
+date    選填，成員造訪日期，例如 "2026-05-10"
+via     選填，出處，例如 "Weverse"、"YouTube"、"IG"
+desc / tip   選填，簡介 / 備註（營業時間、要不要預約等）
+links   選填，[{t:"出處連結",u:"網址"}]
+img     選填，圖片路徑，例如 "IMG/xxx.jpg"
+song    選填，相關歌曲的歌名（例如 "Hooligan"，多首用陣列 ["歌名1","歌名2"]），要和歌曲頁的歌名一模一樣才會變成可點的連結
+state   選填，營業狀態：暫停營業 / 已歇業 / 已搬遷（歇業、搬遷的卡片會變淡並排在最後；不填或「營業中」就不顯示）
+範例：
+{id:"example-1",member:"Jimin",cat:"咖啡廳",title:"店名",city:"首爾",place:"完整地址",map:"完整地址",date:"2026-05-10",via:"Weverse",desc:"成員去過的原因或簡介",links:[{t:"出處",u:"https://..."}]}
+注意：只放有可靠出處的資料；逗號、引號漏掉會讓整個網站空白。 */
+const FOOTPRINTS=[
+];
+let UPDATED="2026-10-20"; /* 每次更新內容後，把這個日期改成當天 */
