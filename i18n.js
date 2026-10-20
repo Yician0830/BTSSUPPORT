@@ -815,7 +815,29 @@ add(/^(.+)，生日還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the birthd
 ["這麼晚了，早點睡，明天再來","It's so late. Get some sleep and come back tomorrow.","너무 늦었어요, 일찍 자고 내일 또 와요.","もうこんな時間だよ、早く寝てまた明日来てね。"],
 ["暈了啦…別戳了","I'm dizzy… stop poking me!","어지러워요… 그만 콕콕 찔러요!","目が回るよ…つつかないで！"],
 ["明天就是演唱會了！今晚早點睡，螢光棒記得帶","The concert is tomorrow! Get to bed early tonight and don't forget your lightstick.","내일이 콘서트예요! 오늘은 일찍 자고 응원봉 꼭 챙기세요.","いよいよ明日がコンサート！今夜は早めに寝て、ペンライトを忘れずにね。"],
-["今天要見面了！出門前再檢查一次票和螢光棒","We finally meet today! Double-check your ticket and lightstick before you leave.","오늘 드디어 만나요! 나가기 전에 티켓과 응원봉을 다시 확인하세요.","今日はついに会える日！出かける前にチケットとペンライトをもう一度確認してね。"]
+["今天要見面了！出門前再檢查一次票和螢光棒","We finally meet today! Double-check your ticket and lightstick before you leave.","오늘 드디어 만나요! 나가기 전에 티켓과 응원봉을 다시 확인하세요.","今日はついに会える日！出かける前にチケットとペンライトをもう一度確認してね。"],
+["zzZ… 好睏，明天再聊","zzZ… So sleepy. Let's talk tomorrow.","zzZ… 너무 졸려요. 내일 또 이야기해요.","zzZ… 眠いよ、また明日話そう。"],
+["zzZ… 好睏，想抽籤的話點這裡叫醒我","zzZ… So sleepy. Tap here to wake me up if you want to draw.","zzZ… 너무 졸려요. 뽑기를 하고 싶다면 여기를 눌러 저를 깨워 주세요.","zzZ… 眠いよ。おみくじを引きたいならここをタップして起こして。"],
+["今天吃飽了嗎？","Have you eaten enough today?","오늘 밥은 든든히 먹었어요?","今日はちゃんと食べた？"],
+["來，一起深呼吸，放輕鬆","Come on, let's take a deep breath and relax.","자, 같이 심호흡하고 긴장 풀어요.","ほら、一緒に深呼吸して、リラックスしよう。"],
+["累的話就休息一下，不急","If you're tired, take a break. No rush.","피곤하면 잠깐 쉬어요. 서두르지 않아도 돼요.","疲れたら少し休もう。急がなくていいよ。"],
+["今天的進度，慢慢來就好","Take today's progress slowly.","오늘 진도는 천천히 해도 괜찮아요.","今日の進み具合は、ゆっくりでいいよ。"],
+["來點元氣！今天也動一動","Let's get energized! Move around a bit today.","기운 내요! 오늘도 몸을 좀 움직여 봐요.","元気出していこう！今日も体を動かそう。"],
+["心情不好的話，跟著節奏晃一晃","Feeling down? Sway along to the rhythm.","기분이 안 좋을 땐 리듬에 맞춰 몸을 흔들어 봐요.","気分が沈んだら、リズムに合わせて体を揺らしてみよう。"],
+["今天有學到什麼新東西嗎？","Did you learn anything new today?","오늘 새로 배운 게 있어요?","今日は何か新しいことを学んだ？"],
+["慢慢來，一步一步走","Take it slow, one step at a time.","천천히, 한 걸음씩 가요.","ゆっくり、一歩ずつ進もう。"],
+["今天也辛苦了，給自己一點掌聲","You worked hard today. Give yourself a round of applause.","오늘도 수고했어요. 스스로에게 박수를 쳐 주세요.","今日もお疲れさま。自分に拍手を送ろう。"],
+["笑一個，今天會順利","Smile, and today will go well.","한번 웃어 봐요. 오늘은 잘 풀릴 거예요.","笑って、今日はきっとうまくいくよ。"],
+["天氣好的話，出去走走吧","If the weather's nice, go for a walk.","날씨가 좋으면 산책 나가 봐요.","天気がよければ、散歩に出かけよう。"],
+["今天有看到什麼漂亮的東西嗎？","Did you see anything beautiful today?","오늘 예쁜 걸 본 게 있어요?","今日は何かきれいなものを見た？"],
+["今天也要全力以赴","Let's give it our all today, too.","오늘도 최선을 다해요.","今日も全力でいこう。"],
+["來比賽，看誰先抽到好籤","Let's race to see who gets a good Lucky Draw first.","내기해요. 누가 먼저 좋은 행운 뽑기 결과를 얻는지!","勝負しよう、誰が先にいいおみくじを引くか。"],
+["被你戳了 10 次，我們開始變熟了","You've poked me 10 times. We're getting close.","10번이나 콕콕 찔렀네요. 우리 친해지고 있어요.","10回もつつかれたよ。仲良くなってきたね。"],
+["第 30 次！你真的很喜歡我欸","30th poke! You really like me, huh?","30번째예요! 저를 정말 좋아하나 봐요.","30回目！本当に僕のこと好きだね。"],
+["100 次！你是我的頭號粉絲","100 pokes! You're my number one fan.","100번이에요! 당신이 제 1호 팬이에요.","100回！君は僕の一番のファンだよ。"],
+["今天可以投票了，投給你最想聽的一首","Voting is open today! Vote for the song you most want to hear.","오늘 투표할 수 있어요! 가장 듣고 싶은 한 곡에 투표해 주세요.","今日は投票できるよ！一番聴きたい曲に投票してね。"],
+["zzZ… 夢到今天還沒投票…","zzZ… I dreamed you haven't voted today yet…","zzZ… 오늘 아직 투표 안 한 꿈을 꿨어요…","zzZ… 今日はまだ投票してない夢を見たよ…"],
+["今天還沒投票，來投給你想聽的歌","You haven't voted today. Come vote for the song you want to hear.","오늘 아직 투표를 안 했어요. 듣고 싶은 곡에 투표해 주세요.","今日はまだ投票してないよ。聴きたい曲に投票しよう。"]
 ].forEach(a=>I18N.add(...a));
 {const E=(i,en,ko,ja)=>i===3?ja:i===2?ko:en,add=(re,f)=>{P.push([re,(...a)=>[f(1,...a),f(2,...a)]]);PJ.push([re,(...a)=>f(3,...a)])},pl=(n,a,b)=>n==="1"?a:b;
 add(/^離我的生日還有 (\d+) 天$/,(i,n)=>E(i,n+pl(n," day"," days")+" until my birthday","제 생일까지 "+n+"일","僕の誕生日まであと"+n+"日"));
