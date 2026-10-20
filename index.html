@@ -990,11 +990,11 @@ html,body{max-width:100%;overflow-x:hidden}
 .petc s{position:absolute;bottom:0;text-decoration:none;font-size:max(12px,calc(var(--ps)*.15));line-height:1;opacity:0;animation:petc 2.2s ease-out infinite}
 .petc s:nth-child(1){left:5%;color:#ff8fb3}.petc s:nth-child(2){left:27%;color:#ffd23f;animation-delay:.45s}.petc s:nth-child(3){left:50%;color:#4aa8ff;animation-delay:.9s}.petc s:nth-child(4){left:72%;color:#ffd23f;animation-delay:1.35s}.petc s:nth-child(5){left:90%;color:#ff8fb3;animation-delay:1.8s}
 @keyframes petc{0%{opacity:0;transform:translateY(6px) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-30px) rotate(40deg) scale(1.1)}}
-.petl{display:none;position:absolute;left:calc(var(--ps)*.02);bottom:calc(var(--ps)*.14);width:calc(var(--ps)*.12);height:calc(var(--ps)*.42);pointer-events:none;transform-origin:50% 100%;animation:petls .5s steps(2) infinite alternate}
+.petl{display:none;position:absolute;left:calc(var(--ps)*.32);bottom:calc(var(--ps)*.09);width:calc(var(--ps)*.11);height:calc(var(--ps)*.3);pointer-events:none;transform-origin:50% 100%;animation:petls .5s steps(2) infinite alternate}
 .pet.cc:not(.sl) .petl{display:block}
 .petl::before{content:"";position:absolute;left:0;top:0;width:100%;height:55%;box-sizing:border-box;background:var(--pur,#a56bff);border:2px solid var(--dark,#0b2a5b);box-shadow:0 0 calc(var(--ps)*.1) var(--pur,#a56bff);animation:petlg .6s steps(2) infinite alternate}
 .petl::after{content:"";position:absolute;left:30%;top:55%;width:40%;height:45%;background:var(--dark,#0b2a5b)}
-@keyframes petls{from{transform:rotate(-24deg)}to{transform:rotate(-6deg)}}
+@keyframes petls{from{transform:rotate(-16deg)}to{transform:rotate(-4deg)}}
 @keyframes petlg{to{filter:brightness(1.6);opacity:.7}}
 .pet{transition:transform .3s ease}
 .pet.hd:not(:focus-within){transform:translateX(calc(var(--ps)*.95))}
