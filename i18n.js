@@ -242,7 +242,13 @@ I18N.add("搜尋歌名","Search song title","곡 제목 검색","曲名を検索
 I18N.add("或貼上 YouTube 網址","Or paste a YouTube link","또는 YouTube 링크 붙여넣기","またはYouTubeのリンクを貼る");
 I18N.add("歌單裡還沒有附影片的歌","No songs with a video in the list yet","영상이 있는 곡이 아직 없어요","動画付きの曲はまだありません");
 I18N.add("已在名單","On the list","목록에 있음","リスト入り");
+I18N.add("我去過了","I’ve been here","다녀왔어요","行ってきた");
 I18N.add("今天已被提名","Already nominated today","오늘 이미 추천됨","本日推薦済み");
+I18N.add("今天可以投票了！","Voting is open today!","오늘 투표할 수 있어요!","今日は投票できます！");
+I18N.add("今天 08:00–23:59 開放投票（台北時間）","Open today 08:00–23:59 (Taipei time)","오늘 08:00–23:59 투표 가능 (타이베이 시간)","本日08:00〜23:59に投票できます（台北時間）");
+I18N.add("投給你最想聽的一首，得票最高的會是明天的背景音樂。","Vote for the song you most want to hear. The top song becomes tomorrow’s background music.","가장 듣고 싶은 곡에 투표하세요. 최다 득표 곡이 내일의 배경음악이 돼요.","一番聴きたい曲に投票してください。最多得票の曲が明日のBGMになります。");
+I18N.add("去投票","Go vote","투표하러 가기","投票する");
+I18N.add("稍後再說","Maybe later","나중에","あとで");
 I18N.add("再點確認","Tap to confirm","한 번 더 눌러 확인","もう一度タップ");
 I18N.add("再點一次確認，今天只能提名一次","Tap again to confirm; you can only nominate once a day","한 번 더 누르세요. 하루에 한 번만 추천할 수 있어요","もう一度タップして確定。推薦は1日1回です");
 I18N.add("今天播放：BTS 出道周年特別歌曲","Today's music: BTS debut anniversary special","오늘의 음악: BTS 데뷔 기념일 특별곡","今日の曲：BTSデビュー記念日スペシャル");
@@ -768,6 +774,24 @@ sel.onchange=()=>{L=sel.value;try{localStorage.setItem("lang",L)}catch(e){}pass(
 I18N.add("下一場","Next show","다음 공연","次の公演");I18N.add("🎉 就是今天","🎉 Today!","🎉 오늘이에요!","🎉 今日です！");
 I18N.add("歌單預測","Setlist Prediction","셋리스트 예측","セットリスト予想");I18N.add("猜猜這次會唱哪些歌","Guess which songs they'll perform","이번에 어떤 곡을 부를지 맞혀보세요","どの曲を歌うか予想しよう");I18N.add("開始猜","Start guessing","예측하기","予想する");I18N.add("送出預測","Submit prediction","예측 제출","予想を送信");I18N.add("更新預測","Update prediction","예측 수정","予想を更新");I18N.add("已送出預測","Prediction submitted","예측을 제출했어요","予想を送信しました");I18N.add("目前沒有進行中的預測活動","No prediction event right now","진행 중인 예측 이벤트가 없어요","現在開催中の予想はありません");I18N.add("暫時連不上預測服務，請稍後再試","Can't reach the prediction service. Please try again later.","예측 서비스에 연결할 수 없어요. 잠시 후 다시 시도해 주세요.","予想サービスに接続できません。しばらくしてからお試しください。");I18N.add("至少選 1 首","Pick at least 1 song","최소 1곡을 선택하세요","1曲以上選んでください");I18N.add("實際歌單","Actual setlist","실제 셋리스트","実際のセットリスト");I18N.add("你猜的","Your picks","내가 고른 곡","あなたの予想");I18N.add("排行榜","Leaderboard","순위","ランキング");I18N.add("大家最常猜的","Most picked","가장 많이 고른 곡","みんなの人気予想");I18N.add("搜尋歌名","Search songs","곡 검색","曲名を検索");I18N.add("暱稱（選填，排行榜會顯示）","Nickname (optional, shown on leaderboard)","닉네임(선택, 순위에 표시)","ニックネーム（任意・ランキングに表示）");I18N.add("沒有人參加","No participants","참가자가 없어요","参加者はいません");I18N.add("你沒有參加這場預測","You did not join this prediction","이 예측에 참여하지 않았어요","この予想には参加していません");
 I18N.add("加入","Add","추가","追加");I18N.add("還沒加入任何歌","No songs added yet","아직 추가한 곡이 없어요","まだ曲が追加されていません");I18N.add("這首已經加過了","Already added","이미 추가했어요","すでに追加済みです");I18N.add("請輸入歌名","Please enter a song title","곡 제목을 입력하세요","曲名を入力してください");
+/* 補翻：簡介、工具按鈕、排序選項、主辦／公告按鈕、倒數天數、生日頁提示、無障礙標籤 */
+[["ARIRANG場次的應援地圖，附日期分頁與打卡集章","Project map for the ARIRANG shows, with date tabs and check-in stamps","ARIRANG 공연별 응원 지도 (날짜 탭·체크인 스탬프 포함)","ARIRANG公演ごとの応援マップ（日付タブ・チェックインスタンプ付き）"],
+["依成員整理的生日與 BTS 出道周年應援","Birthday and BTS debut anniversary projects, organized by member","멤버별로 정리한 생일 및 BTS 데뷔 기념일 응원","メンバー別にまとめた誕生日とBTSデビュー記念日の応援"],
+["地圖總覽","Map","지도","マップ"],["路線規劃","Route planner","경로 계획","ルート計画"],["搜尋及排序","Search & sort","검색·정렬","検索・並べ替え"],
+["倒數時間最近（同天先台灣、再依名稱）","Soonest first (same day: Taiwan first, then by name)","임박순 (같은 날은 대만 먼저, 그다음 이름순)","開催が近い順（同日は台湾を先に、その後名前順）"],
+["主辦 Threads ↗","Host on Threads ↗","주최 Threads ↗","主催 Threads ↗"],["公告 ↗","Announcement ↗","공지 ↗","お知らせ ↗"],
+["付費報名入場","Paid registration entry","유료 신청 입장","有料申込制"],
+["應援地點地圖","Map of project locations","응원 장소 지도","応援スポットの地図"],["選擇場次","Choose a show","공연 선택","公演を選択"],["選擇類別","Choose a category","카테고리 선택","カテゴリーを選択"]
+].forEach(a=>I18N.add(...a));
+{const tx=(c,i)=>i===2?(JA[c]||c):((D[c]||[])[i]||c),dy=(n,i)=>i===2?n+"日":i===1?n+"일":n+(n==="1"?" day":" days");
+const add=(re,f)=>{P.push([re,(...a)=>[f(1,...a),f(2,...a)].slice(0,2)]);PJ.push([re,(...a)=>f(3,...a)])};
+const E=(i,en,ko,ja)=>i===3?ja:i===2?ko:en;
+add(/^(\d+) 天$/,(i,n)=>dy(n,i===3?2:i-1));
+add(/^生日 (\S+)，還有 (\d+) 天。看到應援資訊的話，歡迎提供給我們。$/,(i,d,n)=>E(i,"Birthday "+d+", "+n+" days to go. If you see a project, please let us know.","생일 "+d+", "+n+"일 남았어요. 응원 정보를 발견하면 알려 주세요.","誕生日 "+d+"、あと"+n+"日。応援情報を見かけたら教えてください。"));
+add(/^還沒有收錄 (.+) 的生日應援$/,(i,m)=>E(i,"No birthday projects for "+m+" yet","아직 "+m+"의 생일 응원이 등록되지 않았어요","まだ"+m+"の誕生日応援は登録されていません"));
+add(/^集章簿（(.+)） (\d+) \/ (\d+)$/,(i,c,a,b)=>{const t=tx(c,i===3?2:i-1);return E(i,"Stamp book ("+t+") "+a+" / "+b,"스탬프북 ("+t+") "+a+" / "+b,"スタンプ帳（"+t+"） "+a+" / "+b)});
+add(/^(.+)，出道周年還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the debut anniversary",m+", 데뷔 기념일까지 "+n+"일",m+"、デビュー記念日まであと"+n+"日"));
+add(/^(.+)，生日還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the birthday",m+", 생일까지 "+n+"일",m+"、誕生日まであと"+n+"日"));}
 document.querySelector(".hero").appendChild(sel);
 window.addEventListener("load",pass);pass();
 })();
