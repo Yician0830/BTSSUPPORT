@@ -960,25 +960,36 @@ html,body{max-width:100%;overflow-x:hidden}
 @keyframes egrun{to{transform:translateX(calc(100vw + 20px))}}
 @keyframes egbob{from{transform:translateY(0)}to{transform:translateY(-9px)}}
 @media(prefers-reduced-motion:reduce){.egr{animation-duration:6s}.egr img{animation:none}}
-.pet{--ps:64px;position:fixed;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45}
-@media(min-width:700px){.pet{--ps:96px}}
-@media(min-width:1100px){.pet{--ps:124px}}
+.pet{--ps:80px;position:fixed;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45}
+@media(min-width:700px){.pet{--ps:132px}}
+@media(min-width:1100px){.pet{--ps:172px}}
 .pet[hidden],.petb[hidden]{display:none}
 .petbtn{display:block;position:relative;width:calc(var(--ps)*.84);height:var(--ps);padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.petbtn img{position:absolute;right:calc(var(--ps)*-.58);bottom:0;width:var(--ps);height:var(--ps);object-fit:contain;transform:rotate(-10deg);transform-origin:100% 100%;filter:drop-shadow(0 2px 0 rgba(6,40,110,.35));transition:transform .32s cubic-bezier(.3,1.4,.5,1);animation:petpk 8s ease-in-out infinite}
-.pet.sl .petbtn img{filter:grayscale(1) brightness(.92);opacity:.85;transform:rotate(-6deg);animation:none}
-.pet.out .petbtn img{transform:translateX(calc(var(--ps)*-.64)) rotate(0);animation:none}
-.pet:not(.sl):not(.out) .petbtn:hover img{transform:translateX(calc(var(--ps)*-.23)) rotate(-4deg);animation:none}
+.petw{position:absolute;right:calc(var(--ps)*-.58);bottom:0;width:var(--ps);height:var(--ps);transform:rotate(-10deg);transform-origin:100% 100%;transition:transform .6s cubic-bezier(.45,0,.25,1)}
+.petw img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 0 rgba(6,40,110,.35))}
+.peth{position:absolute;left:calc(var(--ps)*-.16);top:calc(var(--ps)*.42);width:calc(var(--ps)*.3);height:calc(var(--ps)*.375);transform-origin:70% 95%;opacity:0;pointer-events:none;shape-rendering:crispEdges;animation:pethv 8s linear infinite,pethw .42s ease-in-out infinite alternate}
+.petbtn{transform-origin:100% 100%;animation:petpk 8s ease-in-out infinite}
+.pet.sl .petbtn{animation:none}
+.pet.sl .petw{transform:rotate(-6deg)}
+.pet.sl .petw img{filter:grayscale(1) brightness(.92);opacity:.85}
+.pet.sl .peth{display:none}
+.pet.out .petbtn{animation:none}
+.pet.out .petw{transform:translateX(calc(var(--ps)*-.64)) rotate(0);transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.pet.out .peth{opacity:1;animation:pethw .42s ease-in-out infinite alternate}
+.pet:not(.sl):not(.out) .petbtn:hover{animation:none}
+.pet:not(.sl):not(.out) .petbtn:hover .petw{transform:translateX(calc(var(--ps)*-.23)) rotate(-4deg)}
 .petz{display:none;position:absolute;right:calc(var(--ps)*.4);top:calc(var(--ps)*-.04);width:20px;height:20px;pointer-events:none;font-style:normal}
 .pet.sl:not(.out) .petz{display:block}
 .petz s{position:absolute;left:0;bottom:0;text-decoration:none;font:900 max(11px,calc(var(--ps)*.18))/1 var(--px,inherit);color:var(--dark);opacity:0;animation:petz 2.4s ease-out infinite}
 .petz s:nth-child(2){animation-delay:.8s}.petz s:nth-child(3){animation-delay:1.6s}
 .petb{position:absolute;right:10px;bottom:calc(100% + 6px);width:max-content;max-width:min(210px,calc(100vw - 32px));box-sizing:border-box;padding:8px 11px;border:2px solid var(--dark);border-radius:10px;background:var(--card);color:var(--ink);font-size:13px;font-weight:800;line-height:1.45;box-shadow:3px 3px 0 var(--dark)}
 @media(min-width:700px){.petb{font-size:15px;max-width:280px;padding:10px 14px}}
-.petb.lk{cursor:pointer}.petb.lk::after{content:" ›"}
-@keyframes petpk{0%,66%,100%{transform:translateX(0) rotate(-10deg)}74%,88%{transform:translateX(calc(var(--ps)*-.27)) rotate(-4deg)}}
+.petb{transition:opacity .25s}.petb.fd{opacity:0}.petb.lk{cursor:pointer}.petb.lk::after{content:" ›"}
+@keyframes petpk{0%,64%,100%{transform:translateX(0) rotate(0)}71%{transform:translateX(calc(var(--ps)*-.27)) rotate(7deg)}78%{transform:translateX(calc(var(--ps)*-.27)) rotate(-6deg)}85%{transform:translateX(calc(var(--ps)*-.27)) rotate(6deg)}92%{transform:translateX(calc(var(--ps)*-.27)) rotate(0)}}
+@keyframes pethv{0%,69%{opacity:0}71%,92%{opacity:1}94%,100%{opacity:0}}
+@keyframes pethw{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
 @keyframes petz{0%{opacity:0;transform:translate(0,4px)}25%{opacity:1}100%{opacity:0;transform:translate(-8px,-12px)}}
-@media(prefers-reduced-motion:reduce){.petbtn img,.petz s{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.petbtn,.petw,.peth,.petz s{animation:none!important}.petw{transition:none!important}}
 </style>
 <div id="foot" hidden>
 <button class="back" id="fphome" data-go="home">← 回首頁</button>
@@ -2239,8 +2250,8 @@ const FPC={"首爾":"韓國","釜山":"韓國","濟州":"韓國","仁川":"韓�
 function fpCtOf(d){return d.country||FPC[d.city]||"其他"}const FPV=(()=>{try{return JSON.parse(localStorage.getItem("fp-visited")||"{}")||{}}catch(e){return{}}})();
 /* 首頁桌寵（用 setTimeout 等 FPAV 小人表在下方賦值後才啟動）：右下角站一位成員小人。今天抽過幸運籤＝醒著（今天抽到的成員），還沒抽＝灰階睡著（昨天的成員，不會劇透今天的籤）。點小人會說一句話，有連結的話點對話框可前往 */
 setTimeout(function(){try{const h=document.querySelector(".hero h1");if(!h||h.textContent.trim()!=="BTS 應援地圖")return;const F=typeof FPAV!=="undefined"?FPAV:null;if(!F)return;
-const p=document.createElement("div");p.className="pet";p.hidden=true;p.innerHTML='<div class="petb" role="status" aria-live="polite" hidden></div><button type="button" class="petbtn"><img alt="" decoding="async"><i class="petz" aria-hidden="true"><s>z</s><s>z</s><s>Z</s></i></button>';document.body.appendChild(p);
-const bt=p.querySelector(".petb"),bn=p.querySelector(".petbtn"),im=bn.querySelector("img");let cur="",aw=null,k=0,tm=0,act=null;
+const p=document.createElement("div");p.className="pet";p.hidden=true;p.innerHTML='<div class="petb" role="status" aria-live="polite" hidden></div><button type="button" class="petbtn"><span class="petw"><img alt="" decoding="async"><svg class="peth" viewBox="0 0 8 10" aria-hidden="true"><rect x="0" y="5" width="1" height="1" fill="#0b2a5b"/><rect x="0" y="6" width="1" height="1" fill="#0b2a5b"/><rect x="1" y="4" width="1" height="1" fill="#0b2a5b"/><rect x="1" y="7" width="1" height="1" fill="#0b2a5b"/><rect x="2" y="2" width="1" height="1" fill="#0b2a5b"/><rect x="2" y="3" width="1" height="1" fill="#0b2a5b"/><rect x="2" y="4" width="1" height="1" fill="#0b2a5b"/><rect x="2" y="5" width="1" height="1" fill="#0b2a5b"/><rect x="2" y="8" width="1" height="1" fill="#0b2a5b"/><rect x="3" y="1" width="1" height="1" fill="#0b2a5b"/><rect x="3" y="9" width="1" height="1" fill="#0b2a5b"/><rect x="4" y="0" width="1" height="1" fill="#0b2a5b"/><rect x="4" y="9" width="1" height="1" fill="#0b2a5b"/><rect x="5" y="0" width="1" height="1" fill="#0b2a5b"/><rect x="5" y="9" width="1" height="1" fill="#0b2a5b"/><rect x="6" y="1" width="1" height="1" fill="#0b2a5b"/><rect x="6" y="8" width="1" height="1" fill="#0b2a5b"/><rect x="7" y="2" width="1" height="1" fill="#0b2a5b"/><rect x="7" y="3" width="1" height="1" fill="#0b2a5b"/><rect x="7" y="4" width="1" height="1" fill="#0b2a5b"/><rect x="7" y="5" width="1" height="1" fill="#0b2a5b"/><rect x="7" y="6" width="1" height="1" fill="#0b2a5b"/><rect x="7" y="7" width="1" height="1" fill="#0b2a5b"/><rect x="1" y="5" width="1" height="1" fill="#ffe3c4"/><rect x="1" y="6" width="1" height="1" fill="#ffe3c4"/><rect x="2" y="6" width="1" height="1" fill="#ffe3c4"/><rect x="2" y="7" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="2" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="3" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="4" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="5" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="6" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="7" width="1" height="1" fill="#ffe3c4"/><rect x="3" y="8" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="1" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="2" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="3" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="4" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="5" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="6" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="7" width="1" height="1" fill="#ffe3c4"/><rect x="4" y="8" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="1" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="2" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="3" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="4" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="5" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="6" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="7" width="1" height="1" fill="#ffe3c4"/><rect x="5" y="8" width="1" height="1" fill="#ffe3c4"/><rect x="6" y="2" width="1" height="1" fill="#ffe3c4"/><rect x="6" y="3" width="1" height="1" fill="#ffe3c4"/><rect x="6" y="4" width="1" height="1" fill="#ffe3c4"/><rect x="6" y="5" width="1" height="1" fill="#ffe3c4"/><rect x="6" y="6" width="1" height="1" fill="#ffe3c4"/><rect x="6" y="7" width="1" height="1" fill="#ffe3c4"/></svg></span><i class="petz" aria-hidden="true"><s>z</s><s>z</s><s>Z</s></i></button>';document.body.appendChild(p);
+const bt=p.querySelector(".petb"),bn=p.querySelector(".petbtn"),im=bn.querySelector("img");let cur="",aw=null,k=0,tm=0,ht=0,act=null;
 const day=()=>{const t=new Date();t.setHours(0,0,0,0);return t},ld=()=>{try{return JSON.parse(localStorage.getItem("ftn-st")||"{}")||{}}catch(e){return{}}};
 const memFor=d=>{const M=MEMBERS.filter(m=>m[0]!=="BTS"),b=ftBd(d);return b?b.m:M[fth(ftKey(d)+"m")%M.length][0]};
 const awake=()=>{const d=new Date();return ld().last===d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
@@ -2251,8 +2262,8 @@ const s=ld();if(s.n>=2)o.push({t:"你已經連續抽籤 "+s.n+" 天了，明天�
 try{const lv=DATA.filter(d=>d.sec!=="birthday"&&stat(d)==="進行中").length;if(lv)o.push({t:"現在有 "+lv+" 個巡演應援進行中，去打卡吧",go:".entry.tour"});const bl=DATA.filter(d=>d.sec==="birthday"&&stat(d)==="進行中").length;if(bl)o.push({t:"有 "+bl+" 個生日應援正在進行",go:".entry.bd"})}catch(e){}
 const dc=Math.round((new Date(2026,10,19)-t)/864e5);if(dc>0&&dc<=60)o.push({t:"離演唱會開演還有 "+dc+" 天"});else if(dc===0)o.push({t:"今天就是演唱會！記得喝水、顧好嗓子"});
 if(!o.length)o.push({t:"今天也一起加油"});return o}
-function hide(){bt.hidden=true;p.classList.remove("out")}
-function say(x,go){p.classList.add("out");bt.textContent=x;bt.classList.toggle("lk",!!go);if(go){bt.tabIndex=0;bt.setAttribute("role","button")}else{bt.removeAttribute("tabindex");bt.setAttribute("role","status")}bt.hidden=false;clearTimeout(tm);tm=setTimeout(hide,5000)}
+function hide(){p.classList.remove("out");if(bt.hidden)return;bt.classList.add("fd");clearTimeout(ht);ht=setTimeout(()=>{bt.hidden=true;bt.classList.remove("fd")},260)}
+function say(x,go){clearTimeout(ht);bt.classList.remove("fd");p.classList.add("out");bt.textContent=x;bt.classList.toggle("lk",!!go);if(go){bt.tabIndex=0;bt.setAttribute("role","button")}else{bt.removeAttribute("tabindex");bt.setAttribute("role","status")}bt.hidden=false;clearTimeout(tm);tm=setTimeout(hide,5000)}
 bn.addEventListener("click",()=>{refresh();
 if(!aw){act=()=>{const b=document.getElementById("ftnBtn");if(b)b.click()};say("zzZ… 今天還沒抽幸運籤，點這裡叫醒我",1);return}
 const L=msgs(),x=L[k++%L.length],sel=x.go;act=sel?()=>{const b=document.querySelector(sel);if(b)b.click()}:null;say(x.t,sel)});
