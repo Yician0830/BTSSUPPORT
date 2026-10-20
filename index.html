@@ -988,18 +988,6 @@ html,body{max-width:100%;overflow-x:hidden}
 .gd{display:flex;align-items:flex-end;gap:8px;margin:0 0 10px}.gd img{display:block;width:40px;height:40px;flex:none;object-fit:contain}.gd i{flex:none;width:40px;text-align:center;font:normal 24px/1 sans-serif}
 .gd b{position:relative;padding:6px 10px;border:2px solid var(--dark);border-radius:10px;background:var(--card);color:var(--ink);font-size:12.5px;font-weight:800;line-height:1.45;box-shadow:2px 2px 0 var(--dark)}
 .gd b::before{content:"";position:absolute;left:-7px;bottom:8px;width:10px;height:10px;background:var(--card);border-left:2px solid var(--dark);border-bottom:2px solid var(--dark);transform:rotate(45deg)}
-/* 巡演路線小人：城市按鈕下方一條路線，依各城 showDays 判斷已演完／進行中／未開始。小人是今天的幸運成員，站在最近一站，下次來訪若站點變了會走過去（記在 localStorage 的 tp-pos）。節點寬度改 .tpt 的 --w */
-.tp{margin:0 0 14px}.tp[hidden]{display:none}.tps{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 4px 4px;scrollbar-width:none}.tps::-webkit-scrollbar{display:none}
-.tpt{--w:84px;position:relative;display:flex;width:max-content;padding-top:46px}
-.tpt::before,.tpt::after{content:"";position:absolute;top:54px;left:calc(var(--w)/2);height:4px;border-radius:2px}
-.tpt::before{right:calc(var(--w)/2);background:var(--line)}.tpt::after{width:calc(var(--w)*var(--p,0));background:var(--ok);transition:width 1.6s ease-in-out}
-.tpn{position:relative;z-index:1;width:var(--w);flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:none;padding:0 2px;cursor:pointer;color:var(--ink);font:inherit}
-.tpn i{width:18px;height:18px;border-radius:50%;border:3px solid var(--dark);background:var(--card);box-sizing:border-box}.tpn.done i{background:var(--ok)}.tpn.now i{background:var(--pur,#a56bff);box-shadow:0 0 0 4px rgba(165,107,255,.3)}
-.tpn b{font-size:12px;font-weight:900;line-height:1.3}.tpn small{font-size:11px;color:var(--sub)}.tpn[aria-pressed="true"] b{text-decoration:underline}
-.tpp{position:absolute;z-index:2;top:2px;left:calc(var(--w)*var(--q,0) + var(--w)/2 - 20px);width:40px;height:40px;object-fit:contain;pointer-events:none;transition:left 1.6s ease-in-out;animation:egbob .5s steps(2,jump-none) infinite alternate;--h:-4px}
-.tpe{position:absolute;z-index:2;top:8px;left:calc(var(--w)*var(--q,0) + var(--w)/2 - 12px);font:normal 24px/1 sans-serif;transition:left 1.6s ease-in-out}
-.tpl{margin:6px 0 0;padding:6px 10px;border:2px solid var(--dark);border-radius:10px;background:var(--card);font-size:13px;font-weight:800;box-shadow:2px 2px 0 var(--dark);width:max-content;max-width:100%;box-sizing:border-box}
-@media(prefers-reduced-motion:reduce){.tpp,.tpe,.tpt::after{animation:none;transition:none}}
 @media(prefers-reduced-motion:reduce){.hrt{display:none}.egr{animation-duration:6s}.egr img,.egg.pose .egr img,.egh,.egg.pose .egh{animation:none}.egf{display:none}}
 .pet{--ps:80px;position:fixed;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45}
 @media(min-width:700px){.pet{--ps:96px}}
@@ -1228,7 +1216,7 @@ function head(){
 document.body.dataset.sec=sec;
 const home=sec==="home",tour=sec==="tour",bd=sec==="birthday";
 $("#homeBox").hidden=!home;$("#notesBox").hidden=!home;{const an=$("#ann");if(an){if(!home)an.hidden=true;else try{annR()}catch(e){}}}$("#app").hidden=home||sec==="songs"||sec==="foot";$("#songs").hidden=sec!=="songs";$("#foot").hidden=sec!=="foot";$("#favBtn").hidden=home||sec==="songs"||sec==="foot";
-$("#cities").hidden=!tour;{const tp=document.getElementById("tpath");if(tp&&!tour)tp.hidden=true}$("#days").hidden=!tour;$("#members").hidden=!bd;$("#regions").hidden=!bd;$("#nextBd").hidden=!bd;
+$("#cities").hidden=!tour;$("#days").hidden=!tour;$("#members").hidden=!bd;$("#regions").hidden=!bd;$("#nextBd").hidden=!bd;
 const h=document.querySelector(".hero h1");
 if(home){$("#intro").textContent="";h.textContent="BTS 應援地圖";$("#scr").textContent="ARMY FAN PROJECTS";$("#show").innerHTML="<span>選擇你想看的應援</span>";document.title="BTS 應援地圖";return}
 if(sec==="foot"){h.textContent="藝人同款足跡";$("#scr").textContent="FOOTPRINTS";$("#intro").textContent="整理成員去過的店家與景點，去過就按「我去過了」留下紀錄";$("#show").innerHTML="<span>成員去過的店家與景點</span>";document.title="藝人同款足跡｜BTS 應援地圖";try{fpR()}catch(e){}return}
@@ -1621,22 +1609,7 @@ else return;
 if(tg.includes("須配合店家低銷"))o.push("要配合店家低銷，先看一下菜單");else if(tg.includes("免費"))o.push("免費，直接去就好");
 if(o.length<2){const tm=timeTxt(d);if(tm&&tm!=="—")o.push("記得確認時間")}
 const g=document.createElement("div");g.className="gd";g.setAttribute("aria-hidden","true");g.innerHTML=(F[d.member]?`<img src="${F[d.member]}" alt="" decoding="async">`:"<i>💜</i>")+"<b>"+esc(o.slice(0,2).join("，"))+"</b>";bx.before(g)})}catch(e){}}
-/* 巡演路線小人：見上方 .tp 的 CSS 註解 */
-function tpathR(){try{let el=document.getElementById("tpath");if(sec!=="tour"){if(el)el.hidden=true;return}
-const F=typeof FPAV!=="undefined"?FPAV:{},t=today0(),K=Object.keys(CITIES);
-const P=K.map(k=>{const c=CITIES[k]||{},a=c.y?(c.showDays||[]).map(x=>String(x).split("/").map(Number)).filter(q=>q.length===2&&q[0]&&q[1]).map(q=>new Date(c.y,q[0]-1,q[1])).sort((u,v)=>u-v):[];return{k,n:c.name,f:a[0],l:a[a.length-1],a}});
-if(!P.length)return;
-if(!el){el=document.createElement("div");el.id="tpath";el.className="tp";$("#cities").after(el)}el.hidden=false;
-let pos=-1;P.forEach((x,i)=>{if(x.f&&x.f<=t)pos=i});const cur=P[Math.max(pos,0)],nx=P.find(x=>x.f&&x.f>t);pos=Math.max(pos,0);
-const dd=x=>(x.getMonth()+1)+"/"+x.getDate(),dn=d=>Math.round((d-t)/864e5);
-const lb=cur.f&&cur.f<=t&&t<=cur.l?(cur.a.some(x=>+x===+t)?"今天開演！":"巡演進行中："+cur.n):nx?"下一站 "+nx.n+"，"+dn(nx.f)+" 天後":P.some(x=>x.f)?"這輪巡演結束了，謝謝大家":"場次日期公布後，小人就出發";
-let m="";try{const d0=new Date(),M=MEMBERS.filter(x=>x[0]!=="BTS"),bd=ftBd(d0);m=bd?bd.m:M[fth(ftKey(d0)+"m")%M.length][0]}catch(e){}
-let pv=NaN;try{pv=+localStorage.getItem("tp-pos")}catch(e){}if(!(pv>=0&&pv<P.length))pv=pos;
-el.innerHTML='<div class="tps"><div class="tpt" style="--q:'+pv+';--p:'+pv+'">'+P.map(x=>`<button type="button" class="tpn ${x.l&&x.l<t?"done":x.f&&x.f<=t?"now":""}" data-city="${esc(x.k)}" aria-pressed="${x.k===city}"><i></i><b>${esc(x.n)}</b><small>${x.f?(dd(x.f)===dd(x.l)?dd(x.f):dd(x.f)+"–"+dd(x.l)):"待公布"}</small></button>`).join("")+(F[m]?`<img class="tpp" src="${F[m]}" alt="" decoding="async">`:'<i class="tpe">💜</i>')+'</div></div><p class="tpl" role="status">'+esc(lb)+'</p>';
-const tt=el.querySelector(".tpt"),sc=el.querySelector(".tps");sc.scrollLeft=Math.max(0,84*pos-sc.clientWidth/2+42);
-if(pv!==pos)requestAnimationFrame(()=>requestAnimationFrame(()=>{tt.style.setProperty("--q",pos);tt.style.setProperty("--p",pos)}));
-try{localStorage.setItem("tp-pos",pos)}catch(e){}}catch(e){}}
-function afterRender(live){lastLive=live;guideR();tpathR();if(!$("#mapBox").hidden)drawMap();routeR()}
+function afterRender(live){lastLive=live;guideR();if(!$("#mapBox").hidden)drawMap();routeR()}
 /* 從網址還原篩選條件：?section=birthday&member=Jimin&region=香港&type=應援咖啡廳（巡演為 city、day、type） */
 try{const q=new URLSearchParams(location.search);
 if(sec==="birthday"){const m=q.get("member");mem=m==="all"?"全部":(m&&MEMBERS.some(x=>x[0]===m)?m:nearestMem());const r=q.get("region");if(r)reg=r}
