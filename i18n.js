@@ -792,6 +792,22 @@ add(/^還沒有收錄 (.+) 的生日應援$/,(i,m)=>E(i,"No birthday projects fo
 add(/^集章簿（(.+)） (\d+) \/ (\d+)$/,(i,c,a,b)=>{const t=tx(c,i===3?2:i-1);return E(i,"Stamp book ("+t+") "+a+" / "+b,"스탬프북 ("+t+") "+a+" / "+b,"スタンプ帳（"+t+"） "+a+" / "+b)});
 add(/^(.+)，出道周年還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the debut anniversary",m+", 데뷔 기념일까지 "+n+"일",m+"、デビュー記念日まであと"+n+"日"));
 add(/^(.+)，生日還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the birthday",m+", 생일까지 "+n+"일",m+"、誕生日まであと"+n+"日"));}
+/* 首頁桌寵（探頭小人）說的話、無障礙標籤，以及 KTV 唱段小人的標籤。固定句用 I18N.add，帶數字或成員名的句子用比對規則 */
+[["今天是我的生日！去生日應援看看大家準備了什麼","It's my birthday today! Check the birthday projects to see what everyone prepared.","오늘은 제 생일이에요! 생일 응원에서 다들 무엇을 준비했는지 확인해 보세요.","今日は僕の誕生日！誕生日応援でみんなが何を準備したか見てみてね。"],
+["今天就是演唱會！記得喝水、顧好嗓子","It's concert day! Drink water and take care of your voice.","오늘이 콘서트예요! 물 많이 마시고 목 관리하세요.","今日はコンサート！水分補給と喉のケアを忘れずに。"],
+["今天也一起加油","Let's do our best today, too.","오늘도 같이 힘내요.","今日も一緒にがんばろう。"],
+["zzZ… 今天還沒抽幸運籤，點這裡叫醒我","zzZ… You haven't done today's Lucky Draw yet. Tap here to wake me up.","zzZ… 오늘 행운 뽑기를 아직 안 했어요. 여기를 눌러 저를 깨워 주세요.","zzZ… 今日のおみくじはまだだよ。ここをタップして起こして。"]
+].forEach(a=>I18N.add(...a));
+{const E=(i,en,ko,ja)=>i===3?ja:i===2?ko:en,add=(re,f)=>{P.push([re,(...a)=>[f(1,...a),f(2,...a)]]);PJ.push([re,(...a)=>f(3,...a)])},pl=(n,a,b)=>n==="1"?a:b;
+add(/^離我的生日還有 (\d+) 天$/,(i,n)=>E(i,n+pl(n," day"," days")+" until my birthday","제 생일까지 "+n+"일","僕の誕生日まであと"+n+"日"));
+add(/^離我的生日還有 (\d+) 天，去生日應援看看$/,(i,n)=>E(i,n+pl(n," day"," days")+" until my birthday. Check out the birthday projects!","제 생일까지 "+n+"일. 생일 응원도 확인해 보세요!","僕の誕生日まであと"+n+"日。誕生日応援も見てみてね！"));
+add(/^你已經連續抽籤 (\d+) 天了，明天也要來$/,(i,n)=>E(i,"You've drawn "+n+" days in a row. Come back tomorrow!",n+"일 연속으로 뽑았어요. 내일도 오세요!",n+"日連続でおみくじを引いたよ。明日も来てね！"));
+add(/^現在有 (\d+) 個巡演應援進行中，去打卡吧$/,(i,n)=>E(i,n+pl(n," tour project is"," tour projects are")+" live right now. Go check in!","지금 진행 중인 투어 응원이 "+n+"개 있어요. 체크인하러 가요!","いまツアー応援が"+n+"件開催中。チェックインしに行こう！"));
+add(/^有 (\d+) 個生日應援正在進行$/,(i,n)=>E(i,n+pl(n," birthday project is"," birthday projects are")+" happening now","생일 응원 "+n+"개가 진행 중이에요","誕生日応援が"+n+"件開催中だよ"));
+add(/^離演唱會開演還有 (\d+) 天$/,(i,n)=>E(i,n+pl(n," day"," days")+" until the concert","콘서트 개막까지 "+n+"일","コンサート開演まであと"+n+"日"));
+add(/^(\S+) 小人，點一下聽他說話$/,(i,m)=>E(i,m+" avatar. Tap to hear them talk",m+" 캐릭터. 눌러서 이야기 듣기",m+"のミニキャラ。タップすると話します"));
+add(/^睡著的 (\S+) 小人，點一下$/,(i,m)=>E(i,"Sleeping "+m+" avatar. Tap",  "잠든 "+m+" 캐릭터. 눌러 보세요","眠っている"+m+"のミニキャラ。タップ"));
+add(/^演唱：(.+)$/,(i,m)=>E(i,"Singing: "+m.replace(/、/g,", "),"부르는 멤버: "+m,"歌唱："+m))}
 document.querySelector(".hero").appendChild(sel);
 window.addEventListener("load",pass);pass();
 })();
