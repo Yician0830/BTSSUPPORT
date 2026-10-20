@@ -798,7 +798,15 @@ add(/^(.+)，生日還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the birthd
 ["七人大遊行","Parade of Seven","일곱 명의 행진","七人パレード"],
 ["連點首頁標題 7 次，讓七位小人排隊跑過畫面","Tap the home title 7 times to send all seven avatars running across the screen","홈 제목을 7번 연속으로 눌러 일곱 명의 캐릭터가 화면을 달리게 하기","ホームのタイトルを7回連続タップして、七人のミニキャラを走らせる"],
 ["今天也一起加油","Let's do our best today, too.","오늘도 같이 힘내요.","今日も一緒にがんばろう。"],
-["zzZ… 今天還沒抽幸運籤，點這裡叫醒我","zzZ… You haven't done today's Lucky Draw yet. Tap here to wake me up.","zzZ… 오늘 행운 뽑기를 아직 안 했어요. 여기를 눌러 저를 깨워 주세요.","zzZ… 今日のおみくじはまだだよ。ここをタップして起こして。"]
+["zzZ… 今天還沒抽幸運籤，點這裡叫醒我","zzZ… You haven't done today's Lucky Draw yet. Tap here to wake me up.","zzZ… 오늘 행운 뽑기를 아직 안 했어요. 여기를 눌러 저를 깨워 주세요.","zzZ… 今日のおみくじはまだだよ。ここをタップして起こして。"],
+["早安！今天也要元氣滿滿","Good morning! Let's have an energetic day.","좋은 아침이에요! 오늘도 기운 넘치게 보내요.","おはよう！今日も元気いっぱいでいこう。"],
+["午安，記得吃飯喔","Good afternoon! Don't forget to eat.","점심 시간이에요, 밥 꼭 챙겨 드세요.","こんにちは、ごはんを食べるのを忘れずにね。"],
+["下午了，喝口水休息一下","It's the afternoon. Grab some water and take a break.","오후예요, 물 한 모금 마시고 잠깐 쉬어요.","午後だね、水を飲んでひと休みしよう。"],
+["晚上好，今天辛苦了","Good evening! You've worked hard today.","좋은 저녁이에요, 오늘도 수고했어요.","こんばんは、今日もお疲れさま。"],
+["這麼晚了，早點睡，明天再來","It's so late. Get some sleep and come back tomorrow.","너무 늦었어요, 일찍 자고 내일 또 와요.","もうこんな時間だよ、早く寝てまた明日来てね。"],
+["暈了啦…別戳了","I'm dizzy… stop poking me!","어지러워요… 그만 콕콕 찔러요!","目が回るよ…つつかないで！"],
+["明天就是演唱會了！今晚早點睡，螢光棒記得帶","The concert is tomorrow! Get to bed early tonight and don't forget your lightstick.","내일이 콘서트예요! 오늘은 일찍 자고 응원봉 꼭 챙기세요.","いよいよ明日がコンサート！今夜は早めに寝て、ペンライトを忘れずにね。"],
+["今天要見面了！出門前再檢查一次票和螢光棒","We finally meet today! Double-check your ticket and lightstick before you leave.","오늘 드디어 만나요! 나가기 전에 티켓과 응원봉을 다시 확인하세요.","今日はついに会える日！出かける前にチケットとペンライトをもう一度確認してね。"]
 ].forEach(a=>I18N.add(...a));
 {const E=(i,en,ko,ja)=>i===3?ja:i===2?ko:en,add=(re,f)=>{P.push([re,(...a)=>[f(1,...a),f(2,...a)]]);PJ.push([re,(...a)=>f(3,...a)])},pl=(n,a,b)=>n==="1"?a:b;
 add(/^離我的生日還有 (\d+) 天$/,(i,n)=>E(i,n+pl(n," day"," days")+" until my birthday","제 생일까지 "+n+"일","僕の誕生日まであと"+n+"日"));
