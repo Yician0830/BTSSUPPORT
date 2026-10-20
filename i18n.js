@@ -795,6 +795,8 @@ add(/^(.+)，生日還有 (\d+) 天$/,(i,m,n)=>E(i,m+", "+n+" days to the birthd
 /* 首頁桌寵（探頭小人）說的話、無障礙標籤，以及 KTV 唱段小人的標籤。固定句用 I18N.add，帶數字或成員名的句子用比對規則 */
 [["今天是我的生日！去生日應援看看大家準備了什麼","It's my birthday today! Check the birthday projects to see what everyone prepared.","오늘은 제 생일이에요! 생일 응원에서 다들 무엇을 준비했는지 확인해 보세요.","今日は僕の誕生日！誕生日応援でみんなが何を準備したか見てみてね。"],
 ["今天就是演唱會！記得喝水、顧好嗓子","It's concert day! Drink water and take care of your voice.","오늘이 콘서트예요! 물 많이 마시고 목 관리하세요.","今日はコンサート！水分補給と喉のケアを忘れずに。"],
+["七人大遊行","Parade of Seven","일곱 명의 행진","七人パレード"],
+["連點首頁標題 7 次，讓七位小人排隊跑過畫面","Tap the home title 7 times to send all seven avatars running across the screen","홈 제목을 7번 연속으로 눌러 일곱 명의 캐릭터가 화면을 달리게 하기","ホームのタイトルを7回連続タップして、七人のミニキャラを走らせる"],
 ["今天也一起加油","Let's do our best today, too.","오늘도 같이 힘내요.","今日も一緒にがんばろう。"],
 ["zzZ… 今天還沒抽幸運籤，點這裡叫醒我","zzZ… You haven't done today's Lucky Draw yet. Tap here to wake me up.","zzZ… 오늘 행운 뽑기를 아직 안 했어요. 여기를 눌러 저를 깨워 주세요.","zzZ… 今日のおみくじはまだだよ。ここをタップして起こして。"]
 ].forEach(a=>I18N.add(...a));
