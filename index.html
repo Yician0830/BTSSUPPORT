@@ -960,20 +960,23 @@ html,body{max-width:100%;overflow-x:hidden}
 @keyframes egrun{to{transform:translateX(calc(100vw + 20px))}}
 @keyframes egbob{from{transform:translateY(0)}to{transform:translateY(-9px)}}
 @media(prefers-reduced-motion:reduce){.egr{animation-duration:6s}.egr img{animation:none}}
-.pet{position:fixed;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45}
+.pet{--ps:64px;position:fixed;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45}
+@media(min-width:700px){.pet{--ps:96px}}
+@media(min-width:1100px){.pet{--ps:124px}}
 .pet[hidden],.petb[hidden]{display:none}
-.petbtn{display:block;position:relative;width:44px;height:52px;padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.petbtn img{position:absolute;right:-30px;bottom:0;width:52px;height:52px;object-fit:contain;transform:rotate(-10deg);transform-origin:100% 100%;filter:drop-shadow(0 2px 0 rgba(6,40,110,.35));transition:transform .32s cubic-bezier(.3,1.4,.5,1);animation:petpk 8s ease-in-out infinite}
-.pet.sl .petbtn img{filter:grayscale(1) brightness(.92);opacity:.8;transform:translateX(8px) rotate(-6deg);animation:none}
-.pet.out .petbtn img{transform:translateX(-34px) rotate(0);animation:none}
-.pet:not(.sl):not(.out) .petbtn:hover img{transform:translateX(-12px) rotate(-4deg);animation:none}
-.petz{display:none;position:absolute;right:20px;top:-2px;width:20px;height:20px;pointer-events:none;font-style:normal}
+.petbtn{display:block;position:relative;width:calc(var(--ps)*.84);height:var(--ps);padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.petbtn img{position:absolute;right:calc(var(--ps)*-.58);bottom:0;width:var(--ps);height:var(--ps);object-fit:contain;transform:rotate(-10deg);transform-origin:100% 100%;filter:drop-shadow(0 2px 0 rgba(6,40,110,.35));transition:transform .32s cubic-bezier(.3,1.4,.5,1);animation:petpk 8s ease-in-out infinite}
+.pet.sl .petbtn img{filter:grayscale(1) brightness(.92);opacity:.85;transform:rotate(-6deg);animation:none}
+.pet.out .petbtn img{transform:translateX(calc(var(--ps)*-.64)) rotate(0);animation:none}
+.pet:not(.sl):not(.out) .petbtn:hover img{transform:translateX(calc(var(--ps)*-.23)) rotate(-4deg);animation:none}
+.petz{display:none;position:absolute;right:calc(var(--ps)*.4);top:calc(var(--ps)*-.04);width:20px;height:20px;pointer-events:none;font-style:normal}
 .pet.sl:not(.out) .petz{display:block}
-.petz s{position:absolute;left:0;bottom:0;text-decoration:none;font:900 11px/1 var(--px,inherit);color:var(--dark);opacity:0;animation:petz 2.4s ease-out infinite}
+.petz s{position:absolute;left:0;bottom:0;text-decoration:none;font:900 max(11px,calc(var(--ps)*.18))/1 var(--px,inherit);color:var(--dark);opacity:0;animation:petz 2.4s ease-out infinite}
 .petz s:nth-child(2){animation-delay:.8s}.petz s:nth-child(3){animation-delay:1.6s}
 .petb{position:absolute;right:10px;bottom:calc(100% + 6px);width:max-content;max-width:min(210px,calc(100vw - 32px));box-sizing:border-box;padding:8px 11px;border:2px solid var(--dark);border-radius:10px;background:var(--card);color:var(--ink);font-size:13px;font-weight:800;line-height:1.45;box-shadow:3px 3px 0 var(--dark)}
+@media(min-width:700px){.petb{font-size:15px;max-width:280px;padding:10px 14px}}
 .petb.lk{cursor:pointer}.petb.lk::after{content:" ›"}
-@keyframes petpk{0%,66%,100%{transform:translateX(0) rotate(-10deg)}74%,88%{transform:translateX(-14px) rotate(-4deg)}}
+@keyframes petpk{0%,66%,100%{transform:translateX(0) rotate(-10deg)}74%,88%{transform:translateX(calc(var(--ps)*-.27)) rotate(-4deg)}}
 @keyframes petz{0%{opacity:0;transform:translate(0,4px)}25%{opacity:1}100%{opacity:0;transform:translate(-8px,-12px)}}
 @media(prefers-reduced-motion:reduce){.petbtn img,.petz s{animation:none!important}}
 </style>
