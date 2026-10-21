@@ -66,6 +66,9 @@
     "星星海報：今天的運勢，抽籤才知道。": ["Star poster: you'll only know today's fortune by drawing one.", "별 포스터: 오늘의 운세는 뽑아 봐야 알아요.", "星のポスター：今日の運勢は、引いてからのお楽しみ。"],
     "手燈亮起來了 💜": ["The light stick is glowing 💜", "응원봉이 환하게 켜졌어요 💜", "ペンライトが光ったよ 💜"],
     "全部": ["All", "전체", "すべて"],
+    "在小窩裡散步，再點一下換下一位。": ["Taking a stroll around the room — tap again for the next one.", "방 안을 산책 중이에요. 한 번 더 누르면 다음 멤버예요.", "お部屋を散歩中。もう一度タップすると次のメンバーに交代します。"],
+    "本命一直都在小窩裡。": ["Your bias is always here in the room.", "최애는 언제나 방에 있어요.", "本命はいつもお部屋にいます。"],
+    "散步的小人": ["Little walker", "산책하는 꼬마", "お散歩ミニキャラ"],
     "關閉": ["Close", "닫기", "閉じる"]
   };
   var LI = { en: 0, ko: 1, ja: 2 };
@@ -209,6 +212,20 @@
   var PD = { wall: "#d4e9ff", wl: "#b9dcf5", fl: "#d9a877", fll: "#b98757", bs: "#ffffff" };
   var PN = { wall: "#25346b", wl: "#1d2a55", fl: "#6b4c3a", fll: "#533a2c", bs: "#8aa0d8" };
 
+  /* ===== 在房間裡走來走去的小人：左右來回散步，點一下換下一位成員（用網站的成員頭像） ===== */
+  var WN = ["RM", "Jin", "SUGA", "j-hope", "Jimin", "V", "Jungkook"];
+  /* 成員頭像路徑：優先用網站本來的 FPAV（app.js 裡定義的），讀不到才用這裡的備用路徑 */
+  var AVF = { "Jungkook": "bts/av-1.png", "Jimin": "bts/av-5.png", "V": "bts/av-4.png", "j-hope": "bts/av-6.png", "SUGA": "bts/av-7.png", "Jin": "bts/av-2.png", "RM": "bts/av-3.png" };
+  function avUrl(n) {
+    try { if (typeof FPAV !== "undefined" && FPAV && FPAV[n]) return FPAV[n]; } catch (e) {}
+    return AVF[n];
+  }
+  function walker(S) {
+    var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
+    return '<g transform="translate(0,78)"><g class="rmwx"><g class="rmwf"><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
+      R(0, 0, 14, 14, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="14" height="14" preserveAspectRatio="xMidYMax meet"/></g></g></g></g></g>';
+  }
+
   function scene(S, full) {
     var P = S.night ? PN : PD, i, s = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="我的 ARMY 小窩">';
     s += R(0, 0, 160, 66, P.wall);
@@ -223,7 +240,7 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + "</g></g>";
     });
-    return s + "</svg>";
+    return s + walker(S) + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -272,7 +289,7 @@
   /* ===== 樣式 ===== */
   var css = document.createElement("style");
   css.textContent =
-    ".entry.room{border-left:8px solid #19b5c9}" +
+    ".entry.room{border-left:10px solid #19b5c9}" +
     ".entry.room.lock{border-left-color:var(--line);filter:grayscale(1);opacity:.65;cursor:not-allowed}.entry.room.lock:hover,.entry.room.lock:active{transform:none;box-shadow:4px 4px 0 var(--line)}.entry.room.lock::after{display:none}" +
     "#rmo{position:fixed;inset:0;z-index:998;display:grid;place-items:center;padding:12px;background:rgba(6,24,58,.72)}" +
     ".rmc{width:100%;max-width:600px;max-height:94vh;max-height:94dvh;display:flex;flex-direction:column;overflow:hidden;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:14px}" +
@@ -295,7 +312,12 @@
     ".rmn{font:inherit;font-size:12px;font-weight:800;padding:4px 8px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}" +
     ".rmf{display:flex;gap:6px;margin-bottom:8px}.rmf button{font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmf button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
     ".rml{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rmk{border:2px solid var(--line);background:var(--box);padding:8px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}.rmk.on{border-color:var(--dark)}.rmk svg{width:100%;max-width:64px;height:48px;overflow:visible}.rmk svg.lk{opacity:.4;filter:grayscale(1) brightness(.55)}.rmk b{font-size:13px}.rmk small{font-size:11px;color:var(--sub);line-height:1.4}" +
-    ".rmx{margin-top:10px;align-self:flex-end}";
+    ".rmx{margin-top:10px;align-self:flex-end}" +
+    ".rmwk{cursor:pointer}.rmwk:focus-visible{outline:2px solid var(--focus)}" +
+    ".rmwx{transform:translateX(20px);animation:rmwalk 16s linear infinite}@keyframes rmwalk{0%{transform:translateX(20px)}50%{transform:translateX(120px)}100%{transform:translateX(20px)}}" +
+    ".rmwf{transform-box:fill-box;transform-origin:50% 50%;animation:rmflip 16s steps(1,end) infinite}@keyframes rmflip{0%{transform:scaleX(1)}50%{transform:scaleX(-1)}100%{transform:scaleX(-1)}}" +
+    ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-1.5px)}100%{transform:translateY(0)}}" +
+    "@media(prefers-reduced-motion:reduce){.rmwx,.rmwf,.rmwb{animation:none}.rmwx{transform:translateX(66px)}}";
   document.head.appendChild(css);
 
   /* ===== 開啟專區 ===== */
@@ -304,7 +326,14 @@
     if (document.getElementById("rmo")) return;
     opener = document.activeElement;
     var bs = getBs(), L = bs.L, st = bs.st;
-    var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all" };
+    var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false };
+    /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
+    (function () {
+      var b = null;
+      for (var i = 0; i < L.length; i++) if (L[i].id === "h-bias") b = L[i];
+      var ix = b && st["h-bias"] ? WN.indexOf(b.bias) : -1;
+      if (ix >= 0) { S.mem = ix; S.bias = true; }
+    })();
     var nameOf = function (it) { for (var i = 0; i < L.length; i++) if (L[i].id === it.b) return L[i]; return null; };
     var o = document.createElement("div");
     o.id = "rmo";
@@ -369,6 +398,20 @@
       if (cap) cap.innerHTML = capFor(it);
     }
 
+    function walk(g) {
+      if (S.bias) {
+        var cb = document.getElementById("rmcap");
+        if (cb) cb.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t("本命一直都在小窩裡。"));
+        return;
+      }
+      S.mem = (S.mem + 1) % WN.length;
+      var im = g.querySelector("image");
+      if (im) im.setAttribute("href", avUrl(WN[S.mem]));
+      g.setAttribute("aria-label", WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人"));
+      var cap = document.getElementById("rmcap");
+      if (cap) cap.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t("在小窩裡散步，再點一下換下一位。"));
+    }
+
     var close = function () {
       o.remove();
       document.removeEventListener("keydown", ky);
@@ -385,13 +428,15 @@
       var ft = t.closest && t.closest("[data-f]");
       if (ft) { S.flt = ft.getAttribute("data-f"); draw(); return; }
       if (t.closest && t.closest("#rmdn")) { S.night = !S.night; S.lamp = S.night; draw(); return; }
+      var w = t.closest && t.closest(".rmwk");
+      if (w) { walk(w); return; }
       var g = t.closest && t.closest(".rmi");
       if (g) hit(g);
     });
     o.addEventListener("keydown", function (ev) {
       if (ev.key !== "Enter" && ev.key !== " ") return;
-      var g = ev.target.closest && ev.target.closest(".rmi");
-      if (g) { ev.preventDefault(); hit(g); }
+      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk");
+      if (g) { ev.preventDefault(); if (g.classList.contains("rmwk")) walk(g); else hit(g); }
     });
     document.addEventListener("keydown", ky);
     draw();

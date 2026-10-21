@@ -146,7 +146,7 @@ addH("h-bd","準時祝福","在成員生日（或 BTS 出道周年）當天，�
 {const mg=MEMBERS.map(m=>m[0]).filter(n=>dn2.some(d=>d.sec==="birthday"&&d.member===n));L.push({id:"h-mem",fam:"h",name:"全員到齊",desc:"BTS 和七位成員的應援都打過卡",k:mg.length,n:MEMBERS.length,hid:mg.length?0:1,mg})}
 addH("h-sea","跨海應援","台灣和海外的應援都打過卡",dn2.some(tw)&&dn2.some(d=>!tw(d)));
 const byMem={};dn2.forEach(d=>{if(d.sec==="birthday"&&d.member&&d.member!=="BTS")byMem[d.member]=(byMem[d.member]||0)+1});
-addH("h-bias","偏心警告","同一位成員的應援打卡 5 個以上",Object.values(byMem).some(v=>v>=5));
+{const bm=Object.keys(byMem).sort((a,b)=>byMem[b]-byMem[a])[0],ok=!!bm&&byMem[bm]>=5;L.push({id:"h-bias",fam:"h",name:"偏心警告",desc:"同一位成員的應援打卡 5 個以上",k:ok?1:0,n:1,hid:1,bias:ok?bm:""})}
 /* 打卡／收藏類徽章都跟著現況走（取消打卡或取消收藏就收回）；連抽、熱心站民、常駐站民的資料本身不會因取消打卡而消失，仍保留 */
 {const S0=bgRd(),kp=(id,ok)=>ok,iso=s=>{const m=String(s||"").match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);return m?m[1]+"-"+m[2].padStart(2,"0")+"-"+m[3].padStart(2,"0"):""},md=s=>{const m=iso(s);return m?(+m.slice(5,7))+"/"+(+m.slice(8,10)):""},onDay=(d,s)=>{const v=iso(s);if(!v)return false;const t=(ddT[d.id]||"").slice(0,10);return t?t===v:dt(d)===md(s)};
 addH("h-open","開幕第一人","在應援開始的第一天打卡",kp("h-open",dn2.some(d=>onDay(d,d.start))));
