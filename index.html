@@ -2595,8 +2595,23 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 .ppb{width:100%;max-width:980px;max-height:100%;display:flex;flex-direction:column;gap:10px}
 .pptop{display:flex;justify-content:flex-end}
 .pptop .btn{min-height:36px;padding:4px 14px}
-.ppbook{position:relative;display:flex;min-height:min(470px,70vh);flex:1 1 auto;min-width:0;background:#eef7ff;border:4px solid var(--navy);box-shadow:0 0 0 3px #ffd23f,8px 8px 0 4px var(--blue-edge);color:#0b2a5b;overflow:hidden}
-.ppbook.fl{animation:ppfl .28s steps(5) both}
+.ppbook{position:relative;display:flex;height:min(800px,calc(100vh - 150px));height:min(800px,calc(100dvh - 150px));min-height:300px;flex:none;min-width:0;background:#eef7ff;border:4px solid var(--navy);box-shadow:0 0 0 3px #ffd23f,8px 8px 0 4px var(--blue-edge);color:#0b2a5b;overflow:hidden}
+.ppbook{perspective:2400px}
+.ppleaf{position:absolute;top:0;bottom:0;z-index:5;transform-style:preserve-3d;will-change:transform;animation-duration:.6s;animation-timing-function:cubic-bezier(.45,.05,.3,1);animation-fill-mode:both;pointer-events:none}
+.ppleaf.r{right:0;width:50%;transform-origin:left center;animation-name:ppflN}
+.ppleaf.l{left:0;width:50%;transform-origin:right center;animation-name:ppflP}
+.ppleaf.m{left:0;right:0;transform-origin:left center}
+.ppleaf.m.n{animation-name:ppflM}
+.ppleaf.m.p{animation-name:ppflMp}
+.ppf{position:absolute;inset:0;display:flex;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.ppf>.ppp{flex:1 1 0}
+.ppf.b{transform:rotateY(180deg)}
+.ppf::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(8,40,100,.28),transparent 45%,rgba(8,40,100,.12));opacity:0;animation:ppsh .6s ease-in-out both}
+@keyframes ppsh{0%,100%{opacity:0}50%{opacity:1}}
+@keyframes ppflN{from{transform:rotateY(0)}to{transform:rotateY(-180deg)}}
+@keyframes ppflP{from{transform:rotateY(0)}to{transform:rotateY(180deg)}}
+@keyframes ppflM{from{transform:rotateY(0)}to{transform:rotateY(-95deg)}}
+@keyframes ppflMp{from{transform:rotateY(-95deg)}to{transform:rotateY(0)}}
 @keyframes ppfl{from{opacity:.2;transform:translateX(var(--d,14px))}to{opacity:1;transform:none}}
 .ppp{position:relative;flex:1 1 0;min-width:0;padding:18px 18px 12px;overflow:auto;display:flex;flex-direction:column;gap:10px;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(20,105,214,.08) 27px 28px),#eef7ff}
 .ppp:first-child:not(:last-child){box-shadow:inset -22px 0 18px -14px rgba(8,67,154,.42)}
@@ -2614,6 +2629,7 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 .ppc::after{content:"?";position:absolute;right:8px;bottom:-6px;font-family:var(--px);font-size:54px;line-height:1;color:rgba(20,105,214,.13);pointer-events:none}
 .ppc.on{border:2px solid var(--accent);background:rgba(255,255,255,.78);box-shadow:3px 3px 0 rgba(224,36,94,.25)}
 .ppc.on::after{content:none}
+.ppc.ic::after{content:attr(data-ic);font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:44px;bottom:2px;right:8px;opacity:.32;filter:grayscale(1)}
 .ppn{font-style:normal;font-family:var(--px);font-size:13px;letter-spacing:.08em;color:#7ea6d4}
 .ppc.on .ppn{color:var(--accent)}
 .ppc b{font-size:14px;line-height:1.3;color:#4a6a96;word-break:break-word}
@@ -2640,30 +2656,49 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 .ppnav .btn:disabled{opacity:.4}
 .ppnav span{font-size:13px;font-weight:800;min-width:70px;text-align:center;font-family:var(--px);letter-spacing:.1em}
 @media(max-width:899px){.ppp+.ppp{display:none}.ppp{padding:16px 14px 10px}.ppbook:has(.ppp+.ppp)::after{content:none}.ppp:first-child:not(:last-child){box-shadow:none}.ppcov h2{font-size:30px}}
-@media(prefers-reduced-motion:no-preference){.ppst{animation:fpstp .3s steps(4) both}}
+@media(prefers-reduced-motion:no-preference){.ppst{animation:none}}
+/* 印章美化：圓形雙環印泥章 */
+.ppc .ppst{right:6px;bottom:6px;box-sizing:border-box;width:74px;height:74px;padding:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;text-align:center;font-family:var(--px);letter-spacing:0;color:#d6204f;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.55) 0 8%,transparent 9%),radial-gradient(rgba(214,32,79,.14) 1px,transparent 1.5px) 0 0/5px 5px,rgba(255,235,241,.55);border:3px solid #d6204f;outline:0;box-shadow:inset 0 0 0 3px rgba(255,255,255,.0),inset 0 0 0 4px #d6204f,0 0 0 1px rgba(214,32,79,.25);mix-blend-mode:multiply;opacity:.92;-webkit-mask-image:radial-gradient(circle at 70% 80%,transparent 0 3%,#000 4%);mask-image:radial-gradient(circle at 70% 80%,transparent 0 3%,#000 4%)}
+.ppst i{font-style:normal;font-size:8px;letter-spacing:.14em;line-height:1;opacity:.85}
+.ppst b{font-size:13px;line-height:1.1;color:#d6204f!important;white-space:nowrap}
+.ppst u{text-decoration:none;font-size:9px;line-height:1;margin-top:1px}
+@keyframes ppstamp{0%{transform:rotate(var(--r,-8deg)) scale(2.2);opacity:0}70%{transform:rotate(var(--r,-8deg)) scale(.92);opacity:1}100%{transform:rotate(var(--r,-8deg)) scale(1)}}
+.ppc[data-pid]{cursor:pointer;transition:background .15s,border-color .15s}
+.ppc[data-pid]:hover,.ppc[data-pid]:focus-visible{border-color:var(--accent);background:rgba(255,255,255,.7);outline:0}
+.ppc[data-pid]:hover::before{content:"點一下蓋章";position:absolute;right:8px;top:8px;font-size:10px;color:var(--accent);letter-spacing:.08em}
+@keyframes ppslam{0%{transform:rotate(var(--r,-8deg)) scale(3);opacity:0}55%{transform:rotate(var(--r,-8deg)) scale(.88);opacity:1}75%{transform:rotate(var(--r,-8deg)) scale(1.06)}100%{transform:rotate(var(--r,-8deg)) scale(1)}}
+@keyframes ppshk{0%,100%{transform:none}20%{transform:translate(2px,3px)}40%{transform:translate(-2px,1px)}60%{transform:translate(1px,-1px)}}
+@keyframes ppink{0%{opacity:.7;transform:scale(.4)}100%{opacity:0;transform:scale(1.7)}}
+@media(prefers-reduced-motion:no-preference){.ppc.slam{animation:ppshk .3s .2s both}.ppc.slam .ppst{animation:ppslam .42s cubic-bezier(.3,.7,.4,1) both}.ppc.slam::before{content:"";position:absolute;right:6px;bottom:6px;width:74px;height:74px;border-radius:50%;border:3px solid var(--accent);opacity:0;animation:ppink .6s .18s ease-out both;pointer-events:none}}
+
 @media(prefers-reduced-motion:reduce){.ppbook.fl{animation:none}}
 </style>
 <script>
 (function(){
-var idx=0,ov=null,pages=[],last=null;
+var idx=0,ov=null,pages=[],last=null,shown=-1,shownN=0,flT=null;
 function e(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function wide(){return window.matchMedia&&matchMedia("(min-width:900px)").matches}
 function hash(s){var h=0;s=String(s);for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
 var STAR='<svg viewBox="0 0 9 9" shape-rendering="crispEdges" aria-hidden="true" fill="#ffd23f"><rect x="4" y="0" width="1" height="2"/><rect x="3" y="2" width="3" height="1"/><rect x="0" y="3" width="9" height="1"/><rect x="1" y="4" width="7" height="1"/><rect x="2" y="5" width="5" height="1"/><rect x="2" y="6" width="2" height="1"/><rect x="5" y="6" width="2" height="1"/><rect x="1" y="7" width="2" height="1"/><rect x="6" y="7" width="2" height="1"/></svg>';
 function bar(v,n){var p=n?Math.round(v/n*100):0;return '<div class="ppbar'+(n&&v===n?' full':'')+'" role="progressbar" aria-valuemin="0" aria-valuemax="'+n+'" aria-valuenow="'+v+'"><i style="width:'+p+'%"></i></div>'}
+function icon(c){c=String(c||"");var m=[[/咖啡|cafe|coffee/i,"☕"],[/茶/,"🍵"],[/燒肉|烤肉|肉|BBQ/i,"🥩"],[/酒|bar|pub/i,"🍻"],[/甜點|蛋糕|麵包|烘焙|冰/,"🍰"],[/拉麵|麵/,"🍜"],[/餐|食堂|美食|小吃|料理/,"🍴"],[/景點|公園|風景|觀光|海|山/,"🏞️"],[/購物|商店|選物|服飾|店/,"🛍️"],[/演唱會|舞台|劇場|展|博物|美術/,"🎫"],[/住宿|飯店|旅館|民宿/,"🛏️"]];for(var i=0;i<m.length;i++)if(m[i][0].test(c))return m[i][1];return c?"📍":""}
 function build(){
-  var L=fpL(),by={};
+  var L=fpL(),by={},only=(typeof fpCt==="string"&&fpCt)?fpCt:"";
+  if(only){var L2=L.filter(function(d){return fpCtOf(d)===only});if(L2.length)L=L2;else only=""}
   L.forEach(function(d){var c=fpCtOf(d);(by[c]=by[c]||[]).push(d)});
   var cs=Object.keys(by).sort(function(a,b){return by[b].length-by[a].length||a.localeCompare(b)});
   var tv=L.filter(function(d){return FPV[d.id]}).length;
   var flag=function(c){return (typeof FPX!=="undefined"&&FPX[c])||(typeof FPF!=="undefined"&&FPF[c])||"📍"};
-  var out=[{cls:"ppcov",html:'<div class="ppsub">BTS</div>'+STAR+'<h2>足跡護照</h2><div class="big">'+tv+' / '+L.length+'</div>'+bar(tv,L.length)+'<div class="ppsub">已蓋章的足跡</div><div class="ppsub">'+cs.length+' 個國家・翻頁看每個國家的章</div>'}];
+  var out=[{cls:"ppcov",html:'<div class="ppsub">BTS</div>'+STAR+'<h2>'+(only?e(only)+' ':'')+'足跡護照</h2><div class="big">'+tv+' / '+L.length+'</div>'+bar(tv,L.length)+'<div class="ppsub">已蓋章的足跡</div>'+(only?'':'<div class="ppsub">'+cs.length+' 個國家・翻頁看每個國家的章</div>')}];
   cs.forEach(function(c){
-    var a=by[c],v=a.filter(function(d){return FPV[d.id]}).length,full=v===a.length;
-    out.push({cls:"",html:'<div class="pphd"><h2>'+flag(c)+e(c)+'</h2><div class="ppsub">'+v+' / '+a.length+' 個足跡</div>'+bar(v,a.length)+'</div><div class="ppg">'+a.map(function(d,k){
-      var x=FPV[d.id],ms=fpMs(d);
-      return '<div class="ppc'+(x?' on':'')+'"><i class="ppn">No.'+String(k+1).padStart(2,"0")+'</i><b>'+e(String(d.title||"").replace(/\s*[(（].*$/,""))+'</b><small>'+e(d.city||"")+'</small><div class="ppms">'+ms.map(function(m){return '<em>'+e(m)+'</em>'}).join("")+'</div>'+(x?'<span class="ppst" style="--r:'+((hash(d.id)%13)-6)+'deg">'+e(bgDs(x)||"✔")+'</span>':'')+'</div>'
-    }).join("")+'</div>'+(full?'<div class="ppdone">★ '+e(c)+' 完成 ★</div>':'')});
+    var a=by[c],v=a.filter(function(d){return FPV[d.id]}).length,full=v===a.length,PER=wide()?10:8,np=Math.max(1,Math.ceil(a.length/PER));
+    for(var pg=0;pg<np;pg++){
+      var part=a.slice(pg*PER,pg*PER+PER);
+      out.push({cls:"",html:'<div class="pphd"><h2>'+flag(c)+e(c)+(np>1?' <small style="font-size:14px;opacity:.7">'+(pg+1)+'/'+np+'</small>':'')+'</h2><div class="ppsub">'+v+' / '+a.length+' 個足跡</div>'+bar(v,a.length)+'</div><div class="ppg">'+part.map(function(d,j){
+        var k=pg*PER+j,x=FPV[d.id],ms=fpMs(d);
+        var ic=x?"":icon(d.cat);return '<div class="ppc'+(x?' on':'')+(ic?' ic':'')+'"'+(x?' data-pid-done="'+e(d.id)+'"':' data-pid="'+e(d.id)+'" tabindex="0" role="button" aria-label="蓋章：'+e(d.title||"")+'"')+(ic?' data-ic="'+ic+'"':'')+'><i class="ppn">No.'+String(k+1).padStart(2,"0")+'</i><b>'+e(String(d.title||"").replace(/\s*[(（].*$/,""))+'</b><small>'+e(d.city||"")+'</small><div class="ppms">'+ms.map(function(m){return '<em>'+e(m)+'</em>'}).join("")+'</div>'+(x?'<span class="ppst" style="--r:'+((hash(d.id)%17)-8)+'deg"><i>VISITED</i><b>'+e(bgDs(x)||"✔")+'</b></span>':'')+'</div>'
+      }).join("")+'</div>'+(full&&pg===np-1?'<div class="ppdone">★ '+e(c)+' 完成 ★</div>':'')});
+    }
   });
   return out;
 }
@@ -2671,26 +2706,48 @@ function draw(dir){
   var n=wide()?2:1;
   if(n===2&&idx%2===1)idx-=1;
   if(idx<0)idx=0;if(idx>=pages.length)idx=pages.length-1;
-  var show=pages.slice(idx,idx+n),bk=ov.querySelector(".ppbook");
-  bk.innerHTML=show.map(function(p,i){return '<section class="ppp '+p.cls+'">'+p.html+(p.cls?'':'<div class="ppfoot">— '+(idx+i+1)+' —</div>')+'</section>'}).join("");
-  if(dir){bk.style.setProperty("--d",(dir>0?14:-14)+"px");bk.classList.remove("fl");void bk.offsetWidth;bk.classList.add("fl")}
+  var bk=ov.querySelector(".ppbook");
+  function sec(i){var p=pages[i];return p?'<section class="ppp '+p.cls+'">'+p.html+(p.cls?'':'<div class="ppfoot">— '+(i+1)+' —</div>')+'</section>':'<section class="ppp"></section>'}
+  var final='';for(var q=0;q<n&&idx+q<pages.length;q++)final+=sec(idx+q);
+  clearTimeout(flT);
+  var old=shown,reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if(dir&&old>=0&&old!==idx&&shownN===n&&!reduce){
+    var html;
+    if(n===2){
+      if(dir>0)html=sec(old)+sec(idx+1)+'<div class="ppleaf r"><div class="ppf">'+sec(old+1)+'</div><div class="ppf b">'+sec(idx)+'</div></div>';
+      else html=sec(idx)+sec(old+1)+'<div class="ppleaf l"><div class="ppf">'+sec(old)+'</div><div class="ppf b">'+sec(idx+1)+'</div></div>';
+    }else{
+      if(dir>0)html=sec(idx)+'<div class="ppleaf m n"><div class="ppf">'+sec(old)+'</div></div>';
+      else html=sec(old)+'<div class="ppleaf m p"><div class="ppf">'+sec(idx)+'</div></div>';
+    }
+    bk.innerHTML=html;
+    flT=setTimeout(function(){bk.innerHTML=final},620);
+  }else bk.innerHTML=final;
+  shown=idx;shownN=n;
   var end=Math.min(idx+n,pages.length);
   ov.querySelector(".ppnav span").textContent=(idx+1)+(n>1&&end>idx+1?"–"+end:"")+" / "+pages.length;
   ov.querySelector("[data-pp=prev]").disabled=idx<=0;
   ov.querySelector("[data-pp=next]").disabled=idx+n>=pages.length;
 }
 function step(k){idx+=k*(wide()?2:1);draw(k)}
-function close(){if(!ov)return;ov.remove();ov=null;document.removeEventListener("keydown",key);window.removeEventListener("resize",rs);if(last&&last.focus)last.focus()}
-function key(ev){if(ev.key==="Escape")close();else if(ev.key==="ArrowLeft")step(-1);else if(ev.key==="ArrowRight")step(1)}
-function rs(){if(ov)draw()}
+function close(){if(!ov)return;clearTimeout(flT);shown=-1;ov.remove();ov=null;document.removeEventListener("keydown",key);window.removeEventListener("resize",rs);if(last&&last.focus)last.focus()}
+function stamp(id){
+  if(typeof FPV==="undefined"||FPV[id])return;
+  var n=new Date();FPV[id]=n.getFullYear()+"/"+(n.getMonth()+1)+"/"+n.getDate();
+  try{fpSave()}catch(x){}try{badgeSync()}catch(x){}try{toast("已記錄這個足跡")}catch(x){}try{fpR()}catch(x){}
+  pages=build();draw();
+  var c=ov&&ov.querySelector('.ppc[data-pid-done="'+id+'"]');if(c)c.classList.add("slam");
+}
+function key(ev){if((ev.key==="Enter"||ev.key===" ")&&ev.target&&ev.target.matches&&ev.target.matches(".ppc[data-pid]")){ev.preventDefault();stamp(ev.target.dataset.pid);return}if(ev.key==="Escape")close();else if(ev.key==="ArrowLeft")step(-1);else if(ev.key==="ArrowRight")step(1)}
+var lastW=null;function rs(){if(!ov)return;var w=wide();if(lastW!==null&&w!==lastW){pages=build();idx=0}lastW=w;draw()}
 function open(){
   if(ov)return;
-  last=document.activeElement;pages=build();idx=0;
+  last=document.activeElement;pages=build();idx=0;lastW=wide();
   ov=document.createElement("div");ov.className="ppo";
   ov.innerHTML='<div class="ppb" role="dialog" aria-modal="true" aria-label="足跡護照"><div class="pptop"><button type="button" class="btn" data-pp="x">✕ 關閉</button></div><div class="ppbook"></div><div class="ppnav"><button type="button" class="btn main" data-pp="prev">‹ 上一頁</button><span></span><button type="button" class="btn main" data-pp="next">下一頁 ›</button></div></div>';
   document.body.appendChild(ov);
   var sx=null;
-  ov.addEventListener("click",function(ev){var b=ev.target.closest("[data-pp]");if(b){var k=b.dataset.pp;if(k==="x")close();else if(k==="prev")step(-1);else step(1);return}if(ev.target===ov)close()});
+  ov.addEventListener("click",function(ev){var c=ev.target.closest(".ppc[data-pid]");if(c){stamp(c.dataset.pid);return}var b=ev.target.closest("[data-pp]");if(b){var k=b.dataset.pp;if(k==="x")close();else if(k==="prev")step(-1);else step(1);return}if(ev.target===ov)close()});
   ov.addEventListener("touchstart",function(ev){sx=ev.touches[0].clientX},{passive:true});
   ov.addEventListener("touchend",function(ev){if(sx==null)return;var dx=ev.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50)step(dx<0?1:-1)},{passive:true});
   document.addEventListener("keydown",key);window.addEventListener("resize",rs);
