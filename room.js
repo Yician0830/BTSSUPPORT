@@ -5,6 +5,9 @@
   "use strict";
   if (window.__roomLoaded) return;
   window.__roomLoaded = true;
+  /* 網址的 ?preview= 在載入當下就先記下來（網站之後如果改掉網址列，預覽也不會消失） */
+  var PV = "";
+  try { PV = new URLSearchParams(location.search).get("preview") || ""; } catch (e) {}
 
   var R = function (x, y, w, h, c, o) {
     return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"' + (o ? ' opacity="' + o + '"' : "") + "/>";
@@ -106,9 +109,10 @@
   var ROOM_PUBLIC = false;
   var ROOM_OPEN = ROOM_PUBLIC || (function () {
     try {
-      var v = new URLSearchParams(location.search).get("preview");
+      var v = PV;
       if (v === "room") localStorage.setItem("room-preview", "1");
       else if (v === "off") localStorage.removeItem("room-preview");
+      if (v === "613" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -179,14 +183,11 @@
   function isAnniv() {
     var d = new Date();
     if (d.getMonth() === 5 && d.getDate() === 13) return true;
-    try { return new URLSearchParams(location.search).get("preview") === "613"; } catch (e) { return false; }
+    return PV === "613";
   }
   /* 今天生日的成員（MEMBERS 是 app.js 的成員生日表）；預覽：網址加 ?preview=bd-Jimin */
   function bdName() {
-    try {
-      var pv = new URLSearchParams(location.search).get("preview") || "";
-      if (pv.indexOf("bd-") === 0 && WN.indexOf(pv.slice(3)) >= 0) return pv.slice(3);
-    } catch (e) {}
+    if (PV.indexOf("bd-") === 0 && WN.indexOf(PV.slice(3)) >= 0) return PV.slice(3);
     for (var i = 0; i < WN.length; i++) if (bdToday(WN[i])) return WN[i];
     return "";
   }
