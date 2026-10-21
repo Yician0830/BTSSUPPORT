@@ -857,7 +857,15 @@ add(/^演唱：(.+)$/,(i,m)=>E(i,"Singing: "+m.replace(/、/g,", "),"부르는 �
 add(/^(\d+) \/ (\d+) 個足跡$/,(i,n,m)=>E(i,n+" / "+m+pl(m," footprint"," footprints"),n+" / "+m+"개 발자취",n+" / "+m+"か所の足あと"));
 add(/^(\d+) 個國家・翻頁看每個國家的章$/,(i,n)=>E(i,n+pl(n," country"," countries")+" · flip through each country's stamps",n+"개국 · 페이지를 넘겨 나라별 도장을 확인하세요",n+"か国・ページをめくって各国のスタンプを見よう"));
 add(/^★ (.+) 完成 ★$/,(i,c)=>{const t=i===3?(JA[c]||c):((D[c]||[])[i-1]||c);return E(i,"★ "+t+" complete ★","★ "+t+" 완료 ★","★ "+t+" コンプリート ★")});
-add(/^(.+) 的足跡進度$/,(i,m)=>E(i,m+"'s footprint progress",m+"의 발자취 진행도",m+"の足あと進捗"));}
+add(/^(.+) 的足跡進度$/,(i,m)=>E(i,m+"'s footprint progress",m+"의 발자취 진행도",m+"の足あと進捗"));
+I18N.add("本頁為非官方的應援資訊整理與分享。內容與主辦單位立場不代表本站，依照各主辦公告為主。","Unofficial fan-made listing. Organizers' statements do not represent this site. Please go by each organizer's announcements.","비공식 팬 정보 정리 페이지입니다. 주최측의 입장은 본 사이트와 무관하며, 각 주최측의 공지를 기준으로 해 주세요.","このページは非公式のファン有志による応援情報のまとめです。主催者の見解は当サイトを代表するものではありません。各主催者のお知らせを基準にしてください。");
+add(/^進行中 (\d+) 個$/,(i,n)=>E(i,n+" ongoing","진행 중 "+n+"개","開催中 "+n+"件"));
+add(/^即將開始 (\d+) 個$/,(i,n)=>E(i,n+" starting soon","시작 예정 "+n+"개","まもなく開始 "+n+"件"));
+add(/^🎉 今天是出道周年$/,i=>E(i,"🎉 Today is the debut anniversary","🎉 오늘은 데뷔 기념일","🎉 今日はデビュー記念日"));
+add(/^BTS 出道周年，還有 (\d+) 天$/,(i,n)=>E(i,"BTS debut anniversary — "+n+" days to go","BTS 데뷔 기념일 — "+n+"일 남음","BTSデビュー記念日まであと"+n+"日"));
+add(/^🎂 今天是 (.+) 的生日$/,(i,m)=>E(i,"🎂 Today is "+m+"'s birthday","🎂 오늘은 "+m+"의 생일","🎂 今日は"+m+"の誕生日"));
+add(/^下一位：(.+)，還有 (\d+) 天$/,(i,m,n)=>E(i,"Next: "+m+" — "+n+" days to go","다음: "+m+" — "+n+"일 남음","次："+m+" — あと"+n+"日"));
+add(/^去過 (\d+) \/ (\d+)$/,(i,a,b)=>E(i,"Visited "+a+" / "+b,"다녀온 곳 "+a+" / "+b,"行った "+a+" / "+b));}
 document.querySelector(".hero").appendChild(sel);
 window.addEventListener("load",pass);pass();
 })();

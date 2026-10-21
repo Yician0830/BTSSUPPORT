@@ -743,7 +743,7 @@ function ftKey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+":
 function ftPick(d){if(!SONGS.length)return null;let P=SONGS.filter(ftOK);if(!P.length)P=SONGS.slice();const id=ftId();P.sort((a,b)=>fth(id+a.t)-fth(id+b.t));return P[Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)%P.length]}
 function ftSync(){const b=document.getElementById("ftnBtn");if(!b)return;let seen=false;try{const d=new Date(),st=JSON.parse(localStorage.getItem("ftn-st")||"{}")||{};seen=st.last===d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}catch(e){}const et=b.querySelector(".et");if(!et)return;let t=et.querySelector(".ftbd");if(!t){t=document.createElement("em");et.appendChild(t)}t.className="ftbd "+(seen?"done":"todo");t.textContent=seen?"✓ 今日已抽":"● 今天還沒抽"}
 /* 首頁入口卡片的即時資訊小標：巡演（進行中／即將開始幾個）、生日（下一位幾天後）、足跡（去過幾個，開放後才顯示） */
-function entBadge(sel,txt){const et=document.querySelector(sel+" .et");if(!et)return;let b=et.querySelector(".entbd");if(!txt){if(b)b.remove();return}if(!b){b=document.createElement("em");b.className="ftbd done entbd";et.appendChild(b)}if(b.textContent!==txt)b.textContent=txt}
+function entBadge(sel,txt){const et=document.querySelector(sel+" .et");if(!et)return;let b=et.querySelector(".entbd");if(!txt){if(b)b.remove();return}if(!b){b=document.createElement("em");b.className="ftbd done entbd";et.appendChild(b)}if(b.dataset.raw!==txt){b.dataset.raw=txt;b.textContent=txt;try{window.I18N&&I18N.refresh()}catch(e){}}}
 function entSync(){
 if(sec!=="home")return;
 try{const T=DATA.filter(d=>(d.sec||"tour")==="tour"),on=T.filter(d=>stat(d)==="進行中").length,sn=T.filter(d=>stat(d)==="即將開始").length;entBadge(".entry.tour",on?"進行中 "+on+" 個":sn?"即將開始 "+sn+" 個":"")}catch(e){}
