@@ -69,7 +69,20 @@
     "在小窩裡散步，再點一下換下一位。": ["Taking a stroll around the room — tap again for the next one.", "방 안을 산책 중이에요. 한 번 더 누르면 다음 멤버예요.", "お部屋を散歩中。もう一度タップすると次のメンバーに交代します。"],
     "本命一直都在小窩裡。": ["Your bias is always here in the room.", "최애는 언제나 방에 있어요.", "本命はいつもお部屋にいます。"],
     "散步的小人": ["Little walker", "산책하는 꼬마", "お散歩ミニキャラ"],
-    "關閉": ["Close", "닫기", "閉じる"]
+    "關閉": ["Close", "닫기", "閉じる"],
+    "今天是 6/13，出道紀念日！": ["It's 6/13 — debut anniversary!", "오늘은 6/13, 데뷔 기념일!", "今日は6/13、デビュー記念日！"],
+    "小窩也掛上彩旗了。": ["The room put up bunting too.", "방에도 깃발을 달았어요.", "お部屋にもガーランドを飾りました。"],
+    "今天生日！": ["It's their birthday today!", "오늘은 생일이에요!", "今日は誕生日！"],
+    "小窩為壽星布置好了。": ["The room is all decked out for the birthday star.", "방이 생일 주인공을 위해 꾸며졌어요.", "お部屋が主役のために飾られました。"],
+    "第 1 間": ["Room 1", "방 1", "部屋 1"],
+    "第 2 間": ["Room 2", "방 2", "部屋 2"],
+    "第一個房間完成了！": ["The first room is complete!", "첫 번째 방 완성!", "最初のお部屋が完成！"],
+    "下一個房間即將推出，敬請期待。": ["The next room is coming soon — stay tuned.", "다음 방이 곧 공개돼요. 기대해 주세요.", "次のお部屋は近日公開予定です。お楽しみに。"],
+    "看看下一個房間": ["Peek at the next room", "다음 방 보러 가기", "次のお部屋を見る"],
+    "晚點再說": ["Maybe later", "나중에", "あとで"],
+    "新房間即將推出": ["New room coming soon", "새 방이 곧 공개돼요", "新しいお部屋は近日公開"],
+    "完成第一個房間後解鎖。": ["Unlocks after you complete the first room.", "첫 번째 방을 완성하면 열려요.", "最初のお部屋を完成させると解放されます。"],
+    "第一個房間已完成，新房間準備中。": ["First room complete — the new room is on its way.", "첫 번째 방 완성! 새 방을 준비하고 있어요.", "最初のお部屋は完成！新しいお部屋を準備中です。"]
   };
   var LI = { en: 0, ko: 1, ja: 2 };
   function lang() {
@@ -161,6 +174,44 @@
     );
   }
 
+  /* ===== 6/13 出道紀念日：整個小窩一起慶祝（彩旗、彩紙、蛋糕點蠟燭、小人戴派對帽） =====
+     預覽：網址加 ?preview=613 就當作今天是 6/13（不會存任何東西） */
+  function isAnniv() {
+    var d = new Date();
+    if (d.getMonth() === 5 && d.getDate() === 13) return true;
+    try { return new URLSearchParams(location.search).get("preview") === "613"; } catch (e) { return false; }
+  }
+  /* 今天生日的成員（MEMBERS 是 app.js 的成員生日表）；預覽：網址加 ?preview=bd-Jimin */
+  function bdName() {
+    try {
+      var pv = new URLSearchParams(location.search).get("preview") || "";
+      if (pv.indexOf("bd-") === 0 && WN.indexOf(pv.slice(3)) >= 0) return pv.slice(3);
+    } catch (e) {}
+    for (var i = 0; i < WN.length; i++) if (bdToday(WN[i])) return WN[i];
+    return "";
+  }
+  /* 牆上方的彩旗：兩段下垂的線，每 7 格掛一面三角旗。生日那天（傳入成員名）改成「那位成員的顏色＋白」交替 */
+  function buntArt(n) {
+    var s = "", x, y;
+    for (x = 0; x < 160; x += 2) s += R(x, 1 + Math.round(2 * Math.sin(Math.PI * (x % 80) / 80)), 2, 1, "#8b5a2b");
+    for (x = 3; x < 158; x += 7) {
+      y = 1 + Math.round(2 * Math.sin(Math.PI * (x % 80) / 80));
+      var c = n ? (Math.floor(x / 7) % 2 ? "#fff" : MC[WN.indexOf(n) % 7]) : MC[Math.floor(x / 7) % 7];
+      s += R(x, y + 1, 3, 1, c) + R(x + 1, y + 2, 1, 1, c);
+    }
+    return s;
+  }
+  /* 彩紙：14 小片用 CSS 慢慢飄下來，畫在最上層、不擋點擊 */
+  function confArt() {
+    var s = '<g class="rcfs">';
+    for (var i = 0; i < 14; i++) {
+      s += '<g transform="translate(' + ((i * 11 + 5) % 156) + ',0)"><g class="rcf" style="animation-duration:' + (5 + (i % 4)) + "s;animation-delay:-" + (i * 0.9).toFixed(1) + 's">' + (i % 2 ? R(0, 0, 1, 2, MC[i % 7]) : R(0, 0, 2, 1, MC[i % 7])) + "</g></g>";
+    }
+    return s + "</g>";
+  }
+  /* 蛋糕上的蠟燭火焰：兩個影格交替閃，旁邊一圈淡淡的光 */
+  var FLAME = R(2, -3, 3, 3, "#ffe27a", 0.25) + '<g class="rflA">' + R(3, -2, 1, 1, "#fff1a8") + R(3, -1, 1, 1, "#ff8a5b") + '</g><g class="rflB">' + R(4, -2, 1, 1, "#fff1a8") + R(3, -1, 1, 1, "#ff8a5b") + "</g>";
+
   var ITEMS = [
     { k: "rug", b: "m1", fb: "初次打卡", n: "地毯", x: 54, y: 76, w: 56, h: 16, an: "hop", say: "軟軟的地毯，踩起來很舒服。",
       art: R(0, 0, 56, 16, "#7b4fd6") + R(2, 2, 52, 12, "#b794ff") + R(5, 5, 46, 6, "#7b4fd6") + R(8, 7, 40, 2, "#ffd23f") },
@@ -194,6 +245,23 @@
       art: '<g class="halo">' + R(-4, -3, 16, 14, "#b794ff", 0.25) + R(-2, -1, 12, 10, "#b794ff", 0.25) + "</g>" + R(1, 0, 6, 5, "#b794ff") + R(2, 5, 4, 1, "#9d7be8") + R(3, 6, 2, 10, "#444") + R(2, 16, 4, 2, "#222") }
   ];
 
+  /* ===== 窗外煙火（只有小窩 100% 才有）：一格一格的像素，共 8 影格——前 3 格火箭上升，後 5 格爆開、變淡 ===== */
+  function fwHtml(b, f) {
+    var s = "", c1 = MC[b.c], c2 = MC[(b.c + 3) % 7];
+    if (f < 3) {
+      var y = 34 - Math.round((34 - b.y) * (f + 1) / 3);
+      return R(b.x, y, 1, 2, "#fff") + R(b.x, y + 2, 1, 1, "#ffd23f");
+    }
+    var k = f - 3, rs = [1, 3, 5, 6, 7], os = [1, 1, 0.8, 0.55, 0.3];
+    if (k >= rs.length) return "";
+    for (var a = 0; a < 12; a++) {
+      var rad = a * Math.PI / 6;
+      s += R(b.x + Math.round(Math.cos(rad) * rs[k]), b.y + Math.round(Math.sin(rad) * rs[k]), 1, 1, a % 2 ? c1 : c2, os[k]);
+    }
+    if (k === 0) s += R(b.x - 1, b.y, 3, 1, "#fff") + R(b.x, b.y - 1, 1, 3, "#fff");
+    return s;
+  }
+
   /* ===== 窗外的海（白天／夜晚），集滿 100% 會多七個人影 ===== */
   function win(night, full) {
     var s = night
@@ -203,6 +271,8 @@
         '<g class="fish">' + R(68, 24, 4, 2, "#ff8a5b") + R(72, 23, 1, 4, "#ff8a5b") + R(67, 25, 1, 1, "#fff") + "</g>";
     s += R(64, 38, 32, 4, night ? "#3a4a7a" : "#f0d9a0") + R(66, 34, 1, 4, "#2dbf8f") + R(67, 33, 1, 3, "#2dbf8f") + R(92, 35, 1, 3, "#2dbf8f");
     if (full) {
+      /* 煙火層：夾在天空和人影之間，用 clipPath 切在窗框內，內容由 tick 每幀換 */
+      s += '<clipPath id="rmwc"><rect x="64" y="10" width="32" height="28"/></clipPath><g id="rmfw" clip-path="url(#rmwc)"></g>';
       for (var i = 0; i < 7; i++) s += R(66 + i * 4, 32, 2, 2, night ? "#4a6bd0" : "#062a6e") + R(65 + i * 4, 34, 4, 4, night ? "#4a6bd0" : "#062a6e");
     }
     var fr = night ? "#9aa3c7" : "#ffffff";
@@ -232,31 +302,79 @@
     } catch (e) {}
     return false;
   }
+  /* ===== 小人頭上的像素道具：書本、時間氣泡、被撕下的日曆頁（全部用 R() 一格一格畫，沒有圖片也沒有文字） ===== */
+  /* 3×5 像素數字，每個數字 15 格，由左到右、由上到下，1＝有顏色 */
+  var DG = ["111101101101111", "010110010010111", "111001111100111", "111001111001111", "101101111001001", "111100111001111", "111100111101111", "111001001001001", "111101111101111", "111101111001111"];
+  function tmBub() {
+    var d = new Date(), hm = p2(d.getHours()) + p2(d.getMinutes()), D = "#062a6e";
+    var s = R(1, 0, 21, 1, D) + R(1, 10, 21, 1, D) + R(0, 1, 1, 9, D) + R(22, 1, 1, 9, D) + R(1, 1, 21, 9, "#fff") +
+      R(10, 10, 3, 1, "#fff") + R(10, 11, 1, 1, D) + R(11, 11, 1, 1, "#fff") + R(12, 11, 1, 1, D) + R(11, 12, 1, 1, D);
+    [3, 7, 13, 17].forEach(function (x, i) {
+      var g = DG[+hm.charAt(i)];
+      for (var k = 0; k < 15; k++) if (g.charAt(k) === "1") s += R(x + (k % 3), 3 + Math.floor(k / 3), 1, 1, "#7b4fd6");
+    });
+    return '<g transform="translate(2,-19)">' + s + '<g class="rcl">' + R(11, 4, 1, 1, "#e0457b") + R(11, 6, 1, 1, "#e0457b") + "</g></g>";
+  }
+  function bkArt() {
+    var base = R(0, 5, 12, 2, "#8b5a2b") + R(1, 1, 5, 4, "#fff") + R(5, 0, 2, 6, "#b87333") + R(2, 2, 3, 1, "#9aa3c7") + R(2, 4, 3, 1, "#9aa3c7");
+    var mini = function (x, y, c, cls) {
+      return '<g transform="translate(' + x + "," + y + ')"><g class="rbm ' + cls + '">' + R(0, 0, 4, 3, c) + R(1, 1, 2, 1, "#fff") + "</g></g>";
+    };
+    return '<g class="rmbk"><g transform="translate(7,-11)">' +
+      '<g class="rbA">' + base + R(6, 1, 5, 4, "#fff") + R(7, 2, 3, 1, "#9aa3c7") + R(7, 4, 3, 1, "#9aa3c7") + "</g>" +
+      '<g class="rbB">' + base + R(6, 0, 2, 5, "#fff") + R(8, 2, 3, 3, "#d4e9ff") + "</g></g>" +
+      mini(0, -12, "#e0457b", "") + mini(22, -12, "#ffd23f", "d1") + mini(11, -17, "#2dbf8f", "d2") + "</g>";
+  }
+  /* 被撕下來的日曆頁：位置對應日曆（x42,y24）和小人停在 CLX 時的座標 */
+  var CLX = 35;
+  function pgArt() {
+    return '<g class="rpg"><g transform="translate(' + (42 - CLX) + ",-42)\">" + R(0, 0, 12, 12, "#fff") + R(0, 0, 12, 4, "#e0457b") + R(2, 6, 8, 1, "#9aa3c7") + R(2, 8, 8, 1, "#9aa3c7") + R(2, 10, 3, 1, "#e0457b") + "</g></g>";
+  }
+  /* 小跑步時腳後面的像素灰塵（畫在翻轉群組裡，永遠在身後） */
+  function dustArt() {
+    var puff = function (x, y, d) { return '<g transform="translate(' + x + "," + y + ')"><g class="rdp ' + d + '">' + R(0, 0, 2, 2, "#e9dccb") + "</g></g>"; };
+    return '<g class="rdu">' + puff(-1, 22, "") + puff(-4, 19, "d1") + puff(-2, 24, "d2") + "</g>";
+  }
+  /* 經過亮著的檯燈時，身上閃的像素光點 */
+  function litArt() {
+    var sp = function (x, y, d) { return '<g transform="translate(' + x + "," + y + ')"><g class="rsp ' + d + '">' + R(1, 0, 1, 3, "#fff1a8") + R(0, 1, 3, 1, "#fff1a8") + "</g></g>"; };
+    return '<g class="rmlit">' + sp(-3, 6, "") + sp(24, 2, "d1") + sp(25, 16, "d2") + "</g>";
+  }
+  var DUST = dustArt();
+  var PROPS = bkArt() + pgArt() + litArt();
+
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
-    var hat = S.bias && bdToday(WN[S.mem])
+    var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : "";
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : "";
+    var st = S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : "";
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
-      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g></g>" + zz + "</g></g>";
+      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
   }
 
   function scene(S, full) {
-    var P = S.night ? PN : PD, i, s = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="我的 ARMY 小窩">';
+    var P = S.night ? PN : PD, i, s = '<svg id="rmsv"' + (S.lamp && S.st["f-s3"] ? ' class="lon"' : "") + ' viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="我的 ARMY 小窩">';
     s += R(0, 0, 160, 66, P.wall);
     for (i = 1; i < 10; i++) s += R(i * 16, 0, 1, 66, P.wl, 0.6);
     s += R(0, 66, 160, 34, P.fl);
     for (i = 0; i < 5; i++) s += R(0, 70 + i * 7, 160, 1, P.fll);
     s += R(0, 64, 160, 3, P.bs);
+    var bn = bdName();
+    if (isAnniv() || bn) s += buntArt(isAnniv() ? "" : bn);
     s += win(S.night, full);
     s += R(102, 52, 56, 3, "#8b5a2b") + R(104, 55, 52, 2, "#a8743f") + R(104, 57, 3, 9, "#8b5a2b") + R(153, 57, 3, 9, "#8b5a2b");
+    if (S.st["f-s3"]) {
+      s += '<g class="rmlt">';
+      for (var y = 44; y < 92; y += 2) s += R(112 - (6 + Math.floor((y - 44) / 2)), y, 2 * (6 + Math.floor((y - 44) / 2)), 2, "#ffe27a", y >= 80 ? 0.2 : 0.1);
+      s += "</g>";
+    }
     ITEMS.forEach(function (it) {
       var on = !!S.st[it.b], cls = "rmi" + (on ? "" : " lk") + (it.k === "lamp" ? " rmlamp" + (on && S.lamp ? " on" : "") : "");
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
-      s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + "</g></g>";
+      s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "cake" && on && (isAnniv() || bn) ? FLAME : "") + "</g></g>";
     });
-    return s + walker(S) + "</svg>";
+    return s + walker(S) + (isAnniv() || bn ? confArt() : "") + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -336,8 +454,48 @@
     ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
     ".pz .rmwb{animation:none}.slp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(9deg)}" +
     ".rmzz{display:none}.slp .rmzz{display:block}.rz{fill:#fff;stroke:#062a6e;stroke-width:.5;paint-order:stroke;font-weight:900;opacity:0;transform-box:fill-box;animation:rmz 2.4s ease-out infinite}.rz:nth-child(2){animation-delay:.8s}.rz:nth-child(3){animation-delay:1.6s}@keyframes rmz{0%{opacity:0;transform:translate(0,3px)}30%{opacity:1}100%{opacity:0;transform:translate(4px,-8px)}}" +
-    "@media(prefers-reduced-motion:reduce){.rmwb,.rz{animation:none}.slp .rz{opacity:1}}";
+    "@media(prefers-reduced-motion:reduce){.rmwb,.rz{animation:none}.slp .rz{opacity:1}}" +
+    ".rmbk,.rmck,.rpg{display:none;pointer-events:none}.rd .rmbk,.ck .rmck{display:block}" +
+    ".rbA{opacity:1;animation:rmpa 1.2s steps(1) infinite}.rbB{opacity:0;animation:rmpb 1.2s steps(1) infinite}@keyframes rmpa{0%{opacity:1}50%{opacity:0}}@keyframes rmpb{0%{opacity:0}50%{opacity:1}}" +
+    ".rbm{opacity:0;animation:rmbk 2.4s steps(6) infinite}.rbm.d1{animation-delay:.8s}.rbm.d2{animation-delay:1.6s}@keyframes rmbk{0%{opacity:0;transform:translate(0,3px)}25%{opacity:1}100%{opacity:0;transform:translate(0,-9px)}}" +
+    ".cu .rmwb,.ck .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(-1px) rotate(-7deg)}" +
+    ".tr .rpg{display:block;animation:rmpg 1.4s steps(3) forwards}@keyframes rmpg{0%{transform:translate(0,0)}25%{transform:translate(-2px,14px)}50%{transform:translate(4px,28px)}75%{transform:translate(-1px,42px)}100%{transform:translate(8px,56px)}}" +
+    ".rcl{animation:rmblink 1s steps(1) infinite}@keyframes rmblink{50%{opacity:0}}" +
+    ".rmlt{display:none;pointer-events:none}.lon .rmlt{display:block}" +
+    ".lit .rmwb{filter:brightness(1.2) sepia(.25)}.rmlit,.rdu{display:none;pointer-events:none}.lit .rmlit,.jg .rdu{display:block}" +
+    ".rsp{animation:rmsp 1.2s steps(1) infinite}.rsp.d1{animation-delay:.4s}.rsp.d2{animation-delay:.8s}@keyframes rmsp{0%{opacity:1}50%{opacity:0}}" +
+    ".jg .rmwb{animation-duration:.25s}" +
+    ".rdp{animation:rmdu .45s steps(3) infinite}.rdp.d1{animation-delay:.15s}.rdp.d2{animation-delay:.3s}@keyframes rmdu{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(-4px,-3px)}}" +
+    ".rcfs{pointer-events:none}.rcf{animation:rmcf 6s steps(6) infinite}@keyframes rmcf{0%{transform:translate(0,-4px)}25%{transform:translate(2px,22px)}50%{transform:translate(-1px,48px)}75%{transform:translate(2px,74px)}100%{transform:translate(0,100px)}}" +
+    ".rflA{opacity:1;animation:rmpa .6s steps(1) infinite}.rflB{opacity:0;animation:rmpb .6s steps(1) infinite}" +
+    ".rmrs{display:flex;gap:6px;margin-bottom:8px}.rmrs button{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
+    ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
+    "@media(prefers-reduced-motion:reduce){.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}";
   document.head.appendChild(css);
+
+  /* ===== 多房間：S.rm 0＝第一間（彩蛋小窩），1＝第二間（尚未推出，先顯示上鎖畫面）。
+     下一間推出時：把 lockedRoom() 換成真正的場景，並把 chips() 裡第 2 間的鎖頭拿掉 ===== */
+  var LOCK_SVG = '<svg viewBox="0 0 10 10" shape-rendering="crispEdges" width="10" height="10" aria-hidden="true" fill="currentColor"><rect x="3" y="0" width="4" height="1"/><rect x="2" y="1" width="1" height="3"/><rect x="7" y="1" width="1" height="3"/><rect x="1" y="4" width="8" height="5"/></svg>';
+  function chips(S, full) {
+    return '<div class="rmrs" role="group"><button type="button" data-r="0" aria-pressed="' + (S.rm === 0) + '"><span>第 1 間</span></button>' +
+      '<button type="button" data-r="1" class="' + (full ? "nx" : "") + '" aria-pressed="' + (S.rm === 1) + '"><span>第 2 間</span>' + LOCK_SVG + "</button></div>";
+  }
+  function lockedRoom(full, n) {
+    var G = "#2e3452", K = "#aab2c8";
+    var sv = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="img" aria-label="？？？">' +
+      R(0, 0, 160, 66, "#3a4163") + R(0, 66, 160, 34, "#4b5273") + R(0, 64, 160, 3, "#59618a") +
+      R(6, 16, 30, 50, G) + R(124, 10, 28, 28, G) + R(54, 76, 56, 16, G) + R(102, 52, 56, 3, G) +
+      R(72, 30, 16, 4, K) + R(72, 34, 4, 12, K) + R(84, 34, 4, 12, K) +
+      R(66, 46, 28, 22, K) + R(66, 46, 28, 2, "#c9cfe0") + R(78, 54, 4, 5, "#3a4163") + R(79, 59, 2, 5, "#3a4163") + "</svg>";
+    return sv + '<div class="rmcap" aria-live="polite"><b>新房間即將推出</b><br>' +
+      (full ? "第一個房間已完成，新房間準備中。" : "<span>完成第一個房間後解鎖。</span> <small><span>" + n + " / " + ITEMS.length + "</span> <span>件</span></small>") + "</div>";
+  }
+  function nextPop() {
+    var door = R(3, 0, 10, 16, "#8b5a2b") + R(4, 1, 8, 14, "#c99a6b") + R(5, 2, 6, 6, "#b07a45") + R(5, 9, 6, 5, "#b07a45") + R(10, 8, 1, 2, "#ffd23f") + R(0, 2, 1, 1, "#ffd23f") + R(14, 5, 1, 1, "#ffd23f") + R(1, 12, 1, 1, "#fff") + R(14, 13, 1, 1, "#ffd23f");
+    return '<div class="rmnx"><div class="rmnc" role="alertdialog" aria-modal="true" aria-labelledby="rmnt"><svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">' + door + "</svg>" +
+      '<b id="rmnt">第一個房間完成了！</b><p>下一個房間即將推出，敬請期待。</p>' +
+      '<div class="rmna"><button type="button" data-a="go">看看下一個房間</button><button type="button" data-a="cl">晚點再說</button></div></div></div>';
+  }
 
   /* ===== 開啟專區 ===== */
   var opener = null;
@@ -346,7 +504,7 @@
     opener = document.activeElement;
     var bs = getBs(), L = bs.L, st = bs.st;
     var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
-      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0 };
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: 0, pop: false };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -354,6 +512,9 @@
       var ix = b && st["h-bias"] ? WN.indexOf(b.bias) : -1;
       if (ix >= 0) { S.mem = ix; S.bias = true; }
     })();
+    if (!S.bias) { var bi = WN.indexOf(bdName()); if (bi >= 0) S.mem = bi; }
+    /* 第一間全部解鎖：打開小窩時跳出「前往下一個房間」視窗。不存任何東西，所以每次載入網頁只跳一次 */
+    if (count(st) >= ITEMS.length && !window.__roomNextSeen) { S.pop = true; window.__roomNextSeen = 1; }
     var nameOf = function (it) { for (var i = 0; i < L.length; i++) if (L[i].id === it.b) return L[i]; return null; };
     var o = document.createElement("div");
     o.id = "rmo";
@@ -378,11 +539,13 @@
 
     function draw() {
       var n = count(S.st), pct = Math.round((n / ITEMS.length) * 100), full = n >= ITEMS.length, h;
-      h = '<div class="rmc"><div class="rmh"><b>彩蛋小窩</b><span><span>' + n + " / " + ITEMS.length + "</span> <span>件</span></span></div>" +
-        '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div><div class="rmb">';
-      if (S.tab === "room") {
+      h = '<div class="rmc"><div class="rmh">' + (S.rm === 1 ? "<b>？？？</b><span></span>" : "<b>彩蛋小窩</b><span><span>" + n + " / " + ITEMS.length + "</span> <span>件</span></span>") + "</div>" + chips(S, full) +
+        (S.rm === 1 ? "" : '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div>') + '<div class="rmb">';
+      if (S.rm === 1) {
+        h += lockedRoom(full, n);
+      } else if (S.tab === "room") {
         h += scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。") + "</div>" +
+          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。") + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>小窩完成度</span> <span>' + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
@@ -396,8 +559,10 @@
         h += "</div>";
       }
       h += '</div><button type="button" class="btn rmx">關閉</button></div>';
+      if (S.pop) h += nextPop();
       o.innerHTML = h;
       try { window.I18N && I18N.refresh(); } catch (e) {}
+      if (S.pop) { var pb = o.querySelector(".rmnc button"); if (pb) pb.focus(); }
     }
 
     function pop(g, it) {
@@ -412,7 +577,12 @@
       var k = g.getAttribute("data-k"), it = ITEMS.filter(function (x) { return x.k === k; })[0];
       if (!it) return;
       var on = !!S.st[it.b];
-      if (on && it.k === "lamp") { S.lamp = !S.lamp; g.classList.toggle("on", S.lamp); }
+      if (on && it.k === "lamp") {
+        S.lamp = !S.lamp;
+        g.classList.toggle("on", S.lamp);
+        var sv = document.getElementById("rmsv");
+        if (sv) sv.classList.toggle("lon", S.lamp);
+      }
       else if (on) pop(g, it);
       var cap = document.getElementById("rmcap");
       if (cap) cap.innerHTML = capFor(it);
@@ -435,27 +605,81 @@
     /* 小人的動作由這個迴圈控制：左右走、踏上地毯跳一下、走到球鞋（有解鎖才會）停 2 秒、夜晚走一陣子就打瞌睡 5 秒 */
     var raf = 0, lastTs = 0, SPD = 12.5;
     var reduceM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches);
+    /* 新動作：走到書架（左邊）看書、走到日曆／時鐘下（中間）抬頭看。解鎖對應物品才會做 */
+    function popK(k) {
+      var it = ITEMS.filter(function (x) { return x.k === k; })[0], gg = o.querySelector('.rmi[data-k="' + k + '"]');
+      if (it && gg) pop(gg, it);
+    }
+    function enter(w, now) {
+      S.wst = w;
+      if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
+      else if (w === "clk") {
+        S.wuntil = now + 3.2;
+        popK("clock");
+        var bb = o.querySelector(".rmck");
+        if (bb) bb.innerHTML = tmBub();
+        var cp = document.getElementById("rmcap");
+        if (cp) cp.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(clockSay());
+      } else if (w === "cal") {
+        S.wuntil = now + 3.4;
+        S.wtt = Math.random() < 0.5 ? now + 1 : 0;
+        S.wtr = 0;
+      }
+    }
     function tick(ts) {
       if (!document.body.contains(o)) return;
       var dt = Math.min(0.05, (ts - (lastTs || ts)) / 1000), now = ts / 1000, g = o.querySelector(".rmwx");
       lastTs = ts;
+      /* 窗外煙火：小窩 100% 才有。每隔 5～12 秒放一發，每發約 1.4 秒 */
+      var fw = o.querySelector("#rmfw");
+      if (fw) {
+        if (!S.fwn) S.fwn = now + 2.5 + Math.random() * 3;
+        if (!S.fwb && now >= S.fwn) S.fwb = { t: now, x: 70 + Math.floor(Math.random() * 21), y: 15 + Math.floor(Math.random() * 10), c: Math.floor(Math.random() * 7), f: -1 };
+        if (S.fwb) {
+          var ff = Math.floor((now - S.fwb.t) / 0.18);
+          if (ff !== S.fwb.f) { S.fwb.f = ff; fw.innerHTML = fwHtml(S.fwb, ff); }
+          if (ff >= 8) { S.fwb = null; S.fwn = now + 5 + Math.random() * 7; fw.innerHTML = ""; }
+        }
+      }
       if (g) {
         var dy = 0;
         if (S.wst === "walk") {
-          S.wx += S.wd * SPD * dt;
+          var px = S.wx;
+          /* 偶爾小跑步：每隔 8～20 秒跑 1.6～2.8 秒，速度 2.2 倍 */
+          if (!S.wjn) S.wjn = now + 6 + Math.random() * 8;
+          else if (now >= S.wjn) { S.wju = now + 1.6 + Math.random() * 1.2; S.wjn = S.wju + 8 + Math.random() * 12; }
+          S.wx += S.wd * SPD * (now < S.wju ? 2.2 : 1) * dt;
           S.wwalk += dt;
           if (S.wx >= 112) { S.wx = 112; S.wd = -1; }
           else if (S.wx <= 8) {
             S.wx = 8;
-            if (S.st["fp-1"]) { S.wst = "look"; S.wuntil = now + 2.2; } else S.wd = 1;
+            var lo = [];
+            if (S.st["fp-1"]) lo.push("look");
+            if (S.st["v-fav"]) lo.push("read");
+            var pk = lo.length ? lo[Math.floor(Math.random() * lo.length)] : "";
+            if (pk === "look") { S.wst = "look"; S.wuntil = now + 2.2; }
+            else if (pk === "read") enter("read", now);
+            else S.wd = 1;
+          }
+          if (S.wst === "walk" && now >= S.wcd && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX))) {
+            var op = [];
+            if (S.st["h-open"]) op.push("clk");
+            if (S.st["h-last"]) op.push("cal");
+            if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
           var ctr = S.wx + 13, inRug = ctr >= 58 && ctr <= 106;
           if (inRug && !S.wrug && S.wj <= 0) S.wj = 0.5;
           S.wrug = inRug;
-          if (S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; }
-        } else if (now >= S.wuntil) {
-          if (S.wst === "look") S.wd = 1;
-          S.wst = "walk";
+          if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; }
+        } else {
+          if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
+          if (now >= S.wuntil) {
+            if (S.wst === "look" || S.wst === "read") S.wd = 1;
+            S.wst = "walk";
+            S.wtt = 0;
+            S.wtr = 0;
+            S.wcd = now + 6;
+          }
         }
         if (S.wj > 0) {
           S.wj -= dt;
@@ -464,6 +688,12 @@
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy.toFixed(2) + ")");
         g.classList.toggle("pz", S.wst !== "walk");
         g.classList.toggle("slp", S.wst === "sleep");
+        g.classList.toggle("rd", S.wst === "read");
+        g.classList.toggle("cu", S.wst === "cal");
+        g.classList.toggle("ck", S.wst === "clk");
+        g.classList.toggle("tr", S.wst === "cal" && now < S.wtr);
+        g.classList.toggle("jg", S.wst === "walk" && now < S.wju);
+        g.classList.toggle("lit", !!(S.lamp && S.st["f-s3"] && S.wx + 13 >= 96));
         var f = g.querySelector(".rmwf"), want = S.wd < 0;
         if (f && f.__fl !== want) {
           f.__fl = want;
@@ -481,10 +711,18 @@
       try { tag(getBs()); } catch (e) {}
       if (opener && opener.focus) opener.focus();
     };
-    var ky = function (ev) { if (ev.key === "Escape") close(); };
+    var ky = function (ev) {
+      if (ev.key !== "Escape") return;
+      if (S.pop) { S.pop = false; draw(); var xb = o.querySelector(".rmx"); if (xb) xb.focus(); } else close();
+    };
     o.addEventListener("click", function (ev) {
       var t = ev.target;
       if (t === o || (t.closest && t.closest(".rmx"))) return close();
+      if (t.classList && t.classList.contains("rmnx")) { S.pop = false; draw(); return; }
+      var pab = t.closest && t.closest("[data-a]");
+      if (pab) { if (pab.getAttribute("data-a") === "go") S.rm = 1; S.pop = false; draw(); return; }
+      var rsb = t.closest && t.closest("[data-r]");
+      if (rsb) { S.rm = +rsb.getAttribute("data-r"); draw(); return; }
       var tb = t.closest && t.closest("[data-t]");
       if (tb) { S.tab = tb.getAttribute("data-t"); draw(); return; }
       var ft = t.closest && t.closest("[data-f]");
