@@ -2241,7 +2241,7 @@ x.fillStyle=C.card;x.fillRect(bx2,by2,bw2,bw2);x.lineWidth=8;x.strokeStyle=pct==
 x.textAlign="center";x.fillStyle=C.ink;x.font="400 72px "+PF;x.fillText(pct+"%",bx2+bw2/2,by2+bw2/2-14);
 x.font="400 30px "+PF;x.fillStyle=C.sub;x.fillText(pct===100?"全部集滿":"完成度",bx2+bw2/2,by2+bw2/2+52);x.textAlign="left"}
 const top=430,bot=1700,cols=n>22?2:1,per=Math.ceil(n/cols),cw=(W-2*P)/cols,rh=Math.min(100,(bot-top)/per);
-const fs=Math.max(26,Math.min(44,Math.round(rh*.48))),ic=Math.round(rh*.78);
+const fs0=Math.max(26,Math.min(44,Math.round(rh*.48))),fs=cols>1?Math.max(20,Math.min(fs0,Math.floor((rh-26)/2.3))):fs0,ic=Math.round(rh*.78);
 const wrapN=(t,mw,mx)=>{const ch=Array.from(t),o=[];let i=0;while(i<ch.length&&o.length<mx){let j=i;while(j<ch.length&&x.measureText(ch.slice(i,j+1).join("")).width<=mw)j++;if(j===i)j=i+1;let nx=j,line;if(j>=ch.length){line=ch.slice(i).join("");nx=ch.length}else if(o.length===mx-1){line=ch.slice(i,j).join("");while(line.length>1&&x.measureText(line+"…").width>mw)line=line.slice(0,-1);line+="…";nx=ch.length}else{let b=-1;for(let q=j-1;q>i;q--){if(ch[q]===" "||ch[q]==="（"||ch[q]==="("){b=q;break}}if(b>i+(j-i)*.4){line=ch.slice(i,b).join("");nx=ch[b]===" "?b+1:b}else line=ch.slice(i,j).join("")}o.push(line.trim());i=nx}return o};
 L.forEach((d,i)=>{const col=Math.floor(i/per),row=i%per,ox=P+col*cw,cy=top+row*rh+rh/2,dn=done.has(d.id);
 const cwid=cw-(cols>1?12:0),chh=rh-12,cxx=ox-16,cyy=cy-chh/2;
@@ -2255,7 +2255,7 @@ const u=ic/10;x.fillStyle=C.ok;[[2,5],[3,6],[4,7],[5,6],[6,5],[7,4],[8,3]].forEa
 x.fillRect(bx+u*1.2,by+u*1.2,u*.7,u*.7);x.fillRect(bx+ic-u*1.9,by+ic-u*1.9,u*.7,u*.7)}
 else if(stat(d)==="已結束"){x.fillStyle="#9aa3c7";const u=ic*.11;for(let j=0;j<5;j++){x.fillRect(bx+ic*.2+j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1);x.fillRect(bx+ic*.8-u*1.1-j*u*1.1,by+ic*.2+j*u*1.1,u*1.1,u*1.1)}}
 x.font="400 "+fs+"px "+PF;x.fillStyle=C.ink;x.textBaseline="middle";
-const ty=String(d.type||""),em=ty.includes("廣告車")?"truck":ty.includes("公車")?"bus":ty.includes("電視牆")?"tv":ty.includes("燈箱")||ty.includes("看板")?"sign":ty.includes("咖啡")?"cafe":ty.includes("快閃")?"shop":ty.includes("展覽")?"expo":ty.includes("企劃")?"mega":"",pu=Math.max(2,Math.floor(fs*.95/8)),ew=em?pu*8+16:0;
+const ty=String(d.type||""),em=ty.includes("廣告車")?"truck":ty.includes("公車")?"bus":ty.includes("電視牆")?"tv":ty.includes("燈箱")||ty.includes("看板")?"sign":ty.includes("咖啡")?"cafe":ty.includes("快閃")?"shop":ty.includes("展覽")?"expo":ty.includes("企劃")?"mega":"",pu=Math.max(2,Math.floor(fs0*.95/8)),ew=em?pu*8+16:0;
 const dts=dn&&dd[d.id]?dd[d.id]:"";let dw=0;if(dts){x.font="400 "+Math.max(24,Math.round(fs*.78))+"px "+PF;dw=x.measureText(dts).width+28}
 x.font="400 "+fs+"px "+PF;
 let t=name(d);const mw=cw-ic-52-(cols>1?24:0)-dw-ew;let lines=[t];
