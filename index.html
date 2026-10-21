@@ -1179,6 +1179,7 @@ if(prev.size)document.querySelectorAll("#list .card[data-id]").forEach(c=>{if(pr
 async function go(){
 try{const txt=localStorage.getItem("sheet-cache");if(txt){const rows=parse(txt);if(rows.length)apply(rows)}}catch(x){}
 boot();
+if(!(typeof SHEET_CSV_URL==="string"&&SHEET_CSV_URL))window.__sheetReady=1;
 if(typeof SHEET_CSV_URL==="string"&&SHEET_CSV_URL){
 let ld=null;const lt=setTimeout(()=>{try{ld=document.createElement("div");ld.id="sheetLoad";ld.setAttribute("role","status");ld.setAttribute("aria-label","資料更新中");ld.innerHTML="<i></i>";document.body.appendChild(ld)}catch(e){}},400);
 const ldDone=()=>{clearTimeout(lt);if(ld){ld.remove();ld=null}};
@@ -1187,7 +1188,7 @@ const r=await fetch(SHEET_CSV_URL+(SHEET_CSV_URL.includes("?")?"&":"?")+"t="+Dat
 if(!r.ok)throw 0;const txt=await r.text();const rows=parse(txt);if(!rows.length)throw 0;
 let old="";try{old=localStorage.getItem("sheet-cache")||""}catch(e){}
 try{localStorage.setItem("sheet-cache",txt)}catch(e){}
-ldDone();if(txt!==old){apply(rows);refresh()}}catch(e){}finally{ldDone()}}}
+ldDone();if(txt!==old){apply(rows);refresh()}}catch(e){}finally{ldDone();window.__sheetReady=1}}}
 window.SheetLoader={parse,csv};
 go()})();
 </script>
@@ -2336,7 +2337,7 @@ try{const lv=DATA.filter(d=>d.sec!=="birthday"&&stat(d)==="進行中").length;if
 {const S=shows().map(x=>Math.round((x.t-t)/864e5)).filter(n=>n>=0).sort((u,v)=>u-v),dc=S.length?S[0]:-1;if(dc>1&&dc<=60)o.push({t:"離演唱會開演還有 "+dc+" 天"});else if(dc===1)o.push({t:"明天就是演唱會了！今晚早點睡，螢光棒記得帶"});else if(dc===0){const hh=new Date().getHours();o.push({t:hh<12?"今天要見面了！出門前再檢查一次票和螢光棒":"今天就是演唱會！記得喝水、顧好嗓子"})}}
 try{if(vneed())o.push({t:"今天還沒投票，來投給你想聽的歌",go:"#bgv"})}catch(e){}
 (MQ[cur]||[]).forEach(x=>o.push({t:x}));
-{const h=new Date().getHours();o.unshift({t:h>=5&&h<11?"早安！今天也要元氣滿滿":h>=11&&h<14?"午安，記得吃飯喔":h>=14&&h<18?"下午了，喝口水休息一下":h>=18&&h<23?"晚上好，今天辛苦了":"這麼晚了，早點睡，明天再來"})}if(!o.length)o.push({t:"今天也一起加油"});return o}
+{const h=new Date().getHours();o.unshift({t:h>=5&&h<11?"早安！今天也要元氣滿滿":h>=11&&h<14?"午安，記得吃飯喔":h>=14&&h<18?"下午了，喝口水休息一下":h>=18&&h<23?"晚上好，今天辛苦了":"這麼晚了，早點睡，明天再來"})}try{const n=NWG();if(n){if(n.nw.length)o.unshift(newMsg(n));if(n.ch.length)o.unshift(chgMsg(n))}}catch(e){}if(!o.length)o.push({t:"今天也一起加油"});return o}
 function hide(){p.classList.remove("out");if(bt.hidden)return;bt.classList.add("fd");clearTimeout(ht);ht=setTimeout(()=>{bt.hidden=true;bt.classList.remove("fd")},260)}
 function say(x,go){clearTimeout(ht);bt.classList.remove("fd");p.classList.add("out");bt.textContent=x;bt.classList.toggle("lk",!!go);if(go){bt.tabIndex=0;bt.setAttribute("role","button")}else{bt.removeAttribute("tabindex");bt.setAttribute("role","status")}bt.hidden=false;clearTimeout(tm);tm=setTimeout(hide,5000)}
 /* 投票提醒：開放投票、而且這位使用者今天還沒投時，小人會主動提醒一句，投完就安靜；voteRemind() 會先呼叫 window.petRemind，小人不在的頁面才退回原本的跳窗 */
@@ -2346,11 +2347,20 @@ const ck=[];bn.addEventListener("click",()=>{refresh();if(aw&&!nt){const n=Date.
 if(nt){if(aw){act=null;say("zzZ… 好睏，明天再聊");return}act=()=>{const b=document.getElementById("ftnBtn");if(b)b.click()};say("zzZ… 好睏，想抽籤的話點這裡叫醒我",1);return}
 if(!aw){act=()=>{const b=document.getElementById("ftnBtn");if(b)b.click()};say("zzZ… 今天還沒抽幸運籤，點這裡叫醒我",1);return}
 const cn=pnAdd();if(MS[cn]){act=null;say(MS[cn]);return}
-const L=msgs(),x=L[k++%L.length],sel=x.go;act=sel?()=>{const b=document.querySelector(sel);if(b)b.click()}:null;say(x.t,sel)});
+const L=msgs(),x=L[k++%L.length],sel=x.go;act=sel?()=>{if(x.ok)x.ok();const b=document.querySelector(sel);if(b)b.click()}:null;say(x.t,sel)});
 bt.addEventListener("click",()=>{if(bt.classList.contains("lk")&&act)act();hide()});bt.addEventListener("keydown",e=>{if(e.key==="Enter"&&bt.classList.contains("lk")){e.preventDefault();bt.click()}});
 document.addEventListener("click",e=>{if(!p.contains(e.target))hide()});
 {let st=0,sy=window.scrollY;addEventListener("scroll",()=>{if(p.classList.contains("out"))return;const y=window.scrollY;if(Math.abs(y-sy)<4)return;sy=y;p.classList.add("hd");clearTimeout(st);st=setTimeout(()=>p.classList.remove("hd"),700)},{passive:true})}/* 待機動作排程：醒著、白天、沒在說話、沒被捲動收起來、分頁在前景、沒開「減少動態」才會動 */
 {const rm=matchMedia("(prefers-reduced-motion:reduce)");const idle=()=>{try{if(!p.hidden&&aw&&!nt&&!document.hidden&&!rm.matches&&!p.classList.contains("out")&&!p.classList.contains("hd")&&!p.classList.contains("dz")){p.classList.add("idl");setTimeout(()=>p.classList.remove("idl"),3100)}}catch(e){}setTimeout(idle,18000+Math.random()*22000)};setTimeout(idle,7000+Math.random()*6000)}
+/* 新增／異動提醒：網站讀完試算表後，跟這位使用者「上次看過的清單」（localStorage: pet-seen）比對——有沒看過的新應援、或異動內容變了（含取消），小人就提醒。第一次來只記下目前的清單，不會把全部當成新的；點小人的提醒（或自動跳出的對話框）才算看過。自動跳出每天最多一次（pet-nws） */
+const NWS=()=>{try{return JSON.parse(localStorage.getItem("pet-seen")||"null")}catch(e){return null}};
+const NWG=()=>{if(!window.__sheetReady)return null;try{let s=NWS();if(!s||!Array.isArray(s.ids)||!s.chg){s={ids:DATA.map(d=>d.id),chg:{}};localStorage.setItem("pet-seen",JSON.stringify(s))}const ids=new Set(s.ids),L=DATA.filter(d=>d&&d.id&&stat(d)!=="已結束");return{nw:L.filter(d=>!ids.has(d.id)),ch:L.filter(d=>d.chg&&s.chg[d.id]!==d.chg)}}catch(e){return null}};
+const NWK=(nw,ch)=>{try{const s=NWS()||{ids:[],chg:{}};nw.forEach(d=>{if(!s.ids.includes(d.id))s.ids.push(d.id)});ch.forEach(d=>{s.chg[d.id]=d.chg});s.ids=s.ids.slice(-400);localStorage.setItem("pet-seen",JSON.stringify(s))}catch(e){}};
+const NWSEL=L=>L.some(d=>d.sec!=="birthday")?".entry.tour":".entry.bd";
+const chgMsg=n=>{const c=n.ch.filter(d=>/^取消/.test(d.chg)).length,m=n.ch.length-c;return{t:c&&m?"有 "+c+" 個應援取消了、"+m+" 個有異動，出發前看一下":c?"有 "+c+" 個應援取消了，出發前看一下":"有 "+m+" 個應援有異動，出發前看一下",go:NWSEL(n.ch),ok:()=>NWK([],n.ch)}};
+const newMsg=n=>{const t=String(n.nw[0].title||"").replace(/\s*[(（].*$/,"");return{t:n.nw.length===1?"新增了「"+(t.length>14?t.slice(0,14)+"…":t)+"」，去看看":"新增了 "+n.nw.length+" 個應援，去看看",go:NWSEL(n.nw),ok:()=>NWK(n.nw,[])}};
+function pushNews(){try{if(p.hidden||!bt.hidden||document.hidden||document.getElementById("bgd"))return;const n=NWG();if(!n||(!n.nw.length&&!n.ch.length))return;const d=new Date(),sig=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()+"|"+n.nw.length+"|"+n.ch.length;if(localStorage.getItem("pet-nws")===sig)return;localStorage.setItem("pet-nws",sig);refresh();let m;if(n.nw.length&&n.ch.length){const a=chgMsg(n),b=newMsg(n);m={t:"有 "+n.nw.length+" 個新應援、"+n.ch.length+" 個應援有異動，去看看",go:a.go,ok:()=>{a.ok();b.ok()}}}else m=n.ch.length?chgMsg(n):newMsg(n);act=()=>{m.ok();const b=document.querySelector(m.go);if(b)b.click()};say(aw&&!nt?m.t:"zzZ… 夢到有"+(n.ch.length?"應援異動":"新應援")+"了…",1)}catch(e){}}
+setTimeout(()=>setInterval(pushNews,4000),8000);
 refresh();setInterval(refresh,3000);document.addEventListener("visibilitychange",refresh)}catch(e){}},0);
 /* 彩蛋：首頁標題 2.5 秒內連點 7 次，七位成員小人排隊跑過畫面（要有 FPAV 小人圖才會出現） */
 (function(){try{const h=document.querySelector(".hero h1");if(!h)return;let n=0,t=0,run=false;const O=["Jin","SUGA","j-hope","RM","Jimin","V","Jungkook"];
