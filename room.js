@@ -222,8 +222,8 @@
   }
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
-    return '<g transform="translate(0,78)"><g class="rmwx"><g class="rmwf"><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
-      R(0, 0, 14, 14, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="14" height="14" preserveAspectRatio="xMidYMax meet"/></g></g></g></g></g>';
+    return '<g transform="translate(0,70)"><g class="rmwx"><g class="rmwf"><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
+      R(0, 0, 22, 22, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="22" height="22" preserveAspectRatio="xMidYMax meet"/></g></g></g></g></g>';
   }
 
   function scene(S, full) {
@@ -314,9 +314,9 @@
     ".rml{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rmk{border:2px solid var(--line);background:var(--box);padding:8px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}.rmk.on{border-color:var(--dark)}.rmk svg{width:100%;max-width:64px;height:48px;overflow:visible}.rmk svg.lk{opacity:.4;filter:grayscale(1) brightness(.55)}.rmk b{font-size:13px}.rmk small{font-size:11px;color:var(--sub);line-height:1.4}" +
     ".rmx{margin-top:10px;align-self:flex-end}" +
     ".rmwk{cursor:pointer}.rmwk:focus-visible{outline:2px solid var(--focus)}" +
-    ".rmwx{transform:translateX(20px);animation:rmwalk 16s linear infinite}@keyframes rmwalk{0%{transform:translateX(20px)}50%{transform:translateX(120px)}100%{transform:translateX(20px)}}" +
+    ".rmwx{transform:translateX(20px);animation:rmwalk 16s linear infinite}@keyframes rmwalk{0%{transform:translateX(20px)}50%{transform:translateX(116px)}100%{transform:translateX(20px)}}" +
     ".rmwf{transform-box:fill-box;transform-origin:50% 50%;animation:rmflip 16s steps(1,end) infinite}@keyframes rmflip{0%{transform:scaleX(1)}50%{transform:scaleX(-1)}100%{transform:scaleX(-1)}}" +
-    ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-1.5px)}100%{transform:translateY(0)}}" +
+    ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
     "@media(prefers-reduced-motion:reduce){.rmwx,.rmwf,.rmwb{animation:none}.rmwx{transform:translateX(66px)}}";
   document.head.appendChild(css);
 
