@@ -783,6 +783,11 @@ I18N.add("加入","Add","추가","追加");I18N.add("還沒加入任何歌","No 
 ["付費報名入場","Paid registration entry","유료 신청 입장","有料申込制"],
 ["應援地點地圖","Map of project locations","응원 장소 지도","応援スポットの地図"],["選擇場次","Choose a show","공연 선택","公演を選択"],["選擇類別","Choose a category","카테고리 선택","カテゴリーを選択"]
 ].forEach(a=>I18N.add(...a));
+/* 補翻：足跡護照、成員足跡進度 */
+[["📖 足跡護照","📖 Footprint Passport","📖 발자취 여권","📖 足あとパスポート"],["足跡護照","Footprint Passport","발자취 여권","足あとパスポート"],
+["已蓋章的足跡","Stamped footprints","도장 찍은 발자취","スタンプ済みの足あと"],["足跡進度","Footprint progress","발자취 진행도","足あとの進捗"],
+["‹ 上一頁","‹ Prev","‹ 이전","‹ 前へ"],["下一頁 ›","Next ›","다음 ›","次へ ›"],["✕ 關閉","✕ Close","✕ 닫기","✕ 閉じる"]
+].forEach(a=>I18N.add(...a));
 {const tx=(c,i)=>i===2?(JA[c]||c):((D[c]||[])[i]||c),dy=(n,i)=>i===2?n+"日":i===1?n+"일":n+(n==="1"?" day":" days");
 const add=(re,f)=>{P.push([re,(...a)=>[f(1,...a),f(2,...a)].slice(0,2)]);PJ.push([re,(...a)=>f(3,...a)])};
 const E=(i,en,ko,ja)=>i===3?ja:i===2?ko:en;
@@ -848,7 +853,11 @@ add(/^有 (\d+) 個生日應援正在進行$/,(i,n)=>E(i,n+pl(n," birthday proje
 add(/^離演唱會開演還有 (\d+) 天$/,(i,n)=>E(i,n+pl(n," day"," days")+" until the concert","콘서트 개막까지 "+n+"일","コンサート開演まであと"+n+"日"));
 add(/^(\S+) 小人，點一下聽他說話$/,(i,m)=>E(i,m+" avatar. Tap to hear them talk",m+" 캐릭터. 눌러서 이야기 듣기",m+"のミニキャラ。タップすると話します"));
 add(/^睡著的 (\S+) 小人，點一下$/,(i,m)=>E(i,"Sleeping "+m+" avatar. Tap",  "잠든 "+m+" 캐릭터. 눌러 보세요","眠っている"+m+"のミニキャラ。タップ"));
-add(/^演唱：(.+)$/,(i,m)=>E(i,"Singing: "+m.replace(/、/g,", "),"부르는 멤버: "+m,"歌唱："+m))}
+add(/^演唱：(.+)$/,(i,m)=>E(i,"Singing: "+m.replace(/、/g,", "),"부르는 멤버: "+m,"歌唱："+m));
+add(/^(\d+) \/ (\d+) 個足跡$/,(i,n,m)=>E(i,n+" / "+m+pl(m," footprint"," footprints"),n+" / "+m+"개 발자취",n+" / "+m+"か所の足あと"));
+add(/^(\d+) 個國家・翻頁看每個國家的章$/,(i,n)=>E(i,n+pl(n," country"," countries")+" · flip through each country's stamps",n+"개국 · 페이지를 넘겨 나라별 도장을 확인하세요",n+"か国・ページをめくって各国のスタンプを見よう"));
+add(/^★ (.+) 完成 ★$/,(i,c)=>{const t=i===3?(JA[c]||c):((D[c]||[])[i-1]||c);return E(i,"★ "+t+" complete ★","★ "+t+" 완료 ★","★ "+t+" コンプリート ★")});
+add(/^(.+) 的足跡進度$/,(i,m)=>E(i,m+"'s footprint progress",m+"의 발자취 진행도",m+"の足あと進捗"));}
 document.querySelector(".hero").appendChild(sel);
 window.addEventListener("load",pass);pass();
 })();
