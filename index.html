@@ -2240,8 +2240,9 @@ x.font="400 48px "+PF;x.fillStyle="#d6edff";x.fillText("已打卡 "+k+" / "+n+" 
 x.fillStyle=C.card;x.fillRect(bx2,by2,bw2,bw2);x.lineWidth=8;x.strokeStyle=pct===100?"#f2b600":HB;x.strokeRect(bx2+4,by2+4,bw2-8,bw2-8);
 x.textAlign="center";x.fillStyle=C.ink;x.font="400 72px "+PF;x.fillText(pct+"%",bx2+bw2/2,by2+bw2/2-14);
 x.font="400 30px "+PF;x.fillStyle=C.sub;x.fillText(pct===100?"全部集滿":"完成度",bx2+bw2/2,by2+bw2/2+52);x.textAlign="left"}
-const top=430,bot=1700,cols=n>22?2:1,per=Math.ceil(n/cols),cw=(W-2*P)/cols,rh=Math.min(92,(bot-top)/per);
+const top=430,bot=1700,cols=n>22?2:1,per=Math.ceil(n/cols),cw=(W-2*P)/cols,rh=Math.min(100,(bot-top)/per);
 const fs=Math.max(26,Math.min(44,Math.round(rh*.48))),ic=Math.round(rh*.78);
+const wrapN=(t,mw,mx)=>{const ch=Array.from(t),o=[];let i=0;while(i<ch.length&&o.length<mx){let j=i;while(j<ch.length&&x.measureText(ch.slice(i,j+1).join("")).width<=mw)j++;if(j===i)j=i+1;let nx=j,line;if(j>=ch.length){line=ch.slice(i).join("");nx=ch.length}else if(o.length===mx-1){line=ch.slice(i,j).join("");while(line.length>1&&x.measureText(line+"…").width>mw)line=line.slice(0,-1);line+="…";nx=ch.length}else{let b=-1;for(let q=j-1;q>i;q--){if(ch[q]===" "||ch[q]==="（"||ch[q]==="("){b=q;break}}if(b>i+(j-i)*.4){line=ch.slice(i,b).join("");nx=ch[b]===" "?b+1:b}else line=ch.slice(i,j).join("")}o.push(line.trim());i=nx}return o};
 L.forEach((d,i)=>{const col=Math.floor(i/per),row=i%per,ox=P+col*cw,cy=top+row*rh+rh/2,dn=done.has(d.id);
 const cwid=cw-(cols>1?12:0),chh=rh-12,cxx=ox-16,cyy=cy-chh/2;
 x.globalAlpha=dn?1:.62;x.fillStyle=C.line;x.fillRect(cxx+6,cyy+6,cwid,chh);
@@ -2257,9 +2258,9 @@ x.font="400 "+fs+"px "+PF;x.fillStyle=C.ink;x.textBaseline="middle";
 const ty=String(d.type||""),em=ty.includes("廣告車")?"truck":ty.includes("公車")?"bus":ty.includes("電視牆")?"tv":ty.includes("燈箱")||ty.includes("看板")?"sign":ty.includes("咖啡")?"cafe":ty.includes("快閃")?"shop":ty.includes("展覽")?"expo":ty.includes("企劃")?"mega":"",pu=Math.max(2,Math.floor(fs*.95/8)),ew=em?pu*8+16:0;
 const dts=dn&&dd[d.id]?dd[d.id]:"";let dw=0;if(dts){x.font="400 "+Math.max(24,Math.round(fs*.78))+"px "+PF;dw=x.measureText(dts).width+28}
 x.font="400 "+fs+"px "+PF;
-let t=name(d);const mw=cw-ic-52-(cols>1?24:0)-dw-ew;
-if(x.measureText(t).width>mw){while(t.length>1&&x.measureText(t+"…").width>mw)t=t.slice(0,-1);t+="…"}
-x.fillText(t,bx+ic+20+ew,cy+2);if(em){const g=PIX[em],px0=bx+ic+20,py0=Math.round(cy-pu*4);g.forEach((row,ry)=>{for(let rx=0;rx<8;rx++){const ch=row[rx];if(ch!=="."&&PAL[ch]){x.fillStyle=PAL[ch];x.fillRect(px0+rx*pu,py0+ry*pu,pu,pu)}}})}
+let t=name(d);const mw=cw-ic-52-(cols>1?24:0)-dw-ew;let lines=[t];
+if(x.measureText(t).width>mw){const f=Math.max(20,Math.min(fs,Math.floor((chh-14)/2.3)));x.font="400 "+f+"px "+PF;lines=wrapN(t,mw,2)}
+if(lines.length>1){const lh=Math.round(parseInt(x.font.replace(/^\D*/,""))*1.18);lines.forEach((ln,li)=>x.fillText(ln,bx+ic+20+ew,cy+2+(li?lh/2:-lh/2)))}else x.fillText(lines[0],bx+ic+20+ew,cy+2);if(em){const g=PIX[em],px0=bx+ic+20,py0=Math.round(cy-pu*4);g.forEach((row,ry)=>{for(let rx=0;rx<8;rx++){const ch=row[rx];if(ch!=="."&&PAL[ch]){x.fillStyle=PAL[ch];x.fillRect(px0+rx*pu,py0+ry*pu,pu,pu)}}})}
 if(dts){const f2=Math.max(24,Math.round(fs*.78)),pw=dw-4,ph=f2+16,px=cxx+cwid-pw-14,py=cy-ph/2;x.fillStyle=C.ok;x.fillRect(px,py,pw,ph);x.fillStyle=C.card;x.font="400 "+f2+"px "+PF;x.textAlign="center";x.fillText(dts,px+pw/2,cy+2);x.textAlign="left"}
 x.globalAlpha=1});
 const fy=1772,fw=W-2*P;x.fillStyle=C.line;x.fillRect(P+6,fy+6,fw,32);x.fillStyle=C.pill;x.fillRect(P,fy,fw,32);
