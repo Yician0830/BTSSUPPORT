@@ -85,7 +85,33 @@
     "晚點再說": ["Maybe later", "나중에", "あとで"],
     "新房間即將推出": ["New room coming soon", "새 방이 곧 공개돼요", "新しいお部屋は近日公開"],
     "完成第一個房間後解鎖。": ["Unlocks after you complete the first room.", "첫 번째 방을 완성하면 열려요.", "最初のお部屋を完成させると解放されます。"],
-    "第一個房間已完成，新房間準備中。": ["First room complete — the new room is on its way.", "첫 번째 방 완성! 새 방을 준비하고 있어요.", "最初のお部屋は完成！新しいお部屋を準備中です。"]
+    "第一個房間已完成，新房間準備中。": ["First room complete — the new room is on its way.", "첫 번째 방 완성! 새 방을 준비하고 있어요.", "最初のお部屋は完成！新しいお部屋を準備中です。"],
+    "練習室": ["Practice Room", "연습실", "練習室"],
+    "練習室完成度": ["Practice room completion", "연습실 완성도", "練習室の完成度"],
+    "練習室完成！": ["Practice room complete!", "연습실 완성!", "練習室が完成！"],
+    "七個人站好位置了，準備開跳。": ["All seven are in position — time to dance.", "일곱 명이 자리를 잡았어요. 이제 춤출 시간!", "7人が立ち位置につきました。踊り始めよう。"],
+    "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。": ["Tap things in the practice room. Dark silhouettes are items you haven't unlocked yet.", "연습실 안의 물건을 눌러 보세요. 어두운 실루엣은 아직 해제하지 않은 물건이에요.", "練習室のものをタップしてみよう。暗いシルエットはまだ解除していないアイテムです。"],
+    "練習室也掛上彩旗了。": ["The practice room put up bunting too.", "연습실에도 깃발을 달았어요.", "練習室にもガーランドを飾りました。"],
+    "練習室為壽星布置好了。": ["The practice room is all decked out for the birthday star.", "연습실이 생일 주인공을 위해 꾸며졌어요.", "練習室が主役のために飾られました。"],
+    "練習室開放了，快去看看。": ["The practice room is open — go take a look.", "연습실이 열렸어요. 얼른 가 보세요.", "練習室がオープンしました。見に行ってみよう。"],
+    "隊形練習中，再練一遍。": ["Running formations — one more time.", "대형 연습 중이에요. 한 번만 더요.", "フォーメーション練習中。もう一回やろう。"],
+    "音響": ["Speaker", "스피커", "スピーカー"], "隊形貼紙": ["Formation marks", "대형 스티커", "立ち位置テープ"], "三腳架": ["Tripod", "삼각대", "三脚"], "白板": ["Whiteboard", "화이트보드", "ホワイトボード"],
+    "水瓶": ["Water bottle", "물병", "ボトル"], "毛巾": ["Towel", "수건", "タオル"], "運動包": ["Gym bag", "스포츠백", "スポーツバッグ"], "手機架": ["Phone stand", "폰 거치대", "スマホスタンド"],
+    "掛鐘": ["Wall clock", "벽시계", "壁掛け時計"], "日出窗": ["Sunrise window", "일출 창문", "朝焼けの窓"], "練習服掛架": ["Practice-wear rack", "연습복 행거", "練習着ラック"], "練習日誌": ["Practice log", "연습 일지", "練習ノート"],
+    "節拍開起來，從頭再跳一次。": ["Beat's on — one more time from the top.", "비트 켜! 처음부터 한 번 더.", "ビートを流して、もう一回頭から。"],
+    "站好位置，七個人一個都不能錯。": ["Hit your marks — all seven, no one out of place.", "자리에 서요. 일곱 명 모두 틀리면 안 돼요.", "立ち位置について。7人、誰も間違えないで。"],
+    "錄下來，晚點再檢討。": ["Recording — we'll review it later.", "녹화해 두고 나중에 같이 모니터링해요.", "録画しておいて、あとで振り返ろう。"],
+    "今天的練習曲，你猜是哪一首？": ["Today's practice song — can you guess which?", "오늘의 연습곡, 어떤 곡일까요?", "今日の練習曲、どれだと思う？"],
+    "補水時間。": ["Water break.", "물 마시는 시간.", "水分補給の時間。"],
+    "練到流汗，毛巾先掛這裡。": ["Sweaty already — hang the towel here.", "땀이 날 때까지 연습! 수건은 여기에 걸어 둬요.", "汗だくになるまで練習。タオルはここに。"],
+    "東西都帶齊了，隨時可以出發。": ["Everything's packed — ready to go anytime.", "챙길 건 다 챙겼어요. 언제든 출발할 수 있어요.", "荷物は全部そろった。いつでも出発できるよ。"],
+    "今天的運勢，順便排進練習表。": ["Today's fortune — slot it into the practice schedule.", "오늘의 운세도 연습표에 같이 넣어요.", "今日の運勢も、練習スケジュールに入れておこう。"],
+    "還沒走嗎？再一遍就好。": ["Still here? Just one more run.", "아직 안 갔어요? 딱 한 번만 더요.", "まだ帰らないの？あと1回だけ。"],
+    "不知不覺，天亮了。": ["Without noticing, it's already dawn.", "어느새 날이 밝았어요.", "気づけば、夜が明けていた。"],
+    "七件，一件不少。": ["Seven outfits — none missing.", "일곱 벌, 한 벌도 빠지지 않았어요.", "7着、1着も欠けていません。"],
+    "今天也有好好練習。": ["Practiced hard again today.", "오늘도 열심히 연습했어요.", "今日もちゃんと練習したよ。"],
+    "練習課表": ["Practice schedule", "연습 시간표", "練習スケジュール"],
+    "這週的課表排得滿滿的，照表操課。": ["This week's schedule is packed — follow it to the letter.", "이번 주 시간표가 빽빽해요. 표대로 연습해요.", "今週のスケジュールはぎっしり。表のとおりに練習しよう。"]
   };
   var LI = { en: 0, ko: 1, ja: 2 };
   function lang() {
@@ -110,12 +136,24 @@
   var ROOM_OPEN = ROOM_PUBLIC || (function () {
     try {
       var v = PV;
-      if (v === "room") localStorage.setItem("room-preview", "1");
-      else if (v === "off") localStorage.removeItem("room-preview");
-      if (v === "613" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
+      if (v === "room2") localStorage.setItem("room2-preview", "1");
+      else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
+      if (v === "613" || v === "room2all" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
+  /* 練習室（第 2 間）開關。
+     ROOM2_PUBLIC=false＝一般使用者看到的第 2 間還是上鎖畫面；要正式開放就改成 true（開放後仍要先完成第 1 間才進得去），並把 sw.js 的 VER 換一個值。
+     自己預覽：用 ?preview=room2 開一次，這台裝置就能直接進練習室（存在 localStorage: room2-preview，也會一併解鎖小窩入口）；
+     ?preview=room2all 只在這次開啟把練習室 13 件物品全部當成已解鎖（含七人隊形），不存任何東西；?preview=off 會把兩個預覽都關掉 */
+  var ROOM2_PUBLIC = false;
+  var P2ALL = PV === "room2all";
+  var ROOM2_PV = P2ALL || PV === "room2" || (function () {
+    try { return localStorage.getItem("room2-preview") === "1"; } catch (e) { return false; }
+  })();
+  function room2Open(st) { return ROOM2_PV || (ROOM2_PUBLIC && count(st, ITEMS) >= ITEMS.length); }
+
   if (!ROOM_OPEN) {
     var rb = document.getElementById("roomBtn");
     if (rb) {
@@ -246,6 +284,89 @@
       art: '<g class="halo">' + R(-4, -3, 16, 14, "#b794ff", 0.25) + R(-2, -1, 12, 10, "#b794ff", 0.25) + "</g>" + R(1, 0, 6, 5, "#b794ff") + R(2, 5, 4, 1, "#9d7be8") + R(3, 6, 2, 10, "#444") + R(2, 16, 4, 2, "#222") }
   ];
 
+  /* ===== 第 2 間：練習室（13 件物品；6/13、成員生日當天另有裝飾，不算進完成度） =====
+     物品欄位和第 1 間一樣。徽章代號 b 要在 app.js 的徽章表新增（這個檔只讀 badgeSync()，不改徽章資料）：
+       p-game 玩過 5 首不同的歌 ｜ p-foot 足跡集滿 3 個國家 ｜ p-pass 匯出一次「ARMY 應援護照」｜ p-pred 預測 5 次
+       p-chk 打卡 3 個應援地點 ｜ p-fav 收藏 10 個應援 ｜ p-sub 投稿一次 ｜ p-luck 累積抽籤 10 次
+       （隱藏）p-late 凌晨 0–4 點打卡 ｜ p-dawn 連兩天深夜打卡 ｜ p-seven 七位成員都打卡過 ｜ p-week 連續打卡 7 天
+     以上條件都是暫定，要調整只改 app.js 的徽章判斷，這裡不用動。
+     第 13 件「練習課表」不新增徽章，直接用現有的 m10（應援高手：累計打卡 10 個）。
+     an 新增兩種點擊動畫：eq（音量條跳動）、flash（相機閃光）。 */
+  function artPspk() {
+    var s = R(0, 0, 18, 22, "#2b2f3a") + R(1, 1, 16, 20, "#3a4050");
+    [[2, 3], [6, 6], [10, 4], [14, 5]].forEach(function (b, i) { s += '<g class="rsb">' + R(b[0], 8 - b[1], 2, b[1], MC[i]) + "</g>"; });
+    return s + R(6, 10, 6, 1, "#15171e") + R(5, 11, 8, 1, "#15171e") + R(4, 12, 10, 6, "#15171e") + R(5, 18, 8, 1, "#15171e") + R(6, 19, 6, 1, "#15171e") + R(6, 13, 6, 4, "#444") + R(8, 14, 2, 2, "#aab2c8");
+  }
+  /* 七個 X，位置對準七人隊形的第一種站位（站位的 x 中心 = 19 + 21×i） */
+  function artPmark() {
+    var s = "";
+    for (var i = 0; i < 7; i++) {
+      var x = 2 + i * 21, c = MC[i];
+      s += R(x, 0, 1, 1, c) + R(x + 4, 0, 1, 1, c) + R(x + 1, 1, 1, 1, c) + R(x + 3, 1, 1, 1, c) + R(x + 2, 2, 1, 1, c) + R(x + 1, 3, 1, 1, c) + R(x + 3, 3, 1, 1, c) + R(x, 4, 1, 1, c) + R(x + 4, 4, 1, 1, c);
+    }
+    return s;
+  }
+  function artPtripod() {
+    var s = R(2, 0, 8, 6, "#222") + R(3, 1, 6, 4, "#3a4050") + R(5, 2, 2, 2, "#6fb7ff") + R(8, 1, 1, 1, "#e0457b") + R(5, 6, 2, 10, "#555");
+    for (var k = 0; k < 8; k++) s += R(5 - Math.round(k * 0.7), 16 + k, 1, 1, "#444") + R(6 + Math.round(k * 0.7), 16 + k, 1, 1, "#444");
+    return s + '<g class="rfl">' + R(-4, -4, 20, 14, "#fff", 0.85) + "</g>";
+  }
+  function artPboard() {
+    return R(0, 0, 20, 14, "#aab2c8") + R(1, 1, 18, 11, "#fff") + R(2, 13, 16, 1, "#8b5a2b") +
+      R(4, 3, 1, 5, "#555") + R(2, 7, 3, 2, "#555") + R(5, 3, 2, 1, "#555") +
+      R(10, 3, 7, 1, "#7b4fd6") + R(10, 5, 6, 1, "#9aa3c7") + R(10, 7, 7, 1, "#e0457b") + R(10, 9, 4, 1, "#9aa3c7");
+  }
+  function artPwater() {
+    return R(1, 0, 3, 1, "#e0457b") + R(1, 1, 3, 1, "#aab2c8") + R(0, 2, 5, 8, "#bfe3ff") + R(0, 2, 1, 8, "#fff", 0.6) + R(1, 5, 3, 2, "#7b4fd6");
+  }
+  function artPtowel() {
+    return R(0, 0, 9, 3, "#9ad0ff") + R(1, 3, 7, 8, "#6fb7ff") + R(1, 5, 7, 1, "#fff") + R(1, 8, 7, 1, "#fff") + R(1, 11, 7, 1, "#4a90d6");
+  }
+  function artPbag() {
+    return R(4, 0, 8, 1, "#222") + R(3, 1, 1, 3, "#222") + R(12, 1, 1, 3, "#222") + R(0, 3, 16, 9, "#2b2f3a") + R(1, 4, 14, 7, "#3a4050") +
+      R(2, 6, 12, 1, "#aab2c8") + R(6, 8, 4, 2, "#7b4fd6") + R(0, 8, 3, 4, "#222");
+  }
+  function artPphone() {
+    return R(1, 0, 6, 6, "#222") + R(2, 1, 4, 4, "#6fb7ff") + R(2, 1, 1, 1, "#fff") + R(3, 6, 2, 4, "#888") + R(1, 10, 6, 2, "#555");
+  }
+  function artPclock() {
+    return R(1, 0, 10, 12, "#19b5c9") + R(0, 1, 12, 10, "#19b5c9") + R(2, 2, 8, 8, "#fff") + R(6, 3, 1, 4, "#0b2a5b") + R(3, 6, 4, 1, "#0b2a5b");
+  }
+  function artPwin() {
+    return R(0, 0, 20, 20, "#8b5a2b") + R(2, 2, 16, 4, "#7b6fd0") + R(2, 6, 16, 4, "#e58fb0") + R(2, 10, 16, 4, "#ffb36b") + R(2, 14, 16, 4, "#ffe27a") +
+      R(8, 11, 5, 3, "#fff1a8") + R(9, 10, 3, 1, "#fff1a8") + R(2, 15, 16, 3, "#3a4163") + R(9, 2, 2, 16, "#8b5a2b") + R(2, 9, 16, 1, "#8b5a2b");
+  }
+  function artPrack() {
+    var s = R(0, 0, 21, 1, "#555");
+    for (var i = 0; i < 7; i++) s += R(i * 3 + 1, 1, 1, 1, "#aab2c8") + R(i * 3, 2, 3, 9, MC[i]) + R(i * 3 + 1, 2, 1, 1, "#fff");
+    return s;
+  }
+  function artPlog() {
+    return R(0, 1, 12, 6, "#e0457b") + R(1, 0, 5, 6, "#fff") + R(6, 0, 5, 6, "#fff") + R(5, 0, 2, 6, "#9aa3c7") + R(2, 1, 3, 1, "#9aa3c7") + R(2, 3, 3, 1, "#9aa3c7") + R(7, 1, 3, 1, "#9aa3c7") + R(8, 4, 3, 1, "#ffd23f");
+  }
+  function artPsched() {
+    var s = R(0, 0, 22, 14, "#aab2c8") + R(1, 1, 20, 12, "#fff") + R(1, 1, 20, 3, "#7b4fd6") + R(10, 0, 2, 1, "#e0457b");
+    [5, 9, 13, 17].forEach(function (x) { s += R(x, 4, 1, 9, "#d5dbe8"); });
+    [7, 10].forEach(function (y) { s += R(1, y, 20, 1, "#d5dbe8"); });
+    return s + R(2, 5, 3, 2, MC[1]) + R(6, 5, 3, 2, MC[3]) + R(14, 5, 3, 2, MC[4]) + R(10, 8, 3, 2, MC[2]) + R(18, 8, 3, 2, MC[5]) + R(2, 11, 3, 1, MC[0]) + R(14, 11, 3, 1, MC[6]);
+  }
+  var ITEMS2 = [
+    { k: "pmark", b: "p-foot", fb: "站好位置", n: "隊形貼紙", x: 15, y: 89, w: 133, h: 5, an: "hop", say: "站好位置，七個人一個都不能錯。", art: artPmark() },
+    { k: "pspk", b: "p-game", fb: "節拍練習生", n: "音響", x: 136, y: 44, w: 18, h: 22, an: "eq", say: "節拍開起來，從頭再跳一次。", art: artPspk() },
+    { k: "ptripod", b: "p-pass", fb: "錄影存檔", n: "三腳架", x: 5, y: 42, w: 12, h: 24, an: "flash", say: "錄下來，晚點再檢討。", art: artPtripod() },
+    { k: "pboard", b: "p-pred", fb: "練習曲目", n: "白板", x: 116, y: 8, w: 20, h: 14, an: "shake", say: "今天的練習曲，你猜是哪一首？", art: artPboard() },
+    { k: "pwater", b: "p-chk", fb: "補水時間", n: "水瓶", x: 116, y: 56, w: 5, h: 10, an: "hop", say: "補水時間。", art: artPwater() },
+    { k: "ptowel", b: "p-fav", fb: "汗水毛巾", n: "毛巾", x: 44, y: 47, w: 9, h: 12, an: "sway", say: "練到流汗，毛巾先掛這裡。", art: artPtowel() },
+    { k: "pbag", b: "p-sub", fb: "整裝待發", n: "運動包", x: 140, y: 76, w: 16, h: 12, an: "shake", say: "東西都帶齊了，隨時可以出發。", art: artPbag() },
+    { k: "pphone", b: "p-luck", fb: "排進行程", n: "手機架", x: 104, y: 76, w: 8, h: 12, an: "bounce", say: "今天的運勢，順便排進練習表。", art: artPphone() },
+    { k: "pclock", b: "p-late", fb: "練到深夜", hid: 1, n: "掛鐘", x: 68, y: 5, w: 12, h: 12, an: "shake", say: "還沒走嗎？再一遍就好。", art: artPclock() },
+    { k: "pwin", b: "p-dawn", fb: "練到天亮", hid: 1, n: "日出窗", x: 138, y: 8, w: 20, h: 20, an: "bounce", say: "不知不覺，天亮了。", art: artPwin() },
+    { k: "prack", b: "p-seven", fb: "七件同款", hid: 1, n: "練習服掛架", x: 1, y: 8, w: 21, h: 12, an: "sway", say: "七件，一件不少。", art: artPrack() },
+    { k: "plog", b: "p-week", fb: "每日練習", hid: 1, n: "練習日誌", x: 122, y: 72, w: 12, h: 7, an: "hop", say: "今天也有好好練習。", art: artPlog() },
+    { k: "psched", b: "m10", fb: "應援高手", n: "練習課表", x: 30, y: 3, w: 22, h: 14, an: "shake", say: "這週的課表排得滿滿的，照表操課。", art: artPsched() }
+  ];
+  var ALL = ITEMS.concat(ITEMS2);
+
   /* ===== 窗外煙火（只有小窩 100% 才有）：一格一格的像素，共 8 影格——前 3 格火箭上升，後 5 格爆開、變淡 ===== */
   function fwHtml(b, f) {
     var s = "", c1 = MC[b.c], c2 = MC[(b.c + 3) % 7];
@@ -349,7 +470,7 @@
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : "";
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : "";
+    var st = S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : "";
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
       R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
   }
@@ -378,15 +499,93 @@
     return s + walker(S) + (isAnniv() || bn ? confArt() : "") + "</svg>";
   }
 
+  /* ===== 練習室的場景：鏡牆（小人的倒影）＋ 把杆 ＋ 木地板。小人的倒影只畫在鏡子裡（clip），100% 時七個人各有一個 ===== */
+  var PD2 = { wall: "#f3ead8", wl: "#e2d6bd", fl: "#e8c48f", fll: "#c99f66", bs: "#ffffff", mir: "#cfe8f5", mirl: "#eaf7ff" };
+  var PN2 = { wall: "#2b2f55", wl: "#232748", fl: "#7a5a45", fll: "#5f4535", bs: "#8aa0d8", mir: "#34427c", mirl: "#5666a8" };
+  /* 七人隊形：每種 7 個點（成員 0～6 的圖左上角 x,y；圖 18×18，前排 y=76 腳踩在隊形貼紙上） */
+  var FORM = [
+    [[10, 76], [31, 76], [52, 76], [73, 76], [94, 76], [115, 76], [136, 76]],
+    [[10, 64], [31, 68], [52, 72], [73, 76], [94, 72], [115, 68], [136, 64]],
+    [[12, 76], [30, 64], [48, 76], [66, 64], [84, 76], [102, 64], [120, 76]],
+    [[10, 76], [31, 74], [52, 72], [73, 70], [94, 68], [115, 66], [136, 64]]
+  ];
+  var HAT2 = '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>";
+  function reflY(y) { return (50 + (y + 18 - 82) * 0.35 - 14).toFixed(2); }
+  function initDz(S) {
+    if (!S.dz) S.dz = FORM[S.fi].map(function (p) { return { x: p[0], y: p[1] }; });
+  }
+  /* 成員生日當天：白板外框換成那位成員的顏色，再灑幾個彩點 */
+  function bdBoardArt(n) {
+    var c = MC[WN.indexOf(n) % 7];
+    return R(0, 0, 20, 1, c) + R(0, 13, 20, 1, c) + R(0, 0, 1, 14, c) + R(19, 0, 1, 14, c) + R(3, 10, 1, 1, "#ffd23f") + R(8, 11, 1, 1, "#ff8fb3") + R(16, 10, 1, 1, "#6fb7ff");
+  }
+  /* 6/13 當天：牆邊多一支彩帶砲（只是裝飾，不能點） */
+  function popperArt() {
+    return '<g transform="translate(10,80)">' + R(1, 4, 5, 5, "#ff8fb3") + R(0, 7, 7, 2, "#e0457b") + R(3, 1, 1, 1, MC[2]) + R(5, 0, 1, 1, MC[4]) + R(6, 2, 1, 1, MC[1]) + R(2, 2, 1, 1, MC[3]) + R(4, 3, 1, 1, MC[5]) + "</g>";
+  }
+  function mirrorRefl(S, full) {
+    var s = '<g clip-path="url(#rmcp)">';
+    if (full) {
+      s += '<g opacity=".4">';
+      S.dz.forEach(function (d, i) {
+        s += '<image class="rmdr" data-i="' + i + '" href="' + esc(avUrl(WN[i])) + '" x="' + (d.x + 2).toFixed(2) + '" y="' + reflY(d.y) + '" width="14" height="14" preserveAspectRatio="xMidYMax meet"/>';
+      });
+      s += "</g>";
+    } else {
+      s += '<g id="rmmr" opacity=".4" transform="translate(' + (S.wx + 3).toFixed(2) + ',0)"><g class="rmmf"' + (S.wd > 0 ? ' transform="translate(20,0) scale(-1,1)"' : "") + '><image class="rmmra" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="38" width="20" height="20" preserveAspectRatio="xMidYMax meet"/></g></g>';
+    }
+    return s + "</g>";
+  }
+  /* 100%：七個人站在隊形點上，依 y 由後排到前排畫（前排蓋住後排） */
+  function dancers(S) {
+    initDz(S);
+    var s = '<g id="rmdz">';
+    S.dz.map(function (d, i) { return i; }).sort(function (a, b) { return S.dz[a].y - S.dz[b].y; }).forEach(function (i) {
+      var d = S.dz[i], hat = isAnniv() || bdName() === WN[i] ? '<g transform="translate(-1,3) scale(.75)">' + HAT2 + "</g>" : "";
+      s += '<g class="rmdd" data-i="' + i + '" transform="translate(' + d.x.toFixed(2) + "," + d.y.toFixed(2) + ')" tabindex="0" role="button" aria-label="' + esc(WN[i]) + '"><g class="rmdb" style="animation-delay:-' + (i * 0.13).toFixed(2) + 's">' +
+        R(0, 0, 18, 18, "transparent") + '<image href="' + esc(avUrl(WN[i])) + '" x="0" y="0" width="18" height="18" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>";
+    });
+    return s + "</g>";
+  }
+  function scene2(S, full) {
+    var P = S.night ? PN2 : PD2, i, r, x, bn = bdName(), fest = isAnniv() || bn;
+    S.wx = Math.max(6, Math.min(108, S.wx));
+    initDz(S);
+    var s = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="練習室"><defs><clipPath id="rmcp"><rect x="26" y="20" width="86" height="40"/></clipPath></defs>';
+    s += R(0, 0, 160, 64, P.wall);
+    for (i = 1; i < 10; i++) s += R(i * 16, 0, 1, 64, P.wl, 0.6);
+    s += R(0, 66, 160, 34, P.fl);
+    for (r = 0; r < 5; r++) {
+      s += R(0, 70 + r * 7, 160, 1, P.fll);
+      for (x = (r % 2) * 16 + 8; x < 160; x += 32) s += R(x, 71 + r * 7, 1, 6, P.fll, 0.5);
+    }
+    s += R(0, 64, 160, 3, P.bs);
+    if (fest) s += buntArt(isAnniv() ? "" : bn);
+    /* 鏡牆：銀框、鏡面、兩道斜斜的反光 */
+    s += R(24, 18, 90, 44, "#aab2c8") + R(26, 20, 86, 40, P.mir);
+    for (i = 0; i < 40; i += 2) s += R(72 - i, 20 + i, 3, 2, P.mirl, 0.5) + R(92 - i, 20 + i, 2, 2, P.mirl, 0.35);
+    s += mirrorRefl(S, full);
+    /* 把杆（在鏡子前面） */
+    s += R(24, 48, 90, 2, "#b07a45") + R(24, 50, 90, 1, "#8b5a2b") + R(30, 51, 2, 11, "#8b5a2b") + R(104, 51, 2, 11, "#8b5a2b");
+    ITEMS2.forEach(function (it) {
+      var on = !!S.st[it.b], cls = "rmi" + (on ? "" : " lk");
+      var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
+      s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "pboard" && on && bn ? bdBoardArt(bn) : "") + "</g></g>";
+    });
+    if (isAnniv()) s += popperArt();
+    s += full ? dancers(S) : walker(S);
+    return s + (fest ? confArt() : "") + "</svg>";
+  }
+
   /* ===== 狀態 ===== */
   function getBs() {
     var r = null;
     try { r = badgeSync(); } catch (e) {}
     return r && r.st ? r : { st: {}, L: [] };
   }
-  function count(st) {
+  function count(st, list) {
     var n = 0;
-    ITEMS.forEach(function (it) { if (st[it.b]) n++; });
+    (list || ITEMS).forEach(function (it) { if (st[it.b]) n++; });
     return n;
   }
   function dstr(v) {
@@ -469,17 +668,23 @@
     ".rdp{animation:rmdu .45s steps(3) infinite}.rdp.d1{animation-delay:.15s}.rdp.d2{animation-delay:.3s}@keyframes rmdu{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(-4px,-3px)}}" +
     ".rcfs{pointer-events:none}.rcf{animation:rmcf 6s steps(6) infinite}@keyframes rmcf{0%{transform:translate(0,-4px)}25%{transform:translate(2px,22px)}50%{transform:translate(-1px,48px)}75%{transform:translate(2px,74px)}100%{transform:translate(0,100px)}}" +
     ".rflA{opacity:1;animation:rmpa .6s steps(1) infinite}.rflB{opacity:0;animation:rmpb .6s steps(1) infinite}" +
+    ".a-eq .rsb{animation:rseq .45s steps(3) 3}.rsb{transform-box:fill-box;transform-origin:50% 100%}@keyframes rseq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}" +
+    ".rfl{opacity:0;pointer-events:none}.a-flash .rfl{animation:rflash .5s steps(2)}@keyframes rflash{0%,100%{opacity:0}30%,60%{opacity:1}}" +
+    ".dn .rmwb{transform-box:fill-box;transform-origin:50% 100%;animation:rmdn .4s steps(1) infinite}@keyframes rmdn{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-3px) rotate(5deg)}}" +
+    ".po .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(7deg)}" +
+    ".rmdd{cursor:pointer}.rmdd:focus-visible{outline:2px solid var(--focus)}.rmdb{animation:rmbob .5s steps(1) infinite}" +
     ".rmrs{display:flex;gap:6px;margin-bottom:8px}.rmrs button{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
-    "@media(prefers-reduced-motion:reduce){.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}";
+    "@media(prefers-reduced-motion:reduce){.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
+    "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}";
   document.head.appendChild(css);
 
   /* ===== 多房間：S.rm 0＝第一間（彩蛋小窩），1＝第二間（尚未推出，先顯示上鎖畫面）。
-     下一間推出時：把 lockedRoom() 換成真正的場景，並把 chips() 裡第 2 間的鎖頭拿掉 ===== */
+     第 2 間（練習室）開放後，room2Open() 為 true 就顯示真場景，否則還是 lockedRoom() 的上鎖畫面 ===== */
   var LOCK_SVG = '<svg viewBox="0 0 10 10" shape-rendering="crispEdges" width="10" height="10" aria-hidden="true" fill="currentColor"><rect x="3" y="0" width="4" height="1"/><rect x="2" y="1" width="1" height="3"/><rect x="7" y="1" width="1" height="3"/><rect x="1" y="4" width="8" height="5"/></svg>';
-  function chips(S, full) {
+  function chips(S, full, open2) {
     return '<div class="rmrs" role="group"><button type="button" data-r="0" aria-pressed="' + (S.rm === 0) + '"><span>第 1 間</span></button>' +
-      '<button type="button" data-r="1" class="' + (full ? "nx" : "") + '" aria-pressed="' + (S.rm === 1) + '"><span>第 2 間</span>' + LOCK_SVG + "</button></div>";
+      '<button type="button" data-r="1" class="' + (full ? "nx" : "") + '" aria-pressed="' + (S.rm === 1) + '"><span>第 2 間</span>' + (open2 ? "" : LOCK_SVG) + "</button></div>";
   }
   function lockedRoom(full, n) {
     var G = "#2e3452", K = "#aab2c8";
@@ -491,10 +696,10 @@
     return sv + '<div class="rmcap" aria-live="polite"><b>新房間即將推出</b><br>' +
       (full ? "第一個房間已完成，新房間準備中。" : "<span>完成第一個房間後解鎖。</span> <small><span>" + n + " / " + ITEMS.length + "</span> <span>件</span></small>") + "</div>";
   }
-  function nextPop() {
+  function nextPop(open2) {
     var door = R(3, 0, 10, 16, "#8b5a2b") + R(4, 1, 8, 14, "#c99a6b") + R(5, 2, 6, 6, "#b07a45") + R(5, 9, 6, 5, "#b07a45") + R(10, 8, 1, 2, "#ffd23f") + R(0, 2, 1, 1, "#ffd23f") + R(14, 5, 1, 1, "#ffd23f") + R(1, 12, 1, 1, "#fff") + R(14, 13, 1, 1, "#ffd23f");
     return '<div class="rmnx"><div class="rmnc" role="alertdialog" aria-modal="true" aria-labelledby="rmnt"><svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">' + door + "</svg>" +
-      '<b id="rmnt">第一個房間完成了！</b><p>下一個房間即將推出，敬請期待。</p>' +
+      '<b id="rmnt">第一個房間完成了！</b><p>' + (open2 ? "練習室開放了，快去看看。" : "下一個房間即將推出，敬請期待。") + '</p>' +
       '<div class="rmna"><button type="button" data-a="go">看看下一個房間</button><button type="button" data-a="cl">晚點再說</button></div></div></div>';
   }
 
@@ -504,8 +709,10 @@
     if (document.getElementById("rmo")) return;
     opener = document.activeElement;
     var bs = getBs(), L = bs.L, st = bs.st;
+    /* ?preview=room2all：只在這次開啟，把練習室的物品全部當成已獲得（複製一份，不動 badgeSync 的資料） */
+    if (P2ALL) { st = Object.assign({}, st); var pd = new Date().toISOString().slice(0, 10); ITEMS2.forEach(function (it) { if (!st[it.b]) st[it.b] = pd; }); }
     var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
-      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: 0, pop: false };
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: (PV.indexOf("room2") === 0 ? 1 : 0), pop: false, fi: 0, fnx: 0, dz: null, wdn: 0 };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -538,19 +745,33 @@
       return "<b>" + esc(it.n) + "</b> <small><span>來自徽章：</span><span>" + esc(bd ? bd.name : it.fb) + "</span> <span>·</span> <span>獲得於</span> <span>" + esc(dstr(S.st[it.b])) + "</span></small><br>" + tail;
     }
 
+    /* 換房間或換分頁時，把小人的動作重設成「散步」，避免帶著第 1 間的「看書、看日曆」狀態進到第 2 間 */
+    function resetW() {
+      S.wst = "walk"; S.wuntil = 0; S.wtt = 0; S.wtr = 0; S.wcd = 0; S.wdn = 0;
+      S.wx = Math.max(6, Math.min(S.rm === 1 ? 108 : 112, S.wx));
+    }
+    function dzSay(i) {
+      var cp = document.getElementById("rmcap");
+      if (cp) cp.innerHTML = "<b>" + esc(WN[i]) + "</b><br>" + esc(t("隊形練習中，再練一遍。"));
+    }
+
     function draw() {
       var n = count(S.st), pct = Math.round((n / ITEMS.length) * 100), full = n >= ITEMS.length, h;
-      h = '<div class="rmc"><div class="rmh">' + (S.rm === 1 ? "<b>？？？</b><span></span>" : "<b>彩蛋小窩</b><span><span>" + n + " / " + ITEMS.length + "</span> <span>件</span></span>") + "</div>" + chips(S, full) +
-        (S.rm === 1 ? "" : '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div>') + '<div class="rmb">';
-      if (S.rm === 1) {
+      var r2 = room2Open(S.st), p2 = S.rm === 1 && r2, LIST = S.rm === 1 ? ITEMS2 : ITEMS;
+      var n2 = count(S.st, ITEMS2), pct2 = Math.round((n2 / ITEMS2.length) * 100), full2 = n2 >= ITEMS2.length;
+      h = '<div class="rmc"><div class="rmh">' + (S.rm === 1 && !r2 ? "<b>？？？</b><span></span>" : "<b>" + (p2 ? "練習室" : "彩蛋小窩") + "</b><span><span>" + (p2 ? n2 : n) + " / " + (p2 ? ITEMS2.length : ITEMS.length) + "</span> <span>件</span></span>") + "</div>" + chips(S, full, r2) +
+        (S.rm === 1 && !r2 ? "" : '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div>') + '<div class="rmb">';
+      if (S.rm === 1 && !r2) {
         h += lockedRoom(full, n);
       } else if (S.tab === "room") {
-        h += scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。") + "</div>" +
-          '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>小窩完成度</span> <span>' + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
+        h += (p2 ? scene2(S, full2) : scene(S, full)) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
+          (p2
+            ? (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>練習室也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>練習室為壽星布置好了。" : full2 ? "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。" : "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。")
+            : (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。")) + "</div>" +
+          '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + (p2 ? pct2 : pct) + '"><s style="width:' + (p2 ? pct2 : pct) + '%"></s></div><span><span>' + (p2 ? "練習室完成度" : "小窩完成度") + "</span> <span>" + (p2 ? pct2 : pct) + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
-        ITEMS.forEach(function (it) {
+        LIST.forEach(function (it) {
           var on = !!S.st[it.b];
           if ((S.flt === "on" && !on) || (S.flt === "off" && on)) return;
           var bd = nameOf(it);
@@ -560,7 +781,7 @@
         h += "</div>";
       }
       h += '</div><button type="button" class="btn rmx">關閉</button></div>';
-      if (S.pop) h += nextPop();
+      if (S.pop) h += nextPop(r2);
       o.innerHTML = h;
       try { window.I18N && I18N.refresh(); } catch (e) {}
       if (S.pop) { var pb = o.querySelector(".rmnc button"); if (pb) pb.focus(); }
@@ -575,7 +796,7 @@
       setTimeout(function () { g.classList.remove(c); }, 1500);
     }
     function hit(g) {
-      var k = g.getAttribute("data-k"), it = ITEMS.filter(function (x) { return x.k === k; })[0];
+      var k = g.getAttribute("data-k"), it = ALL.filter(function (x) { return x.k === k; })[0];
       if (!it) return;
       var on = !!S.st[it.b];
       if (on && it.k === "lamp") {
@@ -598,6 +819,8 @@
       S.mem = (S.mem + 1) % WN.length;
       var im = g.querySelector("image");
       if (im) im.setAttribute("href", avUrl(WN[S.mem]));
+      var mi = o.querySelector(".rmmra");
+      if (mi) mi.setAttribute("href", avUrl(WN[S.mem]));
       g.setAttribute("aria-label", WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人"));
       var cap = document.getElementById("rmcap");
       if (cap) cap.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t("在小窩裡散步，再點一下換下一位。"));
@@ -608,7 +831,7 @@
     var reduceM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches);
     /* 新動作：走到書架（左邊）看書、走到日曆／時鐘下（中間）抬頭看。解鎖對應物品才會做 */
     function popK(k) {
-      var it = ITEMS.filter(function (x) { return x.k === k; })[0], gg = o.querySelector('.rmi[data-k="' + k + '"]');
+      var it = ALL.filter(function (x) { return x.k === k; })[0], gg = o.querySelector('.rmi[data-k="' + k + '"]');
       if (it && gg) pop(gg, it);
     }
     function enter(w, now) {
@@ -627,10 +850,74 @@
         S.wtr = 0;
       }
     }
+    /* 練習室的動作迴圈（S.rm === 1 時由 tick 轉進來）：
+       單人：左右散步；走到左端（有三腳架）擺姿勢拍照、走到右端（有音響）跳舞、平常每 7～15 秒隨機跳一小段、夜晚走一陣子就打瞌睡。
+       100%：七人在 FORM 的四種隊形之間換位（每 3.6 秒換一次），鏡子裡的倒影同步移動。 */
+    function tick2(now, dt) {
+      var g = o.querySelector(".rmwx"), ds = o.querySelector("#rmdz"), i;
+      if (g) {
+        if (S.wst === "walk") {
+          if (!S.wdn) S.wdn = now + 7 + Math.random() * 8;
+          S.wx += S.wd * SPD * dt;
+          S.wwalk += dt;
+          if (S.wx >= 108) {
+            S.wx = 108; S.wd = -1;
+            if (S.st["p-game"] && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
+          } else if (S.wx <= 6) {
+            S.wx = 6; S.wd = 1;
+            if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
+          }
+          if (S.wst === "walk" && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
+          if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
+        } else if (now >= S.wuntil) {
+          S.wst = "walk";
+        }
+        g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + ",0)");
+        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose");
+        g.classList.toggle("slp", S.wst === "sleep");
+        g.classList.toggle("dn", S.wst === "dn");
+        g.classList.toggle("po", S.wst === "pose");
+        var f = g.querySelector(".rmwf"), want = S.wd < 0;
+        if (f && f.__fl !== want) {
+          f.__fl = want;
+          if (want) f.setAttribute("transform", "translate(26,0) scale(-1,1)"); else f.removeAttribute("transform");
+        }
+        var mr = o.querySelector("#rmmr");
+        if (mr) {
+          mr.setAttribute("transform", "translate(" + (S.wx + 3).toFixed(2) + ",0)");
+          var mf = mr.querySelector(".rmmf"), mw = S.wd > 0;
+          if (mf && mf.__fl !== mw) {
+            mf.__fl = mw;
+            if (mw) mf.setAttribute("transform", "translate(20,0) scale(-1,1)"); else mf.removeAttribute("transform");
+          }
+        }
+      }
+      if (ds && S.dz) {
+        var els = [], rf = [];
+        [].forEach.call(ds.querySelectorAll(".rmdd"), function (e) { els[+e.getAttribute("data-i")] = e; });
+        [].forEach.call(o.querySelectorAll(".rmdr"), function (e) { rf[+e.getAttribute("data-i")] = e; });
+        if (!S.fnx) S.fnx = now + 2.5;
+        if (now >= S.fnx) {
+          S.fi = (S.fi + 1) % FORM.length;
+          S.fnx = now + 3.6;
+          [0, 1, 2, 3, 4, 5, 6].sort(function (a, b) { return FORM[S.fi][a][1] - FORM[S.fi][b][1]; }).forEach(function (j) { if (els[j]) ds.appendChild(els[j]); });
+        }
+        var kk = Math.min(1, dt * 4);
+        for (i = 0; i < 7; i++) {
+          var d = S.dz[i], tg = FORM[S.fi][i];
+          d.x += (tg[0] - d.x) * kk;
+          d.y += (tg[1] - d.y) * kk;
+          if (els[i]) els[i].setAttribute("transform", "translate(" + d.x.toFixed(2) + "," + d.y.toFixed(2) + ")");
+          if (rf[i]) { rf[i].setAttribute("x", (d.x + 2).toFixed(2)); rf[i].setAttribute("y", reflY(d.y)); }
+        }
+      }
+    }
+
     function tick(ts) {
       if (!document.body.contains(o)) return;
       var dt = Math.min(0.05, (ts - (lastTs || ts)) / 1000), now = ts / 1000, g = o.querySelector(".rmwx");
       lastTs = ts;
+      if (S.rm === 1) { tick2(now, dt); raf = requestAnimationFrame(tick); return; }
       /* 窗外煙火：小窩 100% 才有。每隔 5～12 秒放一發，每發約 1.4 秒 */
       var fw = o.querySelector("#rmfw");
       if (fw) {
@@ -721,14 +1008,16 @@
       if (t === o || (t.closest && t.closest(".rmx"))) return close();
       if (t.classList && t.classList.contains("rmnx")) { S.pop = false; draw(); return; }
       var pab = t.closest && t.closest("[data-a]");
-      if (pab) { if (pab.getAttribute("data-a") === "go") S.rm = 1; S.pop = false; draw(); return; }
+      if (pab) { if (pab.getAttribute("data-a") === "go") { S.rm = 1; resetW(); } S.pop = false; draw(); return; }
       var rsb = t.closest && t.closest("[data-r]");
-      if (rsb) { S.rm = +rsb.getAttribute("data-r"); draw(); return; }
+      if (rsb) { S.rm = +rsb.getAttribute("data-r"); resetW(); draw(); return; }
       var tb = t.closest && t.closest("[data-t]");
       if (tb) { S.tab = tb.getAttribute("data-t"); draw(); return; }
       var ft = t.closest && t.closest("[data-f]");
       if (ft) { S.flt = ft.getAttribute("data-f"); draw(); return; }
       if (t.closest && t.closest("#rmdn")) { S.night = !S.night; S.lamp = S.night; draw(); return; }
+      var dd = t.closest && t.closest(".rmdd");
+      if (dd) { dzSay(+dd.getAttribute("data-i")); return; }
       var w = t.closest && t.closest(".rmwk");
       if (w) { walk(w); return; }
       var g = t.closest && t.closest(".rmi");
@@ -736,8 +1025,8 @@
     });
     o.addEventListener("keydown", function (ev) {
       if (ev.key !== "Enter" && ev.key !== " ") return;
-      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk");
-      if (g) { ev.preventDefault(); if (g.classList.contains("rmwk")) walk(g); else hit(g); }
+      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk,.rmdd");
+      if (g) { ev.preventDefault(); if (g.classList.contains("rmwk")) walk(g); else if (g.classList.contains("rmdd")) dzSay(+g.getAttribute("data-i")); else hit(g); }
     });
     document.addEventListener("keydown", ky);
     draw();

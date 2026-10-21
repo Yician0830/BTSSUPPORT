@@ -866,6 +866,30 @@ add(/^BTS 出道周年，還有 (\d+) 天$/,(i,n)=>E(i,"BTS debut anniversary �
 add(/^🎂 今天是 (.+) 的生日$/,(i,m)=>E(i,"🎂 Today is "+m+"'s birthday","🎂 오늘은 "+m+"의 생일","🎂 今日は"+m+"の誕生日"));
 add(/^下一位：(.+)，還有 (\d+) 天$/,(i,m,n)=>E(i,"Next: "+m+" — "+n+" days to go","다음: "+m+" — "+n+"일 남음","次："+m+" — あと"+n+"日"));
 add(/^去過 (\d+) \/ (\d+)$/,(i,a,b)=>E(i,"Visited "+a+" / "+b,"다녀온 곳 "+a+" / "+b,"行った "+a+" / "+b));}
+/* 練習室徽章（p-game…p-week）的名稱和說明；文字要和 app.js bgList() 裡的完全一樣才翻得到（「收藏 10 個應援」本來就有，不用重複加） */
+[["節拍練習生","Beat Trainee","비트 연습생","ビート練習生"],
+["玩 5 首不同歌曲的應援遊戲（至少命中一個音符才算）","Play the cheer game on 5 different songs (hit at least one note to count)","서로 다른 5곡으로 응원 게임 플레이 (음표를 하나 이상 맞춰야 인정)","5つの異なる曲で応援ゲームをプレイ（音符を1つ以上当てると対象）"],
+["站好位置","Hit Your Mark","자리 잡기","立ち位置につけ"],
+["在 3 個不同的國家留下足跡（不含「其他」）","Leave footprints in 3 different countries (“Other” not counted)","서로 다른 3개 국가에 발자취 남기기 ('기타' 제외)","3つの異なる国に足あとを残す（「その他」は除く）"],
+["錄影存檔","Recorded for Review","녹화 저장","録画保存"],
+["匯出一次「ARMY 應援護照」集章圖","Export your “ARMY Cheer Passport” stamp image once","'ARMY 응원 여권' 스탬프 이미지 한 번 내보내기","「ARMY 応援パスポート」のスタンプ画像を1回書き出す"],
+["練習曲目","Practice Setlist","연습곡","練習曲リスト"],
+["累計參加 5 場歌單預測","Join 5 Setlist Predictions in total","셋리스트 예측 누적 5회 참여","セットリスト予想に通算5回参加"],
+["補水時間","Water Break","물 마시는 시간","水分補給タイム"],
+["打卡 3 個不同的應援地點","Check in at 3 different cheer locations","서로 다른 응원 장소 3곳 체크인","3か所の異なる応援スポットでチェックイン"],
+["汗水毛巾","Sweat Towel","땀 수건","汗ふきタオル"],
+["整裝待發","Packed and Ready","출발 준비 완료","準備万端"],
+["點開「投稿」表單一次","Open the “Submit info” form once","'제보' 양식 한 번 열기","「投稿」フォームを1回開く"],
+["排進行程","Scheduled In","일정에 넣기","スケジュールイン"],
+["累積抽幸運籤 10 次","Draw the Lucky Draw 10 times in total","행운 뽑기 누적 10회","おみくじを通算10回引く"],
+["練到深夜","Practicing Past Midnight","심야 연습","深夜練習"],
+["凌晨 0–4 點打卡","Check in between 12 AM and 4 AM","새벽 0~4시에 체크인","午前0〜4時にチェックイン"],
+["練到天亮","Practice Till Dawn","새벽까지 연습","夜明けまで練習"],
+["連續兩個晚上（22 點到凌晨 4 點）都在深夜打卡","Check in late at night (10 PM–4 AM) two nights in a row","이틀 연속 밤(오후 10시~새벽 4시)에 체크인","2晩連続で深夜（22時〜4時）にチェックイン"],
+["七件同款","Seven Matching Outfits","일곱 벌 맞춤","おそろい七着"],
+["七位成員的生日應援都打卡過","Check in at the birthday projects of all seven members","일곱 멤버 모두의 생일 응원 체크인","7人全員の誕生日応援でチェックイン"],
+["每日練習","Daily Practice","매일 연습","毎日練習"],
+["連續 7 天都有打卡","Check in 7 days in a row","7일 연속 체크인","7日連続でチェックイン"]].forEach(a=>I18N.add(...a));
 document.querySelector(".hero").appendChild(sel);
 window.addEventListener("load",pass);pass();
 })();

@@ -147,6 +147,24 @@ addH("h-bd","準時祝福","在成員生日（或 BTS 出道周年）當天，�
 addH("h-sea","跨海應援","台灣和海外的應援都打過卡",dn2.some(tw)&&dn2.some(d=>!tw(d)));
 const byMem={};dn2.forEach(d=>{if(d.sec==="birthday"&&d.member&&d.member!=="BTS")byMem[d.member]=(byMem[d.member]||0)+1});
 {const bm=Object.keys(byMem).sort((a,b)=>byMem[b]-byMem[a])[0],ok=!!bm&&byMem[bm]>=5;L.push({id:"h-bias",fam:"h",name:"偏心警告",desc:"同一位成員的應援打卡 5 個以上",k:ok?1:0,n:1,hid:1,bias:ok?bm:""})}
+/* 練習室徽章（p-game、p-pass、p-pred、p-chk、p-fav、p-sub、p-luck＋隱藏的 p-late、p-dawn、p-seven、p-week；p-foot 在下面的足跡區塊）：條件對應 room.js 的 ITEMS2 上方註解。
+   p-game 玩過 5 首不同的歌（localStorage: kh-gplay 記歌名陣列，gEnd 結算時至少命中一個音符才記；另外把 song-best 裡成績大於 0 的歌也算進來，舊紀錄不用重玩）｜p-pass 匯出一次集章圖（kh-pass，產生圖片就算）｜p-sub 投稿一次（kh-sub，點開「投稿」類表單連結就記）｜p-luck 累積抽籤 10 次（ftn-st.tot）｜p-pred 預測 5 場（kh-pred.j）
+   p-chk、p-fav、p-late、p-dawn、p-seven、p-week 看現況（取消打卡或取消收藏就收回）；p-late 凌晨 0–4 點打卡；p-dawn 連續兩個晚上（22 點到凌晨 4 點，凌晨算前一晚）都有打卡；p-week 連續 7 個日期都有打卡；這三個都讀 ddT（kh-donetime） */
+try{const lsN=k=>{try{return+localStorage.getItem(k)||0}catch(e){return 0}};
+add("p-game","g","節拍練習生","玩 5 首不同歌曲的應援遊戲（至少命中一個音符才算）",(()=>{const s=new Set();try{const a=JSON.parse(localStorage.getItem("kh-gplay")||"[]");if(Array.isArray(a))a.forEach(x=>s.add(x))}catch(e){}try{const B=gBest();Object.keys(B).forEach(k=>{if(B[k]&&B[k].a>0)s.add(k)})}catch(e){}return s.size})(),5);
+add("p-pass","m","錄影存檔","匯出一次「ARMY 應援護照」集章圖",lsN("kh-pass")?1:0,1);
+add("p-pred","c","練習曲目","累計參加 5 場歌單預測",(()=>{try{const o=JSON.parse(localStorage.getItem("kh-pred")||"{}");return Array.isArray(o.j)?o.j.length:0}catch(e){return 0}})(),5);
+add("p-chk","m","補水時間","打卡 3 個不同的應援地點",new Set(dn2.map(d=>String(d.place||d.id).trim())).size,3);
+add("p-fav","b","汗水毛巾","收藏 10 個應援",DATA.filter(d=>favs.has(d.id)).length,10);
+add("p-sub","m","整裝待發","點開「投稿」表單一次",lsN("kh-sub")?1:0,1);
+add("p-luck","t","排進行程","累積抽幸運籤 10 次",+fxSt().tot||0,10);
+const dayN=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s);return m?Date.UTC(+m[1],+m[2]-1,+m[3])/864e5:NaN},hr=s=>+s.slice(11,13),
+tm=dn2.map(d=>String(ddT[d.id]||"")).filter(s=>/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)),
+run=a=>{const u=[...new Set(a.filter(x=>!isNaN(x)))].sort((x,y)=>x-y);let b=0,c=0;u.forEach((x,i)=>{c=i&&x===u[i-1]+1?c+1:1;if(c>b)b=c});return b};
+addH("p-late","練到深夜","凌晨 0–4 點打卡",tm.some(s=>hr(s)<4));
+addH("p-dawn","練到天亮","連續兩個晚上（22 點到凌晨 4 點）都在深夜打卡",run(tm.filter(s=>hr(s)>=22||hr(s)<4).map(s=>dayN(s)-(hr(s)<4?1:0)))>=2);
+addH("p-seven","七件同款","七位成員的生日應援都打卡過",MEMBERS.filter(m=>m[0]!=="BTS").every(m=>dn2.some(d=>d.sec==="birthday"&&d.member===m[0])));
+addH("p-week","每日練習","連續 7 天都有打卡",run(tm.map(dayN))>=7)}catch(e){}
 /* 打卡／收藏類徽章都跟著現況走（取消打卡或取消收藏就收回）；連抽、熱心站民、常駐站民的資料本身不會因取消打卡而消失，仍保留 */
 {const S0=bgRd(),kp=(id,ok)=>ok,iso=s=>{const m=String(s||"").match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);return m?m[1]+"-"+m[2].padStart(2,"0")+"-"+m[3].padStart(2,"0"):""},md=s=>{const m=iso(s);return m?(+m.slice(5,7))+"/"+(+m.slice(8,10)):""},onDay=(d,s)=>{const v=iso(s);if(!v)return false;const t=(ddT[d.id]||"").slice(0,10);return t?t===v:dt(d)===md(s)};
 addH("h-open","開幕第一人","在應援開始的第一天打卡",kp("h-open",dn2.some(d=>onDay(d,d.start))));
@@ -189,6 +207,7 @@ fa("fp-1","初次足跡","去過 1 個藝人同款足跡",nv,1);
 fa("fp-5","足跡新星","累計去過 5 個藝人同款足跡",nv,5);
 fa("fp-10","足跡達人","累計去過 10 個藝人同款足跡",nv,10);
 fa("fp-w","跨國足跡","在 2 個不同的國家留下足跡",new Set(FL.filter(ok).map(fpCtOf)).size,2);
+fa("p-foot","站好位置","在 3 個不同的國家留下足跡（不含「其他」）",new Set(FL.filter(ok).map(fpCtOf).filter(c=>c!=="其他")).size,3);
 {const by={};pool.forEach(d=>{const c=fpCtOf(d);(by[c]=by[c]||[]).push(d)});
 Object.keys(by).filter(c=>c!=="其他"&&by[c].length>=2).forEach(c=>fa("fp-c-"+c,c+"走透透","把"+c+"的足跡全部去過",by[c].filter(ok).length,by[c].length))}
 {const bc={};pool.forEach(d=>{if(d.cat)(bc[d.cat]=bc[d.cat]||[]).push(d)});Object.keys(bc).filter(c=>bc[c].length>=2).forEach(c=>{const n=Math.min(3,bc[c].length);fa("fp-t-"+c,c+"達人","「"+c+"」類別的足跡去過 "+n+" 個",bc[c].filter(ok).length,n)})}
@@ -207,7 +226,7 @@ return L.map(b=>(b.ok=b.k>=b.n,b))}
 const BG_TIER={"r-3":1,"s-v3":1,"s-v7":2,m5:1,m10:2,m20:3,"d-3":1,"d-7":2,"g-1":1,"g-3":2,"f-s3":1,"f-s7":2,"fp-5":1,"fp-10":2};
 function bgRar(b){return b.hid?["h","★ 隱藏"]:(BG_TIER[b.id]>=2||/^(u-|p-live$|g-ap$|g-4$|f-col$|f-sh$|s-win$|r-hit$|r-top$)/.test(b.id))?["r","稀有"]:["n","普通"]}
 const BG_CATS=["演唱會","生日","幸運籤","應援遊戲","打卡天數","收藏","背景音樂","歌單預測","足跡","終極挑戰"];
-function bgCat(id){return id==="h-final"||id==="h-hunt"||id==="h-egg"||id==="h-egg2"||id==="h-hrt"||id==="h-nt"||id==="h-613"||/^u-/.test(id)?"終極挑戰":/^(fp-|h-fp)/.test(id)?"足跡":/^r-/.test(id)?"歌單預測":/^(v-|h-vow)/.test(id)?"收藏":/^(c-|t-|p-two|p-live|h-live|h-w3)/.test(id)?"演唱會":/^g-/.test(id)?"應援遊戲":/^(b-|p-tw|p-ow|h-bd|h-mem|h-bias|h-sea)/.test(id)?"生日":/^f-/.test(id)?"幸運籤":/^s-/.test(id)?"背景音樂":"打卡天數"}
+function bgCat(id){return id==="h-final"||id==="h-hunt"||id==="h-egg"||id==="h-egg2"||id==="h-hrt"||id==="h-nt"||id==="h-613"||/^u-/.test(id)?"終極挑戰":/^(fp-|h-fp|p-foot$)/.test(id)?"足跡":/^(r-|p-pred$)/.test(id)?"歌單預測":/^(v-|h-vow|p-fav$)/.test(id)?"收藏":/^(c-|t-|p-two|p-live|h-live|h-w3)/.test(id)?"演唱會":/^(g-|p-game$)/.test(id)?"應援遊戲":/^(b-|p-tw|p-ow|h-bd|h-mem|h-bias|h-sea)/.test(id)?"生日":/^(f-|p-luck$)/.test(id)?"幸運籤":/^s-/.test(id)?"背景音樂":"打卡天數"}
 /* 解鎖徽章時跳出的獲得卡片；隱藏徽章用金色版本。點空白處、按關閉，或 7 秒後自動關閉 */
 /* 每枚徽章各自的像素圖示：BG_PX 是 10×10 的圖案（# 是主色，+ 是亮點）；BG_MAP 依徽章代號挑圖案，對不到就用兔子 */
 const BG_PX={
@@ -241,7 +260,7 @@ q:["..######..",".##....##.",".##....##.","......###.","....###...","....##...."
 phone:["...####...","..######..","..#....#..","..#....#..","..#....#..","..#....#..","..#....#..","..######..","..##++##..","..######.."],
 bookmark:["..######..","..######..","..######..","..######..","..######..","..######..","..######..","..##..##..","..#....#..",".........."],
 ribbon:["..######..", ".########.", ".###++###.", "..######..", "...####...", "..##..##..", "..##..##..", ".##....##.", ".#......#.", "##......##"]};
-const BG_MAP=[[/^h-nt$/,"moon"],[/^h-613$/,"cake"],[/^h-hrt$/,"heart"],[/^fp-w$/,"globe"],[/^fp-c-/,"pin"],[/^fp-t-/,"ribbon"],[/^h-fp-day$/,"cal"],[/^(fp-|h-fp)/,"foot"],[/^r-1$/,"pad"],[/^r-3$/,"star"],[/^r-hit$/,"target"],[/^r-top$/,"crown"],[/^s-v3$/,"flame"],[/^s-v7$/,"crown"],[/^s-nom$/,"note"],[/^s-win$/,"trophy"],[/^c-day$/,"target"],[/^f-s3$/,"flame"],[/^f-s7$/,"crown"],[/^x-help$/,"mail"],[/^x-app$/,"phone"],[/^h-open$/,"bolt"],[/^h-last$/,"hourglass"],[/^h-w3$/,"cal"],[/^h-vow$/,"check"],[/^v-fav$/,"bookmark"],[/^m1$/,"flag"],[/^m5$/,"star"],[/^m10$/,"trophy"],[/^m20$/,"crown"],[/^c-/,"pin"],[/^t-all$/,"gem"],[/^t-/,"ribbon"],[/^p-two$/,"pin"],[/^p-live$/,"mic"],[/^p-tw$/,"foot"],[/^p-ow$/,"globe"],[/^b-/,"heart"],[/^d-/,"cal"],[/^f-1$/,"clover"],[/^f-col$/,"star"],[/^f-sh$/,"spark"],[/^g-s$/,"trophy"],[/^g-1$/,"flag"],[/^g-3$/,"star"],[/^g-nm$/,"shield"],[/^g-ap$/,"target"],[/^g-4$/,"pad"],[/^h-live$/,"mic"],[/^h-day3$/,"foot"],[/^h-bd$/,"cake"],[/^h-mem$/,"people"],[/^h-sea$/,"globe"],[/^h-bias$/,"spark"],[/^h-final$/,"crown"],[/^u-/,"trophy"],[/^h-hunt$/,"gem"]];
+const BG_MAP=[[/^p-game$/,"pad"],[/^p-foot$/,"globe"],[/^p-pass$/,"bookmark"],[/^p-pred$/,"target"],[/^p-chk$/,"check"],[/^p-fav$/,"heart"],[/^p-sub$/,"mail"],[/^p-luck$/,"clover"],[/^p-late$/,"moon"],[/^p-dawn$/,"star"],[/^p-seven$/,"people"],[/^p-week$/,"cal"],[/^h-nt$/,"moon"],[/^h-613$/,"cake"],[/^h-hrt$/,"heart"],[/^fp-w$/,"globe"],[/^fp-c-/,"pin"],[/^fp-t-/,"ribbon"],[/^h-fp-day$/,"cal"],[/^(fp-|h-fp)/,"foot"],[/^r-1$/,"pad"],[/^r-3$/,"star"],[/^r-hit$/,"target"],[/^r-top$/,"crown"],[/^s-v3$/,"flame"],[/^s-v7$/,"crown"],[/^s-nom$/,"note"],[/^s-win$/,"trophy"],[/^c-day$/,"target"],[/^f-s3$/,"flame"],[/^f-s7$/,"crown"],[/^x-help$/,"mail"],[/^x-app$/,"phone"],[/^h-open$/,"bolt"],[/^h-last$/,"hourglass"],[/^h-w3$/,"cal"],[/^h-vow$/,"check"],[/^v-fav$/,"bookmark"],[/^m1$/,"flag"],[/^m5$/,"star"],[/^m10$/,"trophy"],[/^m20$/,"crown"],[/^c-/,"pin"],[/^t-all$/,"gem"],[/^t-/,"ribbon"],[/^p-two$/,"pin"],[/^p-live$/,"mic"],[/^p-tw$/,"foot"],[/^p-ow$/,"globe"],[/^b-/,"heart"],[/^d-/,"cal"],[/^f-1$/,"clover"],[/^f-col$/,"star"],[/^f-sh$/,"spark"],[/^g-s$/,"trophy"],[/^g-1$/,"flag"],[/^g-3$/,"star"],[/^g-nm$/,"shield"],[/^g-ap$/,"target"],[/^g-4$/,"pad"],[/^h-live$/,"mic"],[/^h-day3$/,"foot"],[/^h-bd$/,"cake"],[/^h-mem$/,"people"],[/^h-sea$/,"globe"],[/^h-bias$/,"spark"],[/^h-final$/,"crown"],[/^u-/,"trophy"],[/^h-hunt$/,"gem"]];
 function bgIco(id){if(id==="h-egg"&&typeof FPAV!=="undefined"&&FPAV.Jungkook)return `<img class="bgav" src="${FPAV.Jungkook}" alt="" aria-hidden="true">`;if(id==="h-egg2"&&typeof FPAV!=="undefined"&&FPAV.RM)return `<img class="bgav" src="${FPAV.RM}" alt="" aria-hidden="true">`;{const mm=/^fp-m-(.+)$/.exec(id);if(mm&&typeof FPAV!=="undefined"&&FPAV[mm[1]])return `<img class="bgav" src="${FPAV[mm[1]]}" alt="" aria-hidden="true">`}const m=BG_MAP.find(a=>a[0].test(id)),g=BG_PX[id==="?"?"q":(m?m[1]:"bunny")];let r="";g.forEach((row,y)=>{const re=/#+|\++/g;let q;while(q=re.exec(row))r+=`<rect x="${q.index}" y="${y}" width="${q[0].length}" height="1"${q[0][0]==="+"?' fill="#fff" opacity=".75"':""}/>`});return `<svg viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`}
 function bgMem(g){const F=typeof FPAV!=="undefined"?FPAV:{};return `<div class="bgm" role="img" aria-label="已打卡 ${g.length} / ${MEMBERS.length}">${MEMBERS.map(m=>{const n=m[0],on=g.includes(n);return n==="BTS"||!F[n]?`<span class="bgm1 t${on?" on":""}">${n}</span>`:`<span class="bgm1${on?" on":""}" title="${n}"><img src="${F[n]}" alt="" aria-hidden="true"></span>`}).join("")}</div>`}
 let BGP_T=0;
@@ -260,11 +279,11 @@ function badgeSync(){const st=bgRd(),L=bgList(),nw=[],n=new Date(),ds=n.getFullY
 let rv=false;
 /* 活動資料還沒載入（或載入失敗）時 DATA 是空的，所有打卡類徽章都會算成未達標；這時只解鎖、不收回，避免誤刪 */
 const safe=Array.isArray(DATA)&&DATA.length>0&&!window.__dataFail;
-L.forEach(b=>{if(b.ok&&!st[b.id]){st[b.id]=ds;nw.push(b)}else if(safe&&!b.ok&&st[b.id]&&!(/^(fp-|h-fp)/.test(b.id)&&!fpL().length)){delete st[b.id];rv=true}});
+L.forEach(b=>{if(b.ok&&!st[b.id]){st[b.id]=ds;nw.push(b)}else if(safe&&!b.ok&&st[b.id]&&!(/^(fp-|h-fp|p-foot$)/.test(b.id)&&!fpL().length)){delete st[b.id];rv=true}});
 if(rv&&!nw.length){try{localStorage.setItem("kh-badges",JSON.stringify(st))}catch(e){}}
 if(nw.length){try{localStorage.setItem("kh-badges",JSON.stringify(st))}catch(e){}try{badgePop(nw)}catch(e){toast(nw.length===1?"獲得新徽章："+nw[0].name:"獲得 "+nw.length+" 個新徽章")}}
 return{st,L}}
-document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest('a[href*="forms.gle"]');if(a){try{localStorage.setItem("kh-help","1")}catch(x){}setTimeout(()=>{try{badgeSync()}catch(x){}},300)}});
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest('a[href*="forms.gle"]');if(a){try{localStorage.setItem("kh-help","1");if(/投稿|提供/.test(a.textContent||"")||(typeof SUBMIT_URL==="string"&&SUBMIT_URL&&a.href===SUBMIT_URL))localStorage.setItem("kh-sub","1")}catch(x){}setTimeout(()=>{try{badgeSync()}catch(x){}},300)}});
 window.addEventListener("appinstalled",()=>{try{localStorage.setItem("kh-app","1");badgeSync()}catch(e){}});
 function fxSt(){try{const o=JSON.parse(localStorage.getItem("ftn-st")||"{}");return o&&typeof o==="object"?o:{}}catch(e){return{}}}
 /* 成就圖鑑：把集章徽章（kh-badges）和幸運籤的成員圖鑑、閃卡、場次限定卡、稱號（ftn-st）放在同一個畫面，只讀取，不改幸運籤的資料 */
@@ -691,7 +710,7 @@ function gStat(){let sc=0;GN.forEach(n=>{sc+=(n.st===1?100:n.st===2?60:0)*(n.f?2
 function gSet(n,st){n.st=st;if(!st)n.a=0;n.f=(st===1||st===2)&&GC>=20?1:0;n.e.classList.toggle("ok",st===1||st===2);n.e.classList.toggle("ms",st===3)}
 function gJ(t,c){const j=document.getElementById("gj");if(!j)return;j.textContent=t;j.className="gj "+c+" on";clearTimeout(gJ.t);gJ.t=setTimeout(()=>j.classList.remove("on"),420)}
 function gMark(t){const g=(gBest()[t]||{}).g;if(!g)return;document.querySelectorAll("#stabs .chip").forEach(c=>{if(c.dataset.t!==t)return;let s=c.querySelector(".gsg");if(!s){s=document.createElement("em");s.className="gsg";c.appendChild(s)}s.textContent=g});const o=[...document.querySelectorAll("#ssel option")].find(o=>o.value===t);if(o)o.textContent=o.textContent.replace(/ ・ [SABC]$/,"")+" ・ "+g}
-function gEnd(){const r=document.getElementById("gres");if(!r)return;let p=0,g=0,m=0;GN.forEach(n=>{n.st===1?p++:n.st===2?g++:m++});const a=GN.length?(p*100+g*60)/(GN.length*100):0,gr=gGrade(a),B=gBest(),old=B[GT],nw=GT&&(!old||a>old.a);if(nw){B[GT]={g:gr,a:Math.round(a*1000)/1000,d:Date.now()};try{localStorage.setItem("song-best",JSON.stringify(B))}catch(e){}gMark(GT);try{badgeSync()}catch(x){}}const bs=B[GT];let bd="";if(nw){gProgUpd();const x0=SONGS.find(z=>z.t===GT),BG=gBadges();if(x0)songCons(x0).forEach(c=>{const g=gProg(c.n);if(g.n&&g.k>=g.n&&!BG[c.n]){BG[c.n]=Date.now();bd+=`<span class="gnew">演唱會全曲通關！</span><span>${esc(c.n)}</span>`;try{localStorage.setItem("song-badge",JSON.stringify(BG))}catch(e){}}})}
+function gEnd(){const r=document.getElementById("gres");if(!r)return;let p=0,g=0,m=0;GN.forEach(n=>{n.st===1?p++:n.st===2?g++:m++});const a=GN.length?(p*100+g*60)/(GN.length*100):0,gr=gGrade(a),B=gBest(),old=B[GT],nw=GT&&(!old||a>old.a),played=GN.length>0&&p+g>0;if(played&&GT){try{let g0=[];try{g0=JSON.parse(localStorage.getItem("kh-gplay")||"[]")}catch(e){}if(!Array.isArray(g0))g0=[];if(!g0.includes(GT)){g0.push(GT);localStorage.setItem("kh-gplay",JSON.stringify(g0))}}catch(e){}}if(played&&!nw){try{badgeSync()}catch(x){}}if(nw){B[GT]={g:gr,a:Math.round(a*1000)/1000,d:Date.now()};try{localStorage.setItem("song-best",JSON.stringify(B))}catch(e){}gMark(GT);try{badgeSync()}catch(x){}}const bs=B[GT];let bd="";if(nw){gProgUpd();const x0=SONGS.find(z=>z.t===GT),BG=gBadges();if(x0)songCons(x0).forEach(c=>{const g=gProg(c.n);if(g.n&&g.k>=g.n&&!BG[c.n]){BG[c.n]=Date.now();bd+=`<span class="gnew">演唱會全曲通關！</span><span>${esc(c.n)}</span>`;try{localStorage.setItem("song-badge",JSON.stringify(BG))}catch(e){}}})}
 const R=gAchRun(),AC=gAch(),hv=AC[GT]||{},an=[],ao=[];Object.keys(R).forEach(k=>{(hv[k]?ao:an).push("★ "+GAN[k]);hv[k]=hv[k]||Date.now()});if(an.length||ao.length){AC[GT]=hv;try{localStorage.setItem("song-ach",JSON.stringify(AC))}catch(e){}}const ah=(an.length?`<span class="gnew">新成就！${an.join("　")}</span>`:"")+(ao.length?`<span>${ao.join("　")}</span>`:"");
 r.innerHTML=`<b>${gr}</b><span>PERFECT ${p}　GOOD ${g}　MISS ${m}</span><span>${Math.round(a*100)}%</span>${nw?`<span class="gnew">${old?"新紀錄！":"首次成績"}</span>`:bs?`<span><em>最佳成績</em> ${bs.g} ${Math.round(bs.a*100)}%</span>`:""}${bd}${ah}`;r.hidden=false}
 function gHit(c){GH[c]=true;GG[c]=performance.now();if(!GN.length||!YP||!YP.getCurrentTime)return;const t=YP.getCurrentTime();GN.forEach(n=>{if(n.c==="t"&&!n.st&&t>=n.w0&&t<=n.w1){gSet(n,3);GC=0;gJ("別喊！","r");gStat()}});let b=null,bd=9;GN.forEach(n=>{if(n.c===c&&!n.st&&!n.d){const d=Math.abs(n.s-t);if(d<bd){bd=d;b=n}}});
@@ -802,7 +821,7 @@ function ftShow(){const d=new Date(),key=ftKey(d),M=MEMBERS.filter(m=>m[0]!=="BT
 let wd=wd0,wsrc="";{const mp=FT_MQ[mb0]||[];if(mp.length&&fth(key+"q")%2===0){const z=mp[fth(key+"w")%mp.length];wd=z[0];wsrc=z[1]}}
 const td=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),yd=new Date(d.getFullYear(),d.getMonth(),d.getDate()-1);let st={};try{st=JSON.parse(localStorage.getItem("ftn-st")||"{}")||{}}catch(e){}
 st.tk={d:td,t:tk.t,go:tk.go||"",ok:st.tk&&st.tk.d===td&&st.tk.ok?1:0};st.th=(Array.isArray(st.th)?st.th:[]).filter(h=>h.d!==td).concat({d:td,t:tk.t}).slice(-14);
-if(st.last!==td){st.n=st.last===yd.getFullYear()+"-"+(yd.getMonth()+1)+"-"+yd.getDate()?(st.n||0)+1:1;st.last=td}
+if(st.last!==td){st.tot=(+st.tot||(st.last?(+st.n||1):0))+1;st.n=st.last===yd.getFullYear()+"-"+(yd.getMonth()+1)+"-"+yd.getDate()?(st.n||0)+1:1;st.last=td}
 st.col=Array.isArray(st.col)?st.col:[];if(!st.col.includes(mb0))st.col.push(mb0);st.sh=Array.isArray(st.sh)?st.sh:[];if(SH&&!st.sh.includes(mb0))st.sh.push(mb0);const shf=st.sh.length>=M.length;st.lm=Array.isArray(st.lm)?st.lm:[];if(LM&&!st.lm.includes(LM.k))st.lm.push(LM.k);const full=st.col.length>=M.length,mb=mb0,sn=st.n||1,ti=ftTier(sn,full),ts0=st.ts;st.ts=ts0&&ts0.d===td?{d:td,i:ti,p:ts0.p}:{d:td,i:ti,p:ts0?ts0.i:0};try{localStorage.setItem("ftn-st",JSON.stringify(st))}catch(e){}setTimeout(()=>{try{badgeSync()}catch(x){}},700);
 ftClose();const o=document.createElement("div");o.id="ftn";o.setAttribute("role","dialog");o.setAttribute("aria-modal","true");
 const nx=FT_TIERS[ti+1],KH=[FT_TEA,FT_TW[0],FT_CHK],kr=fth(key+"px"),ka=kr%3,kb=(ka+1+(kr>>3)%2)%3,kst=n=>{const v=fth(key+"px"+n);return`transform:translateY(${v%9-4}px) rotate(${(v>>5)%31-15}deg)`};
@@ -1080,7 +1099,7 @@ if(pct>0){x.fillStyle=C.ok;x.fillRect(P,fy,Math.max(24,fw*pct/100),32);x.fillSty
 x.lineWidth=4;x.strokeStyle=C.dark;x.strokeRect(P+2,fy+2,fw-4,28);
 x.fillStyle=C.sub;x.font="400 40px "+PF;x.textBaseline="alphabetic";x.fillText("完成 "+pct+"%",P,1870);
 x.textAlign="right";x.fillText("BTS 應援地圖",W-P,1870);x.textAlign="left";
-c.toBlob(b=>{if(!b){toast("儲存失敗，請再試一次");return}stampShow(b)},"image/png")}
+c.toBlob(b=>{if(!b){toast("儲存失敗，請再試一次");return}stampShow(b);try{localStorage.setItem("kh-pass","1")}catch(e){}try{badgeSync()}catch(e){}},"image/png")}
 /* 集章圖：先顯示圖片，再按按鈕叫出手機內建分享選單（可選社群或「儲存影像」）；不支援分享的瀏覽器改成下載，長按圖片也能存 */
 function stampShow(b){
 const url=URL.createObjectURL(b),file=new File([b],"stamp-book.png",{type:"image/png"});
