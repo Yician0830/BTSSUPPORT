@@ -220,10 +220,26 @@
     try { if (typeof FPAV !== "undefined" && FPAV && FPAV[n]) return FPAV[n]; } catch (e) {}
     return AVF[n];
   }
+  /* 本命生日當天（MEMBERS 是 app.js 的成員生日表）頭上戴派對帽 */
+  function bdToday(n) {
+    try {
+      if (typeof MEMBERS === "undefined") return false;
+      var d = new Date();
+      for (var i = 0; i < MEMBERS.length; i++) {
+        var m = MEMBERS[i];
+        if (m[0] === n) return Number(m[1]) === d.getMonth() + 1 && Number(m[2]) === d.getDate();
+      }
+    } catch (e) {}
+    return false;
+  }
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
-    return '<g transform="translate(0,70)"><g class="rmwx"><g class="rmwf"><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
-      R(0, 0, 22, 22, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="22" height="22" preserveAspectRatio="xMidYMax meet"/></g></g></g></g></g>';
+    var hat = S.bias && bdToday(WN[S.mem])
+      ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : "";
+    var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
+    var st = S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : "";
+    return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
+      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g></g>" + zz + "</g></g>";
   }
 
   function scene(S, full) {
@@ -313,14 +329,14 @@
     ".rmf{display:flex;gap:6px;margin-bottom:8px}.rmf button{font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmf button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
     ".rml{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rmk{border:2px solid var(--line);background:var(--box);padding:8px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}.rmk.on{border-color:var(--dark)}.rmk svg{width:100%;max-width:64px;height:48px;overflow:visible}.rmk svg.lk{opacity:.4;filter:grayscale(1) brightness(.55)}.rmk b{font-size:13px}.rmk small{font-size:11px;color:var(--sub);line-height:1.4}" +
     ".rmx{margin-top:10px;align-self:flex-end}" +
-    ".ftbd.rmpb{display:block;width:min(240px,100%);box-sizing:border-box;padding:4px 8px 6px}.rmpx{display:block;position:relative;height:14px;margin-top:4px;border:3px solid var(--dark);background:var(--box);overflow:hidden}.rmpx s{display:block;height:100%;background:var(--gold);text-decoration:none;transition:width .4s steps(8)}.rmpx::after,.rmbar .rmp::after{content:\"\";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 10px,var(--card) 10px 12px)}.ftbd.done .rmpx s{background:var(--ok)}" +
+    ".ftbd.rmpb,.ftbd.rmpb.done{display:block;width:min(240px,100%);box-sizing:border-box;padding:0;border:0;background:none}.rmpx{display:block;position:relative;height:14px;margin-top:4px;border:3px solid var(--dark);background:var(--box);overflow:hidden}.rmpx s{display:block;height:100%;background:var(--gold);text-decoration:none;transition:width .4s steps(8)}.rmpx::after,.rmbar .rmp::after{content:\"\";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 10px,var(--card) 10px 12px)}.ftbd.done .rmpx s{background:var(--ok)}" +
     ".rmbar .rmp{position:relative;overflow:hidden;height:14px;border:3px solid var(--dark)}.rmbar .rmp s{background:var(--gold)}" +
     "@media(prefers-reduced-motion:reduce){.rmpx s{transition:none}}" +
     ".rmwk{cursor:pointer}.rmwk:focus-visible{outline:2px solid var(--focus)}" +
-    ".rmwx{transform:translateX(20px);animation:rmwalk 16s linear infinite}@keyframes rmwalk{0%{transform:translateX(20px)}50%{transform:translateX(116px)}100%{transform:translateX(20px)}}" +
-    ".rmwf{transform-box:fill-box;transform-origin:50% 50%;animation:rmflip 16s steps(1,end) infinite}@keyframes rmflip{0%{transform:scaleX(1)}50%{transform:scaleX(-1)}100%{transform:scaleX(-1)}}" +
     ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
-    "@media(prefers-reduced-motion:reduce){.rmwx,.rmwf,.rmwb{animation:none}.rmwx{transform:translateX(66px)}}";
+    ".pz .rmwb{animation:none}.slp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(9deg)}" +
+    ".rmzz{display:none}.slp .rmzz{display:block}.rz{fill:#fff;stroke:#062a6e;stroke-width:.5;paint-order:stroke;font-weight:900;opacity:0;transform-box:fill-box;animation:rmz 2.4s ease-out infinite}.rz:nth-child(2){animation-delay:.8s}.rz:nth-child(3){animation-delay:1.6s}@keyframes rmz{0%{opacity:0;transform:translate(0,3px)}30%{opacity:1}100%{opacity:0;transform:translate(4px,-8px)}}" +
+    "@media(prefers-reduced-motion:reduce){.rmwb,.rz{animation:none}.slp .rz{opacity:1}}";
   document.head.appendChild(css);
 
   /* ===== 開啟專區 ===== */
@@ -329,7 +345,8 @@
     if (document.getElementById("rmo")) return;
     opener = document.activeElement;
     var bs = getBs(), L = bs.L, st = bs.st;
-    var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false };
+    var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0 };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -415,7 +432,49 @@
       if (cap) cap.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t("在小窩裡散步，再點一下換下一位。"));
     }
 
+    /* 小人的動作由這個迴圈控制：左右走、踏上地毯跳一下、走到球鞋（有解鎖才會）停 2 秒、夜晚走一陣子就打瞌睡 5 秒 */
+    var raf = 0, lastTs = 0, SPD = 12.5;
+    var reduceM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches);
+    function tick(ts) {
+      if (!document.body.contains(o)) return;
+      var dt = Math.min(0.05, (ts - (lastTs || ts)) / 1000), now = ts / 1000, g = o.querySelector(".rmwx");
+      lastTs = ts;
+      if (g) {
+        var dy = 0;
+        if (S.wst === "walk") {
+          S.wx += S.wd * SPD * dt;
+          S.wwalk += dt;
+          if (S.wx >= 112) { S.wx = 112; S.wd = -1; }
+          else if (S.wx <= 8) {
+            S.wx = 8;
+            if (S.st["fp-1"]) { S.wst = "look"; S.wuntil = now + 2.2; } else S.wd = 1;
+          }
+          var ctr = S.wx + 13, inRug = ctr >= 58 && ctr <= 106;
+          if (inRug && !S.wrug && S.wj <= 0) S.wj = 0.5;
+          S.wrug = inRug;
+          if (S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; }
+        } else if (now >= S.wuntil) {
+          if (S.wst === "look") S.wd = 1;
+          S.wst = "walk";
+        }
+        if (S.wj > 0) {
+          S.wj -= dt;
+          dy = S.wj > 0 ? -6 * Math.sin(Math.PI * (1 - S.wj / 0.5)) : 0;
+        }
+        g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy.toFixed(2) + ")");
+        g.classList.toggle("pz", S.wst !== "walk");
+        g.classList.toggle("slp", S.wst === "sleep");
+        var f = g.querySelector(".rmwf"), want = S.wd < 0;
+        if (f && f.__fl !== want) {
+          f.__fl = want;
+          if (want) f.setAttribute("transform", "translate(26,0) scale(-1,1)"); else f.removeAttribute("transform");
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    }
+
     var close = function () {
+      cancelAnimationFrame(raf);
       o.remove();
       document.removeEventListener("keydown", ky);
       document.body.style.overflow = prevOv;
@@ -443,6 +502,7 @@
     });
     document.addEventListener("keydown", ky);
     draw();
+    if (!reduceM) raf = requestAnimationFrame(tick);
     o.querySelector(".rmx").focus();
   }
 
