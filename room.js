@@ -1860,7 +1860,16 @@
       }
     }
     function ngStart(now) {
-      if (S.ngA || !ROOMS[S.rm].ng) return;
+      if (S.ngA || S.ngW || !ROOMS[S.rm].ng) return;
+      /* 七人要進場前，一定要等單人已經離場：先讓單人往右走出畫面（ngW），走完才由 tick 呼叫 ngGo 讓七人進來 */
+      if (!reduceM) {
+        S.ngW = 1; S.ngNext = now + 1e9;
+        S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wdep = 1;
+        return;
+      }
+      ngGo(now);
+    }
+    function ngGo(now) {
       var vdg = seasonKind() === "vd";
       /* 情人節：七個人從左邊慢慢走進來、排好比愛心鞠躬 6 秒、再往右邊慢慢走出去（跟練習室、6/13 一樣）；新年維持原地拜年 6 秒 */
       S.ngx = WN.map(function (n, i) { return reduceM ? 8 + i * 21 : -24 - i * 12; });
@@ -2050,8 +2059,12 @@
       var g = o.querySelector(".rmwx"), ds = o.querySelector("#rmdz"), i, ph = ds ? S.gp : "", sw = !ds || ph === "away" || ph === "enter";
       if (ds && ph === "away") {
         if (!S.gpw) S.gpw = now + 25 + Math.random() * 20;
-        else if (now >= S.gpw && S.wst === "walk") {
-          S.gpw = 0; S.gp = ph = "enter"; S.wd = 1; S.fi = 0; S.capK = "";
+        else if (!S.gclr && now >= S.gpw && S.wst === "walk") {
+          /* 七人要進場前，先等單人完全離場：單人往右走出畫面（gclr），走完才換七人從左邊進來 */
+          S.gclr = 1; S.wd = 1;
+        }
+        if (S.gclr && S.wx >= 168) {
+          S.gclr = 0; S.gpw = 0; S.gp = ph = "enter"; S.wd = 1; S.fi = 0; S.capK = "";
           S.dz.forEach(function (d, k) { d.x = -24 - k * 12; d.y = FORM[0][k][1]; });
           sw = true;
         }
@@ -2065,7 +2078,7 @@
       if (g && sw) {
         if (S.wst === "walk" && !S.wdep && tourLeaving()) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wdep = 1; }
         if (S.wst === "walk") {
-          if (ph === "enter") {
+          if (ph === "enter" || S.gclr) {
             S.wd = 1; S.wx += SPD * 1.5 * dt;
           } else {
             if (!S.wdn) S.wdn = now + 7 + Math.random() * 8;
@@ -2247,8 +2260,9 @@
       if (TICKS[ROOMS[S.rm].id]) { S.ngA = 0; TICKS[ROOMS[S.rm].id](now, dt); raf = requestAnimationFrame(tick); return; }
       if (seasonKind() === "ny" || seasonKind() === "vd") {
         if (!S.ngNext) S.ngNext = now + 6;
-        if (!S.ngA && S.wst === "walk" && now >= S.ngNext) ngStart(now);
+        if (!S.ngA && !S.ngW && S.wst === "walk" && now >= S.ngNext) ngStart(now);
       }
+      if (S.ngW && S.wst === "out" && S.wot === 1) { S.ngW = 0; ngGo(now); } /* 單人已離場，七人才進場 */
       if (S.ngA && now >= S.ngA) S.ngA = 0;
       ngSync();
       /* 情人節七人送愛心的動線：in（走進來）→ hold（站好鞠躬 6 秒）→ out（往右走出去）→ 結束後單人回來 */
@@ -2261,7 +2275,11 @@
           if (now - S.ngT >= 6) S.ngP = "out";
         } else {
           for (nk = 0; nk < 7; nk++) { S.ngx[nk] += 40 * dt; if (S.ngx[nk] < 162) nok = false; }
-          if (nok) { S.ngA = 0; S.ngP = ""; S.ngNext = now + 25 + Math.random() * 20; }
+          if (nok) {
+            S.ngA = 0; S.ngP = ""; S.ngNext = now + 25 + Math.random() * 20;
+            /* 七人全部離場後，單人才從左邊走回來 */
+            if (S.wdep && S.wst === "out") { S.wdep = 0; S.wot = 2; S.wx = -30; S.wd = 1; }
+          }
         }
         if (ngr) {
           ngr.classList.toggle("wk", S.ngP !== "hold");
