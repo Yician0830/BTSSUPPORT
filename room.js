@@ -112,7 +112,7 @@
     "有新物品！": ["New items!", "새 아이템이 있어요!", "新しいアイテムがあります！"],
     "閃爍的星星是新獲得的，點一下看看。": ["The blinking stars mark new items — tap to take a look.", "반짝이는 별은 새로 얻은 아이템이에요. 눌러서 확인해 보세요.", "点滅する星は新しく獲得したアイテム。タップしてみよう。"],
     "全部": ["All", "전체", "すべて"],
-    "在小窩裡散步，再點一下換下一位。": ["Taking a stroll around the room — tap again for the next one.", "방 안을 산책 중이에요. 한 번 더 누르면 다음 멤버예요.", "お部屋を散歩中。もう一度タップすると次のメンバーに交代します。"],
+    "在小窩裡散步。": ["Taking a stroll around the room.", "방 안을 산책 중이에요.", "お部屋を散歩中。"],
     "本命一直都在小窩裡。": ["Your bias is always here in the room.", "최애는 언제나 방에 있어요.", "本命はいつもお部屋にいます。"],
     "散步的小人": ["Little walker", "산책하는 꼬마", "お散歩ミニキャラ"],
     "關閉": ["Close", "닫기", "閉じる"],
@@ -172,6 +172,13 @@
     "一邊走一邊默默數拍子。": ["Quietly counting beats while walking.", "걸으면서 조용히 박자를 세는 중.", "歩きながらこっそりカウント中。"],
     "跳舞中，節拍跟上！": ["Dancing — keep up with the beat!", "춤추는 중, 박자를 놓치지 마요!", "ダンス中。ビートに乗って！"],
     "練舞練到停不下來。": ["Practicing nonstop — can't stop now.", "연습에 빠져서 멈출 수가 없어요.", "夢中で踊って、止まらない。"],
+    "跳完舞，先擦擦汗。": ["Done dancing — time to wipe off the sweat.", "춤을 추고 나서 땀부터 닦아요.", "踊り終わったら、まずは汗を拭こう。"],
+    "拿毛巾擦擦臉，等一下再來一遍。": ["Wiping the face with the towel — one more run in a bit.", "수건으로 얼굴을 닦아요. 조금 있다 한 번 더!", "タオルで顔を拭いて、あとでもう一回。"],
+    "咕嚕咕嚕，補充水分。": ["Gulp, gulp — rehydrating.", "꿀꺽꿀꺽, 수분 보충 중.", "ごくごく、水分補給。"],
+    "喝口水，體力補滿。": ["A sip of water — energy refilled.", "물 한 모금, 체력 충전!", "水を一口飲んで、体力回復。"],
+    "在練習日誌上寫下今天的進度。": ["Writing today's progress in the practice log.", "연습 일지에 오늘의 진도를 적는 중이에요.", "練習ノートに今日の進み具合を書き込み中。"],
+    "翻開日誌，核對今天練了幾遍。": ["Flipping open the log to check how many runs we did today.", "일지를 펴서 오늘 몇 번 연습했는지 확인해요.", "ノートを開いて、今日は何回練習したか確認中。"],
+    "一筆一筆記下來，天天都不間斷。": ["Jotting it down bit by bit — not a single day missed.", "한 줄 한 줄 적어요. 하루도 빠짐없이.", "一つずつ書き留めて、毎日欠かさず。"],
     "對著三腳架擺姿勢，看鏡頭！": ["Striking a pose for the tripod — look at the camera!", "삼각대 앞에서 포즈 중, 카메라를 봐요!", "三脚の前でポーズ。カメラを見て！"],
     "練習告一段落，大家先離開。": ["Practice is done for now — everyone heads out.", "연습이 끝나서 다들 나가요.", "練習は一区切り。みんなで退室。"],
     "新一輪練習，大家就位。": ["New round of practice — everyone to your spots.", "새 연습 시작, 다들 자리로!", "新しい練習、みんな位置について。"],
@@ -221,7 +228,7 @@
     posterT: ["看著海報，今天就是正式演出！", "海報上的七個人，今天終於要見面了！"],
     pack: ["整理行李：票、手燈、行動電源，都放進包包了。", "票帶了嗎？手燈充飽了嗎？再確認一次！"],
     pop: ["拉開彩帶砲——砰！紙花滿天飛。"],
-    walk: ["在小窩裡散步，再點一下換下一位。", "慢慢晃來晃去，心情不錯。", "東看看西看看，巡視自己的小窩。"],
+    walk: ["在小窩裡散步。", "慢慢晃來晃去，心情不錯。", "東看看西看看，巡視自己的小窩。"],
     run: ["突然想跑一下！", "小跑步中，小心別撞到家具。"],
     look: ["盯著球鞋看，好想出門走走。", "看著球鞋發呆，想起下一場應援。"],
     read: ["在書架前翻書，看得入迷。", "挑了一本書，安靜閱讀中。"],
@@ -231,6 +238,9 @@
     w2: ["在練習室裡熱身走動。", "一邊走一邊默默數拍子。"],
     dn: ["跳舞中，節拍跟上！", "練舞練到停不下來。"],
     pose: ["對著三腳架擺姿勢，看鏡頭！"],
+    wipe: ["跳完舞，先擦擦汗。", "拿毛巾擦擦臉，等一下再來一遍。"],
+    drink: ["咕嚕咕嚕，補充水分。", "喝口水，體力補滿。"],
+    plog: ["在練習日誌上寫下今天的進度。", "翻開日誌，核對今天練了幾遍。", "一筆一筆記下來，天天都不間斷。"],
     candy: ["蹲在地上撿糖果，偷吃一顆。", "不給糖就搗蛋，先吃一顆再說。"],
     broom: ["拿起掃帚，假裝要飛起來。", "把掃帚扶正，女巫帽也戴好了。"],
     cookie: ["偷偷咬一口餅乾，再喝口牛奶。", "這是給聖誕老人的……少一片應該沒關係。"],
@@ -1182,6 +1192,8 @@
     ".rfl{opacity:0;pointer-events:none}.a-flash .rfl{animation:rflash .5s steps(2)}@keyframes rflash{0%,100%{opacity:0}30%,60%{opacity:1}}" +
     ".dn .rmwb{transform-box:fill-box;transform-origin:50% 100%;animation:rmdn .4s steps(1) infinite}@keyframes rmdn{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-3px) rotate(5deg)}}" +
     ".po .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(7deg)}" +
+    ".lg .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(1px) rotate(10deg)}" +
+    ".wp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(1px) rotate(6deg)}.dk .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(-9deg)}" +
     ".rmdd{cursor:pointer}.rmdd:focus,.rmdd:focus-visible{outline:none}.rmdb{animation:rmbob .5s steps(1) infinite}" +
     ".rmrs{display:flex;gap:6px;margin-bottom:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:thin}.rmrs button{flex:0 0 auto;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs .rmpc{font-style:normal;font-size:11px;opacity:.8}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
@@ -1307,7 +1319,7 @@
 
     /* 換房間或換分頁時，把小人的動作重設成「散步」，避免帶著第 1 間的「看書、看日曆」狀態進到第 2 間 */
     function resetW() {
-      S.wst = "walk"; S.wuntil = 0; S.wtt = 0; S.wtr = 0; S.wcd = 0; S.wdn = 0;
+      S.wst = "walk"; S.wuntil = 0; S.wtt = 0; S.wtr = 0; S.wcd = 0; S.wdn = 0; S.wchain = [];
       if (S.gp !== "enter") S.wx = Math.max(6, Math.min(ROOMS[S.rm].wmax, S.wx));
     }
     function dzSay(i) {
@@ -1434,7 +1446,7 @@
       if (mi) mi.setAttribute("href", avUrl(WN[S.mem]));
       g.setAttribute("aria-label", WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人"));
       var cap = document.getElementById("rmcap");
-      if (cap) cap.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t("在小窩裡散步，再點一下換下一位。"));
+      if (cap) cap.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t("在小窩裡散步。"));
       S.capK = ""; S.cph = performance.now() / 1000 + 2.5;
     }
 
@@ -1520,11 +1532,13 @@
       else {
         var a = CAPS[key === "poster" ? (tourKind() === "today" ? "posterT" : "posterE") : key];
         if (!a) return;
-        var lo = (key === "walk" && S.bias) ? 1 : 0;
+        var lo = 0;
         tx = t(a[lo + Math.floor(Math.random() * (a.length - lo))]);
       }
       cp.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(tx);
     }
+    /* 練習室：開始走向毛巾（站在毛巾左邊）或水瓶（站在水瓶左邊），到了才由 enter() 接手 */
+    function goTo(act) { S.wact = act; S.wtgt = act === "wipe" ? 18 : 90; S.wst = "go"; S.wuntil = 1e12; }
     function popBurst(id) {
       var b = o.querySelector("#" + (id || "rpb"));
       if (!b) return;
@@ -1537,6 +1551,9 @@
       S.wst = w;
       if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
       else if (w === "poster") { S.wuntil = now + 3; }
+      else if (w === "plog") { S.wuntil = now + 3.4; S.wd = 1; popK("plog"); }
+      else if (w === "wipe") { S.wuntil = now + 2.8; S.wd = 1; popK("ptowel"); }
+      else if (w === "drink") { S.wuntil = now + 3; S.wd = 1; popK("pwater"); popFxK("prbottle"); }
       else if (w === "bdb") { S.wuntil = now + 2.8; popFxK("bdballoon"); }
       else if (w === "bdg") { S.wuntil = now + 2.8; popFxK("bdgift"); }
       else if (w === "candy") { S.wuntil = now + 2.8; popFxK("hwcandy"); }
@@ -1595,11 +1612,26 @@
             /* 成員生日：經過練習室的禮物堆（x≈84）、氣球（x≈106）前有機會停下來看一眼 */
             if (S.wst === "walk" && bdName() && qok && now >= (S.wgf || 0) && ((px2 < 72 && S.wx >= 72) || (px2 > 72 && S.wx <= 72)) && Math.random() < 0.5) { S.wx = 72; S.wgf = now + 15; enter("bdg", now); }
             if (S.wst === "walk" && bdName() && qok && now >= (S.wbf || 0) && ((px2 < 93 && S.wx >= 93) || (px2 > 93 && S.wx <= 93)) && Math.random() < 0.4) { S.wx = 93; S.wbf = now + 15; enter("bdb", now); }
+            /* 練習日誌（解鎖才會）：往右走經過 x≈98，停在日誌左邊，低頭翻日誌、寫進度，日誌跳一下 */
+            if (S.wst === "walk" && S.st["p-week"] && qok && now >= (S.wlf || 0) && px2 < 98 && S.wx >= 98 && Math.random() < 0.5) { S.wx = 98; S.wlf = now + 15; enter("plog", now); }
             if (S.wst === "walk" && qok && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
             if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
           }
+        } else if (S.wst === "go") {
+          /* 走向毛巾／水瓶：到了就開始擦汗／喝水 */
+          var gdx = S.wtgt - S.wx, gst = SPD * 1.4 * dt;
+          if (Math.abs(gdx) <= gst) { S.wx = S.wtgt; S.wd = 1; enter(S.wact, now); }
+          else { S.wd = gdx > 0 ? 1 : -1; S.wx += S.wd * gst; }
         } else if (now >= S.wuntil) {
+          var was = S.wst;
           S.wst = "walk"; S.wq = now + QMIN + Math.random() * QSPAN;
+          /* 跳完舞：有機會先去擦汗（毛巾）、再去喝水（水瓶），各自要解鎖對應物品才會做 */
+          if (was === "dn") {
+            S.wchain = [];
+            if (S.st["p-fav"] && Math.random() < 0.6) S.wchain.push("wipe");
+            if (S.st["p-chk"] && Math.random() < 0.6) S.wchain.push("drink");
+          }
+          if (S.wchain && S.wchain.length) goTo(S.wchain.shift());
         } else if ((S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) || (S.wst === "pop" && !S.wbj && now - S.wbl > 1)) { S.wbj = 1; S.wj = 0.5; if (S.wst === "pop") popBurst(); }
         if (!ds || ph === "away") capSt(now, S.wst === "walk" ? "w2" : S.wst);
         var dy2 = 0;
@@ -1608,7 +1640,10 @@
         g.classList.toggle("bl", S.wst === "blow");
         g.classList.toggle("pp", S.wst === "pop");
         g.classList.toggle("bo", S.wst === "blow" && now - S.wbl > 1.8);
-        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose" || S.wst === "blow" || S.wst === "pop" || S.wst === "bdg" || S.wst === "bdb");
+        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose" || S.wst === "blow" || S.wst === "pop" || S.wst === "bdg" || S.wst === "bdb" || S.wst === "plog" || S.wst === "wipe" || S.wst === "drink");
+        g.classList.toggle("lg", S.wst === "plog");
+        g.classList.toggle("wp", S.wst === "wipe");
+        g.classList.toggle("dk", S.wst === "drink");
         g.classList.toggle("slp", S.wst === "sleep");
         g.classList.toggle("dn", S.wst === "dn");
         g.classList.toggle("po", S.wst === "pose");
