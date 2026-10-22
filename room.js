@@ -816,11 +816,19 @@
   }
   /* 演唱會當天：小人手上多一支會閃的手燈（.ls） */
   function lightStickArt() {
-    return '<g class="rls" transform="translate(21,9)">' + '<g class="rcl">' + R(-2, -2, 10, 9, "#b794ff", 0.28) + "</g>" + R(1, 0, 4, 5, "#b794ff") + R(2, 1, 2, 2, "#fff") + R(2, 5, 2, 9, "#444") + R(1, 14, 4, 2, "#222") + "</g>";
+    return '<g class="rls" transform="translate(21,12)">' + '<g class="rcl">' + R(-2, -2, 10, 9, "#b794ff", 0.28) + "</g>" + R(1, 0, 4, 5, "#b794ff") + R(2, 1, 2, 2, "#fff") + R(2, 5, 2, 4, "#444") + R(1, 9, 4, 2, "#222") + "</g>";
   }
   /* 前一天：地板上的行李包（票、手燈露出來），小人經過會停下來整理 */
   function bagArt() {
     return '<g transform="translate(118,79)" pointer-events="none">' + R(8, -3, 3, 4, "#b794ff") + R(2, 0, 3, 4, "#ffd23f") + R(1, 3, 11, 8, "#3b4a7a") + R(2, 4, 9, 2, "#4b5d94") + R(5, 6, 3, 2, "#ffd23f") + R(1, 11, 11, 1, "#262f55") + "</g>";
+  }
+  /* 演唱會當天：地板上的應援物（橫躺的手燈會閃、三張疊著的小卡）。只是裝飾，不擋點擊；節日／生日當天不畫，避免跟聖誕禮物、新年紅包擠在一起 */
+  function tourGoodsArt() {
+    var card = function (x, y, c) { return R(x, y, 6, 8, "#fff") + R(x + 1, y + 1, 4, 5, c) + R(x + 2, y + 2, 1, 1, "#ffffff", 0.8) + R(x + 1, y + 7, 4, 1, "#d9d9e8"); };
+    return '<g transform="translate(122,83)" pointer-events="none">' +
+      R(0, 6, 15, 1, "#00000022") + '<g class="rcl">' + R(-2, -1, 9, 8, "#b794ff", 0.28) + "</g>" +
+      R(0, 1, 5, 4, "#b794ff") + R(1, 2, 2, 2, "#fff") + R(5, 2, 1, 2, "#9d7be8") + R(6, 2, 6, 2, "#444") + R(12, 1, 2, 4, "#222") +
+      card(18, 0, "#ff8fb3") + card(22, 2, "#6fb7ff") + card(27, 0, "#ffd23f") + "</g>";
   }
   var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt() + lightStickArt();
 
@@ -860,6 +868,7 @@
     if (isFest()) s += letterBanner(isAnniv() ? 52 : 48, 0, bn);
     var p7 = full && isFest();
     if (tourKind() === "eve") s += bagArt();
+    else if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt();
     if (p7 && !S.g7) { S.g7 = "in"; S.g7x = G7X.map(function (v, i) { return -24 - i * 12; }); S.g7t = 0; }
     return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
   }
@@ -957,6 +966,7 @@
     });
     if (fest) s += popperArt(36, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 48, 79) : "");
     s += festProp(true);
+    if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt();
     if (full) {
       var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168);
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
