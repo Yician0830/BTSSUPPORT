@@ -199,7 +199,43 @@
     "練習室也布置好聖誕裝飾了。": ["The practice room is decked out for Christmas too.", "연습실도 크리스마스 장식으로 꾸며졌어요.", "練習室もクリスマスの飾りつけをしました。"],
     "新年快樂！": ["Happy New Year!", "새해 복 많이 받으세요!", "あけましておめでとう！"],
     "小窩也掛上新年彩旗了。": ["The room put up New Year bunting too.", "방에도 새해 깃발을 달았어요.", "お部屋にもお正月のガーランドを飾りました。"],
-    "練習室也掛上新年彩旗了。": ["The practice room put up New Year bunting too.", "연습실에도 새해 깃발을 달았어요.", "練習室にもお正月のガーランドを飾りました。"]
+    "練習室也掛上新年彩旗了。": ["The practice room put up New Year bunting too.", "연습실에도 새해 깃발을 달았어요.", "練習室にもお正月のガーランドを飾りました。"],
+    /* 小人主動說的話（talkLine） */
+    "早安！今天也要元氣滿滿。": ["Good morning! Let's have an energetic day.", "좋은 아침! 오늘도 힘차게 가요.", "おはよう！今日も元気にいこう。"],
+    "中午了，有好好吃飯嗎？": ["It's noon — did you eat properly?", "점심시간이에요. 밥은 잘 챙겨 먹었어요?", "お昼だよ。ちゃんとごはん食べた？"],
+    "下午了，喝口水休息一下吧。": ["It's afternoon — have some water and take a short break.", "오후예요. 물 한 모금 마시고 잠깐 쉬어요.", "午後だね。水を飲んで、ちょっと休もう。"],
+    "晚上好，今天過得怎麼樣？": ["Good evening — how was your day?", "좋은 저녁이에요. 오늘 하루 어땠어요?", "こんばんは。今日はどんな一日だった？"],
+    "這麼晚了，早點休息，晚安。": ["It's so late — get some rest soon. Good night.", "벌써 이렇게 늦었어요. 일찍 쉬어요, 잘 자요.", "もうこんなに遅い。早めに休んでね、おやすみ。"],
+    "房間還有好多空位，多打卡就會有新東西。": ["Lots of room left — check in more and new things will show up.", "방에 빈자리가 많아요. 체크인하면 새 물건이 생겨요.", "お部屋はまだ空きがいっぱい。チェックインすると新しいものが増えるよ。"],
+    "小窩越來越熱鬧了，謝謝你一直來。": ["The room is getting livelier — thanks for always coming by.", "방이 점점 북적여요. 계속 와 줘서 고마워요.", "お部屋がだんだん賑やかになってきた。いつも来てくれてありがとう。"],
+    "小窩完成了，我最喜歡這裡了。": ["The room is all done — this is my favorite place.", "방이 완성됐어요. 저는 여기가 제일 좋아요.", "お部屋が完成したね。ここがいちばん好き。"],
+    "好像有新東西耶，點閃閃的星星看看。": ["Looks like there's something new — tap the sparkly star!", "새 물건이 생긴 것 같아요. 반짝이는 별을 눌러 봐요!", "新しいものがあるみたい。キラキラの星をタップしてみて！"],
+    "今天還沒抽籤喔，籤筒在等你。": ["You haven't drawn a fortune today — the cup is waiting for you.", "오늘은 아직 운세를 안 뽑았어요. 운세 통이 기다리고 있어요.", "今日はまだおみくじを引いてないよ。筒が待ってるよ。"],
+    "有檯燈在，晚上也不怕黑。": ["With the lamp on, the night isn't scary.", "스탠드가 있으니 밤에도 무섭지 않아요.", "ライトがあるから、夜も怖くないよ。"],
+    "今天也辛苦了，有你在真好。": ["You did great today — I'm glad you're here.", "오늘도 수고했어요. 함께 있어서 좋아요.", "今日もおつかれさま。あなたがいてくれて嬉しい。"],
+    "記得多喝水，也要好好休息喔。": ["Remember to drink water and get some rest.", "물 많이 마시고 푹 쉬는 것도 잊지 마세요.", "水をたくさん飲んで、ちゃんと休んでね。"],
+    "今天有打卡了嗎？一起去看看應援吧。": ["Did you check in today? Let's go see the fan projects.", "오늘 체크인했어요? 같이 응원 보러 가요.", "今日はチェックインした？一緒に応援を見に行こう。"],
+    "今天也一起加油吧！": ["Let's do our best again today!", "오늘도 같이 힘내요!", "今日も一緒にがんばろう！"],
+    "要不要一起聽歌？": ["Want to listen to some music together?", "같이 노래 들을래요?", "一緒に音楽を聴かない？"],
+    /* 小人和已解鎖物品的互動（CAPS 的 tube／cab／water／peek／decal） */
+    "晃了晃籤筒，不知道今天會抽到誰。": ["Gave the fortune cup a shake — who will it be today?", "운세 통을 흔들어 봐요. 오늘은 누가 나올까?", "おみくじ筒を振ってみた。今日は誰が出るかな？"],
+    "籤筒搖得喀啦喀啦響。": ["The fortune cup rattles away.", "운세 통이 달그락달그락 소리를 내요.", "おみくじ筒がカラカラ鳴ってる。"],
+    "打開收納櫃翻了翻，說過的話都好好收著。": ["Rummaged through the cabinet — every promise is kept safe inside.", "수납장을 열어 보니 약속한 건 전부 잘 보관돼 있어요.", "収納棚を開けてみた。約束したものは全部ちゃんとしまってある。"],
+    "櫃子裡整整齊齊，什麼都沒少。": ["Everything in the cabinet is neat and nothing's missing.", "수납장 안이 가지런해요. 빠진 게 하나도 없어요.", "棚の中はきちんと整っていて、何も欠けていない。"],
+    "幫盆栽澆了點水，葉子都挺起來了。": ["Watered the plant — its leaves perked right up.", "화분에 물을 줬더니 잎이 쭉 폈어요.", "鉢植えに水をあげたら、葉っぱがぴんと元気に。"],
+    "盆栽沙沙搖，看起來心情不錯。": ["The plant rustles, looking pretty happy.", "화분이 살랑살랑, 기분이 좋아 보여요.", "鉢植えがさわさわ揺れて、ご機嫌みたい。"],
+    "湊近水晶球瞧了瞧，好像有光在閃。": ["Leaned in to the crystal ball — something's glimmering.", "수정구에 가까이 다가가 보니 뭔가 반짝여요.", "水晶玉に顔を近づけると、何かがきらりと光った。"],
+    "水晶球裡的光轉啊轉，看得入迷了。": ["Light swirls inside the crystal ball — totally mesmerized.", "수정구 속 빛이 빙글빙글, 넋을 놓고 봐요.", "水晶玉の中の光がくるくる回って、つい見とれちゃう。"],
+    "牆上的七個人排排站，好像也在看我。": ["The seven on the wall stand in a row — they seem to be looking back.", "벽 위의 일곱 명이 나란히 서서 저를 보는 것 같아요.", "壁の七人が並んで、こっちを見てるみたい。"],
+    "數一數，七個人一個都不少。": ["Counting them up — all seven are here.", "세어 보니 일곱 명 모두 있어요.", "数えてみたら、七人ちゃんと全員いる。"],
+    /* 時鐘整點／檯燈／籤筒提醒（CAPS 的 tubeR／lread／loff／lsl／lon） */
+    "今天還沒抽籤喔，點一下籤筒去抽吧！": ["You haven't drawn today — tap the fortune cup to go draw!", "오늘은 아직 안 뽑았어요. 운세 통을 눌러서 뽑아 봐요!", "今日はまだ引いてないよ。おみくじ筒をタップして引いてみよう！"],
+    "籤筒搖呀搖，今天的幸運籤在等你。": ["The cup keeps rattling — today's lucky draw is waiting.", "운세 통이 달그락달그락, 오늘의 행운 운세가 기다리고 있어요.", "筒がカラカラ鳴ってる。今日のラッキーおみくじが待ってるよ。"],
+    "在檯燈下看書，夜晚特別安靜。": ["Reading under the lamp — the night is so quiet.", "스탠드 아래에서 책을 읽어요. 밤이 정말 고요해요.", "ライトの下で読書。夜はとても静か。"],
+    "燈光暖暖的，書也看得特別專心。": ["The warm light makes it easy to focus on the book.", "불빛이 따뜻해서 책에 더 집중돼요.", "あたたかい光で、本にも集中できる。"],
+    "把檯燈關了，今天先睡吧。": ["Switched off the lamp — time to sleep.", "스탠드를 끄고 이제 자러 가요.", "ライトを消して、今日はもう寝よう。"],
+    "燈關了，小人睡著了。": ["Lights out — fast asleep.", "불을 끄고 스르르 잠들었어요.", "電気を消して、すやすや眠ってる。"],
+    "睡不著，又把檯燈打開了。": ["Can't sleep — turned the lamp back on.", "잠이 안 와서 스탠드를 다시 켰어요.", "眠れなくて、またライトをつけた。"]
   };
   var LI = { en: 0, ko: 1, ja: 2 };
   function lang() {
@@ -217,8 +253,26 @@
     if (L === "ja") return "今日は" + M + "月" + D + "日（" + "日月火水木金土".charAt(W) + "）、今は" + hm + "です。";
     return "今天是 " + M + "/" + D + "（週" + "日一二三四五六".charAt(W) + "），現在 " + hm + "。";
   }
+  /* 整點報時：整點後小人第一次經過時鐘下方時，下方文字改講這句（只報幾點，不報分鐘） */
+  function chimeSay() {
+    var h = new Date().getHours(), L = lang();
+    if (L === "en") return "Chime! It's " + p2(h) + ":00 now.";
+    if (L === "ko") return "정각이에요. 지금은 " + h + "시예요.";
+    if (L === "ja") return "ちょうど" + h + "時だよ。";
+    return "整點報時：現在 " + h + " 點囉。";
+  }
   /* 小人的動作 → 下方那行文字。每個動作有幾句，進入動作時隨機挑一句（第 1 句是「點一下換人」的提示，本命固定時不用） */
   var CAPS = {
+    tube: ["晃了晃籤筒，不知道今天會抽到誰。", "籤筒搖得喀啦喀啦響。"],
+    cab: ["打開收納櫃翻了翻，說過的話都好好收著。", "櫃子裡整整齊齊，什麼都沒少。"],
+    water: ["幫盆栽澆了點水，葉子都挺起來了。", "盆栽沙沙搖，看起來心情不錯。"],
+    peek: ["湊近水晶球瞧了瞧，好像有光在閃。", "水晶球裡的光轉啊轉，看得入迷了。"],
+    decal: ["牆上的七個人排排站，好像也在看我。", "數一數，七個人一個都不少。"],
+    tubeR: ["今天還沒抽籤喔，點一下籤筒去抽吧！", "籤筒搖呀搖，今天的幸運籤在等你。"],
+    lread: ["在檯燈下看書，夜晚特別安靜。", "燈光暖暖的，書也看得特別專心。"],
+    loff: ["把檯燈關了，今天先睡吧。"],
+    lsl: ["燈關了，小人睡著了。"],
+    lon: ["睡不著，又把檯燈打開了。"],
     blow: ["捧著小蛋糕許願，然後一口氣吹熄蠟燭。"],
     out: ["帶著手燈出門，去現場囉！"],
     back: ["回來了，還在回味演唱會的感動。"],
@@ -865,6 +919,21 @@
     });
     return '<g transform="translate(2,-19)">' + s + '<g class="rcl">' + R(11, 4, 1, 1, "#e0457b") + R(11, 6, 1, 1, "#e0457b") + "</g></g>";
   }
+  /* 小人主動說話時頭上冒出的愛心泡泡（跟時鐘泡泡同位置；文字在房間下方那一行） */
+  /* 小人和物品互動時的姿勢：up＝抬頭看／搖高處的東西，lw＝彎身靠近 */
+  var UPS = { tube: 1, tubeR: 1, decal: 1, peek: 1 }, LWS = { cab: 1, water: 1 };
+  var HEART = ["0110110", "1111111", "1111111", "0111110", "0011100", "0001000"];
+  function talkBub(k) {
+    var D = "#062a6e", h = "";
+    var s = R(1, 0, 21, 1, D) + R(1, 10, 21, 1, D) + R(0, 1, 1, 9, D) + R(22, 1, 1, 9, D) + R(1, 1, 21, 9, "#fff") +
+      R(10, 10, 3, 1, "#fff") + R(10, 11, 1, 1, D) + R(11, 11, 1, 1, "#fff") + R(12, 11, 1, 1, D) + R(11, 12, 1, 1, D);
+    if (k === "!") h = R(10, 2, 2, 5, "#e0457b") + R(10, 8, 2, 2, "#e0457b");
+    else {
+      HEART.forEach(function (r, y) { for (var x = 0; x < 7; x++) if (r.charAt(x) === "1") h += R(8 + x, 2 + y, 1, 1, "#e0457b"); });
+      h += R(9, 3, 1, 1, "#ff8fb3");
+    }
+    return '<g transform="translate(2,-19)">' + s + '<g class="rth">' + h + "</g></g>";
+  }
   function bkArt() {
     var base = R(0, 5, 12, 2, "#8b5a2b") + R(1, 1, 5, 4, "#fff") + R(5, 0, 2, 6, "#b87333") + R(2, 2, 3, 1, "#9aa3c7") + R(2, 4, 3, 1, "#9aa3c7");
     var mini = function (x, y, c, cls) {
@@ -945,9 +1014,9 @@
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" || S.wst === "bdg" || S.wst === "bdb" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : "") + (tourKind() === "today" ? " ls" : "");
+    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" || S.wst === "bdg" || S.wst === "bdb" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : S.wst === "talk" ? " tk pz" : S.wst === "tubeR" ? " tk up pz" : S.wst === "lamp" ? " pz" : S.wst === "lread" ? " rd pz" : UPS[S.wst] ? " up pz" : LWS[S.wst] ? " lw pz" : "") + (tourKind() === "today" ? " ls" : "");
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
-      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
+      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g>" + '<g class="rmtk">' + (S.wst === "talk" ? talkBub() : S.wst === "tubeR" ? talkBub("!") : "") + "</g></g></g>";
   }
 
   function scene(S, full) {
@@ -1197,6 +1266,8 @@
     ".rmdd{cursor:pointer}.rmdd:focus,.rmdd:focus-visible{outline:none}.rmdb{animation:rmbob .5s steps(1) infinite}" +
     ".rmrs{display:flex;gap:6px;margin-bottom:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:thin}.rmrs button{flex:0 0 auto;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs .rmpc{font-style:normal;font-size:11px;opacity:.8}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
+    ".up .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(-1px) rotate(-7deg)}.lw .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(1px) rotate(7deg)}" +
+    ".rmtk{display:none;pointer-events:none}.tk .rmtk{display:block}.rth{transform-box:fill-box;transform-origin:50% 50%;animation:rmth .6s steps(1) infinite}@keyframes rmth{0%{transform:scale(1)}50%{transform:scale(1.2)}}@media(prefers-reduced-motion:reduce){.rth{animation:none}}" +
     "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
     "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}";
   document.head.appendChild(css);
@@ -1320,6 +1391,7 @@
     /* 換房間或換分頁時，把小人的動作重設成「散步」，避免帶著第 1 間的「看書、看日曆」狀態進到第 2 間 */
     function resetW() {
       S.wst = "walk"; S.wuntil = 0; S.wtt = 0; S.wtr = 0; S.wcd = 0; S.wdn = 0; S.wchain = [];
+      if (S.wlOff === 1) { S.wlOff = 0; if (S.night) S.lamp = true; }
       if (S.gp !== "enter") S.wx = Math.max(6, Math.min(ROOMS[S.rm].wmax, S.wx));
     }
     function dzSay(i) {
@@ -1528,7 +1600,7 @@
         return;
       }
       var tx;
-      if (key === "clk") tx = clockSay();
+      if (key === "clk") tx = S.wchm ? chimeSay() : clockSay();
       else {
         var a = CAPS[key === "poster" ? (tourKind() === "today" ? "posterT" : "posterE") : key];
         if (!a) return;
@@ -1547,9 +1619,58 @@
       b.classList.add("go");
       setTimeout(function () { b.classList.remove("go"); }, 1500);
     }
+    /* 小人主動說的話：依時間、小窩進度、有沒有新物品、今天抽籤了沒挑幾句，隨機選一句（不會連兩次一樣）。
+       句子都要在 LT 裡有翻譯。想多加句子：在下面 P.push 補一句，再到 LT 補英韓日 */
+    function talkLine() {
+      var h = new Date().getHours(), P = [], pct = roomPct(S.rm, S.st), nw = false, k, c;
+      for (k in S.nw) if (S.nw[k]) { nw = true; break; }
+      c = h >= 5 && h < 11 ? "早安！今天也要元氣滿滿。" : h >= 11 && h < 14 ? "中午了，有好好吃飯嗎？" : h >= 14 && h < 18 ? "下午了，喝口水休息一下吧。" : h >= 18 && h < 22 ? "晚上好，今天過得怎麼樣？" : "這麼晚了，早點休息，晚安。";
+      P.push(c, c);
+      P.push(pct >= 100 ? "小窩完成了，我最喜歡這裡了。" : pct >= 40 ? "小窩越來越熱鬧了，謝謝你一直來。" : "房間還有好多空位，多打卡就會有新東西。");
+      if (nw) P.push("好像有新東西耶，點閃閃的星星看看。", "好像有新東西耶，點閃閃的星星看看。");
+      if (S.st["f-s7"] && !drewToday()) P.push("今天還沒抽籤喔，籤筒在等你。", "今天還沒抽籤喔，籤筒在等你。");
+      if (S.night && S.lamp && S.st["f-s3"]) P.push("有檯燈在，晚上也不怕黑。");
+      P.push("今天也辛苦了，有你在真好。", "記得多喝水，也要好好休息喔。", "今天有打卡了嗎？一起去看看應援吧。", "今天也一起加油吧！", "要不要一起聽歌？");
+      P = P.filter(function (x) { return x !== S.wsl; });
+      return P[Math.floor(Math.random() * P.length)];
+    }
+    function talkSay(now) {
+      var line = talkLine(), cp = document.getElementById("rmcap");
+      S.wsl = line;
+      if (cp) cp.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t(line));
+      S.capK = "talk"; S.cph = now + 4.2;
+    }
+    /* 檯燈開關（跟點檯燈同一套：房間的燈光範圍 .lon、檯燈本體 .on） */
+    function lampSet(on) {
+      S.lamp = on;
+      var lg = o.querySelector(".rmlamp"), sv = document.getElementById("rmsv");
+      if (lg) lg.classList.toggle("on", on);
+      if (sv) sv.classList.toggle("lon", on);
+    }
+    /* 檯燈「睡一覺」：0～1.2 秒伸手關燈（1 秒時燈滅）→ 睡到 7.2 秒 → 伸手開燈（燈亮）→ 約 8.8 秒結束。白天或燈本來就沒開時只做動作，不會改燈 */
+    function lampStep(now) {
+      var le = now - S.wls;
+      S.wlK = le < 1.2 ? "loff" : le < 7.2 ? "lsl" : "lon";
+      if (le >= 1 && !S.wlOff) { S.wlOff = 1; if (S.lamp) lampSet(false); }
+      if (le >= 7.2 && S.wlOff === 1) { S.wlOff = 2; if (S.night) lampSet(true); }
+    }
     function enter(w, now) {
       S.wst = w;
+      if (w === "talk") {
+        S.wuntil = now + 4.2; S.wj = 0.5; S.wsn = now + 30 + Math.random() * 30;
+        talkSay(now);
+        var tb = o.querySelector(".rmtk");
+        if (tb) tb.innerHTML = talkBub();
+      } else
       if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
+      else if (w === "tube") { S.wuntil = now + 3.2; popK("tube"); }
+      else if (w === "tubeR") { S.wuntil = now + 4.2; S.wtbs = now; S.wtbj = 0; popK("tube"); var tb2 = o.querySelector(".rmtk"); if (tb2) tb2.innerHTML = talkBub("!"); }
+      else if (w === "lread") { S.wuntil = now + 3.8; S.wd = 1; }
+      else if (w === "lamp") { S.wuntil = now + 8.8; S.wd = 1; S.wls = now; S.wlOff = 0; S.wlK = "loff"; }
+      else if (w === "cab") { S.wuntil = now + 3.2; popK("cabinet"); }
+      else if (w === "water") { S.wuntil = now + 3.2; S.wd = 1; popK("plant"); }
+      else if (w === "peek") { S.wuntil = now + 3.2; S.wd = 1; popK("ball"); }
+      else if (w === "decal") { S.wuntil = now + 3; S.wd = 1; popK("decal"); }
       else if (w === "poster") { S.wuntil = now + 3; }
       else if (w === "plog") { S.wuntil = now + 3.4; S.wd = 1; popK("plog"); }
       else if (w === "wipe") { S.wuntil = now + 2.8; S.wd = 1; popK("ptowel"); }
@@ -1567,7 +1688,8 @@
       else if (w === "pop") { S.wuntil = now + 2.8; S.wbl = now; S.wbj = 0; S.wd = 1; S.wfc = now + 12; }
       else if (w === "blow") { S.wuntil = now + 4; S.wbl = now; S.wbj = 0; S.wfc = now + 14; }
       else if (w === "clk") {
-        S.wuntil = now + 3.2;
+        S.wchm = !!S.wchmN; S.wchmN = 0;
+        S.wuntil = now + (S.wchm ? 4 : 3.2);
         popK("clock");
         var bb = o.querySelector(".rmck");
         if (bb) bb.innerHTML = tmBub();
@@ -1780,7 +1902,14 @@
           S.wx += S.wd * SPD * (now < S.wju ? 2.2 : 1) * dt;
           S.wwalk += dt;
           if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isFest() && qok && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now);
-            else if (tourKind() === "today" && qok && now >= (S.wfc || 0) && Math.random() < 0.5) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wfc = now + 30; } }
+            else if (tourKind() === "today" && qok && now >= (S.wfc || 0) && Math.random() < 0.5) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wfc = now + 30; }
+            /* 走到右端：看水晶球、七人壁貼 */
+            if (S.wst === "walk" && qok && now >= (S.wif || 0)) {
+              var rp = [];
+              if (S.st["r-1"]) rp.push("peek");
+              if (S.st["h-egg"]) rp.push("decal");
+              if (rp.length && Math.random() < 0.5) { S.wif = now + 12; enter(rp[Math.floor(Math.random() * rp.length)], now); }
+            } }
           else if (S.wx <= 8) {
             S.wx = 8;
             var lo = [];
@@ -1793,10 +1922,18 @@
             else if (pk === "broom") enter("broom", now);
             else S.wd = 1;
           }
+          /* 整點報時：整點過後，小人下次經過時鐘下方（x≈35）一定會停下來抬頭看時鐘，說現在幾點（不受安靜期限制） */
+          var hr = new Date().getHours();
+          if (S.wchime === undefined) S.wchime = hr;
+          if (S.wst === "walk" && S.st["h-open"] && S.wchime !== hr && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX))) { S.wx = CLX; S.wchime = hr; S.wchmN = 1; enter("clk", now); }
+          /* 籤筒提醒：籤筒已解鎖、今天還沒抽籤時，經過籤筒下方有機會停下來搖籤筒提醒你；每次提醒後至少隔 90 秒（不受安靜期限制） */
+          if (S.wst === "walk" && now >= (S.wtbn || 0) && S.st["f-s7"] && !drewToday() && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX)) && Math.random() < 0.5) { S.wx = CLX; S.wtbn = now + 90; enter("tubeR", now); }
           if (S.wst === "walk" && now >= S.wcd && qok && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX))) {
             var op = [];
             if (S.st["h-open"]) op.push("clk");
             if (S.st["h-last"]) op.push("cal");
+            if (S.st["f-s7"]) op.push("tube");
+            if (S.st["h-vow"]) op.push("cab");
             if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
           if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && qok && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
@@ -1814,10 +1951,21 @@
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
             else if (((px < 48 && S.wx >= 48) || (px > 48 && S.wx <= 48)) && Math.random() < 0.2) { S.wx = 48; S.wfc = now + 10; enter(sk2 === "ny" ? "ingot" : "cookie", now); }
           }
+          /* 解鎖物品的互動：走過盆栽旁（x≈82）有機會停下來澆水；每次互動後 12 秒內不會再有下一次 */
+          if (S.wst === "walk" && qok && now >= (S.wif || 0) && ((px < 82 && S.wx >= 82) || (px > 82 && S.wx <= 82))) {
+            var ip = [];
+            if (S.st["x-app"]) ip.push("water");
+            if (ip.length && Math.random() < 0.5) { S.wx = 82; S.wif = now + 12; enter(ip[Math.floor(Math.random() * ip.length)], now); }
+          }
+          /* 檯燈：夜晚燈亮著時，走到燈下（x≈99）有機會停下來看書，或把燈關掉睡一覺、醒來再開燈 */
+          if (S.wst === "walk" && S.night && S.lamp && S.st["f-s3"] && qok && now >= S.cph && now >= (S.wif || 0) && ((px < 99 && S.wx >= 99) || (px > 99 && S.wx <= 99)) && Math.random() < 0.6) { S.wx = 99; S.wif = now + 12; enter(Math.random() < 0.5 ? "lread" : "lamp", now); }
           var ctr = S.wx + 13, inRug = ctr >= 58 && ctr <= 106;
           if (inRug && !S.wrug && S.wj <= 0) S.wj = 0.5;
           S.wrug = inRug;
           if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; }
+          /* 小人主動說話：安靜期過了、沒有其他互動、剛才沒點過東西時，停下來跳一下、頭上冒愛心，下方文字講一句（每 30～60 秒一次；第一次在開啟後約 10～18 秒） */
+          if (!S.wsn) S.wsn = now + 10 + Math.random() * 8;
+          if (S.wst === "walk" && !S.pop && now >= S.wsn && now >= S.cph && qok) enter("talk", now);
         } else {
           if (S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) { S.wbj = 1; S.wj = 0.5; }
           if (S.wst === "pop" && !S.wbj && now - S.wbl > 1) { S.wbj = 1; S.wj = 0.5; popBurst(); }
@@ -1828,28 +1976,35 @@
             else if (S.wot === 1) { if (now >= S.wouti) { S.wot = 2; S.wx = -30; } }
             else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN; } }
           }
+          if (S.wst === "tubeR" && !S.wtbj && now - S.wtbs > 1.6) { S.wtbj = 1; popK("tube"); }
+          if (S.wst === "lamp") lampStep(now);
           if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
           if (now >= S.wuntil) {
             if (S.wst === "look" || S.wst === "read" || S.wst === "broom") S.wd = 1;
             if (S.wst === "pop") S.wd = -1;
+            /* 打瞌睡不算互動：夜晚每走 8 秒就會睡一覺，如果睡醒也進安靜期，夜晚就永遠輪不到任何互動 */
+            var wasSlp = S.wst === "sleep";
             S.wst = "walk";
             S.wtt = 0;
             S.wtr = 0;
-            S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN;
+            S.wcd = now + 6; if (!wasSlp) S.wq = now + QMIN + Math.random() * QSPAN;
           }
         }
         if (S.wj > 0) {
           S.wj -= dt;
           dy = S.wj > 0 ? -6 * Math.sin(Math.PI * (1 - S.wj / 0.5)) : 0;
         }
-        capSt(now, S.wst === "walk" ? (now < S.wju ? "run" : "walk") : (S.wst === "cal" && now < S.wtr) ? "tear" : S.wst === "out" && S.wot === 2 ? "back" : S.wst);
+        capSt(now, S.wst === "walk" ? (now < S.wju ? "run" : "walk") : (S.wst === "cal" && now < S.wtr) ? "tear" : S.wst === "out" && S.wot === 2 ? "back" : S.wst === "lamp" ? (S.wlK || "loff") : S.wst);
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy.toFixed(2) + ")");
         g.classList.toggle("pz", S.wst !== "walk" && S.wst !== "out");
         if (S.wst === "out" && S.wot === 1) g.setAttribute("display", "none"); else g.removeAttribute("display");
-        g.classList.toggle("slp", S.wst === "sleep");
-        g.classList.toggle("rd", S.wst === "read");
+        g.classList.toggle("slp", S.wst === "sleep" || (S.wst === "lamp" && S.wlK === "lsl"));
+        g.classList.toggle("rd", S.wst === "read" || S.wst === "lread");
         g.classList.toggle("cu", S.wst === "cal");
         g.classList.toggle("ck", S.wst === "clk");
+        g.classList.toggle("tk", S.wst === "talk" || S.wst === "tubeR");
+        g.classList.toggle("up", !!UPS[S.wst] || (S.wst === "lamp" && (S.wlK === "loff" || S.wlK === "lon")));
+        g.classList.toggle("lw", !!LWS[S.wst]);
         g.classList.toggle("tr", S.wst === "cal" && now < S.wtr);
         g.classList.toggle("bl", S.wst === "blow");
         g.classList.toggle("pp", S.wst === "pop" || S.wst === "pack");
