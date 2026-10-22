@@ -267,6 +267,13 @@
     });
     return s;
   }
+  /* 春聯：三條紅底金字的直式聯子（新春／福／快樂），掛在同一根橫桿上；字用 SVG 文字，才看得清楚 */
+  function artCouplet() {
+    var tx = function (x, y, sz, c) { return '<text x="' + x + '" y="' + y + '" font-size="' + sz + '" font-weight="700" text-anchor="middle" fill="#ffd23f" shape-rendering="auto" font-family="\'Noto Serif TC\',\'PMingLiU\',serif">' + c + "</text>"; };
+    var s = R(0, 0, 22, 1, "#8b5a2b");
+    [1, 8, 15].forEach(function (x) { s += R(x + 2, 1, 1, 1, "#8b5a2b") + R(x, 2, 5, 10, "#e0453a") + R(x, 2, 5, 1, "#ffd23f", 0.6) + R(x, 11, 5, 1, "#b02a20"); });
+    return s + tx(3.5, 6.1, 3.9, "新") + tx(3.5, 10.4, 3.9, "春") + tx(10.5, 8.6, 5, "福") + tx(17.5, 6.1, 3.9, "快") + tx(17.5, 10.4, 3.9, "樂");
+  }
   function artLamp() {
     return (
       '<g class="glow">' + R(-8, -4, 28, 26, "#ffe27a", 0.1) + R(-5, -2, 22, 20, "#ffe27a", 0.12) + R(-2, 0, 16, 15, "#ffe27a", 0.14) + "</g>" +
@@ -478,7 +485,11 @@
     { k: "tube", b: "f-s7", fb: "連抽七天", n: "籤筒", x: 44, y: 40, w: 10, h: 8, an: "shake", say: "籤筒晃一晃，今天的運氣就靠你自己抽啦。",
       art: R(2, 0, 1, 3, "#ffd23f") + R(4, 0, 1, 3, "#fff") + R(6, 0, 1, 3, "#7b4fd6") + R(1, 3, 8, 5, "#e0457b") + R(2, 4, 1, 3, "#ff8fb3") },
     { k: "decal", b: "h-egg", fb: "七人大遊行", hid: 1, n: "七人壁貼", x: 106, y: 10, w: 46, h: 7, an: "bounce", say: "七個小人排排站，看著你。", art: artDecal() },
-    { k: "tickets", b: "h-w3", fb: "三日全勤", hid: 1, n: "票根串", x: 108, y: 24, w: 22, h: 12, an: "sway", say: "三天全勤的票根，一張都沒少。", art: artTickets() },
+    { k: "tickets", b: "h-w3", fb: "三日全勤", hid: 1, x: 108, y: 24, w: 22, h: 12, an: "sway",
+      /* 新年期間（2/4–2/10）：票根串換成春聯；解鎖條件、收藏清單的位置都不變，只換名稱、圖和台詞 */
+      get n() { return seasonKind() === "ny" ? "春聯" : "票根串"; },
+      get say() { return seasonKind() === "ny" ? "春聯貼好了，新的一年也一起好好應援。" : "三天全勤的票根，一張都沒少。"; },
+      get art() { return seasonKind() === "ny" ? artCouplet() : artTickets(); } },
     { k: "moon", b: "h-nt", fb: "夜貓應援", hid: 1, n: "月亮貼紙", x: 136, y: 22, w: 12, h: 11, an: "bounce", say: "夜深了，小窩陪你一起熬夜。", art: artMoon() },
     { k: "lamp", b: "f-s3", fb: "連抽三天", n: "檯燈", x: 106, y: 36, w: 12, h: 16, an: "", say: "lamp", art: artLamp() },
     { k: "photo", b: "h-egg2", fb: "合照時間", hid: 1, n: "合照相框", x: 122, y: 42, w: 12, h: 10, an: "bounce", say: "七個人，一張合照。", art: artPhoto() },
