@@ -121,6 +121,23 @@
     "出道紀念日剛過！": ["The debut anniversary just passed!", "데뷔 기념일이 지나갔어요!", "デビュー記念日が過ぎました！"],
     "小窩的彩旗還沒收，捨不得。": ["The flags in the room are still up — hard to take them down.", "방의 깃발을 아직 못 치웠어요. 아쉬워서요.", "お部屋の旗はまだそのまま。名残惜しくて。"],
     "練習室的彩旗還沒收，捨不得。": ["The flags in the practice room are still up — hard to take them down.", "연습실의 깃발을 아직 못 치웠어요. 아쉬워서요.", "練習室の旗はまだそのまま。名残惜しくて。"],
+    "巧克力": ["Chocolates", "초콜릿", "チョコレート"],
+    "愛心": ["Hearts", "하트", "ハート"],
+    "情人節的巧克力，粉紅緞帶綁得好整齊。": ["Valentine's chocolates, the pink ribbon tied just right.", "발렌타인 초콜릿, 분홍 리본이 가지런히 묶여 있어요.", "バレンタインのチョコ。ピンクのリボンがきれいに結ばれてる。"],
+    "打開蓋子，每一顆都不一樣。": ["Open the lid — every piece is different.", "뚜껑을 열면 하나하나 모두 달라요.", "ふたを開けると、ひとつひとつ違うよ。"],
+    "分你一顆，剩下的我們一起吃。": ["One for you — we'll share the rest.", "한 개 줄게요. 나머지는 같이 먹어요.", "ひとつあげる。残りはいっしょに食べよう。"],
+    "愛心飄呀飄，今天滿滿都是愛。": ["Hearts floating by — today is full of love.", "하트가 둥실둥실, 오늘은 사랑이 가득해요.", "ハートがふわふわ。今日は愛でいっぱい。"],
+    "輕輕一碰，愛心晃了起來。": ["One gentle tap and the hearts start to sway.", "살짝 건드리니 하트가 흔들려요.", "そっと触れたら、ハートがゆらゆら。"],
+    "偷偷拿了一顆巧克力，甜甜的。": ["Sneaked a chocolate — so sweet.", "몰래 초콜릿 하나를 집었어요. 달콤해요.", "こっそりチョコをひとつ。甘いね。"],
+    "情人節的巧克力，捨不得一口吃完。": ["Valentine's chocolate — too precious to finish in one bite.", "발렌타인 초콜릿, 한입에 먹기 아까워요.", "バレンタインのチョコ、ひと口で食べるのはもったいない。"],
+    "情人節快樂！": ["Happy Valentine's Day!", "해피 발렌타인데이!", "ハッピーバレンタイン！"],
+    "小窩也布置好愛心了。": ["The room is decked out with hearts too.", "방도 하트로 꾸며졌어요.", "お部屋もハートで飾りつけしました。"],
+    "練習室也布置好愛心了。": ["The practice room is decked out with hearts too.", "연습실도 하트로 꾸며졌어요.", "練習室もハートで飾りつけしました。"],
+    "情人節": ["Valentine's Day", "발렌타인데이", "バレンタイン"],
+    "今天跨年！": ["It's New Year's Eve!", "오늘은 새해 전야예요!", "今日は大みそか！"],
+    "點時鐘看跨年倒數，晚上窗外有煙火。": ["Tap the clock for the countdown — fireworks outside tonight.", "시계를 눌러 카운트다운을 확인해요. 밤엔 창밖에 불꽃놀이가 있어요.", "時計をタップしてカウントダウン。夜は窓の外に花火が上がるよ。"],
+    "練習室也迎接新的一年了。": ["The practice room is welcoming the new year too.", "연습실도 새해를 맞이하고 있어요.", "練習室も新しい年を迎えています。"],
+    "跨年夜": ["New Year's Eve", "새해 전야", "大みそか"],
     "紀念日週": ["Anniversary week", "기념일 주간", "記念日ウィーク"],
     "出道紀念日快到了！": ["The debut anniversary is almost here!", "데뷔 기념일이 다가와요!", "デビュー記念日がもうすぐ！"],
     "小窩先掛上彩旗了。": ["Flags are already up in the room.", "방에 깃발을 먼저 달았어요.", "お部屋に旗を先に飾りました。"],
@@ -272,7 +289,20 @@
     var L = lang(), v = LT[zh];
     return L !== "zh" && v && v[LI[L]] ? v[LI[L]] : zh;
   }
+  /* 跨年夜（12/31）：窗外夜晚不論完成度都放煙火、放得比較密，點時鐘改成跨年倒數。預覽：網址加 ?preview=nye（倒數照現在的時間算到午夜） */
+  function isNye() {
+    var d = new Date();
+    return PV === "nye" || (d.getMonth() === 11 && d.getDate() === 31);
+  }
+  function nyeSay() {
+    var d = new Date(), L = lang(), tot = Math.max(1, Math.ceil((new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d) / 60000)), h = Math.floor(tot / 60), m = tot % 60;
+    if (L === "en") return h > 0 ? "New Year countdown: " + h + "h " + m + "m to go." : "New Year countdown: only " + m + " min left!";
+    if (L === "ko") return h > 0 ? "새해까지 " + h + "시간 " + m + "분 남았어요." : "새해까지 " + m + "분 남았어요!";
+    if (L === "ja") return h > 0 ? "新年まであと" + h + "時間" + m + "分。" : "新年まであと" + m + "分！";
+    return h > 0 ? "跨年倒數：還有 " + h + " 小時 " + m + " 分。" : "跨年倒數：只剩 " + m + " 分鐘了！";
+  }
   function clockSay() {
+    if (isNye()) return nyeSay();
     var d = new Date(), L = lang(), M = d.getMonth() + 1, D = d.getDate(), W = d.getDay(), hm = p2(d.getHours()) + ":" + p2(d.getMinutes());
     if (L === "en") return "Today is " + ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][W] + ", " + M + "/" + D + ". It's " + hm + " now.";
     if (L === "ko") return "오늘은 " + M + "월 " + D + "일(" + "일월화수목금토".charAt(W) + ")이에요. 지금은 " + hm + "예요.";
@@ -323,6 +353,7 @@
     plog: ["在練習日誌上寫下今天的進度。", "翻開日誌，核對今天練了幾遍。", "一筆一筆記下來，天天都不間斷。"],
     candy: ["蹲在地上撿糖果，偷吃一顆。", "不給糖就搗蛋，先吃一顆再說。"],
     broom: ["拿起掃帚，假裝要飛起來。", "把掃帚扶正，女巫帽也戴好了。"],
+    choc: ["偷偷拿了一顆巧克力，甜甜的。", "情人節的巧克力，捨不得一口吃完。"],
     cookie: ["偷偷咬一口餅乾，再喝口牛奶。", "這是給聖誕老人的……少一片應該沒關係。"],
     gift: ["搖搖禮物盒，猜猜裡面是什麼。", "蹲在樹下看禮物，好期待。"],
     sock: ["踮腳檢查聖誕襪裡有沒有禮物。", "把襪子拉平整，掛得漂漂亮亮。"],
@@ -340,7 +371,7 @@
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "613w" || v === "613a" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "613" || v === "613w" || v === "613a" || v === "nye" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v === "vd" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -433,8 +464,9 @@
     return s + tx(6, 9.5, 6, "福") + tx(17, 9.5, 6, "春");
   }
   function artLamp() {
+    var lc = seasonKind() === "vd" ? "#ff8fb3" : "#ffe27a";
     return (
-      '<g class="glow">' + R(-8, -4, 28, 26, "#ffe27a", 0.1) + R(-5, -2, 22, 20, "#ffe27a", 0.12) + R(-2, 0, 16, 15, "#ffe27a", 0.14) + "</g>" +
+      '<g class="glow">' + R(-8, -4, 28, 26, lc, 0.1) + R(-5, -2, 22, 20, lc, 0.12) + R(-2, 0, 16, 15, lc, 0.14) + "</g>" +
       R(5, 6, 2, 8, "#555") + R(3, 14, 6, 2, "#444") +
       '<g class="sh">' + R(2, 0, 8, 2, "#fff") + R(1, 2, 10, 2, "#fff") + R(0, 4, 12, 2, "#fff") + "</g>"
     );
@@ -496,8 +528,9 @@
     if ((n = bdName())) return ["生日當天", n];
     if ((n = bdWeekName())) return ["生日週", n];
     if (annivWeek()) return ["紀念日週", ""];
-    if ((k = seasonKind())) return [k === "hw" ? "萬聖節" : k === "xmas" ? "聖誕節" : "新年", ""];
+    if ((k = seasonKind())) return [k === "hw" ? "萬聖節" : k === "xmas" ? "聖誕節" : k === "vd" ? "情人節" : "新年", ""];
     if ((k = tourKind())) return [k === "today" ? "演唱會當天" : "演唱會前夕", ""];
+    if (isNye()) return ["跨年夜", ""];
     if ((n = bdAfterName())) return ["生日隔天", n];
     return null;
   }
@@ -538,13 +571,14 @@
     } catch (e) { return false; }
   }
   /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/29–10/31 萬聖節、12/24–25 聖誕、2/4–2/10 新年。
-     預覽：網址加 ?preview=hw／xmas／ny。6/13 和成員生日的布置優先，節日不會疊上去 */
+     預覽：網址加 ?preview=hw／xmas／ny／vd（2/14 情人節）。6/13 和成員生日的布置優先，節日不會疊上去 */
   function seasonKind() {
     if (isAnniv() || bdName() || bdWeekName()) return "";
     var d = new Date(), m = d.getMonth() + 1, dy = d.getDate();
     if (PV === "hw" || (m === 10 && dy >= 29 && dy <= 31)) return "hw";
     if (PV === "xmas" || (m === 12 && (dy === 24 || dy === 25))) return "xmas";
     if (PV === "ny" || (m === 2 && dy >= 4 && dy <= 10)) return "ny";
+    if (PV === "vd" || (m === 2 && dy === 14)) return "vd";
     return "";
   }
   /* 巡演日（讀 data.js 的 CITIES：showDays＝演唱會日，格式 "11/19"，y＝年份）：演唱會當天回傳 "today"，前一天回傳 "eve"，其他回傳 ""。
@@ -590,19 +624,32 @@
     xmas: { pal: ["#e0453a", "#2dbf8f", "#ffffff", "#2dbf8f"], hy: -4, tt: "聖誕快樂！", s1: "小窩也布置好聖誕裝飾了。", s2: "練習室也布置好聖誕裝飾了。",
       hat: R(6, 0, 2, 1, "#fff") + R(3, 1, 4, 1, "#e0453a") + R(2, 2, 6, 2, "#e0453a") + R(1, 4, 8, 1, "#fff") },
     ny: { pal: ["#ffd23f", "#e0453a", "#ffd23f", "#ffffff"], hy: -5, tt: "新年快樂！", s1: "小窩也掛上新年彩旗了。", s2: "練習室也掛上新年彩旗了。",
-      hat: R(1, 2, 2, 3, "#ffd23f") + R(4, 1, 2, 4, "#ffd23f") + R(7, 2, 2, 3, "#ffd23f") + R(1, 5, 8, 1, "#e0a800") + R(4, 3, 2, 1, "#e0453a") }
+      hat: R(1, 2, 2, 3, "#ffd23f") + R(4, 1, 2, 4, "#ffd23f") + R(7, 2, 2, 3, "#ffd23f") + R(1, 5, 8, 1, "#e0a800") + R(4, 3, 2, 1, "#e0453a") },
+    vd: { pal: ["#ff8fb3", "#e0457b", "#ffffff", "#e0457b"], hy: -5, tt: "情人節快樂！", s1: "小窩也布置好愛心了。", s2: "練習室也布置好愛心了。",
+      hat: R(2, 0, 2, 1, "#e0457b") + R(6, 0, 2, 1, "#e0457b") + R(1, 1, 8, 2, "#e0457b") + R(2, 3, 6, 1, "#e0457b") + R(3, 4, 4, 1, "#e0457b") + R(4, 5, 2, 1, "#e0457b") + R(2, 1, 2, 1, "#ff8fb3") }
   };
   /* 節日帽：座標系跟派對帽一樣（以小人 26×26 的圖左上角為原點），傾斜角度也一樣 */
   function festHat(k) {
     var h = SEAS[k];
     return h ? '<g transform="rotate(-10 13 3)"><g transform="translate(8,' + h.hy + ')">' + h.hat + "</g></g>" : "";
   }
-  /* 地板上的小擺飾（只是裝飾，不能點）：萬聖節南瓜、聖誕樹；新年只有彩旗和皇冠 */
+  /* 情人節（2/14）：地板上一盒巧克力、旁邊飄兩顆愛心（跟氣球同一套上下飄的動畫，減少動態時會停） */
+  function vdHeart(x, y, c) {
+    return R(x, y, 2, 1, c) + R(x + 3, y, 2, 1, c) + R(x, y + 1, 5, 2, c) + R(x + 1, y + 3, 3, 1, c) + R(x + 2, y + 4, 1, 1, c);
+  }
+  /* 巧克力盒（可以點，小人也會走過來偷吃一顆）和兩顆上下飄的愛心（可以點）。練習室（r2）只當裝飾，不擋點擊 */
+  function vdDeco(r2) {
+    var box = '<g transform="translate(30,78)">' + R(0, 3, 12, 7, "#6b3a2a") + R(1, 4, 10, 5, "#8a4b36") + R(5, 3, 2, 7, "#e0457b") + R(0, 6, 12, 1, "#e0457b") + R(3, 2, 2, 1, "#e0457b") + R(5, 1, 2, 2, "#e0457b") + R(7, 2, 2, 1, "#e0457b") + "</g>";
+    var hearts = '<g transform="translate(44,74)"><g class="rbal d1">' + vdHeart(0, 0, "#e0457b") + "</g></g>" +
+      '<g transform="translate(52,78)"><g class="rbal d2">' + vdHeart(0, 0, "#ff8fb3") + "</g></g>";
+    return fxG("vdchoc", box, [29, 78, 14, 12], r2) + fxG("vdheart", hearts, [43, 72, 16, 14], r2);
+  }
+  /* 地板上的小擺飾（只是裝飾，不能點）：萬聖節南瓜、聖誕樹、情人節巧克力；新年只有彩旗和皇冠 */
   function festProp(r2) {
     var k = seasonKind(), s = "";
     if (k === "hw") s = R(5, 0, 2, 2, "#2dbf8f") + R(2, 2, 8, 1, "#ff8a1f") + R(1, 3, 10, 6, "#ff8a1f") + R(2, 9, 8, 1, "#ff8a1f") + R(5, 3, 1, 6, "#d9610f") + R(3, 4, 2, 2, "#2b2f3a") + R(7, 4, 2, 2, "#2b2f3a") + R(4, 7, 4, 1, "#ffd23f");
     else if (k === "xmas") s = xmasTree();
-    return (s ? '<g transform="translate(' + (k === "xmas" ? "138,72" : "30,78") + ')" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? candyArt() + broomArt() : "") + (k === "xmas" ? xmasDeco(r2) : "") + (k === "ny" ? nyDeco(r2) : "");
+    return (s ? '<g transform="translate(' + (k === "xmas" ? "138,72" : "30,78") + ')" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? candyArt() + broomArt() : "") + (k === "xmas" ? xmasDeco(r2) : "") + (k === "ny" ? nyDeco(r2) : "") + (k === "vd" ? vdDeco(r2) : "");
   }
   /* 聖誕節的地板裝飾：樹下的禮物盒、給聖誕老人的餅乾和牛奶、掛在桌邊的聖誕襪（練習室沒有桌子，不掛）。
      一樣可以點（跳一下／抖一下＋台詞）；練習室（r2）只當裝飾，不擋點擊 */
@@ -682,6 +729,8 @@
     nyhb: { an: "hop", n: "紅包", say: ["新年快樂，恭喜發財！", "紅包拿來，裡面是滿滿的祝福。"] },
     nyingot: { an: "hop", n: "金元寶", say: ["金光閃閃，今年一定順順利利。", "沉甸甸的，好有福氣。"] },
     bdballoon: { an: "hop", n: "生日氣球", say: ["氣球飄呀飄，今天是你的日子。", "輕輕一碰，氣球就晃了起來。", "三顆氣球綁在一起，一起慶祝生日。"] },
+    vdchoc: { an: "hop", n: "巧克力", say: ["情人節的巧克力，粉紅緞帶綁得好整齊。", "打開蓋子，每一顆都不一樣。", "分你一顆，剩下的我們一起吃。"] },
+    vdheart: { an: "hop", n: "愛心", say: ["愛心飄呀飄，今天滿滿都是愛。", "輕輕一碰，愛心晃了起來。"] },
     bdwballoon: { an: "hop", n: "生日氣球", say: ["氣球先綁好了，生日快到囉。", "輕輕一碰，氣球就晃了起來。", "三顆氣球先綁在一起，等著慶祝生日。"] },
     bdpballoon: { an: "hop", n: "生日氣球", say: ["昨天的氣球還沒收，捨不得。", "輕輕一碰，氣球就晃了起來。", "派對散場了，氣球還留著一點餘味。"] },
     bdgift: { an: "hop", n: "生日禮物", say: ["是給壽星的，裡面是什麼呢？", "包裝得好漂亮，不知道裝了什麼。", "七個人一起挑的禮物，藏不住心意。"] },
@@ -796,7 +845,7 @@
       get say() { return seasonKind() === "ny" ? "春聯貼好了，新的一年也一起好好應援。" : "三天全勤的票根，一張都沒少。"; },
       get art() { return seasonKind() === "ny" ? artCouplet() : artTickets(); } },
     { k: "moon", b: "h-nt", fb: "夜貓應援", hid: 1, n: "月亮貼紙", x: 136, y: 22, w: 12, h: 11, an: "bounce", say: "夜深了，小窩陪你一起熬夜。", art: artMoon() },
-    { k: "lamp", b: "f-s3", fb: "連抽三天", n: "檯燈", x: 106, y: 36, w: 12, h: 16, an: "", say: "lamp", art: artLamp() },
+    { k: "lamp", b: "f-s3", fb: "連抽三天", n: "檯燈", x: 106, y: 36, w: 12, h: 16, an: "", say: "lamp", get art() { return artLamp(); } },
     { k: "photo", b: "h-egg2", fb: "合照時間", hid: 1, n: "合照相框", x: 122, y: 42, w: 12, h: 10, an: "bounce",
       get say() { return isAnniv() ? "6/13 的合照，七個人都戴上了派對帽。" : "七個人，一張合照。"; },
       get art() { return isAnniv() ? artPhoto613() : artPhoto(); } },
@@ -914,11 +963,11 @@
   var ROOMS = [
     { id: "nest", chip: "第 1 間", name: "彩蛋小窩", items: ITEMS, scene: scene, gate: null, lazy: false, wmax: 112, ng: true, alt: false,
       pct: "小窩完成度", popTitle: "第一個房間完成了！",
-      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", bw: "小窩先掛上彩旗和氣球了。", aw: "小窩先掛上彩旗了。", ax: "小窩的彩旗還沒收，捨不得。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
+      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", bw: "小窩先掛上彩旗和氣球了。", aw: "小窩先掛上彩旗了。", ax: "小窩的彩旗還沒收，捨不得。", nye: "點時鐘看跨年倒數，晚上窗外有煙火。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
     { id: "prac", chip: "第 2 間", name: "練習室", items: ITEMS2, scene: scene2, gate: "nest", lazy: true, wmax: 108, ng: false, alt: true,
       pub: ROOM2_PUBLIC, pv: ROOM2_PV, pvAll: P2ALL, pvStart: "room2",
       pct: "練習室完成度",
-      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", aw: "練習室先掛上彩旗了。", ax: "練習室的彩旗還沒收，捨不得。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
+      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", aw: "練習室先掛上彩旗了。", ax: "練習室的彩旗還沒收，捨不得。", nye: "練習室也迎接新的一年了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
       lock: { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" },
       unlocked: "練習室開放了，快去看看。" }
   ];
@@ -962,8 +1011,8 @@
       : R(64, 10, 32, 28, "#7cc4ff") + R(64, 10, 32, 8, "#9bd3ff") + R(70, 10, 3, 28, "#fff", 0.15) + R(84, 10, 3, 28, "#fff", 0.12) + R(75, 16, 1, 1, "#fff") + R(90, 20, 1, 1, "#fff") +
         '<g class="fish">' + R(68, 24, 4, 2, "#ff8a5b") + R(72, 23, 1, 4, "#ff8a5b") + R(67, 25, 1, 1, "#fff") + "</g>";
     s += R(64, 38, 32, 4, night ? "#3a4a7a" : "#f0d9a0") + R(66, 34, 1, 4, "#2dbf8f") + R(67, 33, 1, 3, "#2dbf8f") + R(92, 35, 1, 3, "#2dbf8f");
-    if (full || (night && isFest())) {
-      /* 煙火層：夾在天空和人影之間，用 clipPath 切在窗框內，內容由 tick 每幀換（6/13 的夜晚不用集滿也會放） */
+    if (full || (night && (isFest() || isNye()))) {
+      /* 煙火層：夾在天空和人影之間，用 clipPath 切在窗框內，內容由 tick 每幀換（6/13、12/31 的夜晚不用集滿也會放） */
       s += '<clipPath id="rmwc"><rect x="64" y="10" width="32" height="28"/></clipPath><g id="rmfw" clip-path="url(#rmwc)"></g>';
     }
     if (full && !isFest()) {
@@ -1126,7 +1175,7 @@
     s += R(102, 52, 56, 3, "#8b5a2b") + R(104, 55, 52, 2, "#a8743f") + R(104, 57, 3, 9, "#8b5a2b") + R(153, 57, 3, 9, "#8b5a2b");
     if (S.st["f-s3"]) {
       s += '<g class="rmlt">';
-      for (var y = 44; y < 92; y += 2) s += R(112 - (6 + Math.floor((y - 44) / 2)), y, 2 * (6 + Math.floor((y - 44) / 2)), 2, "#ffe27a", y >= 80 ? 0.2 : 0.1);
+      for (var y = 44; y < 92; y += 2) s += R(112 - (6 + Math.floor((y - 44) / 2)), y, 2 * (6 + Math.floor((y - 44) / 2)), 2, seasonKind() === "vd" ? "#ff8fb3" : "#ffe27a", y >= 80 ? 0.2 : 0.1);
       s += "</g>";
     }
     ITEMS.forEach(function (it) {
@@ -1514,7 +1563,7 @@
         h += lockedRoom(S.rm, S.st);
       } else if (S.tab === "room") {
         h += RM.scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : annivWeek() ? "<b>" + esc(t(annivWeek() === 2 ? "出道紀念日剛過！" : "出道紀念日快到了！")) + "</b><br>" + esc(t(annivWeek() === 2 ? RM.cap.ax : RM.cap.aw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
+          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : annivWeek() ? "<b>" + esc(t(annivWeek() === 2 ? "出道紀念日剛過！" : "出道紀念日快到了！")) + "</b><br>" + esc(t(annivWeek() === 2 ? RM.cap.ax : RM.cap.aw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : isNye() ? "<b>" + esc(t("今天跨年！")) + "</b><br>" + esc(t(RM.cap.nye)) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>' + RM.pct + "</span> <span>" + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
@@ -1782,6 +1831,7 @@
       else if (w === "bdg") { S.wuntil = now + 2.8; popFxK("bdgift"); }
       else if (w === "candy") { S.wuntil = now + 2.8; popFxK("hwcandy"); }
       else if (w === "broom") { S.wuntil = now + 3; popFxK("hwbroom"); }
+      else if (w === "choc") { S.wuntil = now + 3; S.wd = -1; popFxK("vdchoc"); }
       else if (w === "cookie") { S.wuntil = now + 3.2; S.wd = -1; popFxK("xcookie"); }
       else if (w === "gift") { S.wuntil = now + 2.8; popFxK("xgift"); }
       else if (w === "sock") { S.wuntil = now + 2.8; popFxK("xsock"); }
@@ -1992,7 +2042,7 @@
         if (S.fwb) {
           var ff = Math.floor((now - S.fwb.t) / 0.18);
           if (ff !== S.fwb.f) { S.fwb.f = ff; fw.innerHTML = fwHtml(S.fwb, ff); }
-          if (ff >= 8) { S.fwb = null; S.fwn = now + 5 + Math.random() * 7; fw.innerHTML = ""; }
+          if (ff >= 8) { S.fwb = null; S.fwn = now + (isNye() ? 2 + Math.random() * 3 : 5 + Math.random() * 7); fw.innerHTML = ""; }
         }
       }
       if (g && !g7on) {
@@ -2050,6 +2100,7 @@
           /* 演唱會前一天／當天：經過海報前（小人中心對到海報 x≈72）有機會停下來抬頭看，看完繼續往原方向走 */
           if (S.wst === "walk" && tourKind() && !seasonKind() && S.st["f-1"] && qok && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
           var sk2 = seasonKind();
+          if (S.wst === "walk" && sk2 === "vd" && qok && now >= (S.wfc || 0) && ((px < 42 && S.wx >= 42) || (px > 42 && S.wx <= 42)) && Math.random() < 0.3) { S.wx = 42; S.wfc = now + 10; enter("choc", now); }
           if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && qok && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
             else if (((px < 48 && S.wx >= 48) || (px > 48 && S.wx <= 48)) && Math.random() < 0.2) { S.wx = 48; S.wfc = now + 10; enter(sk2 === "ny" ? "ingot" : "cookie", now); }
