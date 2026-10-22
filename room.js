@@ -336,7 +336,7 @@
   /* 萬聖節：斜靠在書架旁的掃帚（棕色柄、紫色綁帶、黃色掃帚頭；只是裝飾，不能點） */
   function broomArt() {
     var s = "", i, j, x0;
-    for (i = 0; i < 20; i++) s += R(10 - Math.floor(i * 0.35), 64 + i, 2, 1, "#8b5a2b");
+    for (i = 0; i < 20; i++) s += R(10 - Math.floor(i * 0.35), 64 + i, 2, 1, "#2e1a0c");
     s += R(2, 83, 5, 1, "#7b4fd6");
     for (j = 0; j < 9; j++) {
       x0 = 2 - Math.floor(j * 0.3);
