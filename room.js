@@ -118,6 +118,25 @@
     "關閉": ["Close", "닫기", "閉じる"],
     "今天是 6/13，出道紀念日！": ["It's 6/13 — debut anniversary!", "오늘은 6/13, 데뷔 기념일!", "今日は6/13、デビュー記念日！"],
     "小窩也掛上彩旗了。": ["The room put up bunting too.", "방에도 깃발을 달았어요.", "お部屋にもガーランドを飾りました。"],
+    "限定布置": ["Limited decor", "한정 장식", "限定デコ"],
+    "生日當天": ["Birthday", "생일 당일", "誕生日当日"],
+    "生日週": ["Birthday week", "생일 주간", "誕生日ウィーク"],
+    "生日隔天": ["Day after birthday", "생일 다음 날", "誕生日の翌日"],
+    "萬聖節": ["Halloween", "할로윈", "ハロウィン"],
+    "聖誕節": ["Christmas", "크리스마스", "クリスマス"],
+    "新年": ["New Year", "새해", "お正月"],
+    "演唱會當天": ["Concert day", "콘서트 당일", "公演当日"],
+    "演唱會前夕": ["Concert eve", "콘서트 전날", "公演前日"],
+    "出道紀念日": ["Debut anniversary", "데뷔 기념일", "デビュー記念日"],
+    "昨天生日！": ["Birthday was yesterday!", "어제가 생일이었어요!", "昨日は誕生日でした！"],
+    "昨天的派對還有一點餘味。": ["Yesterday's party still lingers a little.", "어제의 파티 여운이 아직 남아 있어요.", "昨日のパーティーの余韻がまだ少し残っています。"],
+    "昨天的氣球還沒收，捨不得。": ["The balloons from yesterday aren't taken down yet.", "어제의 풍선을 아직 못 치웠어요. 아쉬워서요.", "昨日の風船はまだ片づけてないよ。名残惜しくて。"],
+    "派對散場了，氣球還留著一點餘味。": ["The party's over, but the balloons still hold a bit of the glow.", "파티는 끝났지만 풍선에 여운이 남아 있어요.", "パーティーは終わったけど、風船に余韻が残っている。"],
+    "生日快到了！": ["Birthday coming up!", "생일이 다가와요!", "もうすぐ誕生日！"],
+    "小窩先掛上彩旗和氣球了。": ["Flags and balloons are already up in the room.", "방에 깃발과 풍선을 먼저 달았어요.", "お部屋に旗と風船を先に飾りました。"],
+    "練習室先掛上彩旗和氣球了。": ["Flags and balloons are already up in the practice room.", "연습실에 깃발과 풍선을 먼저 달았어요.", "練習室に旗と風船を先に飾りました。"],
+    "氣球先綁好了，生日快到囉。": ["Balloons are tied up — the birthday is almost here.", "풍선을 미리 달아 뒀어요. 생일이 코앞이에요.", "風船を先に結んだよ。もうすぐ誕生日。"],
+    "三顆氣球先綁在一起，等著慶祝生日。": ["Three balloons tied together, waiting for the birthday.", "풍선 세 개가 생일을 기다리고 있어요.", "三つの風船が、誕生日を待っています。"],
     "今天生日！": ["It's their birthday today!", "오늘은 생일이에요!", "今日は誕生日！"],
     "小窩為壽星布置好了。": ["The room is all decked out for the birthday star.", "방이 생일 주인공을 위해 꾸며졌어요.", "お部屋が主役のために飾られました。"],
     "第 1 間": ["Room 1", "방 1", "部屋 1"],
@@ -314,7 +333,7 @@
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "613" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -428,6 +447,53 @@
     for (var i = 0; i < WN.length; i++) if (bdToday(WN[i])) return WN[i];
     return "";
   }
+  /* 生日週：成員生日前 BD_LEAD 天（不含當天）開始掛彩旗和氣球；蛋糕、七人慶祝、派對帽、禮物堆、HAPPY BIRTHDAY 字旗仍然只有當天才有。
+     BD_LEAD 想拉長或縮短只改這個數字。預覽：網址加 ?preview=bdw-Jimin */
+  var BD_LEAD = 3;
+  function bdWeekName() {
+    if (isAnniv() || bdName()) return "";
+    if (PV.indexOf("bdw-") === 0 && WN.indexOf(PV.slice(4)) >= 0) return PV.slice(4);
+    try {
+      if (typeof MEMBERS === "undefined") return "";
+      var now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), i, m, tg, df;
+      for (i = 0; i < MEMBERS.length; i++) {
+        m = MEMBERS[i];
+        if (WN.indexOf(m[0]) < 0) continue;
+        tg = new Date(now.getFullYear(), Number(m[1]) - 1, Number(m[2]));
+        if (tg < t0) tg = new Date(now.getFullYear() + 1, Number(m[1]) - 1, Number(m[2]));
+        df = Math.round((tg - t0) / 86400000);
+        if (df >= 1 && df <= BD_LEAD) return m[0];
+      }
+    } catch (e) {}
+    return "";
+  }
+  /* 收藏清單上方的「限定布置」標籤：現在房間有哪一種限定布置。回傳 [階段文字, 成員名（沒有就空字串）]，沒有限定布置就回傳 null。
+     優先順序跟說明文字一致：6/13 > 生日當天 > 生日週 > 節日 > 演唱會 > 生日隔天 */
+  function limTag() {
+    var n, k;
+    if (isAnniv()) return ["出道紀念日", ""];
+    if ((n = bdName())) return ["生日當天", n];
+    if ((n = bdWeekName())) return ["生日週", n];
+    if ((k = seasonKind())) return [k === "hw" ? "萬聖節" : k === "xmas" ? "聖誕節" : "新年", ""];
+    if ((k = tourKind())) return [k === "today" ? "演唱會當天" : "演唱會前夕", ""];
+    if ((n = bdAfterName())) return ["生日隔天", n];
+    return null;
+  }
+  /* 生日後一天：昨天是成員生日，今天只留沒收的氣球和一句收尾文字（沒有彩旗、蛋糕、禮物）。預覽：網址加 ?preview=bda-Jimin */
+  function bdAfterName() {
+    if (isAnniv() || bdName() || bdWeekName()) return "";
+    if (PV.indexOf("bda-") === 0 && WN.indexOf(PV.slice(4)) >= 0) return PV.slice(4);
+    try {
+      if (typeof MEMBERS === "undefined") return "";
+      var y = new Date(), i, m;
+      y.setDate(y.getDate() - 1);
+      for (i = 0; i < MEMBERS.length; i++) {
+        m = MEMBERS[i];
+        if (WN.indexOf(m[0]) >= 0 && Number(m[1]) === y.getMonth() + 1 && Number(m[2]) === y.getDate()) return m[0];
+      }
+    } catch (e) {}
+    return "";
+  }
   /* 今天抽到的幸運籤成員：跟 app.js 的 ftShow() 用同一套算法（ftKey／fth／ftBd），
      只在「今天已經抽過」（localStorage ftn-st.last 是今天）時才回傳，沒抽就回傳空字串，不會劇透今天的籤 */
   function drawnMem() {
@@ -452,7 +518,7 @@
   /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/29–10/31 萬聖節、12/24–25 聖誕、2/4–2/10 新年。
      預覽：網址加 ?preview=hw／xmas／ny。6/13 和成員生日的布置優先，節日不會疊上去 */
   function seasonKind() {
-    if (isAnniv() || bdName()) return "";
+    if (isAnniv() || bdName() || bdWeekName()) return "";
     var d = new Date(), m = d.getMonth() + 1, dy = d.getDate();
     if (PV === "hw" || (m === 10 && dy >= 29 && dy <= 31)) return "hw";
     if (PV === "xmas" || (m === 12 && (dy === 24 || dy === 25))) return "xmas";
@@ -594,6 +660,8 @@
     nyhb: { an: "hop", n: "紅包", say: ["新年快樂，恭喜發財！", "紅包拿來，裡面是滿滿的祝福。"] },
     nyingot: { an: "hop", n: "金元寶", say: ["金光閃閃，今年一定順順利利。", "沉甸甸的，好有福氣。"] },
     bdballoon: { an: "hop", n: "生日氣球", say: ["氣球飄呀飄，今天是你的日子。", "輕輕一碰，氣球就晃了起來。", "三顆氣球綁在一起，一起慶祝生日。"] },
+    bdwballoon: { an: "hop", n: "生日氣球", say: ["氣球先綁好了，生日快到囉。", "輕輕一碰，氣球就晃了起來。", "三顆氣球先綁在一起，等著慶祝生日。"] },
+    bdpballoon: { an: "hop", n: "生日氣球", say: ["昨天的氣球還沒收，捨不得。", "輕輕一碰，氣球就晃了起來。", "派對散場了，氣球還留著一點餘味。"] },
     bdgift: { an: "hop", n: "生日禮物", say: ["是給壽星的，裡面是什麼呢？", "包裝得好漂亮，不知道裝了什麼。", "七個人一起挑的禮物，藏不住心意。"] },
     prbottle: { an: "hop", n: "水壺和毛巾", say: ["練舞練到口渴，先喝口水補充體力。", "毛巾搭在水壺上，等一下還要擦汗。", "多喝水，七個人一起跳才不會累倒。"] },
     prshoes: { an: "shake", n: "運動鞋", say: ["練舞的球鞋，鞋底都快磨平了。", "有一隻歪倒了，趕快擺好再出發。", "鞋帶綁緊，今天也要練到最後一刻。"] }
@@ -660,12 +728,12 @@
     return '<g pointer-events="none">' + s + "</g>";
   }
   /* 生日當天的禮物堆（壽星的顏色，在 x,y）和三顆會輕輕上下飄的氣球（往右偏移 bx）；只是裝飾 */
-  function bdDeco(n, x, y, bx) {
+  function bdDeco(n, x, y, bx, pre) {
     var c = MC[WN.indexOf(n) % 7], c2 = MC[(WN.indexOf(n) + 3) % 7];
     var bal = function (bx, by, col, d) { return '<g transform="translate(' + bx + "," + by + ')"><g class="rbal ' + d + '">' + R(1, 0, 3, 1, col) + R(0, 1, 5, 4, col) + R(1, 5, 3, 1, col) + R(1, 1, 1, 1, "#fff", 0.6) + R(2, 6, 1, 12, "#8b5a2b", 0.6) + "</g></g>"; };
     var gifts = giftArt(0, 4, 9, 6, c, "#fff") + giftArt(10, 6, 7, 4, "#fff", c) + giftArt(3, -1, 6, 5, "#ffd23f", "#e0457b");
-    return '<g transform="translate(' + x + "," + y + ')">' + '<g transform="translate(' + (bx || 0) + ',0)">' + fxG("bdballoon", bal(2, -22, c, "") + bal(8, -26, "#fff", "d1") + bal(14, -21, c2, "d2"), [1, -27, 18, 22]) + "</g>" +
-      fxG("bdgift", gifts, [0, -1, 17, 11]) + "</g>";
+    return '<g transform="translate(' + x + "," + y + ')">' + '<g transform="translate(' + (bx || 0) + ',0)">' + fxG(pre === 2 ? "bdpballoon" : pre ? "bdwballoon" : "bdballoon", bal(2, -22, c, "") + bal(8, -26, "#fff", "d1") + bal(14, -21, c2, "d2"), [1, -27, 18, 22]) + "</g>" +
+      (pre ? "" : fxG("bdgift", gifts, [0, -1, 17, 11])) + "</g>";
   }
   /* 彩紙：14 小片用 CSS 慢慢飄下來，畫在最上層、不擋點擊 */
   function confArt() {
@@ -824,11 +892,11 @@
   var ROOMS = [
     { id: "nest", chip: "第 1 間", name: "彩蛋小窩", items: ITEMS, scene: scene, gate: null, lazy: false, wmax: 112, ng: true, alt: false,
       pct: "小窩完成度", popTitle: "第一個房間完成了！",
-      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
+      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", bw: "小窩先掛上彩旗和氣球了。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
     { id: "prac", chip: "第 2 間", name: "練習室", items: ITEMS2, scene: scene2, gate: "nest", lazy: true, wmax: 108, ng: false, alt: true,
       pub: ROOM2_PUBLIC, pv: ROOM2_PV, pvAll: P2ALL, pvStart: "room2",
       pct: "練習室完成度",
-      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
+      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
       lock: { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" },
       unlocked: "練習室開放了，快去看看。" }
   ];
@@ -1026,8 +1094,9 @@
     s += R(0, 66, 160, 34, P.fl);
     for (i = 0; i < 5; i++) s += R(0, 70 + i * 7, 160, 1, P.fll);
     s += R(0, 64, 160, 3, P.bs);
-    var bn = bdName();
+    var bn = bdName(), bw = bdWeekName(), ba = bdAfterName();
     if (isAnniv() || bn) s += buntArt(isAnniv() ? "" : bn);
+    else if (bw) s += buntArt(bw);
     else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
     else if (tourKind()) s += buntArt("", TOURPAL);
     s += win(S.night, full);
@@ -1048,7 +1117,7 @@
     else if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt();
     if (tourKind() === "eve" && !seasonKind() && !isFest()) s += eveGoodsArt(false) + chargingStickArt();
     if (p7 && !S.g7) { S.g7 = "in"; S.g7x = G7X.map(function (v, i) { return -24 - i * 12; }); S.g7t = 0; }
-    return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80, 76) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
+    return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80, 76) : bw ? bdDeco(bw, 38, 80, 76, 1) : ba ? bdDeco(ba, 38, 80, 76, 2) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 練習室的場景：鏡牆（小人的倒影）＋ 把杆 ＋ 木地板。小人的倒影只畫在鏡子裡（clip），100% 時七個人各有一個 ===== */
@@ -1116,7 +1185,7 @@
     return s + "</g>";
   }
   function scene2(S, full) {
-    var P = S.night ? PN2 : PD2, i, r, x, bn = bdName(), fest = isAnniv() || bn;
+    var P = S.night ? PN2 : PD2, i, r, x, bn = bdName(), bw = bdWeekName(), ba = bdAfterName(), fest = isAnniv() || bn;
     if (!(full && S.gp === "enter")) S.wx = Math.max(6, Math.min(108, S.wx));
     initDz(S);
     var s = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="練習室"><defs><clipPath id="rmcp"><rect x="26" y="20" width="86" height="40"/></clipPath></defs>';
@@ -1129,6 +1198,7 @@
     }
     s += R(0, 64, 160, 3, P.bs);
     if (fest) s += buntArt(isAnniv() ? "" : bn);
+    else if (bw) s += buntArt(bw);
     else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
     else if (tourKind()) s += buntArt("", TOURPAL);
     /* 鏡牆：銀框、鏡面、兩道斜斜的反光 */
@@ -1144,6 +1214,8 @@
     });
     /* 練習室：彩帶砲在左邊（小人走到左端會拉），禮物在地板中間、氣球再右邊；運動鞋放在彩帶砲和禮物之間 */
     if (fest) s += popperArt(36, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 76, 79, 20) : "");
+    if (bw) s += bdDeco(bw, 76, 79, 20, 1);
+    else if (ba) s += bdDeco(ba, 76, 79, 20, 2);
     s += festProp(true);
     s += practiceFloorArt();
     if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt(84);
@@ -1188,6 +1260,12 @@
       t.className = "ftbd rmpb " + (pct >= 100 ? "done" : "todo");
       var hh = (pct >= 100 ? "<span>✓</span> " : "") + "<span>小窩完成度</span> <span>" + pct + '%</span><i class="rmpx" aria-hidden="true"><s style="width:' + pct + '%"></s></i>';
       if (t.__h !== hh) { t.__h = hh; t.innerHTML = hh; }
+      /* 最外面的按鈕：有限定布置時，完成度下方多一條「限定布置」小標籤；沒有就移除 */
+      var lt = limTag(), lb = et.querySelector(".rmlb");
+      if (!lt) { if (lb) lb.remove(); return; }
+      if (!lb) { lb = document.createElement("em"); lb.className = "rmlb"; et.appendChild(lb); }
+      var lh = '<span class="rmlc">限定布置</span> <span>' + lt[0] + "</span>" + (lt[1] ? " <b>" + esc(lt[1]) + "</b>" : "");
+      if (lb.__h !== lh) { lb.__h = lh; lb.innerHTML = lh; }
     } catch (e) {}
   }
   try {
@@ -1269,7 +1347,8 @@
     ".up .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(-1px) rotate(-7deg)}.lw .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(1px) rotate(7deg)}" +
     ".rmtk{display:none;pointer-events:none}.tk .rmtk{display:block}.rth{transform-box:fill-box;transform-origin:50% 50%;animation:rmth .6s steps(1) infinite}@keyframes rmth{0%{transform:scale(1)}50%{transform:scale(1.2)}}@media(prefers-reduced-motion:reduce){.rth{animation:none}}" +
     "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
-    "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}";
+    "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}" +
+    ".rmlb{display:block;width:min(240px,100%);box-sizing:border-box;margin-top:6px;font-style:normal;font-size:12px;font-weight:800;line-height:1.5}.rmlc{background:#7b4fd6;color:#fff;padding:1px 6px;font-size:11px;letter-spacing:.5px}.rmlb b{font-weight:800}";
   document.head.appendChild(css);
 
   /* ===== 多房間：S.rm 是 ROOMS 的索引（0＝彩蛋小窩，1＝練習室…）。
@@ -1411,7 +1490,7 @@
         h += lockedRoom(S.rm, S.st);
       } else if (S.tab === "room") {
         h += RM.scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
+          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>' + RM.pct + "</span> <span>" + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
