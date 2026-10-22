@@ -76,6 +76,7 @@
     "小人正在整理明天的行李。": ["Packing the bag for tomorrow.", "내일 짐을 챙기는 중이에요.", "明日の荷物を準備中。"],
     "帶著手燈出門，去現場囉！": ["Heading out with the light stick — off to the venue!", "응원봉을 들고 공연장으로 출발!", "ペンライトを持って、会場へ出発！"],
     "回來了，還在回味演唱會的感動。": ["Back home, still glowing from the concert.", "돌아왔어요. 아직 콘서트의 여운이 남아 있어요.", "帰ってきた。まだコンサートの余韻の中。"],
+    "票帶了嗎？手燈充飽了嗎？再確認一次！": ["Got the ticket? Light stick charged? One more check!", "티켓 챙겼나? 응원봉 충전은? 한 번 더 확인!", "チケットは持った？ペンライトは充電した？もう一回確認！"],
     "整理行李：票、手燈、行動電源，都放進包包了。": ["Packing up: ticket, light stick, power bank — all in the bag.", "짐 챙기기: 티켓, 응원봉, 보조배터리 모두 가방에 넣었어요.", "荷造り：チケット、ペンライト、モバイルバッテリー、全部バッグへ。"],
     "拉開彩帶砲——砰！紙花滿天飛。": ["Pulling the party popper — pop! Confetti everywhere.", "파티 폭죽을 당겼어요. 펑! 색종이가 날아요.", "クラッカーをパーン！紙吹雪が舞った。"],
     "捧著小蛋糕許願，然後一口氣吹熄蠟燭。": ["Holding a little cake, making a wish, then blowing out the candle.", "작은 케이크를 들고 소원을 빌고, 촛불을 후— 불어요.", "ミニケーキを持って願いごと、ふーっとろうそくを吹き消す。"],
@@ -191,7 +192,7 @@
     blow: ["捧著小蛋糕許願，然後一口氣吹熄蠟燭。"],
     out: ["帶著手燈出門，去現場囉！"],
     back: ["回來了，還在回味演唱會的感動。"],
-    pack: ["整理行李：票、手燈、行動電源，都放進包包了。"],
+    pack: ["整理行李：票、手燈、行動電源，都放進包包了。", "票帶了嗎？手燈充飽了嗎？再確認一次！"],
     pop: ["拉開彩帶砲——砰！紙花滿天飛。"],
     walk: ["在小窩裡散步，再點一下換下一位。", "慢慢晃來晃去，心情不錯。", "東看看西看看，巡視自己的小窩。"],
     run: ["突然想跑一下！", "小跑步中，小心別撞到家具。"],
@@ -823,12 +824,37 @@
     return '<g transform="translate(118,79)" pointer-events="none">' + R(8, -3, 3, 4, "#b794ff") + R(2, 0, 3, 4, "#ffd23f") + R(1, 3, 11, 8, "#3b4a7a") + R(2, 4, 9, 2, "#4b5d94") + R(5, 6, 3, 2, "#ffd23f") + R(1, 11, 11, 1, "#262f55") + "</g>";
   }
   /* 演唱會當天：地板上的應援物（橫躺的手燈會閃、三張疊著的小卡）。只是裝飾，不擋點擊；節日／生日當天不畫，避免跟聖誕禮物、新年紅包擠在一起 */
-  function tourGoodsArt() {
+  function tourGoodsArt(x) {
     var card = function (x, y, c) { return R(x, y, 6, 8, "#fff") + R(x + 1, y + 1, 4, 5, c) + R(x + 2, y + 2, 1, 1, "#ffffff", 0.8) + R(x + 1, y + 7, 4, 1, "#d9d9e8"); };
-    return '<g transform="translate(122,83)" pointer-events="none">' +
+    return '<g transform="translate(' + (x || 122) + ',83)" pointer-events="none">' +
       R(0, 6, 15, 1, "#00000022") + '<g class="rcl">' + R(-2, -1, 9, 8, "#b794ff", 0.28) + "</g>" +
       R(0, 1, 5, 4, "#b794ff") + R(1, 2, 2, 2, "#fff") + R(5, 2, 1, 2, "#9d7be8") + R(6, 2, 6, 2, "#444") + R(12, 1, 2, 4, "#222") +
       card(18, 0, "#ff8fb3") + card(22, 2, "#6fb7ff") + card(27, 0, "#ffd23f") + "</g>";
+  }
+  /* 練習室左邊地板：搭著毛巾的水壺、一雙運動鞋（一隻歪倒）。平常就有，只是裝飾，不擋點擊 */
+  function practiceFloorArt() {
+    var bottle = '<g transform="translate(12,84)">' + R(0, 9, 8, 1, "#00000022") + R(2, -1, 3, 1, "#444") + R(1, 0, 5, 9, "#6fb7ff") + R(2, 1, 1, 6, "#bfe3ff") +
+      R(0, 1, 7, 2, "#fff") + R(0, 3, 2, 5, "#fff") + R(0, 5, 2, 1, "#b794ff") + "</g>";
+    var shoes = '<g transform="translate(40,88)">' + R(0, 5, 17, 1, "#00000022") + R(0, 1, 6, 3, "#f3f3f8") + R(6, 2, 3, 2, "#f3f3f8") + R(1, 2, 3, 1, "#b794ff") + R(0, 4, 9, 1, "#9aa3c7") +
+      R(11, 0, 3, 5, "#f3f3f8") + R(14, 0, 1, 5, "#9aa3c7") + R(11, 1, 3, 1, "#b794ff") + "</g>";
+    return '<g pointer-events="none">' + bottle + shoes + "</g>";
+  }
+  /* 演唱會前一天：地板上摺好的外套（紫色，上面一件白 T）＋牆上貼的「明天」便條。小窩跟練習室都有，位置各自避開原本的物品；只是裝飾，不擋點擊 */
+  function eveGoodsArt(r2) {
+    var jx = r2 ? 84 : 134, nx = r2 ? 124 : 99, ny = r2 ? 30 : 14;
+    var jacket = '<g transform="translate(' + jx + ',84)">' + R(0, 7, 12, 1, "#00000022") + R(0, 2, 12, 5, "#7b4fd6") + R(0, 2, 12, 1, "#9d7be8") + R(0, 6, 12, 1, "#5f3bb0") + R(9, 3, 2, 2, "#ffd23f") +
+      R(2, 0, 7, 2, "#fff") + R(3, 0, 5, 1, "#e6e8f2") + "</g>";
+    var note = '<g transform="translate(' + nx + "," + ny + ')">' + R(2, 0, 3, 1, "#ffffff", 0.7) + R(0, 1, 7, 8, "#ffe27a") + R(0, 8, 7, 1, "#e0b84a") +
+      '<text x="3.5" y="4.6" font-size="3.4" font-weight="700" text-anchor="middle" fill="#b3262e" shape-rendering="auto" font-family="\'Noto Sans TC\',\'Microsoft JhengHei\',sans-serif">明</text>' +
+      '<text x="3.5" y="8" font-size="3.4" font-weight="700" text-anchor="middle" fill="#b3262e" shape-rendering="auto" font-family="\'Noto Sans TC\',\'Microsoft JhengHei\',sans-serif">天</text></g>';
+    return '<g pointer-events="none">' + jacket + note + "</g>";
+  }
+  /* 演唱會前一天（只有小窩）：桌子底下，手燈插著充電（燈頭微亮、小綠燈），線接到牆上的插座 */
+  function chargingStickArt() {
+    return '<g transform="translate(124,58)" pointer-events="none">' + R(14, 2, 5, 6, "#c9c2b0") + R(15, 3, 3, 1, "#8a8372") + R(15, 5, 3, 1, "#8a8372") +
+      R(5, 11, 10, 1, "#444") + R(15, 8, 1, 4, "#444") +
+      '<g class="halo">' + R(-2, -2, 9, 8, "#b794ff", 0.18) + "</g>" + R(0, 0, 5, 4, "#9d7be8") + R(1, 1, 2, 1, "#d9c9ff") + R(1, 4, 3, 1, "#7b4fd6") + R(1, 5, 3, 7, "#444") + R(0, 12, 5, 2, "#222") +
+      R(2, 8, 1, 1, "#2dbf8f") + "</g>";
   }
   var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt() + lightStickArt();
 
@@ -869,6 +895,7 @@
     var p7 = full && isFest();
     if (tourKind() === "eve") s += bagArt();
     else if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt();
+    if (tourKind() === "eve" && !seasonKind() && !isFest()) s += eveGoodsArt(false) + chargingStickArt();
     if (p7 && !S.g7) { S.g7 = "in"; S.g7x = G7X.map(function (v, i) { return -24 - i * 12; }); S.g7t = 0; }
     return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
   }
@@ -966,7 +993,9 @@
     });
     if (fest) s += popperArt(36, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 48, 79) : "");
     s += festProp(true);
-    if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt();
+    s += practiceFloorArt();
+    if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt(84);
+    if (tourKind() === "eve" && !seasonKind() && !isFest()) s += eveGoodsArt(true);
     if (full) {
       var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168);
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
