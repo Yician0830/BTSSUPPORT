@@ -331,7 +331,26 @@
     var k = seasonKind(), s = "";
     if (k === "hw") s = R(5, 0, 2, 2, "#2dbf8f") + R(2, 2, 8, 1, "#ff8a1f") + R(1, 3, 10, 6, "#ff8a1f") + R(2, 9, 8, 1, "#ff8a1f") + R(5, 3, 1, 6, "#d9610f") + R(3, 4, 2, 2, "#2b2f3a") + R(7, 4, 2, 2, "#2b2f3a") + R(4, 7, 4, 1, "#ffd23f");
     else if (k === "xmas") s = R(5, 0, 2, 1, "#ffd23f") + R(5, 1, 2, 1, "#2dbf8f") + R(4, 2, 4, 2, "#2dbf8f") + R(3, 4, 6, 2, "#2dbf8f") + R(2, 6, 8, 2, "#2dbf8f") + R(1, 8, 10, 2, "#2dbf8f") + R(5, 10, 2, 2, "#8b5a2b") + R(4, 5, 1, 1, "#e0453a") + R(7, 7, 1, 1, "#ffd23f") + R(3, 9, 1, 1, "#6fb7ff");
-    return s ? '<g transform="translate(30,78)" pointer-events="none">' + s + "</g>" : "";
+    return (s ? '<g transform="translate(30,78)" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? candyArt() + broomArt() : "");
+  }
+  /* 萬聖節：斜靠在書架旁的掃帚（棕色柄、紫色綁帶、黃色掃帚頭；只是裝飾，不能點） */
+  function broomArt() {
+    var s = "", i, j, x0;
+    for (i = 0; i < 20; i++) s += R(10 - Math.floor(i * 0.35), 64 + i, 2, 1, "#8b5a2b");
+    s += R(2, 83, 5, 1, "#7b4fd6");
+    for (j = 0; j < 9; j++) {
+      x0 = 2 - Math.floor(j * 0.3);
+      s += R(x0, 84 + j, 5 + Math.floor(j * 0.4), 1, "#e0a800") + R(x0 + 2, 84 + j, 1, 1, "#b87333");
+    }
+    return '<g pointer-events="none">' + s + "</g>";
+  }
+  /* 萬聖節：地板上散落的糖果和一根棒棒糖（只是裝飾，不能點、不擋點擊） */
+  function candyArt() {
+    var cd = function (x, y, c, e) { return R(x + 1, y, 3, 2, c) + R(x, y, 1, 2, e) + R(x + 4, y, 1, 2, e); };
+    return '<g pointer-events="none">' +
+      cd(116, 86, "#ff8a1f", "#ffd9a8") + cd(125, 91, "#7b4fd6", "#cdb8ff") + cd(134, 85, "#ff8fb3", "#ffd6e4") + cd(143, 92, "#ff8a1f", "#ffd9a8") + cd(46, 94, "#7b4fd6", "#cdb8ff") +
+      '<g transform="translate(120,76)">' + R(1, 0, 3, 5, "#ff8fb3") + R(0, 1, 5, 3, "#ff8fb3") + R(2, 1, 1, 3, "#fff") + R(1, 2, 3, 1, "#fff") + R(2, 5, 1, 5, "#e8e8e8") + "</g>" +
+      "</g>";
   }
   /* 節日的下方說明文字（r2＝練習室） */
   function seasCap(r2) {
@@ -748,7 +767,7 @@
     ".rmt{display:flex;gap:6px;margin-bottom:8px}.rmt button{flex:1;font:inherit;font-size:13px;font-weight:800;padding:6px 4px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmt button[aria-selected=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmt button:focus-visible,.rmf button:focus-visible,.rmx:focus-visible,.rmn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmb{overflow:auto;flex:1;min-height:0}" +
     "#rmsv{display:block;width:100%;height:auto;border:3px solid var(--dark);image-rendering:pixelated;touch-action:manipulation;user-select:none;-webkit-user-select:none}" +
-    ".rmi{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%}.rmi:focus-visible{outline:2px solid var(--focus)}" +
+    ".rmi{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%}.rmi:focus,.rmi:focus-visible{outline:none}" +
     ".rmi.lk{opacity:.4;filter:grayscale(1) brightness(.55)}" +
     ".rmlamp .glow,.halo{opacity:0;pointer-events:none}.rmlamp.on .glow{opacity:1}.rmlamp .sh rect{fill:#a89a4a}.rmlamp.on .sh rect{fill:#fff1a8}" +
     ".fish{animation:rmfish 9s linear infinite alternate}@keyframes rmfish{from{transform:translateX(0)}to{transform:translateX(18px)}}" +
@@ -769,7 +788,7 @@
     "@media(prefers-reduced-motion:reduce){.rmpx s{transition:none}}" +
     ".rnw{pointer-events:none;animation:rmblink 1s steps(1) infinite}.rmnw{font-style:normal;font-size:10px;font-weight:800;padding:1px 4px;background:var(--gold);color:var(--dark)}" +
     "@media(prefers-reduced-motion:reduce){.rnw{animation:none}}" +
-    ".rmwk{cursor:pointer}.rmwk:focus-visible{outline:2px solid var(--focus)}" +
+    ".rmwk{cursor:pointer}.rmwk:focus,.rmwk:focus-visible{outline:none}" +
     ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
     ".pz .rmwb{animation:none}.slp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(9deg)}" +
     ".rmzz{display:none}.slp .rmzz{display:block}.rz{fill:#fff;stroke:#062a6e;stroke-width:.5;paint-order:stroke;font-weight:900;opacity:0;transform-box:fill-box;animation:rmz 2.4s ease-out infinite}.rz:nth-child(2){animation-delay:.8s}.rz:nth-child(3){animation-delay:1.6s}@keyframes rmz{0%{opacity:0;transform:translate(0,3px)}30%{opacity:1}100%{opacity:0;transform:translate(4px,-8px)}}" +
@@ -791,7 +810,7 @@
     ".rfl{opacity:0;pointer-events:none}.a-flash .rfl{animation:rflash .5s steps(2)}@keyframes rflash{0%,100%{opacity:0}30%,60%{opacity:1}}" +
     ".dn .rmwb{transform-box:fill-box;transform-origin:50% 100%;animation:rmdn .4s steps(1) infinite}@keyframes rmdn{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-3px) rotate(5deg)}}" +
     ".po .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(7deg)}" +
-    ".rmdd{cursor:pointer}.rmdd:focus-visible{outline:2px solid var(--focus)}.rmdb{animation:rmbob .5s steps(1) infinite}" +
+    ".rmdd{cursor:pointer}.rmdd:focus,.rmdd:focus-visible{outline:none}.rmdb{animation:rmbob .5s steps(1) infinite}" +
     ".rmrs{display:flex;gap:6px;margin-bottom:8px}.rmrs button{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
     "@media(prefers-reduced-motion:reduce){.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
