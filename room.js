@@ -132,6 +132,8 @@
     "跳舞中，節拍跟上！": ["Dancing — keep up with the beat!", "춤추는 중, 박자를 놓치지 마요!", "ダンス中。ビートに乗って！"],
     "練舞練到停不下來。": ["Practicing nonstop — can't stop now.", "연습에 빠져서 멈출 수가 없어요.", "夢中で踊って、止まらない。"],
     "對著三腳架擺姿勢，看鏡頭！": ["Striking a pose for the tripod — look at the camera!", "삼각대 앞에서 포즈 중, 카메라를 봐요!", "三脚の前でポーズ。カメラを見て！"],
+    "練習告一段落，大家先離開。": ["Practice is done for now — everyone heads out.", "연습이 끝나서 다들 나가요.", "練習は一区切り。みんなで退室。"],
+    "新一輪練習，大家就位。": ["New round of practice — everyone to your spots.", "새 연습 시작, 다들 자리로!", "新しい練習、みんな位置について。"],
     "七人隊形": ["Seven-member formation", "일곱 멤버 대형", "7人フォーメーション"],
     "排成一排，整整齊齊。": ["Lined up in a row, neat and tidy.", "한 줄로 나란히, 가지런히 섰어요.", "一列に並んで、きれいにそろった。"],
     "拉成弧形，中間的往前站。": ["Curved into an arc, the middle steps forward.", "호를 그리며 가운데가 앞으로 나왔어요.", "弧を描いて、真ん中が前に出た。"],
@@ -592,7 +594,7 @@
     { k: "pwater", b: "p-chk", fb: "補水時間", n: "水瓶", x: 116, y: 56, w: 5, h: 10, an: "hop", say: "補水時間。", art: artPwater() },
     { k: "ptowel", b: "p-fav", fb: "汗水毛巾", n: "毛巾", x: 44, y: 47, w: 9, h: 12, an: "sway", say: "練到流汗，毛巾先掛這裡。", art: artPtowel() },
     { k: "pbag", b: "p-sub", fb: "整裝待發", n: "運動包", x: 140, y: 76, w: 16, h: 12, an: "shake", say: "東西都帶齊了，隨時可以出發。", art: artPbag() },
-    { k: "pphone", b: "p-luck", fb: "排進行程", n: "手機架", x: 104, y: 76, w: 8, h: 12, an: "bounce", say: "今天的運勢，順便排進練習表。", art: artPphone() },
+    { k: "pphone", b: "p-luck", fb: "排進行程", n: "手機架", x: 127, y: 56, w: 8, h: 12, an: "bounce", say: "今天的運勢，順便排進練習表。", art: artPphone() },
     { k: "pclock", b: "p-late", fb: "練到深夜", hid: 1, n: "掛鐘", x: 68, y: 5, w: 12, h: 12, an: "shake", say: "還沒走嗎？再一遍就好。", art: artPclock() },
     { k: "pwin", b: "p-dawn", fb: "練到天亮", hid: 1, n: "日出窗", x: 138, y: 8, w: 20, h: 20, an: "bounce", say: "不知不覺，天亮了。", art: artPwin() },
     { k: "prack", b: "p-seven", fb: "七件同款", hid: 1, n: "練習服掛架", x: 1, y: 8, w: 21, h: 12, an: "sway", say: "七件，一件不少。", art: artPrack() },
@@ -759,16 +761,15 @@
     return '<g transform="translate(10,80)">' + R(1, 4, 5, 5, "#ff8fb3") + R(0, 7, 7, 2, "#e0457b") + R(3, 1, 1, 1, MC[2]) + R(5, 0, 1, 1, MC[4]) + R(6, 2, 1, 1, MC[1]) + R(2, 2, 1, 1, MC[3]) + R(4, 3, 1, 1, MC[5]) + "</g>";
   }
   function mirrorRefl(S, full) {
-    var s = '<g clip-path="url(#rmcp)">';
+    var s = '<g clip-path="url(#rmcp)">', hideS = full && S.gp !== "away" && S.gp !== "enter";
     if (full) {
-      s += '<g opacity=".4">';
+      s += '<g id="rmdrg" opacity=".4"' + (S.gp === "away" ? ' display="none"' : "") + ">";
       S.dz.forEach(function (d, i) {
         s += '<image class="rmdr" data-i="' + i + '" href="' + esc(avUrl(WN[i])) + '" x="' + (d.x + 2).toFixed(2) + '" y="' + reflY(d.y) + '" width="14" height="14" preserveAspectRatio="xMidYMax meet"/>';
       });
       s += "</g>";
-    } else {
-      s += '<g id="rmmr" opacity=".4" transform="translate(' + (S.wx + 3).toFixed(2) + ',0)"><g class="rmmf"' + (S.wd > 0 ? ' transform="translate(20,0) scale(-1,1)"' : "") + '><image class="rmmra" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="38" width="20" height="20" preserveAspectRatio="xMidYMax meet"/></g></g>';
     }
+    s += '<g id="rmmr" opacity=".4"' + (hideS ? ' display="none"' : "") + ' transform="translate(' + (S.wx + 3).toFixed(2) + ',0)"><g class="rmmf"' + (S.wd > 0 ? ' transform="translate(20,0) scale(-1,1)"' : "") + '><image class="rmmra" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="38" width="20" height="20" preserveAspectRatio="xMidYMax meet"/></g></g>';
     return s + "</g>";
   }
   /* 100%：七個人站在隊形點上，依 y 由後排到前排畫（前排蓋住後排） */
@@ -784,7 +785,7 @@
   }
   function scene2(S, full) {
     var P = S.night ? PN2 : PD2, i, r, x, bn = bdName(), fest = isAnniv() || bn;
-    S.wx = Math.max(6, Math.min(108, S.wx));
+    if (!(full && S.gp === "enter")) S.wx = Math.max(6, Math.min(108, S.wx));
     initDz(S);
     var s = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="練習室"><defs><clipPath id="rmcp"><rect x="26" y="20" width="86" height="40"/></clipPath></defs>';
     s += R(0, 0, 160, 64, P.wall);
@@ -810,7 +811,11 @@
     });
     if (isAnniv()) s += popperArt();
     s += festProp(true);
-    s += full ? dancers(S) : walker(S);
+    if (full) {
+      var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168);
+      s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
+      s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
+    } else s += walker(S);
     return s + (fest ? confArt() : "") + snowArt() + "</svg>";
   }
 
@@ -951,7 +956,7 @@
     /* ?preview=room2all：只在這次開啟，把練習室的物品全部當成已獲得（複製一份，不動 badgeSync 的資料） */
     if (P2ALL) { st = Object.assign({}, st); var pd = new Date().toISOString().slice(0, 10); ITEMS2.forEach(function (it) { if (!st[it.b]) st[it.b] = pd; }); }
     var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
-      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: (PV.indexOf("room2") === 0 ? 1 : 0), pop: false, fi: 0, fnx: 0, dz: null, wdn: 0, capK: "", cph: 0 };
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: (PV.indexOf("room2") === 0 ? 1 : 0), pop: false, fi: 0, fnx: 0, fc: 0, gp: "dance", gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -1018,7 +1023,7 @@
     /* 換房間或換分頁時，把小人的動作重設成「散步」，避免帶著第 1 間的「看書、看日曆」狀態進到第 2 間 */
     function resetW() {
       S.wst = "walk"; S.wuntil = 0; S.wtt = 0; S.wtr = 0; S.wcd = 0; S.wdn = 0;
-      S.wx = Math.max(6, Math.min(S.rm === 1 ? 108 : 112, S.wx));
+      if (!(S.rm === 1 && S.gp === "enter")) S.wx = Math.max(6, Math.min(S.rm === 1 ? 108 : 112, S.wx));
     }
     function dzSay(i) {
       var cp = document.getElementById("rmcap");
@@ -1256,26 +1261,39 @@
     /* 練習室的動作迴圈（S.rm === 1 時由 tick 轉進來）：
        單人：左右散步；走到左端（有三腳架）擺姿勢拍照、走到右端（有音響）跳舞、平常每 7～15 秒隨機跳一小段、夜晚走一陣子就打瞌睡。
        100%：七人在 FORM 的四種隊形之間換位（每 3.6 秒換一次），鏡子裡的倒影同步移動。 */
+    function vis(e, on) {
+      if (e && e.__v !== on) { e.__v = on; if (on) e.removeAttribute("display"); else e.setAttribute("display", "none"); }
+    }
     function tick2(now, dt) {
-      var g = o.querySelector(".rmwx"), ds = o.querySelector("#rmdz"), i;
-      if (g) {
+      var g = o.querySelector(".rmwx"), ds = o.querySelector("#rmdz"), i, ph = ds ? S.gp : "", sw = !ds || ph === "away" || ph === "enter";
+      if (ds) {
+        vis(o.querySelector("#rmwv"), sw && !(ph === "enter" && S.wx >= 168));
+        vis(o.querySelector("#rmmr"), sw && !(ph === "enter" && S.wx >= 168));
+        vis(o.querySelector("#rmdzw"), ph !== "away");
+        vis(o.querySelector("#rmdrg"), ph !== "away");
+      }
+      if (g && sw) {
         if (S.wst === "walk") {
-          if (!S.wdn) S.wdn = now + 7 + Math.random() * 8;
-          S.wx += S.wd * SPD * dt;
-          S.wwalk += dt;
-          if (S.wx >= 108) {
-            S.wx = 108; S.wd = -1;
-            if (S.st["p-game"] && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
-          } else if (S.wx <= 6) {
-            S.wx = 6; S.wd = 1;
-            if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
+          if (ph === "enter") {
+            S.wd = 1; S.wx += SPD * 1.5 * dt;
+          } else {
+            if (!S.wdn) S.wdn = now + 7 + Math.random() * 8;
+            S.wx += S.wd * SPD * dt;
+            S.wwalk += dt;
+            if (S.wx >= 108) {
+              S.wx = 108; S.wd = -1;
+              if (S.st["p-game"] && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
+            } else if (S.wx <= 6) {
+              S.wx = 6; S.wd = 1;
+              if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
+            }
+            if (S.wst === "walk" && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
+            if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
           }
-          if (S.wst === "walk" && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
-          if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
         } else if (now >= S.wuntil) {
           S.wst = "walk";
         }
-        capSt(now, S.wst === "walk" ? "w2" : S.wst);
+        if (!ds || ph === "away") capSt(now, S.wst === "walk" ? "w2" : S.wst);
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + ",0)");
         g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose");
         g.classList.toggle("slp", S.wst === "sleep");
@@ -1296,26 +1314,60 @@
           }
         }
       }
-      if (ds && S.dz) {
-        var els = [], rf = [];
+      if (ds && S.dz && ph !== "away") {
+        var els = [], rf = [], fc = document.getElementById("rmcap"), kk = Math.min(1, dt * 4), d, tg;
         [].forEach.call(ds.querySelectorAll(".rmdd"), function (e) { els[+e.getAttribute("data-i")] = e; });
         [].forEach.call(o.querySelectorAll(".rmdr"), function (e) { rf[+e.getAttribute("data-i")] = e; });
-        if (!S.fnx) S.fnx = now + 2.5;
-        if (now >= S.fnx) {
-          S.fi = (S.fi + 1) % FORM.length;
-          S.fnx = now + 3.6;
-          [0, 1, 2, 3, 4, 5, 6].sort(function (a, b) { return FORM[S.fi][a][1] - FORM[S.fi][b][1]; }).forEach(function (j) { if (els[j]) ds.appendChild(els[j]); });
+        if (ph === "dance") {
+          if (!S.fnx) S.fnx = now + 2.5;
+          if (now >= S.fnx) {
+            if (S.fc + 1 >= FORM.length) {
+              /* 四種隊形各跳過一輪：七個人一起往右邊走出畫面 */
+              S.gp = ph = "leave"; S.fc = 0; S.fnx = 0; S.capK = "gl";
+              if (fc && now >= S.cph) fc.innerHTML = "<b>" + esc(t("七人隊形")) + "</b><br>" + esc(t("練習告一段落，大家先離開。"));
+            } else {
+              S.fc++;
+              S.fi = (S.fi + 1) % FORM.length;
+              S.fnx = now + 3.6;
+              [0, 1, 2, 3, 4, 5, 6].sort(function (a, b) { return FORM[S.fi][a][1] - FORM[S.fi][b][1]; }).forEach(function (j) { if (els[j]) ds.appendChild(els[j]); });
+            }
+          }
+          var fk = "f" + S.fi;
+          if (ph === "dance" && fc && now >= S.cph && S.capK !== fk) {
+            S.capK = fk;
+            fc.innerHTML = "<b>" + esc(t("七人隊形")) + "</b><br>" + esc(t(CAPF[S.fi]));
+          }
+          for (i = 0; i < 7; i++) {
+            d = S.dz[i]; tg = FORM[S.fi][i];
+            d.x += (tg[0] - d.x) * kk;
+            d.y += (tg[1] - d.y) * kk;
+          }
+        } else if (ph === "leave") {
+          var gone = true;
+          for (i = 0; i < 7; i++) {
+            d = S.dz[i];
+            d.x += 34 * dt;
+            d.y += (76 - d.y) * kk;
+            if (d.x < 162) gone = false;
+          }
+          if (gone) {
+            S.gp = "away";
+            S.wx = 6; S.wd = 1; S.wst = "walk"; S.wuntil = 0; S.wdn = 0; S.wwalk = 0; S.capK = "";
+          }
+        } else if (ph === "enter") {
+          var here = true;
+          for (i = 0; i < 7; i++) {
+            d = S.dz[i]; tg = FORM[0][i];
+            d.y = tg[1];
+            if (d.x < tg[0]) { d.x = Math.min(tg[0], d.x + 36 * dt); if (d.x < tg[0]) here = false; }
+          }
+          if (here && S.wx >= 168) {
+            S.gp = "dance"; S.fi = 0; S.fc = 0; S.fnx = now + 2.5; S.capK = "ge";
+            [0, 1, 2, 3, 4, 5, 6].forEach(function (j) { if (els[j]) ds.appendChild(els[j]); });
+          }
         }
-        var fk = "f" + S.fi, fc = document.getElementById("rmcap");
-        if (fc && now >= S.cph && S.capK !== fk) {
-          S.capK = fk;
-          fc.innerHTML = "<b>" + esc(t("七人隊形")) + "</b><br>" + esc(t(CAPF[S.fi]));
-        }
-        var kk = Math.min(1, dt * 4);
         for (i = 0; i < 7; i++) {
-          var d = S.dz[i], tg = FORM[S.fi][i];
-          d.x += (tg[0] - d.x) * kk;
-          d.y += (tg[1] - d.y) * kk;
+          d = S.dz[i];
           if (els[i]) els[i].setAttribute("transform", "translate(" + d.x.toFixed(2) + "," + d.y.toFixed(2) + ")");
           if (rf[i]) { rf[i].setAttribute("x", (d.x + 2).toFixed(2)); rf[i].setAttribute("y", reflY(d.y)); }
         }
