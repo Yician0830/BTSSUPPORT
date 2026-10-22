@@ -64,7 +64,19 @@
     "檯燈關了。": ["The lamp is off.", "스탠드가 꺼졌어요.", "ライトが消えました。"],
     "6/13 的合照，七個人都戴上了派對帽。": ["The 6/13 group photo — all seven in party hats.", "6/13 단체 사진, 일곱 명 모두 파티 모자를 썼어요.", "6/13の集合写真。7人みんなパーティー帽子。"],
     "七個人一起來慶祝了！出道紀念日快樂！": ["All seven came to celebrate — happy debut anniversary!", "일곱 명이 함께 축하하러 왔어요. 데뷔 기념일 축하해요!", "7人そろってお祝いに来た。デビュー記念日おめでとう！"],
+    "七個人一起幫 ": ["All seven are celebrating ", "일곱 명이 함께 ", "7人みんなで "],
+    " 慶祝生日！": ["'s birthday!", "의 생일을 축하해요!", " の誕生日をお祝い！"],
     "派對告一段落，大家先離開。": ["The party's winding down — everyone heads out.", "파티가 끝나서 다들 나가요.", "パーティーは一区切り。みんなで退室。"],
+    "演唱會海報": ["Concert poster", "콘서트 포스터", "コンサートポスター"],
+    "演唱會海報貼好了，今天就是正式演出！": ["The concert poster is up — today is the real show!", "콘서트 포스터를 붙였어요. 오늘이 본공연이에요!", "コンサートポスターを貼った。今日が本番！"],
+    "演唱會海報貼好了，明天就要見面了。": ["The concert poster is up — see them tomorrow.", "콘서트 포스터를 붙였어요. 내일이면 만나요.", "コンサートポスターを貼った。明日はいよいよ会える。"],
+    "練習室裡也有手燈在發光。": ["A light stick is glowing in the practice room too.", "연습실에도 응원봉이 빛나고 있어요.", "練習室でもペンライトが光っている。"],
+    "小人拿起手燈，準備出門了。": ["Light stick in hand, getting ready to head out.", "응원봉을 들고 외출 준비 중이에요.", "ペンライトを持って、出かける準備。"],
+    "練習到這裡，明天就是正式舞台。": ["Practice ends here — tomorrow is the real stage.", "연습은 여기까지, 내일은 진짜 무대예요.", "練習はここまで。明日が本番のステージ。"],
+    "小人正在整理明天的行李。": ["Packing the bag for tomorrow.", "내일 짐을 챙기는 중이에요.", "明日の荷物を準備中。"],
+    "帶著手燈出門，去現場囉！": ["Heading out with the light stick — off to the venue!", "응원봉을 들고 공연장으로 출발!", "ペンライトを持って、会場へ出発！"],
+    "回來了，還在回味演唱會的感動。": ["Back home, still glowing from the concert.", "돌아왔어요. 아직 콘서트의 여운이 남아 있어요.", "帰ってきた。まだコンサートの余韻の中。"],
+    "整理行李：票、手燈、行動電源，都放進包包了。": ["Packing up: ticket, light stick, power bank — all in the bag.", "짐 챙기기: 티켓, 응원봉, 보조배터리 모두 가방에 넣었어요.", "荷造り：チケット、ペンライト、モバイルバッテリー、全部バッグへ。"],
     "拉開彩帶砲——砰！紙花滿天飛。": ["Pulling the party popper — pop! Confetti everywhere.", "파티 폭죽을 당겼어요. 펑! 색종이가 날아요.", "クラッカーをパーン！紙吹雪が舞った。"],
     "捧著小蛋糕許願，然後一口氣吹熄蠟燭。": ["Holding a little cake, making a wish, then blowing out the candle.", "작은 케이크를 들고 소원을 빌고, 촛불을 후— 불어요.", "ミニケーキを持って願いごと、ふーっとろうそくを吹き消す。"],
     "七個人，一張合照。": ["Seven of them, one photo.", "일곱 명, 한 장의 단체 사진.", "7人、1枚の集合写真。"],
@@ -177,6 +189,9 @@
   /* 小人的動作 → 下方那行文字。每個動作有幾句，進入動作時隨機挑一句（第 1 句是「點一下換人」的提示，本命固定時不用） */
   var CAPS = {
     blow: ["捧著小蛋糕許願，然後一口氣吹熄蠟燭。"],
+    out: ["帶著手燈出門，去現場囉！"],
+    back: ["回來了，還在回味演唱會的感動。"],
+    pack: ["整理行李：票、手燈、行動電源，都放進包包了。"],
     pop: ["拉開彩帶砲——砰！紙花滿天飛。"],
     walk: ["在小窩裡散步，再點一下換下一位。", "慢慢晃來晃去，心情不錯。", "東看看西看看，巡視自己的小窩。"],
     run: ["突然想跑一下！", "小跑步中，小心別撞到家具。"],
@@ -207,7 +222,7 @@
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "613" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -275,6 +290,13 @@
     for (var i = 0; i < 7; i++) s += R(2 + i, 3, 1, 1, MC[(i + 3) % 7]) + R(2 + i, 4, 1, 1, "#ffe0c2") + R(2 + i, 5, 1, 3, MC[i]);
     return s;
   }
+  /* 巡演日（當天／前一天）：星星海報換成原創的演唱會海報（深紫底、手燈、七個成員色的小點；不是官方海報） */
+  function artTourPoster() {
+    var s = R(0, 0, 16, 14, "#b794ff") + R(1, 1, 14, 12, "#241a52") + R(1, 1, 14, 1, "#3a2c7a") + R(5, 2, 6, 3, "#b794ff", 0.35) + R(6, 2, 4, 3, "#b794ff") + R(7, 3, 2, 1, "#fff") + R(7, 5, 2, 4, "#d9d9e8");
+    s += R(3, 10, 10, 1, "#fff", 0.85) + R(5, 9, 6, 1, "#fff", 0.5);
+    for (var i = 0; i < 7; i++) s += R(2 + i * 2, 11, 1, 1, MC[i]);
+    return s;
+  }
   function artTickets() {
     var s = R(0, 0, 22, 1, "#8b5a2b"), c = ["#ffd23f", "#ff8fb3", "#6fb7ff"];
     [1, 8, 15].forEach(function (x, i) {
@@ -307,6 +329,7 @@
     if (d.getMonth() === 5 && d.getDate() === 13) return true;
     return PV === "613";
   }
+  function isFest() { return isAnniv() || !!bdName(); }
   /* 今天生日的成員（MEMBERS 是 app.js 的成員生日表）；預覽：網址加 ?preview=bd-Jimin */
   function bdName() {
     if (PV.indexOf("bd-") === 0 && WN.indexOf(PV.slice(3)) >= 0) return PV.slice(3);
@@ -343,6 +366,42 @@
     if (PV === "xmas" || (m === 12 && (dy === 24 || dy === 25))) return "xmas";
     if (PV === "ny" || (m === 2 && dy >= 4 && dy <= 10)) return "ny";
     return "";
+  }
+  /* 巡演日（讀 data.js 的 CITIES：showDays＝演唱會日，格式 "11/19"，y＝年份）：演唱會當天回傳 "today"，前一天回傳 "eve"，其他回傳 ""。
+     預覽：網址加 ?preview=tour（當天）或 ?preview=eve（前一天），不存任何東西 */
+  var TOURPAL = ["#8e6bd8", "#ffffff", "#b794ff"];
+  var tkCache = null;
+  function tourInfo() {
+    if (PV === "tour" || PV === "eve") {
+      var C0 = null; try { C0 = typeof CITIES !== "undefined" ? CITIES[Object.keys(CITIES)[0]] : null; } catch (e) {}
+      return { k: PV === "tour" ? "today" : "eve", zh: C0 ? C0.name : "高雄", en: C0 ? C0.en : "Kaohsiung" };
+    }
+    try {
+      if (typeof CITIES === "undefined") return null;
+      var n = new Date(), nx = new Date(n.getTime() + 86400000), ks = Object.keys(CITIES), i, C, r = null;
+      var md = function (d) { return (d.getMonth() + 1) + "/" + d.getDate(); };
+      for (i = 0; i < ks.length; i++) {
+        C = CITIES[ks[i]];
+        if (!C || !C.showDays) continue;
+        if (C.y === n.getFullYear() && C.showDays.indexOf(md(n)) >= 0) return { k: "today", zh: C.name, en: C.en };
+        if (C.y === nx.getFullYear() && C.showDays.indexOf(md(nx)) >= 0 && !r) r = { k: "eve", zh: C.name, en: C.en };
+      }
+      return r;
+    } catch (e) { return null; }
+  }
+  function tourKind() { var i = tourInfo(); return i ? i.k : ""; }
+  function tourTitle() {
+    var i = tourInfo(), L = lang();
+    if (!i) return "";
+    var td = i.k === "today";
+    if (L === "en") return td ? "It's the " + i.en + " concert day!" : "The " + i.en + " concert is tomorrow!";
+    if (L === "ko") return td ? "오늘은 " + i.en + " 콘서트 날!" : "내일은 " + i.en + " 콘서트!";
+    if (L === "ja") return td ? "今日は" + i.en + "公演！" : "明日は" + i.en + "公演！";
+    return td ? "今天是" + i.zh + "演唱會！" : "明天就是" + i.zh + "演唱會！";
+  }
+  function tourCap(r2) {
+    var td = tourKind() === "today";
+    return "<b>" + esc(tourTitle()) + "</b><br>" + esc(t(td ? (r2 ? "練習室裡也有手燈在發光。" : "小人拿起手燈，準備出門了。") : (r2 ? "練習到這裡，明天就是正式舞台。" : "小人正在整理明天的行李。")));
   }
   /* pal＝彩旗顏色；hat＝帽子像素（10 格寬的小圖）；hy＝帽子最下面一排要貼在頭頂（y=0）所需的位移；tt／s1／s2＝下方文字 */
   var SEAS = {
@@ -484,21 +543,32 @@
   var BFONT = {
     H: ["101", "101", "111", "101", "101"], A: ["010", "101", "111", "101", "101"], P: ["110", "101", "110", "100", "100"],
     Y: ["101", "101", "010", "010", "010"], B: ["110", "101", "110", "101", "110"], T: ["111", "010", "010", "010", "010"],
-    S: ["011", "100", "010", "001", "110"], D: ["110", "101", "101", "101", "110"]
+    S: ["011", "100", "010", "001", "110"], D: ["110", "101", "101", "101", "110"], I: ["111", "010", "010", "010", "111"],
+    R: ["110", "101", "110", "101", "101"]
   };
-  function letterBanner(x0, y0) {
-    var txt = "HAPPY BTS DAY", W = 72, s = "", x, i, k = 0, cx = x0;
+  /* 生日當天文字改成「HAPPY BIRTHDAY」，字用壽星的顏色 */
+  function letterBanner(x0, y0, bn) {
+    var txt = bn ? "HAPPY BIRTHDAY" : "HAPPY BTS DAY", s = "", x, i, k = 0, cx = x0, W = 0;
+    for (i = 0; i < txt.length; i++) W += txt.charAt(i) === " " ? 3 : 6;
+    var mc = bn ? MC[WN.indexOf(bn) % 7] : "";
     var sag = function (xx) { return y0 + Math.round(2 * Math.sin(Math.PI * (xx - x0) / W)); };
     for (x = x0; x < x0 + W; x += 2) s += R(x, sag(x), 2, 1, "#8b5a2b");
     for (i = 0; i < txt.length; i++) {
       var ch = txt.charAt(i);
       if (ch === " ") { cx += 3; continue; }
-      var y = sag(cx + 2) + 1, c = MC[k % 7] === "#ffd23f" ? "#e0a800" : MC[k % 7], f = BFONT[ch], r, q;
+      var cc = mc || MC[k % 7], y = sag(cx + 2) + 1, c = cc === "#ffd23f" ? "#e0a800" : cc, f = BFONT[ch], r, q;
       s += R(cx, y, 5, 6, "#fff") + R(cx + 1, y + 6, 3, 1, "#fff") + R(cx + 2, y + 7, 1, 1, "#fff") + R(cx, y, 5, 1, c);
       for (r = 0; r < 5; r++) for (q = 0; q < 3; q++) if (f[r].charAt(q) === "1") s += R(cx + 1 + q, y + 1 + r, 1, 1, c);
       cx += 6; k++;
     }
     return '<g pointer-events="none">' + s + "</g>";
+  }
+  /* 生日當天的禮物堆（壽星的顏色）和三顆會輕輕上下飄的氣球；只是裝飾 */
+  function bdDeco(n, x, y) {
+    var c = MC[WN.indexOf(n) % 7], c2 = MC[(WN.indexOf(n) + 3) % 7];
+    var bal = function (bx, by, col, d) { return '<g transform="translate(' + bx + "," + by + ')"><g class="rbal ' + d + '">' + R(1, 0, 3, 1, col) + R(0, 1, 5, 4, col) + R(1, 5, 3, 1, col) + R(1, 1, 1, 1, "#fff", 0.6) + R(2, 6, 1, 12, "#8b5a2b", 0.6) + "</g></g>"; };
+    return '<g transform="translate(' + x + "," + y + ')" pointer-events="none">' + bal(2, -22, c, "") + bal(8, -26, "#fff", "d1") + bal(14, -21, c2, "d2") +
+      giftArt(0, 4, 9, 6, c, "#fff") + giftArt(10, 6, 7, 4, "#fff", c) + giftArt(3, -1, 6, 5, "#ffd23f", "#e0457b") + "</g>";
   }
   /* 彩紙：14 小片用 CSS 慢慢飄下來，畫在最上層、不擋點擊 */
   function confArt() {
@@ -549,8 +619,10 @@
       art: R(2, 0, 6, 1, "#b794ff") + R(1, 1, 8, 6, "#b794ff") + R(0, 2, 10, 4, "#b794ff") + R(2, 2, 2, 2, "#fff") + R(1, 8, 8, 2, "#7b4fd6") + R(2, 7, 6, 1, "#7b4fd6") },
     { k: "plant", b: "x-app", fb: "常駐站民", n: "盆栽", x: 92, y: 32, w: 10, h: 14, an: "sway", say: "盆栽沙沙搖，歡迎常常回來。",
       art: R(4, 2, 2, 7, "#2dbf8f") + R(2, 4, 3, 3, "#2dbf8f") + R(5, 3, 3, 3, "#2dbf8f") + R(3, 1, 2, 2, "#2dbf8f") + R(2, 9, 6, 5, "#d9482f") + R(1, 9, 8, 1, "#b8381f") },
-    { k: "poster", b: "f-1", fb: "初次抽籤", n: "星星海報", x: 64, y: 50, w: 16, h: 14, an: "shake", say: "星星海報：今天的運勢，抽籤才知道。",
-      art: R(0, 0, 16, 14, "#7b4fd6") + R(1, 1, 14, 12, "#9d7be8") + R(7, 3, 2, 2, "#ffd23f") + R(4, 5, 8, 2, "#ffd23f") + R(5, 7, 6, 2, "#ffd23f") + R(4, 9, 3, 2, "#ffd23f") + R(9, 9, 3, 2, "#ffd23f") },
+    { k: "poster", b: "f-1", fb: "初次抽籤", x: 64, y: 50, w: 16, h: 14, an: "shake",
+      get n() { return tourKind() ? "演唱會海報" : "星星海報"; },
+      get say() { return tourKind() === "today" ? "演唱會海報貼好了，今天就是正式演出！" : tourKind() === "eve" ? "演唱會海報貼好了，明天就要見面了。" : "星星海報：今天的運勢，抽籤才知道。"; },
+      get art() { return tourKind() ? artTourPoster() : R(0, 0, 16, 14, "#7b4fd6") + R(1, 1, 14, 12, "#9d7be8") + R(7, 3, 2, 2, "#ffd23f") + R(4, 5, 8, 2, "#ffd23f") + R(5, 7, 6, 2, "#ffd23f") + R(4, 9, 3, 2, "#ffd23f") + R(9, 9, 3, 2, "#ffd23f"); } },
     { k: "stick", b: "h-live", fb: "現場見證", hid: 1, n: "手燈", x: 88, y: 48, w: 8, h: 18, an: "glow", say: "手燈亮起來了 💜",
       art: '<g class="halo">' + R(-4, -3, 16, 14, "#b794ff", 0.25) + R(-2, -1, 12, 10, "#b794ff", 0.25) + "</g>" + R(1, 0, 6, 5, "#b794ff") + R(2, 5, 4, 1, "#9d7be8") + R(3, 6, 2, 10, "#444") + R(2, 16, 4, 2, "#222") }
   ];
@@ -663,11 +735,11 @@
       : R(64, 10, 32, 28, "#7cc4ff") + R(64, 10, 32, 8, "#9bd3ff") + R(70, 10, 3, 28, "#fff", 0.15) + R(84, 10, 3, 28, "#fff", 0.12) + R(75, 16, 1, 1, "#fff") + R(90, 20, 1, 1, "#fff") +
         '<g class="fish">' + R(68, 24, 4, 2, "#ff8a5b") + R(72, 23, 1, 4, "#ff8a5b") + R(67, 25, 1, 1, "#fff") + "</g>";
     s += R(64, 38, 32, 4, night ? "#3a4a7a" : "#f0d9a0") + R(66, 34, 1, 4, "#2dbf8f") + R(67, 33, 1, 3, "#2dbf8f") + R(92, 35, 1, 3, "#2dbf8f");
-    if (full || (night && isAnniv())) {
+    if (full || (night && isFest())) {
       /* 煙火層：夾在天空和人影之間，用 clipPath 切在窗框內，內容由 tick 每幀換（6/13 的夜晚不用集滿也會放） */
       s += '<clipPath id="rmwc"><rect x="64" y="10" width="32" height="28"/></clipPath><g id="rmfw" clip-path="url(#rmwc)"></g>';
     }
-    if (full && !isAnniv()) {
+    if (full && !isFest()) {
       for (var i = 0; i < 7; i++) s += R(66 + i * 4, 32, 2, 2, night ? "#4a6bd0" : "#062a6e") + R(65 + i * 4, 34, 4, 4, night ? "#4a6bd0" : "#062a6e");
     }
     var fr = night ? "#9aa3c7" : "#ffffff";
@@ -742,14 +814,22 @@
     return '<g class="rcb" transform="translate(9,17)">' + R(3, 0, 1, 2, "#ffd23f") + R(1, 2, 7, 2, "#fff") + R(0, 4, 9, 4, "#ff8fb3") + R(0, 6, 9, 1, "#e0457b") + R(0, 8, 9, 1, "#9aa3c7") +
       '<g class="rflm">' + FLAME + '</g><g class="rfo">' + smoke(3, -3, "") + smoke(4, -5, "d1") + smoke(2, -4, "d2") + "</g></g>";
   }
-  var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt();
+  /* 演唱會當天：小人手上多一支會閃的手燈（.ls） */
+  function lightStickArt() {
+    return '<g class="rls" transform="translate(21,9)">' + '<g class="rcl">' + R(-2, -2, 10, 9, "#b794ff", 0.28) + "</g>" + R(1, 0, 4, 5, "#b794ff") + R(2, 1, 2, 2, "#fff") + R(2, 5, 2, 9, "#444") + R(1, 14, 4, 2, "#222") + "</g>";
+  }
+  /* 前一天：地板上的行李包（票、手燈露出來），小人經過會停下來整理 */
+  function bagArt() {
+    return '<g transform="translate(118,79)" pointer-events="none">' + R(8, -3, 3, 4, "#b794ff") + R(2, 0, 3, 4, "#ffd23f") + R(1, 3, 11, 8, "#3b4a7a") + R(2, 4, 9, 2, "#4b5d94") + R(5, 6, 3, 2, "#ffd23f") + R(1, 11, 11, 1, "#262f55") + "</g>";
+  }
+  var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt() + lightStickArt();
 
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : "";
+    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : "") + (tourKind() === "today" ? " ls" : "");
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
       R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
   }
@@ -764,6 +844,7 @@
     var bn = bdName();
     if (isAnniv() || bn) s += buntArt(isAnniv() ? "" : bn);
     else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
+    else if (tourKind()) s += buntArt("", TOURPAL);
     s += win(S.night, full);
     s += R(102, 52, 56, 3, "#8b5a2b") + R(104, 55, 52, 2, "#a8743f") + R(104, 57, 3, 9, "#8b5a2b") + R(153, 57, 3, 9, "#8b5a2b");
     if (S.st["f-s3"]) {
@@ -776,10 +857,11 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "cake" && on && (isAnniv() || bn) ? FLAME : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    if (isAnniv()) s += letterBanner(52, 0);
-    var p7 = full && isAnniv();
+    if (isFest()) s += letterBanner(isAnniv() ? 52 : 48, 0, bn);
+    var p7 = full && isFest();
+    if (tourKind() === "eve") s += bagArt();
     if (p7 && !S.g7) { S.g7 = "in"; S.g7x = G7X.map(function (v, i) { return -24 - i * 12; }); S.g7t = 0; }
-    return s + festProp() + (isAnniv() ? popperArt(140, 80) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isAnniv() ? popBurstArt(143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
+    return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 練習室的場景：鏡牆（小人的倒影）＋ 把杆 ＋ 木地板。小人的倒影只畫在鏡子裡（clip），100% 時七個人各有一個 ===== */
@@ -861,6 +943,7 @@
     s += R(0, 64, 160, 3, P.bs);
     if (fest) s += buntArt(isAnniv() ? "" : bn);
     else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
+    else if (tourKind()) s += buntArt("", TOURPAL);
     /* 鏡牆：銀框、鏡面、兩道斜斜的反光 */
     s += R(24, 18, 90, 44, "#aab2c8") + R(26, 20, 86, 40, P.mir);
     for (i = 0; i < 40; i += 2) s += R(72 - i, 20 + i, 3, 2, P.mirl, 0.5) + R(92 - i, 20 + i, 2, 2, P.mirl, 0.35);
@@ -872,14 +955,14 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "pboard" && on && bn ? bdBoardArt(bn) : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    if (isAnniv()) s += popperArt(36, 80) + letterBanner(40, 21);
+    if (fest) s += popperArt(36, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 48, 79) : "");
     s += festProp(true);
     if (full) {
       var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168);
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
       s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
     } else s += walker(S);
-    return s + (isAnniv() ? popBurstArt(39, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
+    return s + (fest ? popBurstArt(39, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -968,6 +1051,8 @@
     ".cu .rmwb,.ck .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(-1px) rotate(-7deg)}" +
     ".tr .rpg{display:block;animation:rmpg 1.4s steps(3) forwards}@keyframes rmpg{0%{transform:translate(0,0)}25%{transform:translate(-2px,14px)}50%{transform:translate(4px,28px)}75%{transform:translate(-1px,42px)}100%{transform:translate(8px,56px)}}" +
     ".rcl{animation:rmblink 1s steps(1) infinite}@keyframes rmblink{50%{opacity:0}}" +
+    ".rbal{animation:rmbal 2.4s steps(4) infinite alternate}.rbal.d1{animation-delay:-.8s}.rbal.d2{animation-delay:-1.6s}@keyframes rmbal{0%{transform:translateY(0)}100%{transform:translateY(-2px)}}" +
+    ".rls{display:none;pointer-events:none}.ls .rls{display:block}" +
     ".rpb{display:none;pointer-events:none}.rpb.go{display:block}.rpb.go .rpbp{animation:rpbk 1.3s steps(8) forwards}@keyframes rpbk{0%{opacity:1;transform:translate(0,0)}60%{opacity:1;transform:translate(var(--dx),var(--dy))}100%{opacity:0;transform:translate(calc(var(--dx) * 1.2),calc(var(--dy) + 22px))}}" +
     ".pp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateX(1px) rotate(7deg)}" +
     ".rcb{display:none;pointer-events:none}.bl .rcb{display:block}.rfo{display:none}.bo .rflm{display:none}.bo .rfo{display:block}" +
@@ -985,7 +1070,7 @@
     ".rmdd{cursor:pointer}.rmdd:focus,.rmdd:focus-visible{outline:none}.rmdb{animation:rmbob .5s steps(1) infinite}" +
     ".rmrs{display:flex;gap:6px;margin-bottom:8px}.rmrs button{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
-    "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
+    "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
     "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}";
   document.head.appendChild(css);
 
@@ -1110,8 +1195,8 @@
       } else if (S.tab === "room") {
         h += (p2 ? scene2(S, full2) : scene(S, full)) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
           (p2
-            ? (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>練習室也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>練習室為壽星布置好了。" : seasonKind() ? seasCap(true) : nn ? NWM : full2 ? "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。" : "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。")
-            : (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : seasonKind() ? seasCap(false) : nn ? NWM : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。")) + "</div>" +
+            ? (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>練習室也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>練習室為壽星布置好了。" : seasonKind() ? seasCap(true) : tourKind() ? tourCap(true) : nn ? NWM : full2 ? "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。" : "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。")
+            : (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : seasonKind() ? seasCap(false) : tourKind() ? tourCap(false) : nn ? NWM : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。")) + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + (p2 ? pct2 : pct) + '"><s style="width:' + (p2 ? pct2 : pct) + '%"></s></div><span><span>' + (p2 ? "練習室完成度" : "小窩完成度") + "</span> <span>" + (p2 ? pct2 : pct) + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
@@ -1288,6 +1373,10 @@
           : "<b>" + esc(bdName()) + "</b> <span>" + esc(t("今天生日！")) + "</span><br>" + esc(t(r2 ? "練習室為壽星布置好了。" : "小窩為壽星布置好了。"));
         return;
       }
+      if (tourKind() && !seasonKind() && (key === "walk" || key === "run" || key === "w2")) {
+        cp.innerHTML = tourCap(key === "w2");
+        return;
+      }
       var sk = seasonKind();
       if (sk && (key === "walk" || key === "run" || key === "w2")) {
         cp.innerHTML = "<b>" + esc(t(SEAS[sk].tt)) + "</b><br>" + esc(t(key === "w2" ? SEAS[sk].s2 : SEAS[sk].s1));
@@ -1321,6 +1410,7 @@
       else if (w === "sock") { S.wuntil = now + 2.8; popFxK("xsock"); }
       else if (w === "hb") { S.wuntil = now + 2.8; popFxK("nyhb"); }
       else if (w === "ingot") { S.wuntil = now + 3; S.wd = -1; popFxK("nyingot"); }
+      else if (w === "pack") { S.wuntil = now + 3.4; S.wd = 1; S.wfc = now + 10; }
       else if (w === "pop") { S.wuntil = now + 2.8; S.wbl = now; S.wbj = 0; S.wd = 1; S.wfc = now + 12; }
       else if (w === "blow") { S.wuntil = now + 4; S.wbl = now; S.wbj = 0; S.wfc = now + 14; }
       else if (w === "clk") {
@@ -1362,10 +1452,10 @@
               if (S.st["p-game"] && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
             } else if (S.wx <= 6) {
               S.wx = 6; S.wd = 1;
-              if (isAnniv() && now >= (S.wfc || 0) && Math.random() < 0.5) enter("pop", now);
+              if (isFest() && now >= (S.wfc || 0) && Math.random() < 0.5) enter("pop", now);
               else if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
             }
-            if (S.wst === "walk" && isAnniv() && S.st["h-613"] && now >= (S.wfc || 0) && ((px2 < 60 && S.wx >= 60) || (px2 > 60 && S.wx <= 60)) && Math.random() < 0.5) { S.wx = 60; enter("blow", now); }
+            if (S.wst === "walk" && isFest() && S.st["h-613"] && now >= (S.wfc || 0) && ((px2 < 60 && S.wx >= 60) || (px2 > 60 && S.wx <= 60)) && Math.random() < 0.5) { S.wx = 60; enter("blow", now); }
             if (S.wst === "walk" && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
             if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
           }
@@ -1477,7 +1567,7 @@
           for (i7 = 0; i7 < 7; i7++) { if (S.g7x[i7] < G7X[i7]) { S.g7x[i7] = Math.min(G7X[i7], S.g7x[i7] + 40 * dt); if (S.g7x[i7] < G7X[i7]) all7 = false; } }
           if (all7) {
             S.g7 = "cheer"; S.g7t = now; S.g7b = 0; S.capK = "g7c";
-            if (fc7 && now >= S.cph) fc7.innerHTML = "<b>" + esc(t("七個人一起來慶祝了！出道紀念日快樂！")) + "</b>";
+            if (fc7 && now >= S.cph) fc7.innerHTML = bdName() && !isAnniv() ? "<b>" + esc(t("七個人一起幫 ")) + esc(bdName()) + esc(t(" 慶祝生日！")) + "</b>" : "<b>" + esc(t("七個人一起來慶祝了！出道紀念日快樂！")) + "</b>";
           }
         } else if (S.g7 === "cheer") {
           if (S.g7b < 3 && now - S.g7t >= S.g7b * 2.6) { S.g7b++; popBurst("rpb7"); }
@@ -1510,7 +1600,8 @@
           else if (now >= S.wjn) { S.wju = now + 1.6 + Math.random() * 1.2; S.wjn = S.wju + 8 + Math.random() * 12; }
           S.wx += S.wd * SPD * (now < S.wju ? 2.2 : 1) * dt;
           S.wwalk += dt;
-          if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isAnniv() && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now); }
+          if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isFest() && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now);
+            else if (tourKind() === "today" && now >= (S.wfc || 0) && Math.random() < 0.5) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wfc = now + 30; } }
           else if (S.wx <= 8) {
             S.wx = 8;
             var lo = [];
@@ -1530,7 +1621,8 @@
             if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
           if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
-          if (S.wst === "walk" && isAnniv() && S.st["h-613"] && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
+          if (S.wst === "walk" && isFest() && S.st["h-613"] && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
+          if (S.wst === "walk" && tourKind() === "eve" && now >= (S.wfc || 0) && ((px < 92 && S.wx >= 92) || (px > 92 && S.wx <= 92)) && Math.random() < 0.6) { S.wx = 92; enter("pack", now); }
           var sk2 = seasonKind();
           if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
@@ -1543,6 +1635,13 @@
         } else {
           if (S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) { S.wbj = 1; S.wj = 0.5; }
           if (S.wst === "pop" && !S.wbj && now - S.wbl > 1) { S.wbj = 1; S.wj = 0.5; popBurst(); }
+          /* 演唱會當天：小人拿著手燈往右走出房間，過一會兒再從左邊回來 */
+          if (S.wst === "out") {
+            S.wd = 1;
+            if (!S.wot) { S.wx += SPD * 1.3 * dt; if (S.wx >= 172) { S.wot = 1; S.wouti = now + 6; } }
+            else if (S.wot === 1) { if (now >= S.wouti) { S.wot = 2; S.wx = -30; } }
+            else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; } }
+          }
           if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
           if (now >= S.wuntil) {
             if (S.wst === "look" || S.wst === "read" || S.wst === "broom") S.wd = 1;
@@ -1557,16 +1656,17 @@
           S.wj -= dt;
           dy = S.wj > 0 ? -6 * Math.sin(Math.PI * (1 - S.wj / 0.5)) : 0;
         }
-        capSt(now, S.wst === "walk" ? (now < S.wju ? "run" : "walk") : (S.wst === "cal" && now < S.wtr) ? "tear" : S.wst);
+        capSt(now, S.wst === "walk" ? (now < S.wju ? "run" : "walk") : (S.wst === "cal" && now < S.wtr) ? "tear" : S.wst === "out" && S.wot === 2 ? "back" : S.wst);
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy.toFixed(2) + ")");
-        g.classList.toggle("pz", S.wst !== "walk");
+        g.classList.toggle("pz", S.wst !== "walk" && S.wst !== "out");
+        if (S.wst === "out" && S.wot === 1) g.setAttribute("display", "none"); else g.removeAttribute("display");
         g.classList.toggle("slp", S.wst === "sleep");
         g.classList.toggle("rd", S.wst === "read");
         g.classList.toggle("cu", S.wst === "cal");
         g.classList.toggle("ck", S.wst === "clk");
         g.classList.toggle("tr", S.wst === "cal" && now < S.wtr);
         g.classList.toggle("bl", S.wst === "blow");
-        g.classList.toggle("pp", S.wst === "pop");
+        g.classList.toggle("pp", S.wst === "pop" || S.wst === "pack");
         g.classList.toggle("bo", S.wst === "blow" && now - S.wbl > 1.8);
         g.classList.toggle("jg", S.wst === "walk" && now < S.wju);
         g.classList.toggle("lit", !!(S.lamp && S.st["f-s3"] && S.wx + 13 >= 96));
