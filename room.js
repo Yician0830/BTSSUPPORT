@@ -183,7 +183,9 @@
     broom: ["拿起掃帚，假裝要飛起來。", "把掃帚扶正，女巫帽也戴好了。"],
     cookie: ["偷偷咬一口餅乾，再喝口牛奶。", "這是給聖誕老人的……少一片應該沒關係。"],
     gift: ["搖搖禮物盒，猜猜裡面是什麼。", "蹲在樹下看禮物，好期待。"],
-    sock: ["踮腳檢查聖誕襪裡有沒有禮物。", "襪子掛好了，等著被塞滿。"]
+    sock: ["踮腳檢查聖誕襪裡有沒有禮物。", "把襪子拉平整，掛得漂漂亮亮。"],
+    hb: ["收到紅包，開心到想跳一下。", "把紅包收進口袋，新年快樂！"],
+    ingot: ["抱起金元寶掂掂重量，沉甸甸的。", "金元寶擦得亮晶晶，討個好彩頭。"]
   };
   var CAPF = ["排成一排，整整齊齊。", "拉成弧形，中間的往前站。", "高低交錯，換成錯位隊形。", "排成斜線，一階一階往上。"];
   /* 彩蛋小窩開關：跟「藝人同款足跡」一樣的鎖法。
@@ -307,14 +309,14 @@
       return st.last === td;
     } catch (e) { return false; }
   }
-  /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/31 萬聖節、12/24–25 聖誕、1/1 新年。
+  /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/31 萬聖節、12/24–25 聖誕、2/4–2/10 新年。
      預覽：網址加 ?preview=hw／xmas／ny。6/13 和成員生日的布置優先，節日不會疊上去 */
   function seasonKind() {
     if (isAnniv() || bdName()) return "";
     var d = new Date(), m = d.getMonth() + 1, dy = d.getDate();
     if (PV === "hw" || (m === 10 && dy === 31)) return "hw";
     if (PV === "xmas" || (m === 12 && (dy === 24 || dy === 25))) return "xmas";
-    if (PV === "ny" || (m === 1 && dy === 1)) return "ny";
+    if (PV === "ny" || (m === 2 && dy >= 4 && dy <= 10)) return "ny";
     return "";
   }
   /* pal＝彩旗顏色；hat＝帽子像素（10 格寬的小圖）；hy＝帽子最下面一排要貼在頭頂（y=0）所需的位移；tt／s1／s2＝下方文字 */
@@ -336,7 +338,7 @@
     var k = seasonKind(), s = "";
     if (k === "hw") s = R(5, 0, 2, 2, "#2dbf8f") + R(2, 2, 8, 1, "#ff8a1f") + R(1, 3, 10, 6, "#ff8a1f") + R(2, 9, 8, 1, "#ff8a1f") + R(5, 3, 1, 6, "#d9610f") + R(3, 4, 2, 2, "#2b2f3a") + R(7, 4, 2, 2, "#2b2f3a") + R(4, 7, 4, 1, "#ffd23f");
     else if (k === "xmas") s = xmasTree();
-    return (s ? '<g transform="translate(' + (k === "xmas" ? "138,72" : "30,78") + ')" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? candyArt() + broomArt() : "") + (k === "xmas" ? xmasDeco(r2) : "");
+    return (s ? '<g transform="translate(' + (k === "xmas" ? "138,72" : "30,78") + ')" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? candyArt() + broomArt() : "") + (k === "xmas" ? xmasDeco(r2) : "") + (k === "ny" ? nyDeco(r2) : "");
   }
   /* 聖誕節的地板裝飾：樹下的禮物盒、給聖誕老人的餅乾和牛奶、掛在桌邊的聖誕襪（練習室沒有桌子，不掛）。
      一樣可以點（跳一下／抖一下＋台詞）；練習室（r2）只當裝飾，不擋點擊 */
@@ -369,6 +371,20 @@
     }
     return s + "</g>";
   }
+  /* 新年的裝飾：牆上兩盞紅燈籠、地板右邊的紅包、左邊的金元寶。可以點（燈籠抖、紅包和元寶跳），練習室（r2）只當裝飾 */
+  function lanternArt(x, y) {
+    return R(x + 4, y - 3, 1, 3, "#8b5a2b") + R(x + 2, y, 4, 1, "#ffd23f") + R(x + 1, y + 1, 6, 1, "#e0453a") + R(x, y + 2, 8, 4, "#e0453a") + R(x + 1, y + 6, 6, 1, "#e0453a") +
+      R(x + 3, y + 2, 1, 5, "#b02a20") + R(x + 5, y + 2, 1, 5, "#b02a20") + R(x + 2, y + 7, 4, 1, "#ffd23f") + R(x + 4, y + 8, 1, 3, "#ffd23f") + R(x + 1, y + 2, 1, 1, "#ff8a7a");
+  }
+  function envArt(x, y) {
+    return R(x, y, 6, 8, "#e0453a") + R(x + 1, y + 1, 4, 1, "#b02a20") + R(x + 2, y + 4, 2, 2, "#ffd23f");
+  }
+  function nyDeco(r2) {
+    var ingot = '<g transform="translate(34,86)">' + R(3, 0, 6, 2, "#ffe27a") + R(4, 0, 2, 1, "#ffffff") + R(0, 2, 12, 2, "#ffd23f") + R(1, 4, 10, 2, "#e0a800") + R(2, 6, 8, 1, "#b87333") + "</g>";
+    return fxG("nylan", lanternArt(31, 4), [30, 0, 10, 16], r2) + fxG("nylan", lanternArt(151, 4), [150, 0, 10, 16], r2) +
+      fxG("nyhb", envArt(128, 86), [127, 85, 8, 10], r2) + fxG("nyhb", envArt(135, 90), [134, 89, 8, 10], r2) + fxG("nyhb", envArt(142, 86), [141, 85, 8, 10], r2) +
+      fxG("nyingot", ingot, [33, 85, 14, 9], r2);
+  }
   /* 聖誕樹：放在地板右側，16×18 格（比原本大），只是裝飾，不能點 */
   function xmasTree() {
     var g = "#2dbf8f", d = "#1f9a72", s = R(7, 0, 2, 2, "#ffd23f") + R(6, 1, 4, 1, "#ffd23f"), t = 0;
@@ -387,7 +403,10 @@
     hwbroom: { an: "shake", n: "掃帚", say: ["女巫的掃帚，騎上去好像就能飛。", "掃帚靠在書架旁，隨時可以出發。"] },
     xgift: { an: "hop", n: "禮物盒", say: ["不知道裡面是什麼，好期待。", "搖一搖，好像有東西在動。", "是要送給誰的呢？"] },
     xcookie: { an: "hop", n: "餅乾和牛奶", say: ["給聖誕老人準備的，今晚會有人來吃嗎？", "餅乾還熱熱的，牛奶也倒好了。"] },
-    xsock: { an: "shake", n: "聖誕襪", say: ["掛好聖誕襪，等著收禮物。", "襪子裡好像有顆糖果。"] }
+    xsock: { an: "shake", n: "聖誕襪", say: ["掛好聖誕襪，等著收禮物。", "襪子裡好像有顆糖果。"] },
+    nylan: { an: "shake", n: "燈籠", say: ["紅燈籠高高掛，過年的味道。", "燈籠晃呀晃，喜氣洋洋。"] },
+    nyhb: { an: "hop", n: "紅包", say: ["新年快樂，恭喜發財！", "紅包拿來，裡面是滿滿的祝福。"] },
+    nyingot: { an: "hop", n: "金元寶", say: ["金光閃閃，今年一定順順利利。", "沉甸甸的，好有福氣。"] }
   };
   function fxG(k, a, hit, inert) {
     if (inert) return '<g pointer-events="none">' + a + "</g>";
@@ -1170,6 +1189,8 @@
       else if (w === "cookie") { S.wuntil = now + 3.2; S.wd = -1; popFxK("xcookie"); }
       else if (w === "gift") { S.wuntil = now + 2.8; popFxK("xgift"); }
       else if (w === "sock") { S.wuntil = now + 2.8; popFxK("xsock"); }
+      else if (w === "hb") { S.wuntil = now + 2.8; popFxK("nyhb"); }
+      else if (w === "ingot") { S.wuntil = now + 3; S.wd = -1; popFxK("nyingot"); }
       else if (w === "clk") {
         S.wuntil = now + 3.2;
         popK("clock");
@@ -1295,9 +1316,10 @@
             if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
           if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
-          if (S.wst === "walk" && seasonKind() === "xmas" && now >= (S.wfc || 0)) {
-            if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(Math.random() < 0.5 ? "gift" : "sock", now); }
-            else if (((px < 48 && S.wx >= 48) || (px > 48 && S.wx <= 48)) && Math.random() < 0.7) { S.wx = 48; S.wfc = now + 10; enter("cookie", now); }
+          var sk2 = seasonKind();
+          if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && now >= (S.wfc || 0)) {
+            if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
+            else if (((px < 48 && S.wx >= 48) || (px > 48 && S.wx <= 48)) && Math.random() < 0.2) { S.wx = 48; S.wfc = now + 10; enter(sk2 === "ny" ? "ingot" : "cookie", now); }
           }
           var ctr = S.wx + 13, inRug = ctr >= 58 && ctr <= 106;
           if (inRug && !S.wrug && S.wj <= 0) S.wj = 0.5;
