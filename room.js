@@ -386,7 +386,7 @@
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "613w" || v === "613a" || v === "nye" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v === "vd" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "613" || v === "613w" || v === "613a" || v === "nye" || v === "tour" || v === "eve" || v === "room2all" || v === "room1all" || v === "hw" || v === "xmas" || v === "ny" || v === "vd" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -396,6 +396,8 @@
      ?preview=room2all 只在這次開啟把練習室 13 件物品全部當成已解鎖（含七人隊形），不存任何東西；?preview=off 會把兩個預覽都關掉 */
   var ROOM2_PUBLIC = false;
   var P2ALL = PV === "room2all";
+  /* ?preview=room1all：只在這次開啟把第 1 間（彩蛋小窩）18 件物品全部當成已獲得，不存任何東西（跟 room2all 一樣的做法） */
+  var P1ALL = PV === "room1all";
   var ROOM2_PV = P2ALL || PV === "room2" || (function () {
     try { return localStorage.getItem("room2-preview") === "1"; } catch (e) { return false; }
   })();
@@ -1010,7 +1012,7 @@
      popTitle 這間集滿時，打開小窩會跳「前往下一個房間」彈窗的標題（沒填就不跳；下一間也已集滿時同樣不跳）
      pct     完成度標籤；cap＝節日、完成、提示的下方文字；lock＝鎖著時的說明；unlocked＝前一間完成時彈窗上的文字 */
   var ROOMS = [
-    { id: "nest", chip: "第 1 間", name: "彩蛋小窩", items: ITEMS, scene: scene, gate: null, lazy: false, wmax: 112, ng: true, alt: false,
+    { id: "nest", chip: "第 1 間", name: "彩蛋小窩", items: ITEMS, scene: scene, gate: null, lazy: false, wmax: 112, ng: true, alt: false, pvAll: P1ALL,
       pct: "小窩完成度", popTitle: "第一個房間完成了！",
       cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", bw: "小窩先掛上彩旗和氣球了。", aw: "小窩先掛上彩旗了。", ax: "小窩的彩旗還沒收，捨不得。", nye: "點時鐘看跨年倒數，晚上窗外有煙火。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
     { id: "prac", chip: "第 2 間", name: "練習室", items: ITEMS2, scene: scene2, gate: "nest", lazy: true, wmax: 108, ng: false, alt: true,
