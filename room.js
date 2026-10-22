@@ -136,7 +136,20 @@
     "排成一排，整整齊齊。": ["Lined up in a row, neat and tidy.", "한 줄로 나란히, 가지런히 섰어요.", "一列に並んで、きれいにそろった。"],
     "拉成弧形，中間的往前站。": ["Curved into an arc, the middle steps forward.", "호를 그리며 가운데가 앞으로 나왔어요.", "弧を描いて、真ん中が前に出た。"],
     "高低交錯，換成錯位隊形。": ["Switching to a staggered high-low formation.", "높낮이를 엇갈리게 바꾼 대형이에요.", "高低をずらした、互い違いの隊形に。"],
-    "排成斜線，一階一階往上。": ["Lined up on a diagonal, stepping up one by one.", "대각선으로 한 칸씩 올라가요.", "斜めに並んで、一段ずつ上がっていく。"]
+    "排成斜線，一階一階往上。": ["Lined up on a diagonal, stepping up one by one.", "대각선으로 한 칸씩 올라가요.", "斜めに並んで、一段ずつ上がっていく。"],
+    "再點一次，去抽今天的幸運籤": ["Tap again to go draw today's fortune", "한 번 더 누르면 오늘의 운세를 뽑으러 가요", "もう一度タップして、今日のおみくじを引きに行こう"],
+    "再點一次，去猜下一場的歌單": ["Tap again to guess the next setlist", "한 번 더 누르면 다음 공연 셋리스트를 예측하러 가요", "もう一度タップして、次のセットリストを予想しに行こう"],
+    "再點一次，去玩應援遊戲": ["Tap again to play the fanchant game", "한 번 더 누르면 응원 게임을 하러 가요", "もう一度タップして、応援ゲームを遊びに行こう"],
+    "今天已經抽過籤了，明天再來搖一搖。": ["You've already drawn today — shake it again tomorrow.", "오늘은 이미 뽑았어요. 내일 또 흔들어 봐요.", "今日はもう引きました。また明日振ってみてね。"],
+    "今天是萬聖節！": ["It's Halloween!", "오늘은 할로윈이에요!", "今日はハロウィン！"],
+    "小窩也掛上南瓜旗了。": ["The room put up pumpkin bunting too.", "방에도 호박 깃발을 달았어요.", "お部屋にもカボチャのガーランドを飾りました。"],
+    "練習室也掛上南瓜旗了。": ["The practice room put up pumpkin bunting too.", "연습실에도 호박 깃발을 달았어요.", "練習室にもカボチャのガーランドを飾りました。"],
+    "聖誕快樂！": ["Merry Christmas!", "메리 크리스마스!", "メリークリスマス！"],
+    "小窩也布置好聖誕裝飾了。": ["The room is decked out for Christmas too.", "방도 크리스마스 장식으로 꾸며졌어요.", "お部屋もクリスマスの飾りつけをしました。"],
+    "練習室也布置好聖誕裝飾了。": ["The practice room is decked out for Christmas too.", "연습실도 크리스마스 장식으로 꾸며졌어요.", "練習室もクリスマスの飾りつけをしました。"],
+    "新年快樂！": ["Happy New Year!", "새해 복 많이 받으세요!", "あけましておめでとう！"],
+    "小窩也掛上新年彩旗了。": ["The room put up New Year bunting too.", "방에도 새해 깃발을 달았어요.", "お部屋にもお正月のガーランドを飾りました。"],
+    "練習室也掛上新年彩旗了。": ["The practice room put up New Year bunting too.", "연습실에도 새해 깃발을 달았어요.", "練習室にもお正月のガーランドを飾りました。"]
   };
   var LI = { en: 0, ko: 1, ja: 2 };
   function lang() {
@@ -178,7 +191,7 @@
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "room2all" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "613" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -268,13 +281,70 @@
     for (var i = 0; i < WN.length; i++) if (bdToday(WN[i])) return WN[i];
     return "";
   }
+  /* 今天抽到的幸運籤成員：跟 app.js 的 ftShow() 用同一套算法（ftKey／fth／ftBd），
+     只在「今天已經抽過」（localStorage ftn-st.last 是今天）時才回傳，沒抽就回傳空字串，不會劇透今天的籤 */
+  function drawnMem() {
+    try {
+      var d = new Date(), td = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      var st = JSON.parse(localStorage.getItem("ftn-st") || "{}") || {};
+      if (st.last !== td) return "";
+      if (typeof ftKey !== "function" || typeof fth !== "function" || typeof MEMBERS === "undefined") return "";
+      var M = MEMBERS.filter(function (m) { return m[0] !== "BTS"; }), bd = typeof ftBd === "function" ? ftBd(d) : null;
+      var n = bd ? bd.m : M[fth(ftKey(d) + "m") % M.length][0];
+      return WN.indexOf(n) >= 0 ? n : "";
+    } catch (e) { return ""; }
+  }
+  /* 今天是否已經抽過幸運籤（localStorage ftn-st.last 是今天） */
+  function drewToday() {
+    try {
+      var d = new Date(), td = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+      var st = JSON.parse(localStorage.getItem("ftn-st") || "{}") || {};
+      return st.last === td;
+    } catch (e) { return false; }
+  }
+  /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/31 萬聖節、12/24–25 聖誕、1/1 新年。
+     預覽：網址加 ?preview=hw／xmas／ny。6/13 和成員生日的布置優先，節日不會疊上去 */
+  function seasonKind() {
+    if (isAnniv() || bdName()) return "";
+    var d = new Date(), m = d.getMonth() + 1, dy = d.getDate();
+    if (PV === "hw" || (m === 10 && dy === 31)) return "hw";
+    if (PV === "xmas" || (m === 12 && (dy === 24 || dy === 25))) return "xmas";
+    if (PV === "ny" || (m === 1 && dy === 1)) return "ny";
+    return "";
+  }
+  /* pal＝彩旗顏色；hat＝帽子像素（10 格寬的小圖）；hy＝帽子最下面一排要貼在頭頂（y=0）所需的位移；tt／s1／s2＝下方文字 */
+  var SEAS = {
+    hw: { pal: ["#ff8a1f", "#7b4fd6", "#ff8a1f", "#2b2f3a"], hy: -5, tt: "今天是萬聖節！", s1: "小窩也掛上南瓜旗了。", s2: "練習室也掛上南瓜旗了。",
+      hat: R(4, 0, 2, 1, "#7b4fd6") + R(3, 1, 4, 2, "#7b4fd6") + R(2, 3, 6, 1, "#ffd23f") + R(2, 4, 6, 1, "#7b4fd6") + R(0, 5, 10, 1, "#7b4fd6") },
+    xmas: { pal: ["#e0453a", "#2dbf8f", "#ffffff", "#2dbf8f"], hy: -4, tt: "聖誕快樂！", s1: "小窩也布置好聖誕裝飾了。", s2: "練習室也布置好聖誕裝飾了。",
+      hat: R(6, 0, 2, 1, "#fff") + R(3, 1, 4, 1, "#e0453a") + R(2, 2, 6, 2, "#e0453a") + R(1, 4, 8, 1, "#fff") },
+    ny: { pal: ["#ffd23f", "#e0453a", "#ffd23f", "#ffffff"], hy: -5, tt: "新年快樂！", s1: "小窩也掛上新年彩旗了。", s2: "練習室也掛上新年彩旗了。",
+      hat: R(1, 2, 2, 3, "#ffd23f") + R(4, 1, 2, 4, "#ffd23f") + R(7, 2, 2, 3, "#ffd23f") + R(1, 5, 8, 1, "#e0a800") + R(4, 3, 2, 1, "#e0453a") }
+  };
+  /* 節日帽：座標系跟派對帽一樣（以小人 26×26 的圖左上角為原點），傾斜角度也一樣 */
+  function festHat(k) {
+    var h = SEAS[k];
+    return h ? '<g transform="rotate(-10 13 3)"><g transform="translate(8,' + h.hy + ')">' + h.hat + "</g></g>" : "";
+  }
+  /* 地板上的小擺飾（只是裝飾，不能點）：萬聖節南瓜、聖誕樹；新年只有彩旗和皇冠 */
+  function festProp() {
+    var k = seasonKind(), s = "";
+    if (k === "hw") s = R(5, 0, 2, 2, "#2dbf8f") + R(2, 2, 8, 1, "#ff8a1f") + R(1, 3, 10, 6, "#ff8a1f") + R(2, 9, 8, 1, "#ff8a1f") + R(5, 3, 1, 6, "#d9610f") + R(3, 4, 2, 2, "#2b2f3a") + R(7, 4, 2, 2, "#2b2f3a") + R(4, 7, 4, 1, "#ffd23f");
+    else if (k === "xmas") s = R(5, 0, 2, 1, "#ffd23f") + R(5, 1, 2, 1, "#2dbf8f") + R(4, 2, 4, 2, "#2dbf8f") + R(3, 4, 6, 2, "#2dbf8f") + R(2, 6, 8, 2, "#2dbf8f") + R(1, 8, 10, 2, "#2dbf8f") + R(5, 10, 2, 2, "#8b5a2b") + R(4, 5, 1, 1, "#e0453a") + R(7, 7, 1, 1, "#ffd23f") + R(3, 9, 1, 1, "#6fb7ff");
+    return s ? '<g transform="translate(30,78)" pointer-events="none">' + s + "</g>" : "";
+  }
+  /* 節日的下方說明文字（r2＝練習室） */
+  function seasCap(r2) {
+    var h = SEAS[seasonKind()];
+    return "<b>" + h.tt + "</b><br>" + (r2 ? h.s2 : h.s1);
+  }
   /* 牆上方的彩旗：兩段下垂的線，每 7 格掛一面三角旗。生日那天（傳入成員名）改成「那位成員的顏色＋白」交替 */
-  function buntArt(n) {
+  function buntArt(n, pal) {
     var s = "", x, y;
     for (x = 0; x < 160; x += 2) s += R(x, 1 + Math.round(2 * Math.sin(Math.PI * (x % 80) / 80)), 2, 1, "#8b5a2b");
     for (x = 3; x < 158; x += 7) {
       y = 1 + Math.round(2 * Math.sin(Math.PI * (x % 80) / 80));
-      var c = n ? (Math.floor(x / 7) % 2 ? "#fff" : MC[WN.indexOf(n) % 7]) : MC[Math.floor(x / 7) % 7];
+      var c = pal ? pal[Math.floor(x / 7) % pal.length] : n ? (Math.floor(x / 7) % 2 ? "#fff" : MC[WN.indexOf(n) % 7]) : MC[Math.floor(x / 7) % 7];
       s += R(x, y + 1, 3, 1, c) + R(x + 1, y + 2, 1, 1, c);
     }
     return s;
@@ -512,7 +582,7 @@
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
     var hat = isAnniv() || bdName() === WN[S.mem]
-      ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : "";
+      ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
     var st = S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : "";
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
@@ -528,6 +598,7 @@
     s += R(0, 64, 160, 3, P.bs);
     var bn = bdName();
     if (isAnniv() || bn) s += buntArt(isAnniv() ? "" : bn);
+    else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
     s += win(S.night, full);
     s += R(102, 52, 56, 3, "#8b5a2b") + R(104, 55, 52, 2, "#a8743f") + R(104, 57, 3, 9, "#8b5a2b") + R(153, 57, 3, 9, "#8b5a2b");
     if (S.st["f-s3"]) {
@@ -540,7 +611,7 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "cake" && on && (isAnniv() || bn) ? FLAME : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    return s + walker(S) + (isAnniv() || bn ? confArt() : "") + "</svg>";
+    return s + festProp() + walker(S) + (isAnniv() || bn ? confArt() : "") + "</svg>";
   }
 
   /* ===== 練習室的場景：鏡牆（小人的倒影）＋ 把杆 ＋ 木地板。小人的倒影只畫在鏡子裡（clip），100% 時七個人各有一個 ===== */
@@ -585,7 +656,7 @@
     initDz(S);
     var s = '<g id="rmdz">';
     S.dz.map(function (d, i) { return i; }).sort(function (a, b) { return S.dz[a].y - S.dz[b].y; }).forEach(function (i) {
-      var d = S.dz[i], hat = isAnniv() || bdName() === WN[i] ? '<g transform="translate(-1,3) scale(.75)">' + HAT2 + "</g>" : "";
+      var d = S.dz[i], hat = isAnniv() || bdName() === WN[i] ? '<g transform="translate(-1,3) scale(.75)">' + HAT2 + "</g>" : (seasonKind() ? '<g transform="translate(-1,3) scale(.75)">' + festHat(seasonKind()) + "</g>" : "");
       s += '<g class="rmdd" data-i="' + i + '" transform="translate(' + d.x.toFixed(2) + "," + d.y.toFixed(2) + ')" tabindex="0" role="button" aria-label="' + esc(WN[i]) + '"><g class="rmdb" style="animation-delay:-' + (i * 0.13).toFixed(2) + 's">' +
         R(0, 0, 18, 18, "transparent") + '<image href="' + esc(avUrl(WN[i])) + '" x="0" y="0" width="18" height="18" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>";
     });
@@ -605,6 +676,7 @@
     }
     s += R(0, 64, 160, 3, P.bs);
     if (fest) s += buntArt(isAnniv() ? "" : bn);
+    else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
     /* 鏡牆：銀框、鏡面、兩道斜斜的反光 */
     s += R(24, 18, 90, 44, "#aab2c8") + R(26, 20, 86, 40, P.mir);
     for (i = 0; i < 40; i += 2) s += R(72 - i, 20 + i, 3, 2, P.mirl, 0.5) + R(92 - i, 20 + i, 2, 2, P.mirl, 0.35);
@@ -617,6 +689,7 @@
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "pboard" && on && bn ? bdBoardArt(bn) : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
     if (isAnniv()) s += popperArt();
+    s += festProp();
     s += full ? dancers(S) : walker(S);
     return s + (fest ? confArt() : "") + "</svg>";
   }
@@ -766,16 +839,37 @@
       var ix = b && st["h-bias"] ? WN.indexOf(b.bias) : -1;
       if (ix >= 0) { S.mem = ix; S.bias = true; }
     })();
-    if (!S.bias) { var bi = WN.indexOf(bdName()); if (bi >= 0) S.mem = bi; }
-    /* 新獲得標記：跟上次打開時存的 room-seen 比對。第一次打開（還沒存過）只建立基準，不會全部標成新的；預覽 room2all 的假資料不比對也不存 */
+    /* 優先順序：偏心警告的本命 > 今天生日的壽星 > 今天抽到的幸運籤成員 > 隨機 */
+    if (!S.bias) {
+      var bi = WN.indexOf(bdName());
+      if (bi < 0) bi = WN.indexOf(drawnMem());
+      if (bi >= 0) S.mem = bi;
+    }
+    /* 新獲得標記：跟 room-seen（已看過的物品）比對。
+       第 1 間的物品打開小窩就算看過；第 2 間要等真的進到練習室才算（saveSeen(true)），
+       所以練習室開放前就拿到的物品，開放後第一次進去仍會有 NEW 星星。
+       第一次打開（還沒存過）第 1 間只建立基準，不會全部標成新的；預覽 room2all 的假資料不比對也不存 */
     S.nw = {};
+    var seenOld = null, have1 = [], have2 = [];
+    ITEMS.forEach(function (it) { if (st[it.b]) have1.push(it.b); });
+    ITEMS2.forEach(function (it) { if (st[it.b]) have2.push(it.b); });
+    function saveSeen(v2) {
+      if (P2ALL) return;
+      try {
+        var keep = have1.slice();
+        have2.forEach(function (b) { if (v2 || (seenOld && seenOld.indexOf(b) >= 0)) keep.push(b); });
+        localStorage.setItem("room-seen", JSON.stringify(keep));
+        seenOld = keep;
+      } catch (e) {}
+    }
     if (!P2ALL) {
       try {
-        var raw = localStorage.getItem("room-seen"), seen = raw ? JSON.parse(raw) : null, have = [];
-        ALL.forEach(function (it) { if (st[it.b]) have.push(it.b); });
-        if (seen && typeof seen.indexOf === "function") have.forEach(function (b) { if (seen.indexOf(b) < 0) S.nw[b] = 1; });
-        localStorage.setItem("room-seen", JSON.stringify(have));
+        var raw = localStorage.getItem("room-seen"), sn = raw ? JSON.parse(raw) : null;
+        if (sn && typeof sn.indexOf === "function") seenOld = sn;
       } catch (e) {}
+      if (seenOld) have1.forEach(function (b) { if (seenOld.indexOf(b) < 0) S.nw[b] = 1; });
+      if (room2Open(st)) have2.forEach(function (b) { if (!seenOld || seenOld.indexOf(b) < 0) S.nw[b] = 1; });
+      saveSeen(S.rm === 1 && room2Open(st));
     }
     /* 第一間全部解鎖：打開小窩時跳出「前往下一個房間」視窗。不存任何東西，所以每次載入網頁只跳一次 */
     if (count(st) >= ITEMS.length && !window.__roomNextSeen) { S.pop = true; window.__roomNextSeen = 1; }
@@ -796,7 +890,7 @@
           ? "<b>？？？</b><br><small>隱藏物品，達成後才會揭曉。</small>"
           : "<b>" + esc(it.n) + "</b> <small>尚未解鎖</small><br>" + (bd ? esc(bd.desc) : "<span>解鎖徽章：</span><span>" + esc(it.fb) + "</span>");
       }
-      var say = it.say === "lamp" ? (S.lamp ? "檯燈亮了。" : "檯燈關了。") : it.say;
+      var say = it.say === "lamp" ? (S.lamp ? "檯燈亮了。" : "檯燈關了。") : (it.k === "tube" && drewToday() ? "今天已經抽過籤了，明天再來搖一搖。" : it.say);
       var tail = it.say === "clock" ? esc(clockSay()) : esc(say);
       return "<b>" + esc(it.n) + "</b> <small><span>來自徽章：</span><span>" + esc(bd ? bd.name : it.fb) + "</span> <span>·</span> <span>獲得於</span> <span>" + esc(dstr(S.st[it.b])) + "</span></small><br>" + tail;
     }
@@ -825,8 +919,8 @@
       } else if (S.tab === "room") {
         h += (p2 ? scene2(S, full2) : scene(S, full)) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
           (p2
-            ? (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>練習室也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>練習室為壽星布置好了。" : nn ? NWM : full2 ? "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。" : "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。")
-            : (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : nn ? NWM : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。")) + "</div>" +
+            ? (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>練習室也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>練習室為壽星布置好了。" : seasonKind() ? seasCap(true) : nn ? NWM : full2 ? "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。" : "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。")
+            : (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : seasonKind() ? seasCap(false) : nn ? NWM : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。")) + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + (p2 ? pct2 : pct) + '"><s style="width:' + (p2 ? pct2 : pct) + '%"></s></div><span><span>' + (p2 ? "練習室完成度" : "小窩完成度") + "</span> <span>" + (p2 ? pct2 : pct) + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
@@ -871,9 +965,49 @@
         if (sv) sv.classList.toggle("lon", S.lamp);
       }
       else if (on) pop(g, it);
+      /* 有功能入口的物品：第一次點先顯示說明和「再點一次」提示，4 秒內再點一次才真的離開小窩去那個功能，避免誤觸跳走 */
+      var ac = on ? actOf(it.k) : null, now = performance.now() / 1000;
+      if (ac && S.armK === it.k && now < S.armT) { S.armK = ""; leaveAnd(ac.run); return; }
+      S.armK = ac ? it.k : ""; S.armT = now + 4;
       var cap = document.getElementById("rmcap");
-      if (cap) cap.innerHTML = capFor(it);
-      S.capK = ""; S.cph = performance.now() / 1000 + 5;
+      if (cap) cap.innerHTML = capFor(it) + (ac ? "<br><b>" + esc(t(ac.hint)) + "</b>" : "");
+      S.capK = ""; S.cph = now + 5;
+    }
+
+    /* 物品 → 站內功能。函式都是 app.js 的全域函式；讀不到（或功能沒開）就回傳 null，那個物品維持原本只講話 */
+    function playGame() {
+      var L = SONGS.filter(ftOK), P = L.filter(function (s) { return !gCleared(s); });
+      if (!P.length) P = L;
+      gos("songs");
+      if (!P.length) return;
+      var x = P[Math.floor(Math.random() * P.length)], m = memOf(x);
+      VIEW = m ? "m" : "a"; MEM = m; ALB = albOf(x); SEL = x.t; SMODE = "g";
+      try { sessionStorage.setItem("song-view", VIEW); localStorage.setItem("song-sel", SEL); } catch (e) {}
+      songsR();
+      window.scrollTo(0, 0);
+    }
+    function actOf(k) {
+      try {
+        if (k === "tube" && !drewToday() && typeof ftOpen === "function") return { hint: "再點一次，去抽今天的幸運籤", run: ftOpen };
+        if ((k === "ball" || k === "pboard") && typeof predOpen === "function" && typeof predUrl === "function" && predUrl()) return { hint: "再點一次，去猜下一場的歌單", run: predOpen };
+        if (k === "pspk" && typeof gos === "function" && typeof SONGS !== "undefined" && SONGS.some(ftOK)) return { hint: "再點一次，去玩應援遊戲", run: playGame };
+      } catch (e) {}
+      return null;
+    }
+    /* 關掉小窩去做某件事；如果那件事開了視窗（抽籤、歌單預測），視窗關掉後自動回到小窩，
+       這樣抽完籤回來，房間裡站的就是剛抽到的成員。跳去別的頁面（例如應援遊戲）就不會再開回來 */
+    function leaveAnd(fn) {
+      close();
+      try { fn(); } catch (e) { return; }
+      var ids = ["ftn", "ftimg", "bgd", "stampPv"];
+      var up = function () { return ids.some(function (i) { return document.getElementById(i); }); };
+      if (!up()) return;
+      var n = 0, iv = setInterval(function () {
+        if (++n > 1500) { clearInterval(iv); return; }
+        if (up()) return;
+        clearInterval(iv);
+        if (typeof sec !== "undefined" && sec === "home" && !document.getElementById("rmo")) open();
+      }, 400);
     }
 
     function walk(g) {
@@ -912,6 +1046,11 @@
         cp.innerHTML = isAnniv()
           ? "<b>" + esc(t("今天是 6/13，出道紀念日！")) + "</b><br>" + esc(t(r2 ? "練習室也掛上彩旗了。" : "小窩也掛上彩旗了。"))
           : "<b>" + esc(bdName()) + "</b> <span>" + esc(t("今天生日！")) + "</span><br>" + esc(t(r2 ? "練習室為壽星布置好了。" : "小窩為壽星布置好了。"));
+        return;
+      }
+      var sk = seasonKind();
+      if (sk && (key === "walk" || key === "run" || key === "w2")) {
+        cp.innerHTML = "<b>" + esc(t(SEAS[sk].tt)) + "</b><br>" + esc(t(key === "w2" ? SEAS[sk].s2 : SEAS[sk].s1));
         return;
       }
       var tx;
@@ -1103,9 +1242,9 @@
       if (t === o || (t.closest && t.closest(".rmx"))) return close();
       if (t.classList && t.classList.contains("rmnx")) { S.pop = false; draw(); return; }
       var pab = t.closest && t.closest("[data-a]");
-      if (pab) { if (pab.getAttribute("data-a") === "go") { S.rm = 1; resetW(); } S.pop = false; draw(); return; }
+      if (pab) { if (pab.getAttribute("data-a") === "go") { S.rm = 1; resetW(); if (room2Open(S.st)) saveSeen(true); } S.pop = false; draw(); return; }
       var rsb = t.closest && t.closest("[data-r]");
-      if (rsb) { S.rm = +rsb.getAttribute("data-r"); resetW(); draw(); return; }
+      if (rsb) { S.rm = +rsb.getAttribute("data-r"); resetW(); if (S.rm === 1 && room2Open(S.st)) saveSeen(true); draw(); return; }
       var tb = t.closest && t.closest("[data-t]");
       if (tb) { S.tab = tb.getAttribute("data-t"); draw(); return; }
       var ft = t.closest && t.closest("[data-f]");
