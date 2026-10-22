@@ -381,6 +381,16 @@
     }
     return s + "</g>";
   }
+  /* 新年：七位成員排成一排一起拜年（戴金皇冠、一起鞠躬）。只在新年期間（2/4–2/10）出現，由 tick() 定時觸發或點春聯觸發 */
+  function ngHtml() {
+    var s = '<g id="rmng">';
+    WN.forEach(function (n, i) {
+      var x = 8 + i * 21, y = 73 + Math.abs(i - 3) * 1.5;
+      s += '<g class="rmnm" data-i="' + i + '" transform="translate(' + x + "," + y.toFixed(1) + ')" tabindex="0" role="button" aria-label="' + esc(n) + '"><g class="rmbw" style="animation-delay:-' + (i * 0.1).toFixed(2) + 's">' +
+        R(0, 0, 18, 18, "transparent") + '<image href="' + esc(avUrl(n)) + '" x="0" y="0" width="18" height="18" preserveAspectRatio="xMidYMax meet"/><g transform="translate(-1,3) scale(.75)">' + festHat("ny") + "</g></g></g>";
+    });
+    return s + "</g>";
+  }
   /* 新年的裝飾：牆上兩盞紅燈籠、地板右邊的紅包、左邊的金元寶。可以點（燈籠抖、紅包和元寶跳），練習室（r2）只當裝飾 */
   function lanternArt(x, y) {
     return R(x + 4, y - 3, 1, 3, "#8b5a2b") + R(x + 2, y, 4, 1, "#ffd23f") + R(x + 1, y + 1, 6, 1, "#e0453a") + R(x, y + 2, 8, 4, "#e0453a") + R(x + 1, y + 6, 6, 1, "#e0453a") +
@@ -879,7 +889,7 @@
     "@media(prefers-reduced-motion:reduce){.rmpx s{transition:none}}" +
     ".rnw{pointer-events:none;animation:rmblink 1s steps(1) infinite}.rmnw{font-style:normal;font-size:10px;font-weight:800;padding:1px 4px;background:var(--gold);color:var(--dark)}" +
     "@media(prefers-reduced-motion:reduce){.rnw{animation:none}}" +
-    ".rmwk{cursor:pointer}.rmwk:focus,.rmwk:focus-visible{outline:none}.rmfx{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%}.rmfx:focus,.rmfx:focus-visible{outline:none}" +
+    ".rmwk{cursor:pointer}.rmwk:focus,.rmwk:focus-visible{outline:none}.rmnm{cursor:pointer}.rmnm:focus,.rmnm:focus-visible{outline:none}.rmbw{transform-box:fill-box;transform-origin:50% 100%;animation:rmbow 1.3s steps(1,end) infinite}@keyframes rmbow{0%{transform:translateY(0) scaleY(1)}40%{transform:translateY(1.5px) scaleY(.82)}70%{transform:translateY(0) scaleY(1)}100%{transform:translateY(0) scaleY(1)}}@media(prefers-reduced-motion:reduce){.rmbw{animation:none}}.rmfx{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%}.rmfx:focus,.rmfx:focus-visible{outline:none}" +
     ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
     ".pz .rmwb{animation:none}.slp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(9deg)}" +
     ".rmzz{display:none}.slp .rmzz{display:block}.rz{fill:#fff;stroke:#062a6e;stroke-width:.5;paint-order:stroke;font-weight:900;opacity:0;transform-box:fill-box;animation:rmz 2.4s ease-out infinite}.rz:nth-child(2){animation-delay:.8s}.rz:nth-child(3){animation-delay:1.6s}@keyframes rmz{0%{opacity:0;transform:translate(0,3px)}30%{opacity:1}100%{opacity:0;transform:translate(4px,-8px)}}" +
@@ -1082,6 +1092,7 @@
       var cap = document.getElementById("rmcap");
       if (cap) cap.innerHTML = capFor(it) + (ac ? "<br><b>" + esc(t(ac.hint)) + "</b>" : "");
       S.capK = ""; S.cph = now + 5;
+      if (on && it.k === "tickets" && seasonKind() === "ny") ngStart(now);
     }
 
     /* 物品 → 站內功能。函式都是 app.js 的全域函式；讀不到（或功能沒開）就回傳 null，那個物品維持原本只講話 */
@@ -1151,6 +1162,32 @@
       void g.getBoundingClientRect();
       g.classList.add(c);
       setTimeout(function () { g.classList.remove(c); }, 1500);
+    }
+    /* 新年拜年：七個人排排站、一起鞠躬約 6 秒。小人（單人）暫時隱藏，結束後回來；重畫畫面時 tick 會自動補回 */
+    function ngSync() {
+      var g = o.querySelector(".rmwx"), ng = o.querySelector("#rmng");
+      if (S.ngA) {
+        if (!ng) { var sv = o.querySelector("#rmsv"); if (sv) sv.insertAdjacentHTML("beforeend", ngHtml()); }
+        if (g) g.setAttribute("visibility", "hidden");
+      } else {
+        if (ng) ng.remove();
+        if (g) g.removeAttribute("visibility");
+      }
+    }
+    function ngStart(now) {
+      if (S.ngA || S.rm === 1) return;
+      S.ngA = now + 6;
+      S.ngNext = S.ngA + 25 + Math.random() * 20;
+      var cap = document.getElementById("rmcap");
+      if (cap) cap.innerHTML = "<b>" + esc(t("七個人一起拜年！")) + "</b><br>" + esc(t("新年快樂，今年也請多多指教。"));
+      S.capK = ""; S.cph = now + 6;
+      ngSync();
+      if (reduceM) setTimeout(function () { S.ngA = 0; ngSync(); }, 6000);
+    }
+    function ngSay(i) {
+      var L = ["新年快樂！", "恭喜發財！", "新年也要一起應援！"], cap = document.getElementById("rmcap");
+      if (cap) cap.innerHTML = "<b>" + esc(WN[i]) + "</b><br>" + esc(t(L[Math.floor(Math.random() * L.length)]));
+      S.capK = ""; S.cph = performance.now() / 1000 + 3;
     }
     function popFxK(k) {
       var l = o.querySelectorAll('.rmfx[data-k="' + k + '"]');
@@ -1289,7 +1326,13 @@
       if (!document.body.contains(o)) return;
       var dt = Math.min(0.05, (ts - (lastTs || ts)) / 1000), now = ts / 1000, g = o.querySelector(".rmwx");
       lastTs = ts;
-      if (S.rm === 1) { tick2(now, dt); raf = requestAnimationFrame(tick); return; }
+      if (S.rm === 1) { S.ngA = 0; tick2(now, dt); raf = requestAnimationFrame(tick); return; }
+      if (seasonKind() === "ny") {
+        if (!S.ngNext) S.ngNext = now + 6;
+        if (!S.ngA && S.wst === "walk" && now >= S.ngNext) ngStart(now);
+      }
+      if (S.ngA && now >= S.ngA) S.ngA = 0;
+      ngSync();
       /* 窗外煙火：小窩 100% 才有。每隔 5～12 秒放一發，每發約 1.4 秒 */
       var fw = o.querySelector("#rmfw");
       if (fw) {
@@ -1401,6 +1444,8 @@
       if (dd) { dzSay(+dd.getAttribute("data-i")); return; }
       var w = t.closest && t.closest(".rmwk");
       if (w) { walk(w); return; }
+      var nm = t.closest && t.closest(".rmnm");
+      if (nm) { ngSay(+nm.getAttribute("data-i")); return; }
       var fx = t.closest && t.closest(".rmfx");
       if (fx) { fxHit(fx); return; }
       var g = t.closest && t.closest(".rmi");
@@ -1408,8 +1453,8 @@
     });
     o.addEventListener("keydown", function (ev) {
       if (ev.key !== "Enter" && ev.key !== " ") return;
-      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk,.rmdd,.rmfx");
-      if (g) { ev.preventDefault(); if (g.classList.contains("rmfx")) fxHit(g); else if (g.classList.contains("rmwk")) walk(g); else if (g.classList.contains("rmdd")) dzSay(+g.getAttribute("data-i")); else hit(g); }
+      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk,.rmdd,.rmfx,.rmnm");
+      if (g) { ev.preventDefault(); if (g.classList.contains("rmnm")) ngSay(+g.getAttribute("data-i")); else if (g.classList.contains("rmfx")) fxHit(g); else if (g.classList.contains("rmwk")) walk(g); else if (g.classList.contains("rmdd")) dzSay(+g.getAttribute("data-i")); else hit(g); }
     });
     document.addEventListener("keydown", ky);
     draw();
