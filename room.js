@@ -351,6 +351,16 @@
     if (L === "ja") return "ちょうど" + h + "時だよ。";
     return "整點報時：現在 " + h + " 點囉。";
   }
+  /* 練習室的掛鐘：報真實時間，再依時段接一句練習室的話（跨年夜同小窩，改報跨年倒數） */
+  function practiceClockSay() {
+    if (isNye()) return nyeSay();
+    var d = new Date(), L = lang(), h = d.getHours(), hm = p2(h) + ":" + p2(d.getMinutes()), k = h < 5 ? 0 : h < 12 ? 1 : h < 18 ? 2 : 3;
+    var Z = ["現在 " + hm + "，還沒走嗎？再一遍就好。", "現在 " + hm + "，早起練習，先把暖身做好。", "現在 " + hm + "，下午的練習時間，記得補水。", "現在 " + hm + "，晚上了，再一遍就收工。"];
+    var E = ["It's " + hm + " now. Still here? Just one more run.", "It's " + hm + " now. Early practice, warm up first.", "It's " + hm + " now. Afternoon practice, remember to drink water.", "It's " + hm + " now. Evening already, one more run and we wrap up."];
+    var K = ["지금은 " + hm + "예요. 아직 안 갔어요? 한 번만 더요.", "지금은 " + hm + "예요. 일찍 연습하러 왔네요, 먼저 몸부터 풀어요.", "지금은 " + hm + "예요. 오후 연습 시간, 물 마시는 것 잊지 마요.", "지금은 " + hm + "예요. 저녁이에요, 한 번만 더 하고 마무리해요."];
+    var J = ["今は" + hm + "です。まだ帰らないの？あと1回だけ。", "今は" + hm + "です。朝練、まずはウォームアップから。", "今は" + hm + "です。午後の練習、水分補給を忘れずに。", "今は" + hm + "です。もう夜、あと1回やったら終わりにしよう。"];
+    return (L === "en" ? E : L === "ko" ? K : L === "ja" ? J : Z)[k];
+  }
   /* 小人的動作 → 下方那行文字。每個動作有幾句，進入動作時隨機挑一句（第 1 句是「點一下換人」的提示，本命固定時不用） */
   var CAPS = {
     tube: ["晃了晃籤筒，不知道今天會抽到誰。", "籤筒搖得喀啦喀啦響。"],
@@ -1053,7 +1063,7 @@
     { k: "ptowel", b: "p-fav", fb: "汗水毛巾", n: "毛巾", x: 44, y: 47, w: 9, h: 12, an: "sway", say: "練到流汗，毛巾先掛這裡。", art: artPtowel() },
     { k: "pbag", b: "p-sub", fb: "整裝待發", n: "運動包", x: 140, y: 76, w: 16, h: 12, an: "shake", say: "東西都帶齊了，隨時可以出發。", art: artPbag() },
     { k: "pphone", b: "p-luck", fb: "排進行程", n: "手機架", x: 127, y: 56, w: 8, h: 12, an: "bounce", say: "今天的運勢，順便排進練習表。", art: artPphone() },
-    { k: "pclock", b: "p-late", fb: "練到深夜", hid: 1, n: "掛鐘", x: 68, y: 5, w: 12, h: 12, an: "shake", say: "還沒走嗎？再一遍就好。", art: artPclock() },
+    { k: "pclock", b: "p-late", fb: "練到深夜", hid: 1, n: "掛鐘", x: 68, y: 5, w: 12, h: 12, an: "shake", say: "pclock", art: artPclock() },
     { k: "pwin", b: "p-dawn", fb: "練到天亮", hid: 1, n: "日出窗", x: 138, y: 8, w: 20, h: 20, an: "bounce", say: "不知不覺，天亮了。", art: artPwin() },
     { k: "prack", b: "p-seven", fb: "七件同款", hid: 1, n: "練習服掛架", x: 1, y: 8, w: 21, h: 12, an: "sway", say: "七件，一件不少。", art: artPrack() },
     { k: "plog", b: "p-week", fb: "每日練習", hid: 1, n: "練習日誌", x: 122, y: 72, w: 12, h: 7, an: "hop", say: "今天也有好好練習。", art: artPlog() },
@@ -1691,7 +1701,7 @@
           : "<b>" + esc(it.n) + "</b> <small>尚未解鎖</small><br>" + (bd ? esc(bd.desc) : "<span>解鎖徽章：</span><span>" + esc(it.fb) + "</span>");
       }
       var say = it.say === "lamp" ? (S.lamp ? "檯燈亮了。" : "檯燈關了。") : (it.k === "tube" && drewToday() ? "今天已經抽過籤了，明天再來搖一搖。" : it.say);
-      var tail = it.say === "clock" ? esc(clockSay()) : esc(say);
+      var tail = it.say === "clock" ? esc(clockSay()) : it.say === "pclock" ? esc(practiceClockSay()) : esc(say);
       return "<b>" + esc(it.n) + "</b> <small><span>來自徽章：</span><span>" + esc(bd ? bd.name : it.fb) + "</span> <span>·</span> <span>獲得於</span> <span>" + esc(dstr(S.st[it.b])) + "</span></small><br>" + tail;
     }
 
