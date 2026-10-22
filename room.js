@@ -1329,7 +1329,7 @@
   var HAT2 = '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>";
   function reflY(y) { return (50 + (y + 18 - 82) * 0.35 - 14).toFixed(2); }
   function initDz(S) {
-    if (!S.dz) S.dz = FORM[S.fi].map(function (p) { return { x: p[0], y: p[1] }; });
+    if (!S.dz) S.dz = FORM[S.fi].map(function (p, i) { return S.gp === "enter" ? { x: -24 - i * 12, y: p[1] } : { x: p[0], y: p[1] }; });
   }
   /* 成員生日當天：白板外框換成那位成員的顏色，再灑幾個彩點 */
   function bdBoardArt(n) {
@@ -1604,7 +1604,7 @@
     var PALL = ROOMS.some(function (r) { return r.pvAll; });
     if (PALL) { st = Object.assign({}, st); var pd = new Date().toISOString().slice(0, 10); ROOMS.forEach(function (r) { if (r.pvAll) r.items.forEach(function (it) { if (!st[it.b]) st[it.b] = pd; }); }); }
     var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
-      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: startRoom(), pop: false, fi: 0, fnx: 0, fc: 0, gp: "dance", gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: startRoom(), pop: false, fi: 0, fnx: 0, fc: 0, gp: "enter", gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -1826,14 +1826,19 @@
       setTimeout(function () { g.classList.remove(c); }, 1500);
     }
     /* 新年拜年：七個人排排站、一起鞠躬約 6 秒。小人（單人）暫時隱藏，結束後回來；重畫畫面時 tick 會自動補回 */
+    /* 淡入淡出：單人小人和七人交接時不要瞬間消失／出現 */
+    function fadeEl(e, v) {
+      if (e.__fo === v) return;
+      e.__fo = v; e.style.transition = "opacity .8s linear"; e.style.opacity = v;
+    }
     function ngSync() {
       var g = o.querySelector(".rmwx"), ng = o.querySelector("#rmng");
       if (S.ngA) {
-        if (!ng) { var sv = o.querySelector("#rmsv"); if (sv) sv.insertAdjacentHTML("beforeend", ngHtml(seasonKind() === "vd" ? S.ngx : null)); }
-        if (g) g.setAttribute("visibility", "hidden");
+        if (!ng) { var sv = o.querySelector("#rmsv"); if (sv) sv.insertAdjacentHTML("beforeend", ngHtml(S.ngP ? S.ngx : null)); }
+        if (g) fadeEl(g, 0);
       } else {
         if (ng) ng.remove();
-        if (g) g.removeAttribute("visibility");
+        if (g) fadeEl(g, 1);
       }
     }
     function ngStart(now) {
@@ -1841,12 +1846,12 @@
       var vdg = seasonKind() === "vd";
       /* 情人節：七個人從左邊慢慢走進來、排好比愛心鞠躬 6 秒、再往右邊慢慢走出去（跟練習室、6/13 一樣）；新年維持原地拜年 6 秒 */
       S.ngx = WN.map(function (n, i) { return reduceM ? 8 + i * 21 : -24 - i * 12; });
-      S.ngP = vdg ? (reduceM ? "hold" : "in") : "";
-      S.ngA = vdg && !reduceM ? 1e12 : now + 6;
-      S.ngNext = vdg && !reduceM ? now + 1e9 : S.ngA + 25 + Math.random() * 20;
+      S.ngP = reduceM ? "hold" : "in";
+      S.ngA = !reduceM ? 1e12 : now + 6;
+      S.ngNext = !reduceM ? now + 1e9 : S.ngA + 25 + Math.random() * 20;
       var cap = document.getElementById("rmcap");
       if (cap) cap.innerHTML = seasonKind() === "vd" ? "<b>" + esc(t("七個人一起送愛心！")) + "</b><br>" + esc(t("情人節快樂，愛心送給每一位 ARMY。")) : "<b>" + esc(t("七個人一起拜年！")) + "</b><br>" + esc(t("新年快樂，今年也請多多指教。"));
-      S.capK = ""; S.cph = now + (vdg && !reduceM ? 16 : 6);
+      S.capK = ""; S.cph = now + (!reduceM ? 16 : 6);
       ngSync();
       if (reduceM) setTimeout(function () { S.ngA = 0; S.ngP = ""; ngSync(); }, 6000);
     }
@@ -2025,6 +2030,14 @@
     }
     function tick2(now, dt) {
       var g = o.querySelector(".rmwx"), ds = o.querySelector("#rmdz"), i, ph = ds ? S.gp : "", sw = !ds || ph === "away" || ph === "enter";
+      if (ds && ph === "away") {
+        if (!S.gpw) S.gpw = now + 25 + Math.random() * 20;
+        else if (now >= S.gpw && S.wst === "walk") {
+          S.gpw = 0; S.gp = ph = "enter"; S.wd = 1; S.fi = 0; S.capK = "";
+          S.dz.forEach(function (d, k) { d.x = -24 - k * 12; d.y = FORM[0][k][1]; });
+          sw = true;
+        }
+      }
       if (ds) {
         vis(o.querySelector("#rmwv"), sw && !(ph === "enter" && S.wx >= 168));
         vis(o.querySelector("#rmmr"), sw && !(ph === "enter" && S.wx >= 168));
@@ -2139,7 +2152,7 @@
             if (d.x < 162) gone = false;
           }
           if (gone) {
-            S.gp = "away";
+            S.gp = "away"; S.gpw = 0;
             S.wx = 6; S.wd = 1; S.wst = "walk"; S.wuntil = 0; S.wdn = 0; S.wwalk = 0; S.capK = "";
           }
         } else if (ph === "enter") {
@@ -2217,7 +2230,8 @@
         }
         if (S.g7 !== "done") els7.forEach(function (e, k) { e.setAttribute("transform", "translate(" + S.g7x[k].toFixed(2) + ",70)"); });
         vis(g7, S.g7 !== "done");
-        vis(o.querySelector("#rmwv7"), S.g7 === "done");
+        var w7 = o.querySelector("#rmwv7");
+        if (w7) { if (S.g7 === "done") w7.removeAttribute("display"); fadeEl(w7, S.g7 === "done" ? 1 : 0); }
       }
       /* 窗外煙火：小窩 100% 才有。每隔 5～12 秒放一發，每發約 1.4 秒 */
       var fw = o.querySelector("#rmfw");
