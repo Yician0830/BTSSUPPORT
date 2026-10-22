@@ -267,12 +267,15 @@
     });
     return s;
   }
-  /* 春聯：三條紅底金字的直式聯子（新春／福／快樂），掛在同一根橫桿上；字用 SVG 文字，才看得清楚 */
+  /* 春聯（斗方）：兩張方形的紅底金字春聯，左「福」右「春」，金色內框，掛在同一根橫桿上；字用 SVG 文字，才看得清楚 */
   function artCouplet() {
     var tx = function (x, y, sz, c) { return '<text x="' + x + '" y="' + y + '" font-size="' + sz + '" font-weight="700" text-anchor="middle" fill="#ffd23f" shape-rendering="auto" font-family="\'Noto Serif TC\',\'PMingLiU\',serif">' + c + "</text>"; };
     var s = R(0, 0, 22, 1, "#8b5a2b");
-    [1, 8, 15].forEach(function (x) { s += R(x + 2, 1, 1, 1, "#8b5a2b") + R(x, 2, 5, 10, "#e0453a") + R(x, 2, 5, 1, "#ffd23f", 0.6) + R(x, 11, 5, 1, "#b02a20"); });
-    return s + tx(3.5, 6.1, 3.9, "新") + tx(3.5, 10.4, 3.9, "春") + tx(10.5, 8.6, 5, "福") + tx(17.5, 6.1, 3.9, "快") + tx(17.5, 10.4, 3.9, "樂");
+    [1, 12].forEach(function (x) {
+      s += R(x + 4, 1, 1, 1, "#8b5a2b") + R(x, 2, 10, 10, "#e0453a") +
+        R(x + 1, 3, 8, 1, "#ffd23f", 0.85) + R(x + 1, 10, 8, 1, "#ffd23f", 0.85) + R(x + 1, 3, 1, 8, "#ffd23f", 0.85) + R(x + 8, 3, 1, 8, "#ffd23f", 0.85);
+    });
+    return s + tx(6, 9.5, 6, "福") + tx(17, 9.5, 6, "春");
   }
   function artLamp() {
     return (
