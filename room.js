@@ -106,6 +106,7 @@
     "練習到這裡，明天就是正式舞台。": ["Practice ends here — tomorrow is the real stage.", "연습은 여기까지, 내일은 진짜 무대예요.", "練習はここまで。明日が本番のステージ。"],
     "小人正在整理明天的行李。": ["Packing the bag for tomorrow.", "내일 짐을 챙기는 중이에요.", "明日の荷物を準備中。"],
     "帶著手燈出門，去現場囉！": ["Heading out with the light stick — off to the venue!", "응원봉을 들고 공연장으로 출발!", "ペンライトを持って、会場へ出発！"],
+    "小人出發看演唱會了，晚點回來。": ["Off to the concert — back later.", "콘서트 보러 출발했어요. 나중에 돌아올게요.", "コンサートに出発！あとで帰ってくるね。"],
     "回來了，還在回味演唱會的感動。": ["Back home, still glowing from the concert.", "돌아왔어요. 아직 콘서트의 여운이 남아 있어요.", "帰ってきた。まだコンサートの余韻の中。"],
     "票帶了嗎？手燈充飽了嗎？再確認一次！": ["Got the ticket? Light stick charged? One more check!", "티켓 챙겼나? 응원봉 충전은? 한 번 더 확인!", "チケットは持った？ペンライトは充電した？もう一回確認！"],
     "水壺和毛巾": ["Water bottle & towel", "물병과 수건", "ボトルとタオル"], "運動鞋": ["Sneakers", "운동화", "スニーカー"],
@@ -645,9 +646,9 @@
   var TOURPAL = ["#8e6bd8", "#ffffff", "#b794ff"];
   var tkCache = null;
   function tourInfo() {
-    if (PV === "tour" || PV === "eve") {
+    if (PV === "tour" || PV === "eve" || PV === "tourout" || PV === "tourgo") {
       var C0 = null; try { C0 = typeof CITIES !== "undefined" ? CITIES[Object.keys(CITIES)[0]] : null; } catch (e) {}
-      return { k: PV === "tour" ? "today" : "eve", zh: C0 ? C0.name : "高雄", en: C0 ? C0.en : "Kaohsiung" };
+      return { k: PV === "eve" ? "eve" : "today", zh: C0 ? C0.name : "高雄", en: C0 ? C0.en : "Kaohsiung" };
     }
     try {
       if (typeof CITIES === "undefined") return null;
@@ -663,6 +664,20 @@
     } catch (e) { return null; }
   }
   function tourKind() { var i = tourInfo(); return i ? i.k : ""; }
+  /* 演唱會當天 18:59：小人拿著手燈走出房間（之後 19:00 起不出現）。預覽：?preview=tourgo（走出去後一直不回來） */
+  function tourLeaving() {
+    if (PV === "tourgo") return true;
+    if (tourKind() !== "today") return false;
+    var n = new Date();
+    return n.getHours() === 18 && n.getMinutes() === 59;
+  }
+  /* 演唱會當天 19:00～22:00：小人出發去看演唱會，房間裡不出現，22:00 後再回來。預覽：?preview=tourout */
+  function tourAway() {
+    if (PV === "tourout") return true;
+    if (tourKind() !== "today") return false;
+    var h = new Date().getHours();
+    return h >= 19 && h < 22;
+  }
   function tourTitle() {
     var i = tourInfo(), L = lang();
     if (!i) return "";
@@ -674,7 +689,7 @@
   }
   function tourCap(r2) {
     var td = tourKind() === "today";
-    return "<b>" + esc(tourTitle()) + "</b><br>" + esc(t(td ? (r2 ? "練習室裡也有手燈在發光。" : "小人拿起手燈，準備出門了。") : (r2 ? "練習到這裡，明天就是正式舞台。" : "小人正在整理明天的行李。")));
+    return "<b>" + esc(tourTitle()) + "</b><br>" + esc(t(td ? (tourAway() ? "小人出發看演唱會了，晚點回來。" : r2 ? "練習室裡也有手燈在發光。" : "小人拿起手燈，準備出門了。") : (r2 ? "練習到這裡，明天就是正式舞台。" : "小人正在整理明天的行李。")));
   }
   /* pal＝彩旗顏色；hat＝帽子像素（10 格寬的小圖）；hy＝帽子最下面一排要貼在頭頂（y=0）所需的位移；tt／s1／s2＝下方文字 */
   var SEAS = {
@@ -1261,6 +1276,7 @@
   var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt() + lightStickArt() + paperArt();
 
   function walker(S) {
+    if (tourAway()) return "";
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
@@ -1360,7 +1376,7 @@
     return s + "</g>";
   }
   function mirrorRefl(S, full) {
-    var s = '<g clip-path="url(#rmcp)">', hideS = full && S.gp !== "away" && S.gp !== "enter";
+    var s = '<g clip-path="url(#rmcp)">', hideS = (full && S.gp !== "away" && S.gp !== "enter") || tourAway();
     if (full) {
       s += '<g id="rmdrg" opacity=".4"' + (S.gp === "away" ? ' display="none"' : "") + ">";
       S.dz.forEach(function (d, i) {
@@ -1421,7 +1437,7 @@
     if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt(84);
     if (tourKind() === "eve" && !seasonKind() && !isFest()) s += eveGoodsArt(true);
     if (full) {
-      var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168);
+      var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168 && !S.gh);
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
       s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
     } else s += walker(S);
@@ -1606,7 +1622,7 @@
     var PALL = ROOMS.some(function (r) { return r.pvAll; });
     if (PALL) { st = Object.assign({}, st); var pd = new Date().toISOString().slice(0, 10); ROOMS.forEach(function (r) { if (r.pvAll) r.items.forEach(function (it) { if (!st[it.b]) st[it.b] = pd; }); }); }
     var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
-      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: startRoom(), pop: false, fi: 0, fnx: 0, fc: 0, gp: "enter", gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: startRoom(), pop: false, fi: 0, fnx: 0, fc: 0, gp: "enter", gh: true, gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -1702,7 +1718,7 @@
         h += lockedRoom(S.rm, S.st);
       } else if (S.tab === "room") {
         h += RM.scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : annivWeek() ? "<b>" + esc(t(annivWeek() === 2 ? "出道紀念日剛過！" : "出道紀念日快到了！")) + "</b><br>" + esc(t(annivWeek() === 2 ? RM.cap.ax : RM.cap.aw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : isNye() ? "<b>" + esc(t("今天跨年！")) + "</b><br>" + esc(t(RM.cap.nye)) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
+          (tourAway() ? tourCap(RM.alt) : isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : annivWeek() ? "<b>" + esc(t(annivWeek() === 2 ? "出道紀念日剛過！" : "出道紀念日快到了！")) + "</b><br>" + esc(t(annivWeek() === 2 ? RM.cap.ax : RM.cap.aw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : isNye() ? "<b>" + esc(t("今天跨年！")) + "</b><br>" + esc(t(RM.cap.nye)) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>' + RM.pct + "</span> <span>" + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
@@ -2041,12 +2057,13 @@
         }
       }
       if (ds) {
-        vis(o.querySelector("#rmwv"), sw && !(ph === "enter" && S.wx >= 168));
-        vis(o.querySelector("#rmmr"), sw && !(ph === "enter" && S.wx >= 168));
+        vis(o.querySelector("#rmwv"), sw && !(ph === "enter" && (S.wx >= 168 || S.gh)));
+        vis(o.querySelector("#rmmr"), sw && !(ph === "enter" && (S.wx >= 168 || S.gh)));
         vis(o.querySelector("#rmdzw"), ph !== "away");
         vis(o.querySelector("#rmdrg"), ph !== "away");
       }
       if (g && sw) {
+        if (S.wst === "walk" && !S.wdep && tourLeaving()) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wdep = 1; }
         if (S.wst === "walk") {
           if (ph === "enter") {
             S.wd = 1; S.wx += SPD * 1.5 * dt;
@@ -2078,6 +2095,12 @@
           var gdx = S.wtgt - S.wx, gst = SPD * 1.4 * dt;
           if (Math.abs(gdx) <= gst) { S.wx = S.wtgt; S.wd = 1; enter(S.wact, now); }
           else { S.wd = gdx > 0 ? 1 : -1; S.wx += S.wd * gst; }
+        } else if (S.wst === "out") {
+          /* 演唱會：小人拿著手燈往右走出練習室；22:00 後從左邊走回來 */
+          S.wd = 1;
+          if (!S.wot) { S.wx += SPD * 1.3 * dt; if (S.wx >= 172) { S.wot = 1; S.wouti = now + 6; } }
+          else if (S.wot === 1) { if (now >= S.wouti && !S.wdep) { S.wot = 2; S.wx = -30; } }
+          else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN; } }
         } else if (now >= S.wuntil) {
           var was = S.wst;
           S.wst = "walk"; S.wq = now + QMIN + Math.random() * QSPAN;
@@ -2089,7 +2112,7 @@
           }
           if (S.wchain && S.wchain.length) goTo(S.wchain.shift());
         } else if ((S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) || (S.wst === "pop" && !S.wbj && now - S.wbl > 1)) { S.wbj = 1; S.wj = 0.5; if (S.wst === "pop") popBurst(); }
-        if (!ds || ph === "away") capSt(now, S.wst === "walk" ? "w2" : S.wst);
+        if (!ds || ph === "away") capSt(now, S.wst === "walk" ? "w2" : S.wst === "out" && S.wot === 2 ? "back" : S.wst);
         var dy2 = 0;
         if (S.wj > 0) { S.wj -= dt; dy2 = S.wj > 0 ? -6 * Math.sin(Math.PI * (1 - S.wj / 0.5)) : 0; }
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy2.toFixed(2) + ")");
@@ -2100,6 +2123,7 @@
         g.classList.toggle("lg", S.wst === "plog");
         g.classList.toggle("wp", S.wst === "wipe");
         g.classList.toggle("dk", S.wst === "drink");
+        if (S.wst === "out" && S.wot === 1) g.setAttribute("display", "none"); else g.removeAttribute("display");
         g.classList.toggle("slp", S.wst === "sleep");
         g.classList.toggle("dn", S.wst === "dn");
         g.classList.toggle("po", S.wst === "pose");
@@ -2190,7 +2214,8 @@
             d.y = tg[1];
             if (d.x < tg[0]) { d.x = Math.min(tg[0], d.x + 36 * dt); if (d.x < tg[0]) here = false; }
           }
-          if (here && S.wx >= 168) {
+          if (here && (S.gh || S.wx >= 168)) {
+            S.gh = false;
             S.gp = "dance"; S.fi = 0; S.fc = 0; S.fnx = now + 2.5; S.capK = "ge";
             [0, 1, 2, 3, 4, 5, 6].forEach(function (j) { if (els[j]) ds.appendChild(els[j]); });
           }
@@ -2208,6 +2233,13 @@
 
     function tick(ts) {
       if (!document.body.contains(o)) return;
+      var awN = tourAway();
+      if (S.awk === undefined) S.awk = awN;
+      else if (S.awk !== awN) {
+        S.awk = awN; S.capK = "";
+        if (!awN) { S.wdep = 0; S.wst = "out"; S.wot = 2; S.wx = -30; S.wd = 1; S.wuntil = 1e12; }
+        draw();
+      }
       var dt = Math.min(0.05, (ts - (lastTs || ts)) / 1000), now = ts / 1000, g = o.querySelector(".rmwx");
       lastTs = ts;
       /* 有自己動作迴圈的房間走 TICKS；沒登記的房間用預設迴圈（也就是第 1 間小窩的那一套）。鎖著的房間沒有小人，不跑任何迴圈 */
@@ -2273,6 +2305,7 @@
         }
       }
       if (g && !g7on) {
+        if (S.wst === "walk" && !S.wdep && tourLeaving()) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wdep = 1; }
         var dy = 0;
         if (S.wst === "walk") {
           var px = S.wx, qok = now >= (S.wq || 0);
@@ -2356,7 +2389,7 @@
           if (S.wst === "out") {
             S.wd = 1;
             if (!S.wot) { S.wx += SPD * 1.3 * dt; if (S.wx >= 172) { S.wot = 1; S.wouti = now + 6; } }
-            else if (S.wot === 1) { if (now >= S.wouti) { S.wot = 2; S.wx = -30; } }
+            else if (S.wot === 1) { if (now >= S.wouti && !S.wdep) { S.wot = 2; S.wx = -30; } }
             else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN; } }
           }
           if (S.wst === "tubeR" && !S.wtbj && now - S.wtbs > 1.6) { S.wtbj = 1; popK("tube"); }
