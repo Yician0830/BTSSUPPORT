@@ -6,8 +6,14 @@
   if (window.__roomLoaded) return;
   window.__roomLoaded = true;
   /* 網址的 ?preview= 在載入當下就先記下來（網站之後如果改掉網址列，預覽也不會消失） */
-  var PV = "";
-  try { PV = window.__PV || new URLSearchParams(location.search).get("preview") || ""; } catch (e) {}
+  /* 預覽參數可以組合：?preview=room1all,vd（逗號、加號、或重複 &preview=… 都可以）。
+     room1all／room2all 是「全部解鎖」旗標，可以跟任何一個日期／節日／成員預覽一起用；PV 是其餘參數裡的第一個（日期／節日／成員），舊的單一參數寫法完全不變 */
+  var PV = "", PVL = [];
+  try {
+    var pvRaw = window.__PV || new URLSearchParams(location.search).getAll("preview").join(",");
+    PVL = String(pvRaw || "").split(/[,+\s]+/).filter(Boolean);
+    PV = PVL.filter(function (x) { return x !== "room1all" && x !== "room2all"; })[0] || (PVL[0] || "");
+  } catch (e) {}
 
   var R = function (x, y, w, h, c, o) {
     return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"' + (o ? ' opacity="' + o + '"' : "") + "/>";
@@ -383,6 +389,7 @@
   var ROOM_OPEN = ROOM_PUBLIC || (function () {
     try {
       var v = PV;
+      if (PVL.indexOf("room1all") >= 0 || PVL.indexOf("room2all") >= 0) return true;
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
@@ -395,9 +402,9 @@
      自己預覽：用 ?preview=room2 開一次，這台裝置就能直接進練習室（存在 localStorage: room2-preview，也會一併解鎖小窩入口）；
      ?preview=room2all 只在這次開啟把練習室 13 件物品全部當成已解鎖（含七人隊形），不存任何東西；?preview=off 會把兩個預覽都關掉 */
   var ROOM2_PUBLIC = false;
-  var P2ALL = PV === "room2all";
+  var P2ALL = PVL.indexOf("room2all") >= 0;
   /* ?preview=room1all：只在這次開啟把第 1 間（彩蛋小窩）18 件物品全部當成已獲得，不存任何東西（跟 room2all 一樣的做法） */
-  var P1ALL = PV === "room1all";
+  var P1ALL = PVL.indexOf("room1all") >= 0;
   var ROOM2_PV = P2ALL || PV === "room2" || (function () {
     try { return localStorage.getItem("room2-preview") === "1"; } catch (e) { return false; }
   })();
@@ -1033,7 +1040,7 @@
     return !!r.pub && g >= 0 && roomOpen(g, st) && roomFull(g, st);
   }
   function startRoom() {
-    for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i].pvStart && PV.indexOf(ROOMS[i].pvStart) === 0) return i;
+    for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i].pvStart && (PV.indexOf(ROOMS[i].pvStart) === 0 || ROOMS[i].pvAll)) return i;
     return 0;
   }
 
