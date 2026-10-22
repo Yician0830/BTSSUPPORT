@@ -867,9 +867,9 @@
   function practiceFloorArt() {
     var bottle = '<g transform="translate(12,84)">' + R(0, 9, 8, 1, "#00000022") + R(2, -1, 3, 1, "#444") + R(1, 0, 5, 9, "#6fb7ff") + R(2, 1, 1, 6, "#bfe3ff") +
       R(0, 1, 7, 2, "#fff") + R(0, 3, 2, 5, "#fff") + R(0, 5, 2, 1, "#b794ff") + "</g>";
-    var shoes = '<g transform="translate(40,88)">' + R(0, 5, 17, 1, "#00000022") + R(0, 1, 6, 3, "#f3f3f8") + R(6, 2, 3, 2, "#f3f3f8") + R(1, 2, 3, 1, "#b794ff") + R(0, 4, 9, 1, "#9aa3c7") +
+    var shoes = '<g transform="translate(50,88)">' + R(0, 5, 17, 1, "#00000022") + R(0, 1, 6, 3, "#f3f3f8") + R(6, 2, 3, 2, "#f3f3f8") + R(1, 2, 3, 1, "#b794ff") + R(0, 4, 9, 1, "#9aa3c7") +
       R(11, 0, 3, 5, "#f3f3f8") + R(14, 0, 1, 5, "#9aa3c7") + R(11, 1, 3, 1, "#b794ff") + "</g>";
-    return fxG("prbottle", bottle, [10, 82, 10, 12]) + fxG("prshoes", shoes, [39, 87, 19, 7]);
+    return fxG("prbottle", bottle, [10, 82, 10, 12]) + fxG("prshoes", shoes, [49, 87, 19, 7]);
   }
   /* 演唱會前一天：地板上摺好的外套（紫色，上面一件白 T）＋牆上貼的「明天」便條。小窩跟練習室都有，位置各自避開原本的物品；只是裝飾，不擋點擊 */
   function eveGoodsArt(r2) {
@@ -1023,8 +1023,8 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "pboard" && on && bn ? bdBoardArt(bn) : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    /* 練習室的慶祝物品放在地板中間偏右，左邊留給水壺和運動鞋 */
-    if (fest) s += popperArt(118, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 76, 79, 20) : "");
+    /* 練習室：彩帶砲在左邊（小人走到左端會拉），禮物在地板中間、氣球再右邊；運動鞋放在彩帶砲和禮物之間 */
+    if (fest) s += popperArt(36, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 76, 79, 20) : "");
     s += festProp(true);
     s += practiceFloorArt();
     if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt(84);
@@ -1034,7 +1034,7 @@
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
       s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
     } else s += walker(S);
-    return s + (fest ? popBurstArt(121, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
+    return s + (fest ? popBurstArt(39, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -1378,7 +1378,7 @@
     }
 
     /* 小人的動作由這個迴圈控制：左右走、踏上地毯跳一下、走到球鞋（有解鎖才會）停 2 秒、夜晚走一陣子就打瞌睡 5 秒 */
-    var raf = 0, lastTs = 0, SPD = 12.5;
+    var raf = 0, lastTs = 0, SPD = 12.5, QMIN = 15, QSPAN = 10; /* 每次停下來互動結束後，至少安靜 QMIN～QMIN+QSPAN 秒（15～25 秒）才會有下一次互動；想更久或更短就改這兩個數字（小窩、練習室共用） */
     var reduceM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches);
     /* 新動作：走到書架（左邊）看書、走到日曆／時鐘下（中間）抬頭看。解鎖對應物品才會做 */
     /* 萬聖節的糖果／掃帚：跳一下或抖一下；rand＝小人自己去玩時隨機挑一個 */
@@ -1519,23 +1519,26 @@
             S.wd = 1; S.wx += SPD * 1.5 * dt;
           } else {
             if (!S.wdn) S.wdn = now + 7 + Math.random() * 8;
-            var px2 = S.wx;
+            var px2 = S.wx, qok = now >= (S.wq || 0);
             S.wx += S.wd * SPD * dt;
             S.wwalk += dt;
             if (S.wx >= 108) {
               S.wx = 108; S.wd = -1;
-              if (S.st["p-game"] && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
+              if (S.st["p-game"] && qok && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
             } else if (S.wx <= 6) {
               S.wx = 6; S.wd = 1;
-              if (isFest() && now >= (S.wfc || 0) && Math.random() < 0.5) enter("pop", now);
-              else if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
+              if (isFest() && qok && now >= (S.wfc || 0) && Math.random() < 0.5) enter("pop", now);
+              else if (S.st["p-pass"] && qok && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
             }
-            if (S.wst === "walk" && isFest() && S.st["h-613"] && now >= (S.wfc || 0) && ((px2 < 60 && S.wx >= 60) || (px2 > 60 && S.wx <= 60)) && Math.random() < 0.5) { S.wx = 60; enter("blow", now); }
-            if (S.wst === "walk" && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
+            if (S.wst === "walk" && isFest() && S.st["h-613"] && qok && now >= (S.wfc || 0) && ((px2 < 60 && S.wx >= 60) || (px2 > 60 && S.wx <= 60)) && Math.random() < 0.5) { S.wx = 60; enter("blow", now); }
+            /* 成員生日：經過練習室的禮物堆（x≈84）、氣球（x≈106）前有機會停下來看一眼 */
+            if (S.wst === "walk" && bdName() && qok && now >= (S.wgf || 0) && ((px2 < 72 && S.wx >= 72) || (px2 > 72 && S.wx <= 72)) && Math.random() < 0.5) { S.wx = 72; S.wgf = now + 15; enter("bdg", now); }
+            if (S.wst === "walk" && bdName() && qok && now >= (S.wbf || 0) && ((px2 < 93 && S.wx >= 93) || (px2 > 93 && S.wx <= 93)) && Math.random() < 0.4) { S.wx = 93; S.wbf = now + 15; enter("bdb", now); }
+            if (S.wst === "walk" && qok && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
             if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
           }
         } else if (now >= S.wuntil) {
-          S.wst = "walk";
+          S.wst = "walk"; S.wq = now + QMIN + Math.random() * QSPAN;
         } else if ((S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) || (S.wst === "pop" && !S.wbj && now - S.wbl > 1)) { S.wbj = 1; S.wj = 0.5; if (S.wst === "pop") popBurst(); }
         if (!ds || ph === "away") capSt(now, S.wst === "walk" ? "w2" : S.wst);
         var dy2 = 0;
@@ -1544,7 +1547,7 @@
         g.classList.toggle("bl", S.wst === "blow");
         g.classList.toggle("pp", S.wst === "pop");
         g.classList.toggle("bo", S.wst === "blow" && now - S.wbl > 1.8);
-        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose" || S.wst === "blow" || S.wst === "pop");
+        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose" || S.wst === "blow" || S.wst === "pop" || S.wst === "bdg" || S.wst === "bdb");
         g.classList.toggle("slp", S.wst === "sleep");
         g.classList.toggle("dn", S.wst === "dn");
         g.classList.toggle("po", S.wst === "pose");
@@ -1669,44 +1672,44 @@
       if (g && !g7on) {
         var dy = 0;
         if (S.wst === "walk") {
-          var px = S.wx;
+          var px = S.wx, qok = now >= (S.wq || 0);
           /* 偶爾小跑步：每隔 8～20 秒跑 1.6～2.8 秒，速度 2.2 倍 */
           if (!S.wjn) S.wjn = now + 6 + Math.random() * 8;
           else if (now >= S.wjn) { S.wju = now + 1.6 + Math.random() * 1.2; S.wjn = S.wju + 8 + Math.random() * 12; }
           S.wx += S.wd * SPD * (now < S.wju ? 2.2 : 1) * dt;
           S.wwalk += dt;
-          if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isFest() && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now);
-            else if (tourKind() === "today" && now >= (S.wfc || 0) && Math.random() < 0.5) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wfc = now + 30; } }
+          if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isFest() && qok && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now);
+            else if (tourKind() === "today" && qok && now >= (S.wfc || 0) && Math.random() < 0.5) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wfc = now + 30; } }
           else if (S.wx <= 8) {
             S.wx = 8;
             var lo = [];
             if (S.st["fp-1"]) lo.push("look");
             if (S.st["v-fav"]) lo.push("read");
             if (seasonKind() === "hw") lo.push("broom");
-            var pk = lo.length ? lo[Math.floor(Math.random() * lo.length)] : "";
+            var pk = lo.length && qok ? lo[Math.floor(Math.random() * lo.length)] : "";
             if (pk === "look") { S.wst = "look"; S.wuntil = now + 2.2; }
             else if (pk === "read") enter("read", now);
             else if (pk === "broom") enter("broom", now);
             else S.wd = 1;
           }
-          if (S.wst === "walk" && now >= S.wcd && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX))) {
+          if (S.wst === "walk" && now >= S.wcd && qok && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX))) {
             var op = [];
             if (S.st["h-open"]) op.push("clk");
             if (S.st["h-last"]) op.push("cal");
             if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
-          if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
-          if (S.wst === "walk" && isFest() && S.st["h-613"] && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
-          if (S.wst === "walk" && tourKind() === "eve" && now >= (S.wfc || 0) && ((px < 92 && S.wx >= 92) || (px > 92 && S.wx <= 92)) && Math.random() < 0.6) { S.wx = 92; enter("pack", now); }
+          if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && qok && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
+          if (S.wst === "walk" && isFest() && S.st["h-613"] && qok && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
+          if (S.wst === "walk" && tourKind() === "eve" && qok && now >= (S.wfc || 0) && ((px < 92 && S.wx >= 92) || (px > 92 && S.wx <= 92)) && Math.random() < 0.6) { S.wx = 92; enter("pack", now); }
           /* 成員生日：經過禮物堆前（小窩 x≈46、練習室 x≈84）有機會停下來看一眼，禮物會跳一下 */
           var gX = S.rm === 1 ? 72 : 33;
-          if (S.wst === "walk" && bdName() && now >= (S.wgf || 0) && ((px < gX && S.wx >= gX) || (px > gX && S.wx <= gX)) && Math.random() < 0.5) { S.wx = gX; S.wgf = now + 15; enter("bdg", now); }
+          if (S.wst === "walk" && bdName() && qok && now >= (S.wgf || 0) && ((px < gX && S.wx >= gX) || (px > gX && S.wx <= gX)) && Math.random() < 0.5) { S.wx = gX; S.wgf = now + 15; enter("bdg", now); }
           var bX = S.rm === 1 ? 93 : 108;
-          if (S.wst === "walk" && bdName() && now >= (S.wbf || 0) && ((px < bX && S.wx >= bX) || (px > bX && S.wx <= bX)) && Math.random() < 0.4) { S.wx = bX; S.wbf = now + 15; enter("bdb", now); }
+          if (S.wst === "walk" && bdName() && qok && now >= (S.wbf || 0) && ((px < bX && S.wx >= bX) || (px > bX && S.wx <= bX)) && Math.random() < 0.4) { S.wx = bX; S.wbf = now + 15; enter("bdb", now); }
           /* 演唱會前一天／當天：經過海報前（小人中心對到海報 x≈72）有機會停下來抬頭看，看完繼續往原方向走 */
-          if (S.wst === "walk" && S.rm !== 1 && tourKind() && !seasonKind() && S.st["f-1"] && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
+          if (S.wst === "walk" && S.rm !== 1 && tourKind() && !seasonKind() && S.st["f-1"] && qok && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
           var sk2 = seasonKind();
-          if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && now >= (S.wfc || 0)) {
+          if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && qok && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
             else if (((px < 48 && S.wx >= 48) || (px > 48 && S.wx <= 48)) && Math.random() < 0.2) { S.wx = 48; S.wfc = now + 10; enter(sk2 === "ny" ? "ingot" : "cookie", now); }
           }
@@ -1722,7 +1725,7 @@
             S.wd = 1;
             if (!S.wot) { S.wx += SPD * 1.3 * dt; if (S.wx >= 172) { S.wot = 1; S.wouti = now + 6; } }
             else if (S.wot === 1) { if (now >= S.wouti) { S.wot = 2; S.wx = -30; } }
-            else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; } }
+            else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN; } }
           }
           if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
           if (now >= S.wuntil) {
@@ -1731,7 +1734,7 @@
             S.wst = "walk";
             S.wtt = 0;
             S.wtr = 0;
-            S.wcd = now + 6;
+            S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN;
           }
         }
         if (S.wj > 0) {
