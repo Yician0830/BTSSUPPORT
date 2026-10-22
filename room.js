@@ -7,7 +7,7 @@
   window.__roomLoaded = true;
   /* 網址的 ?preview= 在載入當下就先記下來（網站之後如果改掉網址列，預覽也不會消失） */
   var PV = "";
-  try { PV = new URLSearchParams(location.search).get("preview") || ""; } catch (e) {}
+  try { PV = window.__PV || new URLSearchParams(location.search).get("preview") || ""; } catch (e) {}
 
   var R = function (x, y, w, h, c, o) {
     return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"' + (o ? ' opacity="' + o + '"' : "") + "/>";

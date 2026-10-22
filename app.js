@@ -1,3 +1,4 @@
+try{window.__PV=new URLSearchParams(location.search).get("preview")||""}catch(e){window.__PV=""}
 /* 活動資料在 data.js，新增活動請改那個檔案 */
 /* 巡演城市只在這裡維護：加一個城市就多一組 {…}。y＝開演年份，al＝試算表「城市」欄可以填的寫法（代碼、中文名都行），showDays＝開演日；演唱會限定卡、成就、歌單預測、試算表判斷都從這份清單自動長出來 */
 const MEMBERS=[["BTS",6,13],["RM",9,12],["Jin",12,4],["SUGA",3,9],["j-hope",2,18],["Jimin",10,13],["V",12,30],["Jungkook",9,1]];
