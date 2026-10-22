@@ -29,6 +29,18 @@
      LT：中文原文 → [英, 韓, 日]。網站的翻譯機制（i18n.js）是「整段文字完全相同才換」，所以畫面上的句子都拆成固定短句，數字、日期另外放在自己的標籤裡。
      t(中文)：JS 自己組字串（aria-label、時鐘台詞）時用，依 <html lang> 取目前語言。 */
   var LT = {
+    "在桌邊寫情書，筆尖沙沙響。": ["Writing a love letter at the desk, the pen scratching softly.", "책상 옆에서 러브레터를 쓰는 중, 펜 소리가 사각사각.", "机のそばでラブレターを書いてる。ペン先がさらさら。"],
+    "寫了又擦，最後還是寫下最想說的話。": ["Written, erased, and in the end the words that mattered most.", "썼다 지웠다 하다가 결국 가장 하고 싶은 말을 적었어요.", "書いては消して、結局いちばん伝えたい言葉を書いた。"],
+    "把信封收好，走去郵筒。": ["Tucked the envelope away and headed for the mailbox.", "봉투를 챙겨 우체통으로 가요.", "封筒をしまって、ポストへ向かう。"],
+    "把情書投進郵筒，希望能順利寄到。": ["Dropped the letter in the mailbox, hoping it arrives safely.", "러브레터를 우체통에 넣었어요. 잘 도착하길 바라요.", "ラブレターをポストに投函。無事に届きますように。"],
+    "叮咚——信寄出去了，心跳好快。": ["Ding-dong. The letter is sent, heart racing.", "딩동— 편지를 보냈어요. 심장이 두근거려요.", "ピンポン——手紙を出した。ドキドキが止まらない。"],
+    "最後一顆了，捨不得吃，還是吃掉了。": ["The last piece. Hard to part with, but eaten anyway.", "마지막 한 개예요. 아까웠지만 결국 먹어 버렸어요.", "最後のひとつ。もったいないけど、食べちゃった。"],
+    "偷偷拿走最後一顆，盒子空空的了。": ["Sneaked the last piece. The box is empty now.", "몰래 마지막 한 개를 집었어요. 상자가 비었어요.", "こっそり最後のひとつを。箱は空っぽになった。"],
+    "盒子空了，只剩下包裝紙。": ["The box is empty, just the wrapping left.", "상자가 비었어요. 포장지만 남았어요.", "箱は空っぽ。包み紙だけが残ってる。"],
+    "巧克力被吃光了，下次要記得留一顆。": ["All the chocolates are gone. Save one next time.", "초콜릿을 다 먹었어요. 다음엔 하나 남겨 둬요.", "チョコは全部なくなった。次はひとつ残しておこう。"],
+    "郵筒": ["Mailbox", "우체통", "ポスト"],
+    "郵筒肚子裡，好像有信在等著寄出。": ["There seems to be a letter inside, waiting to be sent.", "우체통 안에 보낼 편지가 기다리는 것 같아요.", "ポストの中で、手紙が出番を待っているみたい。"],
+    "投進去的心意，一定會寄到。": ["Whatever you drop in is sure to arrive.", "넣은 마음은 꼭 도착할 거예요.", "投函した気持ちは、きっと届くよ。"],
     "玫瑰": ["Rose", "장미", "バラ"], "情書": ["Love letter", "러브레터", "ラブレター"],
     "一朵紅玫瑰，送給最喜歡的你。": ["A red rose, for the one you like most.", "빨간 장미 한 송이, 가장 좋아하는 당신에게.", "赤いバラを一輪、いちばん大好きなあなたに。"],
     "玫瑰的香味淡淡的，好像春天來了。": ["The rose smells faint and sweet, like spring has come.", "장미 향이 은은해서 봄이 온 것 같아요.", "バラの香りがほのかで、春が来たみたい。"],
@@ -379,7 +391,12 @@
     hb: ["收到紅包，開心到想跳一下。", "把紅包收進口袋，新年快樂！"],
     ingot: ["抱起金元寶掂掂重量，沉甸甸的。", "金元寶擦得亮晶晶，討個好彩頭。"],
     rose: ["湊近聞了聞玫瑰，甜甜的香味。", "幫玫瑰擺正，花瓣紅得很漂亮。"],
-    letter: ["拿起情書慢慢讀，臉都紅了。", "把情書捧在胸前，心跳好快。"]
+    letter: ["拿起情書慢慢讀，臉都紅了。", "把情書捧在胸前，心跳好快。"],
+    chocL: ["最後一顆了，捨不得吃，還是吃掉了。", "偷偷拿走最後一顆，盒子空空的了。"],
+    chocE: ["盒子空了，只剩下包裝紙。", "巧克力被吃光了，下次要記得留一顆。"],
+    write: ["在桌邊寫情書，筆尖沙沙響。", "寫了又擦，最後還是寫下最想說的話。"],
+    mailgo: ["把信封收好，走去郵筒。"],
+    mail: ["把情書投進郵筒，希望能順利寄到。", "叮咚——信寄出去了，心跳好快。"]
   };
   var CAPF = ["排成一排，整整齊齊。", "拉成弧形，中間的往前站。", "高低交錯，換成錯位隊形。", "排成斜線，一階一階往上。"];
   /* 彩蛋小窩開關：跟「藝人同款足跡」一樣的鎖法。
@@ -677,18 +694,39 @@
   function vdHeart(x, y, c) {
     return R(x, y, 2, 1, c) + R(x + 3, y, 2, 1, c) + R(x, y + 1, 5, 2, c) + R(x + 1, y + 3, 3, 1, c) + R(x + 2, y + 4, 1, 1, c);
   }
+  /* 情人節互動的狀態（只存在這次開啟小窩的期間，每次打開都重來）：巧克力還剩幾顆、郵筒旗子是否升起、地板上的情書是第幾封 */
+  var vdChoc = 6, vdMailUp = false, vdLetterN = 0;
+  var CHOCC = ["#8a4b36", "#c68642", "#ffd9e4", "#e0457b", "#8a4b36", "#ffd23f"];
+  var LETV = [["#ffffff", "#e0b8c8", "#e0457b"], ["#ffe3ef", "#f0a8c0", "#c0306a"], ["#e8f3ff", "#a8c8e8", "#2a7de1"], ["#fff6d6", "#e8d090", "#e0a800"]];
+  /* 打開的巧克力盒，裡面 2×3 顆，剩幾顆就畫幾顆（被小人偷吃會一顆一顆消失） */
+  function chocBoxArt() {
+    var a = '<g transform="translate(30,78)">' + R(0, 2, 12, 8, "#6b3a2a") + R(0, 2, 12, 1, "#e0457b") + R(1, 3, 10, 6, "#3a1f17") + R(9, 0, 3, 2, "#e0457b") + R(10, 1, 1, 1, "#ff8fb3"), i;
+    for (i = 0; i < vdChoc; i++) a += '<g class="rcp" data-i="' + i + '">' + R(2 + (i % 3) * 3, 4 + Math.floor(i / 3) * 3, 2, 2, CHOCC[i]) + R(2 + (i % 3) * 3, 4 + Math.floor(i / 3) * 3, 1, 1, "#ffffff", 0.35) + "</g>";
+    return a + "</g>";
+  }
+  /* 地板上的情書：每寄出一封，換成下一種顏色的新信（白、粉、藍、奶油色輪流） */
+  function letterArt(n, lx) {
+    var v = LETV[n % 4];
+    return '<g class="rlt" transform="translate(' + lx + ',88)">' + R(0, 0, 10, 7, v[0]) + R(0, 6, 10, 1, v[1]) + R(1, 1, 2, 1, v[1]) + R(3, 2, 2, 1, v[1]) + R(5, 2, 2, 1, v[1]) + R(7, 1, 2, 1, v[1]) +
+      R(3, 3, 1, 1, v[2]) + R(5, 3, 1, 1, v[2]) + R(3, 4, 3, 1, v[2]) + R(4, 5, 1, 1, v[2]) + "</g>";
+  }
+  /* 郵筒（只有小窩有）：圓頂紅色，左邊一支小旗子，有信投進去後旗子升起 */
+  function mailArt() {
+    return '<g class="rmml' + (vdMailUp ? " up" : "") + '" transform="translate(149,80)">' + R(2, 0, 6, 1, "#e0453a") + R(1, 1, 8, 1, "#e0453a") + R(0, 2, 10, 10, "#e0453a") + R(0, 2, 1, 10, "#ff8a7a", 0.5) + R(9, 2, 1, 10, "#b02a20") + R(1, 12, 8, 1, "#b02a20") +
+      R(2, 4, 6, 1, "#3a1f17") + R(3, 7, 1, 1, "#fff") + R(5, 7, 1, 1, "#fff") + R(3, 8, 3, 1, "#fff") + R(4, 9, 1, 1, "#fff") + R(4, 13, 2, 3, "#555") + R(-1, 3, 1, 8, "#555") +
+      '<g class="rmfd">' + R(-4, 8, 3, 2, "#ffd23f") + '</g><g class="rmfu">' + R(-4, 3, 3, 2, "#ffd23f") + "</g></g>";
+  }
   /* 巧克力盒（可以點，小人也會走過來偷吃一顆）和兩顆上下飄的愛心（可以點）。練習室（r2）只當裝飾，不擋點擊 */
   function vdDeco(r2) {
-    var box = '<g transform="translate(30,78)">' + R(0, 3, 12, 7, "#6b3a2a") + R(1, 4, 10, 5, "#8a4b36") + R(5, 3, 2, 7, "#e0457b") + R(0, 6, 12, 1, "#e0457b") + R(3, 2, 2, 1, "#e0457b") + R(5, 1, 2, 2, "#e0457b") + R(7, 2, 2, 1, "#e0457b") + "</g>";
+    var box = chocBoxArt();
     var hearts = '<g transform="translate(44,74)"><g class="rbal d1">' + vdHeart(0, 0, "#e0457b") + "</g></g>" +
       '<g transform="translate(52,78)"><g class="rbal d2">' + vdHeart(0, 0, "#ff8fb3") + "</g></g>";
     var rx = r2 ? 104 : 124, lx = r2 ? 116 : 138;
     var rose = '<g transform="translate(' + rx + ',80)">' + R(3, 0, 3, 1, "#e0457b") + R(2, 1, 5, 3, "#e0457b") + R(3, 4, 3, 1, "#e0457b") + R(4, 1, 1, 2, "#ff8fb3") + R(4, 5, 1, 5, "#2dbf8f") + R(2, 7, 2, 1, "#2dbf8f") + R(5, 8, 2, 1, "#2dbf8f") +
       R(2, 10, 5, 1, "#bfe3ff") + R(1, 11, 7, 4, "#bfe3ff") + R(2, 15, 5, 1, "#9ad0ff") + R(2, 12, 1, 2, "#ffffff") + R(1, 13, 7, 1, "#ff8fb3") + "</g>";
-    var letter = '<g transform="translate(' + lx + ',88)">' + R(0, 0, 10, 7, "#ffffff") + R(0, 6, 10, 1, "#e0b8c8") + R(1, 1, 2, 1, "#e0b8c8") + R(3, 2, 2, 1, "#e0b8c8") + R(5, 2, 2, 1, "#e0b8c8") + R(7, 1, 2, 1, "#e0b8c8") +
-      R(3, 3, 1, 1, "#e0457b") + R(5, 3, 1, 1, "#e0457b") + R(3, 4, 3, 1, "#e0457b") + R(4, 5, 1, 1, "#e0457b") + "</g>";
+    var letter = letterArt(vdLetterN, lx);
     return fxG("vdchoc", box, [29, 78, 14, 12], r2) + fxG("vdheart", hearts, [43, 72, 16, 14], r2) +
-      fxG("vdrose", rose, [rx - 1, 79, 11, 17], r2) + fxG("vdletter", letter, [lx - 1, 87, 12, 9], r2);
+      fxG("vdrose", rose, [rx - 1, 79, 11, 17], r2) + fxG("vdletter", letter, [lx - 1, 87, 12, 9], r2) + (r2 ? "" : fxG("vdmail", mailArt(), [144, 80, 16, 17]));
   }
   /* 地板上的小擺飾（只是裝飾，不能點）：萬聖節南瓜、聖誕樹、情人節巧克力；新年只有彩旗和皇冠 */
   function festProp(r2) {
@@ -739,10 +777,11 @@
     return s + "</g>";
   }
   /* 新年：七位成員排成一排一起拜年（戴金皇冠、一起鞠躬）。只在新年期間（2/4–2/10）出現，由 tick() 定時觸發或點春聯觸發 */
-  function ngHtml() {
-    var s = '<g id="rmng">';
+  /* xs＝情人節七人送愛心用：每個人目前的 x（走進來、走出去的過程中會變）；新年拜年不傳，固定站好 */
+  function ngHtml(xs) {
+    var s = '<g id="rmng"' + (xs ? ' class="wk"' : "") + ">";
     WN.forEach(function (n, i) {
-      var x = 8 + i * 21, y = 73 + Math.abs(i - 3) * 1.5;
+      var x = xs ? xs[i] : 8 + i * 21, y = 73 + Math.abs(i - 3) * 1.5;
       s += '<g class="rmnm" data-i="' + i + '" transform="translate(' + x + "," + y.toFixed(1) + ')" tabindex="0" role="button" aria-label="' + esc(n) + '"><g class="rmbw" style="animation-delay:-' + (i * 0.1).toFixed(2) + 's">' +
         R(0, 0, 18, 18, "transparent") + '<image href="' + esc(avUrl(n)) + '" x="0" y="0" width="18" height="18" preserveAspectRatio="xMidYMax meet"/><g transform="translate(-1,3) scale(.75)">' + festHat(seasonKind()) + "</g>" + (seasonKind() === "vd" ? '<g transform="translate(6,11)">' + vdHeart(0, 0, "#e0457b") + R(1, 0, 1, 1, "#ff8fb3") + "</g>" : "") + "</g></g>";
     });
@@ -790,6 +829,7 @@
     bdwballoon: { an: "hop", n: "生日氣球", say: ["氣球先綁好了，生日快到囉。", "輕輕一碰，氣球就晃了起來。", "三顆氣球先綁在一起，等著慶祝生日。"] },
     bdpballoon: { an: "hop", n: "生日氣球", say: ["昨天的氣球還沒收，捨不得。", "輕輕一碰，氣球就晃了起來。", "派對散場了，氣球還留著一點餘味。"] },
     vdrose: { an: "shake", n: "玫瑰", say: ["一朵紅玫瑰，送給最喜歡的你。", "玫瑰的香味淡淡的，好像春天來了。"] },
+    vdmail: { an: "shake", n: "郵筒", say: ["郵筒肚子裡，好像有信在等著寄出。", "投進去的心意，一定會寄到。"] },
     vdletter: { an: "hop", n: "情書", say: ["信封上蓋著愛心封印，不知道是寫給誰的。", "拆開看看吧，裡面寫著滿滿的心意。"] },
     bdgift: { an: "hop", n: "生日禮物", say: ["是給壽星的，裡面是什麼呢？", "包裝得好漂亮，不知道裝了什麼。", "七個人一起挑的禮物，藏不住心意。"] },
     prbottle: { an: "hop", n: "水壺和毛巾", say: ["練舞練到口渴，先喝口水補充體力。", "毛巾搭在水壺上，等一下還要擦汗。", "多喝水，七個人一起跳才不會累倒。"] },
@@ -1126,7 +1166,7 @@
   }
   /* 小人主動說話時頭上冒出的愛心泡泡（跟時鐘泡泡同位置；文字在房間下方那一行） */
   /* 小人和物品互動時的姿勢：up＝抬頭看／搖高處的東西，lw＝彎身靠近 */
-  var UPS = { tube: 1, tubeR: 1, decal: 1, peek: 1 }, LWS = { cab: 1, water: 1, rose: 1 };
+  var UPS = { tube: 1, tubeR: 1, decal: 1, peek: 1 }, LWS = { cab: 1, water: 1, rose: 1, write: 1 };
   var HEART = ["0110110", "1111111", "1111111", "0111110", "0011100", "0001000"];
   function talkBub(k) {
     var D = "#062a6e", h = "";
@@ -1212,16 +1252,20 @@
       '<g class="halo">' + R(-2, -2, 9, 8, "#b794ff", 0.18) + "</g>" + R(0, 0, 5, 4, "#9d7be8") + R(1, 1, 2, 1, "#d9c9ff") + R(1, 4, 3, 1, "#7b4fd6") + R(1, 5, 3, 7, "#444") + R(0, 12, 5, 2, "#222") +
       R(2, 8, 1, 1, "#2dbf8f") + "</g>";
   }
-  var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt() + lightStickArt();
+  /* 寫情書時小人手上的信紙和筆（.wr 才顯示，筆尖會左右抖） */
+  function paperArt() {
+    return '<g class="rmwr" transform="translate(19,12)">' + R(0, 2, 8, 9, "#fff") + R(0, 2, 8, 1, "#e0b8c8") + R(1, 5, 5, 1, "#e0b8c8") + R(1, 7, 4, 1, "#e0b8c8") + R(1, 9, 5, 1, "#e0b8c8") + '<g class="rpen">' + R(6, 0, 1, 5, "#e0457b") + R(6, 5, 1, 1, "#555") + "</g></g>";
+  }
+  var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt() + lightStickArt() + paperArt();
 
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" || S.wst === "bdg" || S.wst === "bdb" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : S.wst === "talk" || S.wst === "letter" ? " tk pz" : S.wst === "tubeR" ? " tk up pz" : S.wst === "lamp" ? " pz" : S.wst === "lread" ? " rd pz" : UPS[S.wst] ? " up pz" : LWS[S.wst] ? " lw pz" : "") + (tourKind() === "today" ? " ls" : "");
+    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" || S.wst === "bdg" || S.wst === "bdb" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : S.wst === "talk" || S.wst === "letter" || S.wst === "mail" ? " tk pz" : S.wst === "tubeR" ? " tk up pz" : S.wst === "lamp" ? " pz" : S.wst === "lread" ? " rd pz" : UPS[S.wst] ? " up pz" : LWS[S.wst] ? " lw pz" : "") + (tourKind() === "today" ? " ls" : "");
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
-      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g>" + '<g class="rmtk">' + (S.wst === "talk" || S.wst === "letter" ? talkBub() : S.wst === "tubeR" ? talkBub("!") : "") + "</g></g></g>";
+      R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g>" + '<g class="rmtk">' + (S.wst === "talk" || S.wst === "letter" || S.wst === "mail" ? talkBub() : S.wst === "tubeR" ? talkBub("!") : "") + "</g></g></g>";
   }
 
   /* 情人節的愛心燈串：兩條下垂的線掛滿小燈，奇偶兩組交替閃（減少動態時全亮不閃），夜晚多一圈光暈 */
@@ -1473,6 +1517,7 @@
     "@media(prefers-reduced-motion:reduce){.rmpx s{transition:none}}" +
     ".rnw{pointer-events:none;animation:rmblink 1s steps(1) infinite}.rmnw{font-style:normal;font-size:10px;font-weight:800;padding:1px 4px;background:var(--gold);color:var(--dark)}" +
     "@media(prefers-reduced-motion:reduce){.rnw{animation:none}}" +
+    "#rmng.wk .rmbw{animation:rmbob .5s steps(1) infinite}" +
     ".rmwk{cursor:pointer}.rmwk:focus,.rmwk:focus-visible{outline:none}.rmnm{cursor:pointer}.rmnm:focus,.rmnm:focus-visible{outline:none}.rmbw{transform-box:fill-box;transform-origin:50% 100%;animation:rmbow 1.3s steps(1,end) infinite}@keyframes rmbow{0%{transform:translateY(0) scaleY(1)}40%{transform:translateY(1.5px) scaleY(.82)}70%{transform:translateY(0) scaleY(1)}100%{transform:translateY(0) scaleY(1)}}@media(prefers-reduced-motion:reduce){.rmbw{animation:none}}.rmfx{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%}.rmfx:focus,.rmfx:focus-visible{outline:none}" +
     ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
     ".pz .rmwb{animation:none}.slp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(9deg)}" +
@@ -1486,6 +1531,8 @@
     ".rcl{animation:rmblink 1s steps(1) infinite}@keyframes rmblink{50%{opacity:0}}" +
     ".rbal{animation:rmbal 2.4s steps(4) infinite alternate}.rbal.d1{animation-delay:-.8s}.rbal.d2{animation-delay:-1.6s}@keyframes rmbal{0%{transform:translateY(0)}100%{transform:translateY(-2px)}}" +
     ".rls{display:none;pointer-events:none}.ls .rls{display:block}" +
+    ".rmwr{display:none;pointer-events:none}.wr .rmwr{display:block}.rpen{animation:rmpen .5s steps(2) infinite}@keyframes rmpen{0%{transform:translate(0,0)}50%{transform:translate(-2px,1px)}}@media(prefers-reduced-motion:reduce){.rpen{animation:none}}" +
+    ".rmml .rmfu{display:none}.rmml.up .rmfu{display:block}.rmml.up .rmfd{display:none}" +
     ".rpb{display:none;pointer-events:none}.rpb.go{display:block}.rpb.go .rpbp{animation:rpbk 1.3s steps(8) forwards}@keyframes rpbk{0%{opacity:1;transform:translate(0,0)}60%{opacity:1;transform:translate(var(--dx),var(--dy))}100%{opacity:0;transform:translate(calc(var(--dx) * 1.2),calc(var(--dy) + 22px))}}" +
     ".pp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateX(1px) rotate(7deg)}" +
     ".rcb{display:none;pointer-events:none}.bl .rcb{display:block}.rfo{display:none}.bo .rflm{display:none}.bo .rfo{display:block}" +
@@ -1551,6 +1598,7 @@
   function open() {
     if (document.getElementById("rmo")) return;
     opener = document.activeElement;
+    vdChoc = 6; vdMailUp = false; vdLetterN = 0;
     var bs = getBs(), L = bs.L, st = bs.st;
     /* ?preview=room2all：只在這次開啟，把練習室的物品全部當成已獲得（複製一份，不動 badgeSync 的資料） */
     var PALL = ROOMS.some(function (r) { return r.pvAll; });
@@ -1781,7 +1829,7 @@
     function ngSync() {
       var g = o.querySelector(".rmwx"), ng = o.querySelector("#rmng");
       if (S.ngA) {
-        if (!ng) { var sv = o.querySelector("#rmsv"); if (sv) sv.insertAdjacentHTML("beforeend", ngHtml()); }
+        if (!ng) { var sv = o.querySelector("#rmsv"); if (sv) sv.insertAdjacentHTML("beforeend", ngHtml(seasonKind() === "vd" ? S.ngx : null)); }
         if (g) g.setAttribute("visibility", "hidden");
       } else {
         if (ng) ng.remove();
@@ -1790,13 +1838,17 @@
     }
     function ngStart(now) {
       if (S.ngA || !ROOMS[S.rm].ng) return;
-      S.ngA = now + 6;
-      S.ngNext = S.ngA + 25 + Math.random() * 20;
+      var vdg = seasonKind() === "vd";
+      /* 情人節：七個人從左邊慢慢走進來、排好比愛心鞠躬 6 秒、再往右邊慢慢走出去（跟練習室、6/13 一樣）；新年維持原地拜年 6 秒 */
+      S.ngx = WN.map(function (n, i) { return reduceM ? 8 + i * 21 : -24 - i * 12; });
+      S.ngP = vdg ? (reduceM ? "hold" : "in") : "";
+      S.ngA = vdg && !reduceM ? 1e12 : now + 6;
+      S.ngNext = vdg && !reduceM ? now + 1e9 : S.ngA + 25 + Math.random() * 20;
       var cap = document.getElementById("rmcap");
       if (cap) cap.innerHTML = seasonKind() === "vd" ? "<b>" + esc(t("七個人一起送愛心！")) + "</b><br>" + esc(t("情人節快樂，愛心送給每一位 ARMY。")) : "<b>" + esc(t("七個人一起拜年！")) + "</b><br>" + esc(t("新年快樂，今年也請多多指教。"));
-      S.capK = ""; S.cph = now + 6;
+      S.capK = ""; S.cph = now + (vdg && !reduceM ? 16 : 6);
       ngSync();
-      if (reduceM) setTimeout(function () { S.ngA = 0; ngSync(); }, 6000);
+      if (reduceM) setTimeout(function () { S.ngA = 0; S.ngP = ""; ngSync(); }, 6000);
     }
     function ngSay(i) {
       var L = seasonKind() === "vd" ? ["情人節快樂！", "愛心送給你！", "今天也要一起幸福！"] : ["新年快樂！", "恭喜發財！", "新年也要一起應援！"], cap = document.getElementById("rmcap");
@@ -1812,8 +1864,27 @@
       if (!f) return;
       popFx(g);
       var cap = document.getElementById("rmcap");
-      if (cap) cap.innerHTML = "<b>" + esc(t(f.n)) + "</b><br>" + esc(t(f.say[Math.floor(Math.random() * f.say.length)]));
+      var sy = g.getAttribute("data-k") === "vdchoc" && vdChoc <= 0 ? CAPS.chocE : f.say;
+      if (cap) cap.innerHTML = "<b>" + esc(t(f.n)) + "</b><br>" + esc(t(sy[Math.floor(Math.random() * sy.length)]));
       S.capK = ""; S.cph = performance.now() / 1000 + 5;
+    }
+    /* 小人偷吃一顆：盒子裡最後那顆消失 */
+    function chocEat() {
+      if (vdChoc <= 0) return;
+      vdChoc--;
+      var e = o.querySelector('.rcp[data-i="' + vdChoc + '"]');
+      if (e) e.remove();
+    }
+    /* 信寄出去了：旗子升起（投信那一刻就升了），地板上的情書換成新的一封 */
+    function mailDone() {
+      vdMailUp = true; vdLetterN++;
+      var ml = o.querySelector(".rmml"), lg = o.querySelector('.rmfx[data-k="vdletter"]');
+      if (ml) ml.classList.add("up");
+      if (lg) {
+        var ol = lg.querySelector(".rlt");
+        lg.insertAdjacentHTML("beforeend", letterArt(vdLetterN, 138));
+        if (ol) ol.remove();
+      }
     }
     function popK(k) {
       var it = ALL.filter(function (x) { return x.k === k; })[0], gg = o.querySelector('.rmi[data-k="' + k + '"]');
@@ -1920,7 +1991,10 @@
       else if (w === "bdg") { S.wuntil = now + 2.8; popFxK("bdgift"); }
       else if (w === "candy") { S.wuntil = now + 2.8; popFxK("hwcandy"); }
       else if (w === "broom") { S.wuntil = now + 3; popFxK("hwbroom"); }
-      else if (w === "choc") { S.wuntil = now + 3; S.wd = -1; popFxK("vdchoc"); }
+      else if (w === "choc" || w === "chocL") { S.wuntil = now + 3; S.wd = -1; S.wchc = now + 1.2; popFxK("vdchoc"); }
+      else if (w === "chocE") { S.wuntil = now + 2.6; S.wd = -1; popFxK("vdchoc"); }
+      else if (w === "write") { S.wuntil = now + 3.4; S.wd = 1; popFxK("vdletter"); }
+      else if (w === "mail") { S.wuntil = now + 2.8; S.wd = 1; S.wmd = now + 1.2; var mb = o.querySelector(".rmtk"); if (mb) mb.innerHTML = talkBub(); }
       else if (w === "rose") { S.wuntil = now + 3; S.wd = 1; popFxK("vdrose"); }
       else if (w === "letter") { S.wuntil = now + 3.6; S.wd = 1; popFxK("vdletter"); var lb2 = o.querySelector(".rmtk"); if (lb2) lb2.innerHTML = talkBub(); }
       else if (w === "cookie") { S.wuntil = now + 3.2; S.wd = -1; popFxK("xcookie"); }
@@ -2104,6 +2178,26 @@
       }
       if (S.ngA && now >= S.ngA) S.ngA = 0;
       ngSync();
+      /* 情人節七人送愛心的動線：in（走進來）→ hold（站好鞠躬 6 秒）→ out（往右走出去）→ 結束後單人回來 */
+      if (S.ngA && S.ngP && S.ngx) {
+        var nok = true, nk, nt, ngr = o.querySelector("#rmng"), nmm;
+        if (S.ngP === "in") {
+          for (nk = 0; nk < 7; nk++) { nt = 8 + nk * 21; if (S.ngx[nk] < nt) { S.ngx[nk] = Math.min(nt, S.ngx[nk] + 40 * dt); if (S.ngx[nk] < nt) nok = false; } }
+          if (nok) { S.ngP = "hold"; S.ngT = now; }
+        } else if (S.ngP === "hold") {
+          if (now - S.ngT >= 6) S.ngP = "out";
+        } else {
+          for (nk = 0; nk < 7; nk++) { S.ngx[nk] += 40 * dt; if (S.ngx[nk] < 162) nok = false; }
+          if (nok) { S.ngA = 0; S.ngP = ""; S.ngNext = now + 25 + Math.random() * 20; }
+        }
+        if (ngr) {
+          ngr.classList.toggle("wk", S.ngP !== "hold");
+          [].forEach.call(ngr.querySelectorAll(".rmnm"), function (e) {
+            nmm = +e.getAttribute("data-i");
+            e.setAttribute("transform", "translate(" + S.ngx[nmm].toFixed(2) + "," + (73 + Math.abs(nmm - 3) * 1.5).toFixed(1) + ")");
+          });
+        }
+      }
       /* 6/13 小窩 100%：七人走進來 → 排好慶祝（放三次紙花）→ 走出右邊 → 只剩單人 */
       var g7 = o.querySelector("#rmg7"), g7on = !!(g7 && S.g7 && S.g7 !== "done");
       if (g7) {
@@ -2145,7 +2239,7 @@
           else if (now >= S.wjn) { S.wju = now + 1.6 + Math.random() * 1.2; S.wjn = S.wju + 8 + Math.random() * 12; }
           S.wx += S.wd * SPD * (now < S.wju ? 2.2 : 1) * dt;
           S.wwalk += dt;
-          if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isFest() && qok && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now);
+          if (S.wx >= 112 && S.wd > 0) { S.wx = 112; S.wd = -1; if (isFest() && qok && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now);
             else if (tourKind() === "today" && qok && now >= (S.wfc || 0) && Math.random() < 0.5) { S.wst = "out"; S.wot = 0; S.wd = 1; S.wuntil = 1e12; S.wfc = now + 30; }
             /* 走到右端：看水晶球、七人壁貼 */
             if (S.wst === "walk" && qok && now >= (S.wif || 0)) {
@@ -2191,8 +2285,8 @@
           /* 演唱會前一天／當天：經過海報前（小人中心對到海報 x≈72）有機會停下來抬頭看，看完繼續往原方向走 */
           if (S.wst === "walk" && tourKind() && !seasonKind() && S.st["f-1"] && qok && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
           var sk2 = seasonKind();
-          if (S.wst === "walk" && sk2 === "vd" && qok && now >= (S.wfc || 0) && ((px < 42 && S.wx >= 42) || (px > 42 && S.wx <= 42)) && Math.random() < 0.3) { S.wx = 42; S.wfc = now + 10; enter("choc", now); }
-          if (S.wst === "walk" && sk2 === "vd" && S.wd > 0 && px < 104 && S.wx >= 104 && qok && now >= (S.wfc || 0) && Math.random() < 0.6) { S.wx = 104; S.wfc = now + 10; enter(Math.random() < 0.5 ? "rose" : "letter", now); }
+          if (S.wst === "walk" && sk2 === "vd" && qok && now >= (S.wfc || 0) && ((px < 42 && S.wx >= 42) || (px > 42 && S.wx <= 42)) && Math.random() < 0.3) { S.wx = 42; S.wfc = now + 10; enter(vdChoc > 1 ? "choc" : vdChoc === 1 ? "chocL" : "chocE", now); }
+          if (S.wst === "walk" && sk2 === "vd" && S.wd > 0 && px < 104 && S.wx >= 104 && qok && now >= (S.wfc || 0) && Math.random() < 0.6) { S.wx = 104; S.wfc = now + 10; var rv = Math.random(); enter(rv < 0.34 ? "rose" : rv < 0.67 ? "letter" : "write", now); }
           if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && qok && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
             else if (((px < 48 && S.wx >= 48) || (px > 48 && S.wx <= 48)) && Math.random() < 0.2) { S.wx = 48; S.wfc = now + 10; enter(sk2 === "ny" ? "ingot" : "cookie", now); }
@@ -2224,16 +2318,28 @@
           }
           if (S.wst === "tubeR" && !S.wtbj && now - S.wtbs > 1.6) { S.wtbj = 1; popK("tube"); }
           if (S.wst === "lamp") lampStep(now);
+          if ((S.wst === "choc" || S.wst === "chocL") && S.wchc && now >= S.wchc) { S.wchc = 0; chocEat(); }
+          if (S.wst === "mailgo") {
+            var mdx = 124 - S.wx, mst = SPD * 1.4 * dt;
+            if (Math.abs(mdx) <= mst) { S.wx = 124; S.wd = 1; enter("mail", now); } else { S.wd = mdx > 0 ? 1 : -1; S.wx += S.wd * mst; }
+          }
+          if (S.wst === "mail" && S.wmd && now >= S.wmd) {
+            S.wmd = 0; vdMailUp = true; popFxK("vdmail");
+            var mfl = o.querySelector(".rmml");
+            if (mfl) mfl.classList.add("up");
+          }
+          if (S.wst === "write" && now >= S.wuntil) { S.wst = "mailgo"; S.wuntil = 1e12; }
           if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
           if (now >= S.wuntil) {
             if (S.wst === "look" || S.wst === "read" || S.wst === "broom") S.wd = 1;
             if (S.wst === "pop") S.wd = -1;
             /* 打瞌睡不算互動：夜晚每走 8 秒就會睡一覺，如果睡醒也進安靜期，夜晚就永遠輪不到任何互動 */
-            var wasSlp = S.wst === "sleep";
+            var wasSlp = S.wst === "sleep", wasMail = S.wst === "mail";
             S.wst = "walk";
             S.wtt = 0;
             S.wtr = 0;
             S.wcd = now + 6; if (!wasSlp) S.wq = now + QMIN + Math.random() * QSPAN;
+            if (wasMail) { S.wd = -1; mailDone(); }
           }
         }
         if (S.wj > 0) {
@@ -2242,13 +2348,14 @@
         }
         capSt(now, S.wst === "walk" ? (now < S.wju ? "run" : "walk") : (S.wst === "cal" && now < S.wtr) ? "tear" : S.wst === "out" && S.wot === 2 ? "back" : S.wst === "lamp" ? (S.wlK || "loff") : S.wst);
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy.toFixed(2) + ")");
-        g.classList.toggle("pz", S.wst !== "walk" && S.wst !== "out");
+        g.classList.toggle("pz", S.wst !== "walk" && S.wst !== "out" && S.wst !== "mailgo");
+        g.classList.toggle("wr", S.wst === "write" || (S.wst === "mail" && !!S.wmd));
         if (S.wst === "out" && S.wot === 1) g.setAttribute("display", "none"); else g.removeAttribute("display");
         g.classList.toggle("slp", S.wst === "sleep" || (S.wst === "lamp" && S.wlK === "lsl"));
         g.classList.toggle("rd", S.wst === "read" || S.wst === "lread");
         g.classList.toggle("cu", S.wst === "cal");
         g.classList.toggle("ck", S.wst === "clk");
-        g.classList.toggle("tk", S.wst === "talk" || S.wst === "tubeR" || S.wst === "letter");
+        g.classList.toggle("tk", S.wst === "talk" || S.wst === "tubeR" || S.wst === "letter" || (S.wst === "mail" && !S.wmd));
         g.classList.toggle("up", !!UPS[S.wst] || (S.wst === "lamp" && (S.wlK === "loff" || S.wlK === "lon")));
         g.classList.toggle("lw", !!LWS[S.wst]);
         g.classList.toggle("tr", S.wst === "cal" && now < S.wtr);
