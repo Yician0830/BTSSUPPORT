@@ -118,6 +118,13 @@
     "關閉": ["Close", "닫기", "閉じる"],
     "今天是 6/13，出道紀念日！": ["It's 6/13 — debut anniversary!", "오늘은 6/13, 데뷔 기념일!", "今日は6/13、デビュー記念日！"],
     "小窩也掛上彩旗了。": ["The room put up bunting too.", "방에도 깃발을 달았어요.", "お部屋にもガーランドを飾りました。"],
+    "出道紀念日剛過！": ["The debut anniversary just passed!", "데뷔 기념일이 지나갔어요!", "デビュー記念日が過ぎました！"],
+    "小窩的彩旗還沒收，捨不得。": ["The flags in the room are still up — hard to take them down.", "방의 깃발을 아직 못 치웠어요. 아쉬워서요.", "お部屋の旗はまだそのまま。名残惜しくて。"],
+    "練習室的彩旗還沒收，捨不得。": ["The flags in the practice room are still up — hard to take them down.", "연습실의 깃발을 아직 못 치웠어요. 아쉬워서요.", "練習室の旗はまだそのまま。名残惜しくて。"],
+    "紀念日週": ["Anniversary week", "기념일 주간", "記念日ウィーク"],
+    "出道紀念日快到了！": ["The debut anniversary is almost here!", "데뷔 기념일이 다가와요!", "デビュー記念日がもうすぐ！"],
+    "小窩先掛上彩旗了。": ["Flags are already up in the room.", "방에 깃발을 먼저 달았어요.", "お部屋に旗を先に飾りました。"],
+    "練習室先掛上彩旗了。": ["Flags are already up in the practice room.", "연습실에 깃발을 먼저 달았어요.", "練習室に旗を先に飾りました。"],
     "限定布置": ["Limited decor", "한정 장식", "限定デコ"],
     "生日當天": ["Birthday", "생일 당일", "誕生日当日"],
     "生日週": ["Birthday week", "생일 주간", "誕生日ウィーク"],
@@ -333,7 +340,7 @@
       if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
       else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      if (v === "613" || v === "613w" || v === "613a" || v === "tour" || v === "eve" || v === "room2all" || v === "hw" || v === "xmas" || v === "ny" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -440,6 +447,20 @@
     if (d.getMonth() === 5 && d.getDate() === 13) return true;
     return PV === "613";
   }
+  /* 紀念日週：6/13 前 ANNIV_LEAD 天、後 ANNIV_TAIL 天（都不含 6/13 當天）掛著彩旗；字旗、蛋糕、七人慶祝等仍然只有 6/13 當天才有。
+     回傳 0＝不是紀念日週、1＝6/13 之前、2＝6/13 之後。ANNIV_LEAD／ANNIV_TAIL 想調整只改這兩個數字（現在是 6/6–6/15）。
+     預覽：網址加 ?preview=613w（之前）或 ?preview=613a（之後） */
+  var ANNIV_LEAD = 7, ANNIV_TAIL = 2;
+  function annivWeek() {
+    if (isAnniv()) return 0;
+    if (PV === "613w") return 1;
+    if (PV === "613a") return 2;
+    var d = new Date(), df = 13 - d.getDate();
+    if (d.getMonth() !== 5) return 0;
+    if (df >= 1 && df <= ANNIV_LEAD) return 1;
+    if (df < 0 && -df <= ANNIV_TAIL) return 2;
+    return 0;
+  }
   function isFest() { return isAnniv() || !!bdName(); }
   /* 今天生日的成員（MEMBERS 是 app.js 的成員生日表）；預覽：網址加 ?preview=bd-Jimin */
   function bdName() {
@@ -474,6 +495,7 @@
     if (isAnniv()) return ["出道紀念日", ""];
     if ((n = bdName())) return ["生日當天", n];
     if ((n = bdWeekName())) return ["生日週", n];
+    if (annivWeek()) return ["紀念日週", ""];
     if ((k = seasonKind())) return [k === "hw" ? "萬聖節" : k === "xmas" ? "聖誕節" : "新年", ""];
     if ((k = tourKind())) return [k === "today" ? "演唱會當天" : "演唱會前夕", ""];
     if ((n = bdAfterName())) return ["生日隔天", n];
@@ -892,11 +914,11 @@
   var ROOMS = [
     { id: "nest", chip: "第 1 間", name: "彩蛋小窩", items: ITEMS, scene: scene, gate: null, lazy: false, wmax: 112, ng: true, alt: false,
       pct: "小窩完成度", popTitle: "第一個房間完成了！",
-      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", bw: "小窩先掛上彩旗和氣球了。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
+      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", bw: "小窩先掛上彩旗和氣球了。", aw: "小窩先掛上彩旗了。", ax: "小窩的彩旗還沒收，捨不得。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
     { id: "prac", chip: "第 2 間", name: "練習室", items: ITEMS2, scene: scene2, gate: "nest", lazy: true, wmax: 108, ng: false, alt: true,
       pub: ROOM2_PUBLIC, pv: ROOM2_PV, pvAll: P2ALL, pvStart: "room2",
       pct: "練習室完成度",
-      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
+      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", aw: "練習室先掛上彩旗了。", ax: "練習室的彩旗還沒收，捨不得。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
       lock: { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" },
       unlocked: "練習室開放了，快去看看。" }
   ];
@@ -1097,6 +1119,7 @@
     var bn = bdName(), bw = bdWeekName(), ba = bdAfterName();
     if (isAnniv() || bn) s += buntArt(isAnniv() ? "" : bn);
     else if (bw) s += buntArt(bw);
+    else if (annivWeek()) s += buntArt("");
     else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
     else if (tourKind()) s += buntArt("", TOURPAL);
     s += win(S.night, full);
@@ -1199,6 +1222,7 @@
     s += R(0, 64, 160, 3, P.bs);
     if (fest) s += buntArt(isAnniv() ? "" : bn);
     else if (bw) s += buntArt(bw);
+    else if (annivWeek()) s += buntArt("");
     else if (seasonKind()) s += buntArt("", SEAS[seasonKind()].pal);
     else if (tourKind()) s += buntArt("", TOURPAL);
     /* 鏡牆：銀框、鏡面、兩道斜斜的反光 */
@@ -1490,7 +1514,7 @@
         h += lockedRoom(S.rm, S.st);
       } else if (S.tab === "room") {
         h += RM.scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
+          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : bdWeekName() ? "<b>" + esc(bdWeekName()) + "</b> <span>" + esc(t("生日快到了！")) + "</span><br>" + esc(t(RM.cap.bw)) : annivWeek() ? "<b>" + esc(t(annivWeek() === 2 ? "出道紀念日剛過！" : "出道紀念日快到了！")) + "</b><br>" + esc(t(annivWeek() === 2 ? RM.cap.ax : RM.cap.aw)) : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : bdAfterName() ? "<b>" + esc(bdAfterName()) + "</b> <span>" + esc(t("昨天生日！")) + "</span><br>" + esc(t("昨天的派對還有一點餘味。")) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
           '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>' + RM.pct + "</span> <span>" + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
