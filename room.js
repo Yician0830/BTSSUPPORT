@@ -534,6 +534,22 @@
     if ((n = bdAfterName())) return ["生日隔天", n];
     return null;
   }
+  /* 限定布置的小圖示（12×12 像素，顯示在首頁入口按鈕右上角）。判斷順序跟 limTag() 一樣，兩邊要一起改 */
+  function limIcon() {
+    var n, k, c, G = "#2dbf8f", GD = "#1f9a72", s = "";
+    if (isAnniv()) s = R(5, 0, 2, 1, "#ffd23f") + R(4, 1, 4, 2, "#ff8fb3") + R(3, 3, 6, 2, "#fff") + R(2, 5, 8, 2, "#6fb7ff") + R(1, 7, 10, 1, "#ffd23f") + R(4, 9, 1, 1, "#e0457b") + R(8, 10, 1, 1, "#2dbf8f") + R(2, 11, 1, 1, "#ffd23f");
+    else if ((n = bdName() || bdWeekName() || bdAfterName())) { c = MC[WN.indexOf(n) % 7]; s = R(4, 0, 4, 1, c) + R(3, 1, 6, 5, c) + R(4, 6, 4, 1, c) + R(4, 2, 1, 1, "#fff") + R(5, 7, 2, 1, c) + R(6, 8, 1, 4, "#8b5a2b"); }
+    else if (annivWeek()) s = R(0, 2, 12, 1, "#8b5a2b") + R(1, 3, 3, 1, MC[0]) + R(2, 4, 1, 1, MC[0]) + R(5, 3, 3, 1, MC[2]) + R(6, 4, 1, 1, MC[2]) + R(9, 3, 3, 1, MC[1]) + R(10, 4, 1, 1, MC[1]) + R(0, 6, 12, 1, "#8b5a2b") + R(1, 7, 3, 1, MC[3]) + R(2, 8, 1, 1, MC[3]) + R(5, 7, 3, 1, MC[4]) + R(6, 8, 1, 1, MC[4]) + R(9, 7, 3, 1, MC[5]) + R(10, 8, 1, 1, MC[5]);
+    else if ((k = seasonKind())) {
+      if (k === "hw") s = R(5, 1, 2, 2, G) + R(2, 3, 8, 1, "#ff8a1f") + R(1, 4, 10, 6, "#ff8a1f") + R(2, 10, 8, 1, "#ff8a1f") + R(5, 4, 1, 6, "#d9610f") + R(3, 5, 2, 2, "#2b2f3a") + R(7, 5, 2, 2, "#2b2f3a") + R(4, 8, 4, 1, "#ffd23f");
+      else if (k === "xmas") s = R(5, 0, 2, 1, "#ffd23f") + R(5, 1, 2, 2, G) + R(4, 3, 4, 2, G) + R(3, 5, 6, 2, G) + R(2, 7, 8, 2, G) + R(8, 3, 1, 2, GD) + R(9, 5, 1, 2, GD) + R(10, 7, 1, 2, GD) + R(5, 9, 2, 2, "#8b5a2b") + R(5, 4, 1, 1, "#e0453a") + R(7, 6, 1, 1, "#ffd23f") + R(4, 7, 1, 1, "#6fb7ff") + R(6, 8, 1, 1, "#e0453a");
+      else if (k === "vd") s = vdHeart(3, 3, "#e0457b") + R(4, 3, 1, 1, "#ff8fb3");
+      else s = R(5, 0, 2, 1, "#8b5a2b") + R(3, 1, 6, 1, "#ffd23f") + R(2, 2, 8, 6, "#e0453a") + R(5, 2, 1, 6, "#b02a20") + R(3, 3, 1, 1, "#ff8a7a") + R(3, 8, 6, 1, "#ffd23f") + R(5, 9, 2, 3, "#ffd23f");
+    }
+    else if (tourKind()) s = R(2, 0, 8, 7, "#b794ff", 0.3) + R(4, 0, 4, 5, "#b794ff") + R(5, 1, 2, 2, "#fff") + R(5, 5, 2, 5, "#444") + R(4, 10, 4, 2, "#222");
+    else if (isNye()) s = R(5, 0, 2, 12, "#ffd23f") + R(0, 5, 12, 2, "#ffd23f") + R(2, 2, 1, 1, "#ff8fb3") + R(9, 2, 1, 1, "#6fb7ff") + R(2, 9, 1, 1, "#6fb7ff") + R(9, 9, 1, 1, "#ff8fb3") + R(5, 5, 2, 2, "#fff");
+    return s ? '<svg viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">' + s + "</svg>" : "";
+  }
   /* 生日後一天：昨天是成員生日，今天只留沒收的氣球和一句收尾文字（沒有彩旗、蛋糕、禮物）。預覽：網址加 ?preview=bda-Jimin */
   function bdAfterName() {
     if (isAnniv() || bdName() || bdWeekName()) return "";
@@ -1335,6 +1351,13 @@
       if (t.__h !== hh) { t.__h = hh; t.innerHTML = hh; }
       /* 最外面的按鈕：有限定布置時，完成度下方多一條「限定布置」小標籤；沒有就移除 */
       var lt = limTag(), lb = et.querySelector(".rmlb");
+      var ci = b.querySelector(".rmli"), ih = lt ? limIcon() : "";
+      if (!ih) { if (ci) ci.remove(); }
+      else {
+        if (!ci) { ci = document.createElement("span"); ci.className = "rmli"; ci.setAttribute("aria-hidden", "true"); b.appendChild(ci); }
+        if (ci.__h !== ih) { ci.__h = ih; ci.innerHTML = ih; }
+        ci.title = lt[0] + (lt[1] ? " " + lt[1] : "");
+      }
       if (!lt) { if (lb) lb.remove(); return; }
       if (!lb) { lb = document.createElement("em"); lb.className = "rmlb"; et.appendChild(lb); }
       var lh = '<span class="rmlc">限定布置</span> <span>' + lt[0] + "</span>" + (lt[1] ? " <b>" + esc(lt[1]) + "</b>" : "");
@@ -1421,7 +1444,7 @@
     ".rmtk{display:none;pointer-events:none}.tk .rmtk{display:block}.rth{transform-box:fill-box;transform-origin:50% 50%;animation:rmth .6s steps(1) infinite}@keyframes rmth{0%{transform:scale(1)}50%{transform:scale(1.2)}}@media(prefers-reduced-motion:reduce){.rth{animation:none}}" +
     "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
     "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}" +
-    ".rmlb{display:block;width:min(240px,100%);box-sizing:border-box;margin-top:6px;font-style:normal;font-size:12px;font-weight:800;line-height:1.5}.rmlc{background:#7b4fd6;color:#fff;padding:1px 6px;font-size:11px;letter-spacing:.5px}.rmlb b{font-weight:800}";
+    "#roomBtn{position:relative}.rmli{position:absolute;top:10px;right:10px;width:34px;height:34px;display:block;pointer-events:none}.rmli svg{display:block;width:100%;height:100%;image-rendering:pixelated}.entry .et em.rmlb{background:none;border:0;padding:0;box-shadow:none}.rmlb{display:block;width:min(240px,100%);box-sizing:border-box;margin-top:6px;font-style:normal;font-size:12px;font-weight:800;line-height:1.5}.rmlc{background:#7b4fd6;color:#fff;padding:1px 6px;font-size:11px;letter-spacing:.5px}.rmlb b{font-weight:800}";
   document.head.appendChild(css);
 
   /* ===== 多房間：S.rm 是 ROOMS 的索引（0＝彩蛋小窩，1＝練習室…）。
