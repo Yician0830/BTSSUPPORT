@@ -62,6 +62,11 @@
     "夜深了，小窩陪你一起熬夜。": ["It's late — your room is staying up with you.", "밤이 깊었어요. 방이 함께 밤을 새워 줄게요.", "夜も更けました。お部屋も一緒に夜更かしするよ。"],
     "檯燈亮了。": ["The lamp is on.", "스탠드가 켜졌어요.", "ライトがつきました。"],
     "檯燈關了。": ["The lamp is off.", "스탠드가 꺼졌어요.", "ライトが消えました。"],
+    "6/13 的合照，七個人都戴上了派對帽。": ["The 6/13 group photo — all seven in party hats.", "6/13 단체 사진, 일곱 명 모두 파티 모자를 썼어요.", "6/13の集合写真。7人みんなパーティー帽子。"],
+    "七個人一起來慶祝了！出道紀念日快樂！": ["All seven came to celebrate — happy debut anniversary!", "일곱 명이 함께 축하하러 왔어요. 데뷔 기념일 축하해요!", "7人そろってお祝いに来た。デビュー記念日おめでとう！"],
+    "派對告一段落，大家先離開。": ["The party's winding down — everyone heads out.", "파티가 끝나서 다들 나가요.", "パーティーは一区切り。みんなで退室。"],
+    "拉開彩帶砲——砰！紙花滿天飛。": ["Pulling the party popper — pop! Confetti everywhere.", "파티 폭죽을 당겼어요. 펑! 색종이가 날아요.", "クラッカーをパーン！紙吹雪が舞った。"],
+    "捧著小蛋糕許願，然後一口氣吹熄蠟燭。": ["Holding a little cake, making a wish, then blowing out the candle.", "작은 케이크를 들고 소원을 빌고, 촛불을 후— 불어요.", "ミニケーキを持って願いごと、ふーっとろうそくを吹き消す。"],
     "七個人，一張合照。": ["Seven of them, one photo.", "일곱 명, 한 장의 단체 사진.", "7人、1枚の集合写真。"],
     "6/13 的蛋糕，出道紀念日快樂！": ["A 6/13 cake — happy debut anniversary!", "6/13 케이크, 데뷔 기념일 축하해요!", "6/13のケーキ。デビュー記念日おめでとう！"],
     "水晶球裡好像看到了……下一場的歌單？": ["I think I see something in the crystal ball... the next setlist?", "수정구 안에 뭔가 보이는 것 같아요… 다음 공연 세트리스트?", "水晶玉に何か見える……次のセットリスト？"],
@@ -171,6 +176,8 @@
   }
   /* 小人的動作 → 下方那行文字。每個動作有幾句，進入動作時隨機挑一句（第 1 句是「點一下換人」的提示，本命固定時不用） */
   var CAPS = {
+    blow: ["捧著小蛋糕許願，然後一口氣吹熄蠟燭。"],
+    pop: ["拉開彩帶砲——砰！紙花滿天飛。"],
     walk: ["在小窩裡散步，再點一下換下一位。", "慢慢晃來晃去，心情不錯。", "東看看西看看，巡視自己的小窩。"],
     run: ["突然想跑一下！", "小跑步中，小心別撞到家具。"],
     look: ["盯著球鞋看，好想出門走走。", "看著球鞋發呆，想起下一場應援。"],
@@ -260,6 +267,12 @@
   function artPhoto() {
     var s = R(0, 0, 12, 10, "#8b5a2b") + R(1, 1, 10, 8, "#bfe3ff");
     for (var i = 0; i < 7; i++) s += R(2 + i, 4, 1, 1, "#ffe0c2") + R(2 + i, 5, 1, 3, MC[i]);
+    return s;
+  }
+  /* 6/13 當天：合照相框換成七人戴著派對帽的版本（金框、粉色底、頭上一頂小帽、角落灑彩紙） */
+  function artPhoto613() {
+    var s = R(0, 0, 12, 10, "#ffd23f") + R(1, 1, 10, 8, "#ffe3ef") + R(2, 2, 1, 1, "#6fb7ff") + R(9, 1, 1, 1, "#ff8a5b") + R(6, 2, 1, 1, "#2dbf8f");
+    for (var i = 0; i < 7; i++) s += R(2 + i, 3, 1, 1, MC[(i + 3) % 7]) + R(2 + i, 4, 1, 1, "#ffe0c2") + R(2 + i, 5, 1, 3, MC[i]);
     return s;
   }
   function artTickets() {
@@ -467,6 +480,26 @@
     }
     return s;
   }
+  /* 「HAPPY BTS DAY」字母旗（只有 6/13 才有）：3×5 的像素字母，每個字母一面白色三角旗，旗面上的字用成員色；兩端高、中間垂下 */
+  var BFONT = {
+    H: ["101", "101", "111", "101", "101"], A: ["010", "101", "111", "101", "101"], P: ["110", "101", "110", "100", "100"],
+    Y: ["101", "101", "010", "010", "010"], B: ["110", "101", "110", "101", "110"], T: ["111", "010", "010", "010", "010"],
+    S: ["011", "100", "010", "001", "110"], D: ["110", "101", "101", "101", "110"]
+  };
+  function letterBanner(x0, y0) {
+    var txt = "HAPPY BTS DAY", W = 72, s = "", x, i, k = 0, cx = x0;
+    var sag = function (xx) { return y0 + Math.round(2 * Math.sin(Math.PI * (xx - x0) / W)); };
+    for (x = x0; x < x0 + W; x += 2) s += R(x, sag(x), 2, 1, "#8b5a2b");
+    for (i = 0; i < txt.length; i++) {
+      var ch = txt.charAt(i);
+      if (ch === " ") { cx += 3; continue; }
+      var y = sag(cx + 2) + 1, c = MC[k % 7] === "#ffd23f" ? "#e0a800" : MC[k % 7], f = BFONT[ch], r, q;
+      s += R(cx, y, 5, 6, "#fff") + R(cx + 1, y + 6, 3, 1, "#fff") + R(cx + 2, y + 7, 1, 1, "#fff") + R(cx, y, 5, 1, c);
+      for (r = 0; r < 5; r++) for (q = 0; q < 3; q++) if (f[r].charAt(q) === "1") s += R(cx + 1 + q, y + 1 + r, 1, 1, c);
+      cx += 6; k++;
+    }
+    return '<g pointer-events="none">' + s + "</g>";
+  }
   /* 彩紙：14 小片用 CSS 慢慢飄下來，畫在最上層、不擋點擊 */
   function confArt() {
     var s = '<g class="rcfs">';
@@ -507,7 +540,9 @@
       get art() { return seasonKind() === "ny" ? artCouplet() : artTickets(); } },
     { k: "moon", b: "h-nt", fb: "夜貓應援", hid: 1, n: "月亮貼紙", x: 136, y: 22, w: 12, h: 11, an: "bounce", say: "夜深了，小窩陪你一起熬夜。", art: artMoon() },
     { k: "lamp", b: "f-s3", fb: "連抽三天", n: "檯燈", x: 106, y: 36, w: 12, h: 16, an: "", say: "lamp", art: artLamp() },
-    { k: "photo", b: "h-egg2", fb: "合照時間", hid: 1, n: "合照相框", x: 122, y: 42, w: 12, h: 10, an: "bounce", say: "七個人，一張合照。", art: artPhoto() },
+    { k: "photo", b: "h-egg2", fb: "合照時間", hid: 1, n: "合照相框", x: 122, y: 42, w: 12, h: 10, an: "bounce",
+      get say() { return isAnniv() ? "6/13 的合照，七個人都戴上了派對帽。" : "七個人，一張合照。"; },
+      get art() { return isAnniv() ? artPhoto613() : artPhoto(); } },
     { k: "cake", b: "h-613", fb: "出道紀念日", hid: 1, n: "小蛋糕", x: 138, y: 43, w: 9, h: 9, an: "bounce", say: "6/13 的蛋糕，出道紀念日快樂！",
       art: R(3, 0, 1, 2, "#ffd23f") + R(1, 2, 7, 2, "#fff") + R(0, 4, 9, 4, "#ff8fb3") + R(0, 6, 9, 1, "#e0457b") + R(0, 8, 9, 1, "#9aa3c7") },
     { k: "ball", b: "r-1", fb: "初次預測", n: "水晶球", x: 148, y: 42, w: 10, h: 10, an: "glow", say: "水晶球裡好像看到了……下一場的歌單？",
@@ -628,9 +663,11 @@
       : R(64, 10, 32, 28, "#7cc4ff") + R(64, 10, 32, 8, "#9bd3ff") + R(70, 10, 3, 28, "#fff", 0.15) + R(84, 10, 3, 28, "#fff", 0.12) + R(75, 16, 1, 1, "#fff") + R(90, 20, 1, 1, "#fff") +
         '<g class="fish">' + R(68, 24, 4, 2, "#ff8a5b") + R(72, 23, 1, 4, "#ff8a5b") + R(67, 25, 1, 1, "#fff") + "</g>";
     s += R(64, 38, 32, 4, night ? "#3a4a7a" : "#f0d9a0") + R(66, 34, 1, 4, "#2dbf8f") + R(67, 33, 1, 3, "#2dbf8f") + R(92, 35, 1, 3, "#2dbf8f");
-    if (full) {
-      /* 煙火層：夾在天空和人影之間，用 clipPath 切在窗框內，內容由 tick 每幀換 */
+    if (full || (night && isAnniv())) {
+      /* 煙火層：夾在天空和人影之間，用 clipPath 切在窗框內，內容由 tick 每幀換（6/13 的夜晚不用集滿也會放） */
       s += '<clipPath id="rmwc"><rect x="64" y="10" width="32" height="28"/></clipPath><g id="rmfw" clip-path="url(#rmwc)"></g>';
+    }
+    if (full && !isAnniv()) {
       for (var i = 0; i < 7; i++) s += R(66 + i * 4, 32, 2, 2, night ? "#4a6bd0" : "#062a6e") + R(65 + i * 4, 34, 4, 4, night ? "#4a6bd0" : "#062a6e");
     }
     var fr = night ? "#9aa3c7" : "#ffffff";
@@ -699,14 +736,20 @@
     return '<g class="rmlit">' + sp(-3, 6, "") + sp(24, 2, "d1") + sp(25, 16, "d2") + "</g>";
   }
   var DUST = dustArt();
-  var PROPS = bkArt() + pgArt() + litArt();
+  /* 6/13：小人捧著小蛋糕許願（.bl），吹熄後（.bo）火焰消失、冒出幾縷煙 */
+  function cakeHeldArt() {
+    var smoke = function (x, y, d) { return '<g transform="translate(' + x + "," + y + ')"><g class="rdp ' + d + '">' + R(0, 0, 1, 2, "#d5dbe8") + "</g></g>"; };
+    return '<g class="rcb" transform="translate(9,17)">' + R(3, 0, 1, 2, "#ffd23f") + R(1, 2, 7, 2, "#fff") + R(0, 4, 9, 4, "#ff8fb3") + R(0, 6, 9, 1, "#e0457b") + R(0, 8, 9, 1, "#9aa3c7") +
+      '<g class="rflm">' + FLAME + '</g><g class="rfo">' + smoke(3, -3, "") + smoke(4, -5, "d1") + smoke(2, -4, "d2") + "</g></g>";
+  }
+  var PROPS = bkArt() + pgArt() + litArt() + cakeHeldArt();
 
   function walker(S) {
     var label = WN[S.mem] + (lang() === "zh" ? "，" : ", ") + t("散步的小人");
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : "";
+    var st = S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : "";
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
       R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
   }
@@ -733,7 +776,10 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "cake" && on && (isAnniv() || bn) ? FLAME : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    return s + festProp() + walker(S) + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
+    if (isAnniv()) s += letterBanner(52, 0);
+    var p7 = full && isAnniv();
+    if (p7 && !S.g7) { S.g7 = "in"; S.g7x = G7X.map(function (v, i) { return -24 - i * 12; }); S.g7t = 0; }
+    return s + festProp() + (isAnniv() ? popperArt(140, 80) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isAnniv() ? popBurstArt(143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 練習室的場景：鏡牆（小人的倒影）＋ 把杆 ＋ 木地板。小人的倒影只畫在鏡子裡（clip），100% 時七個人各有一個 ===== */
@@ -757,8 +803,25 @@
     return R(0, 0, 20, 1, c) + R(0, 13, 20, 1, c) + R(0, 0, 1, 14, c) + R(19, 0, 1, 14, c) + R(3, 10, 1, 1, "#ffd23f") + R(8, 11, 1, 1, "#ff8fb3") + R(16, 10, 1, 1, "#6fb7ff");
   }
   /* 6/13 當天：牆邊多一支彩帶砲（只是裝飾，不能點） */
-  function popperArt() {
-    return '<g transform="translate(10,80)">' + R(1, 4, 5, 5, "#ff8fb3") + R(0, 7, 7, 2, "#e0457b") + R(3, 1, 1, 1, MC[2]) + R(5, 0, 1, 1, MC[4]) + R(6, 2, 1, 1, MC[1]) + R(2, 2, 1, 1, MC[3]) + R(4, 3, 1, 1, MC[5]) + "</g>";
+  function popperArt(px, py) {
+    return '<g transform="translate(' + px + "," + py + ')">' + R(1, 4, 5, 5, "#ff8fb3") + R(0, 7, 7, 2, "#e0457b") + R(3, 1, 1, 1, MC[2]) + R(5, 0, 1, 1, MC[4]) + R(6, 2, 1, 1, MC[1]) + R(2, 2, 1, 1, MC[3]) + R(4, 3, 1, 1, MC[5]) + "</g>";
+  }
+  /* 拉彩帶砲的紙花：12 片從砲口往上、往兩邊噴開再落下；平常隱藏，tick 拉的瞬間加上 .go */
+  function popBurstArt(x, y, id) {
+    var s = '<g id="' + (id || "rpb") + '" class="rpb" transform="translate(' + x + "," + y + ')" pointer-events="none">';
+    for (var i = 0; i < 12; i++) s += '<g class="rpbp" style="--dx:' + ((i - 5.5) * (id ? 10 : 4.5)).toFixed(1) + "px;--dy:" + (-(16 + (i % 3) * 8 + (i % 2) * 4)) + 'px">' + (i % 2 ? R(0, 0, 1, 2, MC[i % 7]) : R(0, 0, 2, 1, MC[i % 7])) + "</g>";
+    return s + "</g>";
+  }
+  /* 6/13 小窩 100%：窗外不再是人影，七個人真的走進房間，排成一排戴著派對帽慶祝，之後一起走出右邊 */
+  var G7X = [12, 33, 55, 76, 98, 119, 141];
+  function party7(S) {
+    var s = '<g id="rmg7"' + (S.g7 === "done" ? ' display="none"' : "") + ' pointer-events="none">';
+    for (var i = 0; i < 7; i++) {
+      var x = S.g7x ? S.g7x[i] : -24 - i * 12;
+      s += '<g class="rmd7" data-i="' + i + '" transform="translate(' + x.toFixed(2) + ',70)"><g class="rmdb" style="animation-delay:-' + (i * 0.13).toFixed(2) + 's">' +
+        '<image href="' + esc(avUrl(WN[i])) + '" x="0" y="0" width="18" height="18" preserveAspectRatio="xMidYMax meet"/><g transform="translate(-1,3) scale(.75)">' + HAT2 + "</g></g></g>";
+    }
+    return s + "</g>";
   }
   function mirrorRefl(S, full) {
     var s = '<g clip-path="url(#rmcp)">', hideS = full && S.gp !== "away" && S.gp !== "enter";
@@ -809,14 +872,14 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "pboard" && on && bn ? bdBoardArt(bn) : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    if (isAnniv()) s += popperArt();
+    if (isAnniv()) s += popperArt(36, 80) + letterBanner(40, 21);
     s += festProp(true);
     if (full) {
       var wShow = S.gp === "away" || (S.gp === "enter" && S.wx < 168);
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
       s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
     } else s += walker(S);
-    return s + (fest ? confArt() : "") + snowArt() + "</svg>";
+    return s + (isAnniv() ? popBurstArt(39, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -905,6 +968,9 @@
     ".cu .rmwb,.ck .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(-1px) rotate(-7deg)}" +
     ".tr .rpg{display:block;animation:rmpg 1.4s steps(3) forwards}@keyframes rmpg{0%{transform:translate(0,0)}25%{transform:translate(-2px,14px)}50%{transform:translate(4px,28px)}75%{transform:translate(-1px,42px)}100%{transform:translate(8px,56px)}}" +
     ".rcl{animation:rmblink 1s steps(1) infinite}@keyframes rmblink{50%{opacity:0}}" +
+    ".rpb{display:none;pointer-events:none}.rpb.go{display:block}.rpb.go .rpbp{animation:rpbk 1.3s steps(8) forwards}@keyframes rpbk{0%{opacity:1;transform:translate(0,0)}60%{opacity:1;transform:translate(var(--dx),var(--dy))}100%{opacity:0;transform:translate(calc(var(--dx) * 1.2),calc(var(--dy) + 22px))}}" +
+    ".pp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateX(1px) rotate(7deg)}" +
+    ".rcb{display:none;pointer-events:none}.bl .rcb{display:block}.rfo{display:none}.bo .rflm{display:none}.bo .rfo{display:block}" +
     ".rmlt{display:none;pointer-events:none}.lon .rmlt{display:block}" +
     ".lit .rmwb{filter:brightness(1.2) sepia(.25)}.rmlit,.rdu{display:none;pointer-events:none}.lit .rmlit,.jg .rdu{display:block}" +
     ".rsp{animation:rmsp 1.2s steps(1) infinite}.rsp.d1{animation-delay:.4s}.rsp.d2{animation-delay:.8s}@keyframes rmsp{0%{opacity:1}50%{opacity:0}}" +
@@ -919,7 +985,7 @@
     ".rmdd{cursor:pointer}.rmdd:focus,.rmdd:focus-visible{outline:none}.rmdb{animation:rmbob .5s steps(1) infinite}" +
     ".rmrs{display:flex;gap:6px;margin-bottom:8px}.rmrs button{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
-    "@media(prefers-reduced-motion:reduce){.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
+    "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
     "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}";
   document.head.appendChild(css);
 
@@ -1237,6 +1303,14 @@
       }
       cp.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(tx);
     }
+    function popBurst(id) {
+      var b = o.querySelector("#" + (id || "rpb"));
+      if (!b) return;
+      b.classList.remove("go");
+      void b.getBoundingClientRect();
+      b.classList.add("go");
+      setTimeout(function () { b.classList.remove("go"); }, 1500);
+    }
     function enter(w, now) {
       S.wst = w;
       if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
@@ -1247,6 +1321,8 @@
       else if (w === "sock") { S.wuntil = now + 2.8; popFxK("xsock"); }
       else if (w === "hb") { S.wuntil = now + 2.8; popFxK("nyhb"); }
       else if (w === "ingot") { S.wuntil = now + 3; S.wd = -1; popFxK("nyingot"); }
+      else if (w === "pop") { S.wuntil = now + 2.8; S.wbl = now; S.wbj = 0; S.wd = 1; S.wfc = now + 12; }
+      else if (w === "blow") { S.wuntil = now + 4; S.wbl = now; S.wbj = 0; S.wfc = now + 14; }
       else if (w === "clk") {
         S.wuntil = now + 3.2;
         popK("clock");
@@ -1278,6 +1354,7 @@
             S.wd = 1; S.wx += SPD * 1.5 * dt;
           } else {
             if (!S.wdn) S.wdn = now + 7 + Math.random() * 8;
+            var px2 = S.wx;
             S.wx += S.wd * SPD * dt;
             S.wwalk += dt;
             if (S.wx >= 108) {
@@ -1285,17 +1362,24 @@
               if (S.st["p-game"] && Math.random() < 0.7) { S.wst = "dn"; S.wuntil = now + 3; popK("pspk"); }
             } else if (S.wx <= 6) {
               S.wx = 6; S.wd = 1;
-              if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
+              if (isAnniv() && now >= (S.wfc || 0) && Math.random() < 0.5) enter("pop", now);
+              else if (S.st["p-pass"] && Math.random() < 0.7) { S.wst = "pose"; S.wuntil = now + 2.2; popK("ptripod"); }
             }
+            if (S.wst === "walk" && isAnniv() && S.st["h-613"] && now >= (S.wfc || 0) && ((px2 < 60 && S.wx >= 60) || (px2 > 60 && S.wx <= 60)) && Math.random() < 0.5) { S.wx = 60; enter("blow", now); }
             if (S.wst === "walk" && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
             if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
           }
         } else if (now >= S.wuntil) {
           S.wst = "walk";
-        }
+        } else if ((S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) || (S.wst === "pop" && !S.wbj && now - S.wbl > 1)) { S.wbj = 1; S.wj = 0.5; if (S.wst === "pop") popBurst(); }
         if (!ds || ph === "away") capSt(now, S.wst === "walk" ? "w2" : S.wst);
-        g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + ",0)");
-        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose");
+        var dy2 = 0;
+        if (S.wj > 0) { S.wj -= dt; dy2 = S.wj > 0 ? -6 * Math.sin(Math.PI * (1 - S.wj / 0.5)) : 0; }
+        g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy2.toFixed(2) + ")");
+        g.classList.toggle("bl", S.wst === "blow");
+        g.classList.toggle("pp", S.wst === "pop");
+        g.classList.toggle("bo", S.wst === "blow" && now - S.wbl > 1.8);
+        g.classList.toggle("pz", S.wst === "sleep" || S.wst === "pose" || S.wst === "blow" || S.wst === "pop");
         g.classList.toggle("slp", S.wst === "sleep");
         g.classList.toggle("dn", S.wst === "dn");
         g.classList.toggle("po", S.wst === "pose");
@@ -1385,6 +1469,27 @@
       }
       if (S.ngA && now >= S.ngA) S.ngA = 0;
       ngSync();
+      /* 6/13 小窩 100%：七人走進來 → 排好慶祝（放三次紙花）→ 走出右邊 → 只剩單人 */
+      var g7 = o.querySelector("#rmg7"), g7on = !!(g7 && S.g7 && S.g7 !== "done");
+      if (g7) {
+        var els7 = [].slice.call(g7.querySelectorAll(".rmd7")), fc7 = document.getElementById("rmcap"), i7, all7 = true;
+        if (S.g7 === "in") {
+          for (i7 = 0; i7 < 7; i7++) { if (S.g7x[i7] < G7X[i7]) { S.g7x[i7] = Math.min(G7X[i7], S.g7x[i7] + 40 * dt); if (S.g7x[i7] < G7X[i7]) all7 = false; } }
+          if (all7) {
+            S.g7 = "cheer"; S.g7t = now; S.g7b = 0; S.capK = "g7c";
+            if (fc7 && now >= S.cph) fc7.innerHTML = "<b>" + esc(t("七個人一起來慶祝了！出道紀念日快樂！")) + "</b>";
+          }
+        } else if (S.g7 === "cheer") {
+          if (S.g7b < 3 && now - S.g7t >= S.g7b * 2.6) { S.g7b++; popBurst("rpb7"); }
+          if (now - S.g7t > 8) { S.g7 = "out"; S.capK = "g7o"; if (fc7 && now >= S.cph) fc7.innerHTML = "<b>" + esc(t("派對告一段落，大家先離開。")) + "</b>"; }
+        } else if (S.g7 === "out") {
+          for (i7 = 0; i7 < 7; i7++) { S.g7x[i7] += 40 * dt; if (S.g7x[i7] < 162) all7 = false; }
+          if (all7) { S.g7 = "done"; S.wx = 8; S.wd = 1; S.wst = "walk"; S.wuntil = 0; S.capK = ""; }
+        }
+        if (S.g7 !== "done") els7.forEach(function (e, k) { e.setAttribute("transform", "translate(" + S.g7x[k].toFixed(2) + ",70)"); });
+        vis(g7, S.g7 !== "done");
+        vis(o.querySelector("#rmwv7"), S.g7 === "done");
+      }
       /* 窗外煙火：小窩 100% 才有。每隔 5～12 秒放一發，每發約 1.4 秒 */
       var fw = o.querySelector("#rmfw");
       if (fw) {
@@ -1396,7 +1501,7 @@
           if (ff >= 8) { S.fwb = null; S.fwn = now + 5 + Math.random() * 7; fw.innerHTML = ""; }
         }
       }
-      if (g) {
+      if (g && !g7on) {
         var dy = 0;
         if (S.wst === "walk") {
           var px = S.wx;
@@ -1405,7 +1510,7 @@
           else if (now >= S.wjn) { S.wju = now + 1.6 + Math.random() * 1.2; S.wjn = S.wju + 8 + Math.random() * 12; }
           S.wx += S.wd * SPD * (now < S.wju ? 2.2 : 1) * dt;
           S.wwalk += dt;
-          if (S.wx >= 112) { S.wx = 112; S.wd = -1; }
+          if (S.wx >= 112) { S.wx = 112; S.wd = -1; if (isAnniv() && now >= (S.wfc || 0) && Math.random() < 0.6) enter("pop", now); }
           else if (S.wx <= 8) {
             S.wx = 8;
             var lo = [];
@@ -1425,6 +1530,7 @@
             if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
           if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
+          if (S.wst === "walk" && isAnniv() && S.st["h-613"] && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
           var sk2 = seasonKind();
           if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
@@ -1435,9 +1541,12 @@
           S.wrug = inRug;
           if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; }
         } else {
+          if (S.wst === "blow" && !S.wbj && now - S.wbl > 2.4) { S.wbj = 1; S.wj = 0.5; }
+          if (S.wst === "pop" && !S.wbj && now - S.wbl > 1) { S.wbj = 1; S.wj = 0.5; popBurst(); }
           if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
           if (now >= S.wuntil) {
             if (S.wst === "look" || S.wst === "read" || S.wst === "broom") S.wd = 1;
+            if (S.wst === "pop") S.wd = -1;
             S.wst = "walk";
             S.wtt = 0;
             S.wtr = 0;
@@ -1456,6 +1565,9 @@
         g.classList.toggle("cu", S.wst === "cal");
         g.classList.toggle("ck", S.wst === "clk");
         g.classList.toggle("tr", S.wst === "cal" && now < S.wtr);
+        g.classList.toggle("bl", S.wst === "blow");
+        g.classList.toggle("pp", S.wst === "pop");
+        g.classList.toggle("bo", S.wst === "blow" && now - S.wbl > 1.8);
         g.classList.toggle("jg", S.wst === "walk" && now < S.wju);
         g.classList.toggle("lit", !!(S.lamp && S.st["f-s3"] && S.wx + 13 >= 96));
         var f = g.querySelector(".rmwf"), want = S.wd < 0;
