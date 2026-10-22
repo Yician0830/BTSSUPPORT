@@ -263,7 +263,7 @@
   var ROOM2_PV = P2ALL || PV === "room2" || (function () {
     try { return localStorage.getItem("room2-preview") === "1"; } catch (e) { return false; }
   })();
-  function room2Open(st) { return ROOM2_PV || (ROOM2_PUBLIC && count(st, ITEMS) >= ITEMS.length); }
+  /* 房間是否開放，統一由下面 ROOMS 區塊的 roomOpen(i, st) 判斷（ROOM2_PUBLIC／ROOM2_PV／P2ALL 現在只是第 2 間在 ROOMS 裡的設定值） */
 
   if (!ROOM_OPEN) {
     var rb = document.getElementById("roomBtn");
@@ -743,6 +743,46 @@
   ];
   var ALL = ITEMS.concat(ITEMS2);
 
+  /* ===== 房間表 =====
+     新增房間：在 ROOMS 加一筆，再補上該房間的 items、scene 函式（以及需要時的 tick 函式，見 open() 裡的 TICKS）。
+     id      房間代號（也是別的房間 gate 要填的值）
+     chip    房間選擇器上的標籤（要在 LT 裡有翻譯，例如「第 3 間」）
+     name    房間名稱，開放後才顯示（鎖著時顯示「？？？」）
+     items   這間的物品清單（徽章代號 b 必須全站唯一，room-seen 才不會混在一起）
+     scene   (S, full) → 這間的 SVG 字串
+     gate    要先完成哪一間才會開放（填那間的 id）；null＝一開始就開放
+     pub     true＝正式開放（仍要先完成 gate）；false＝只有預覽能進。第 1 間不需要
+     pv／pvAll／pvStart  預覽開關：pv＝這台裝置已預覽解鎖；pvAll＝這次開啟把物品全部當成已獲得；pvStart＝網址 ?preview= 以此開頭就直接開在這間
+     lazy    true＝要真的進到這間，才把物品標成「看過」（NEW 星星才不會在還沒進去前就被吃掉）
+     wmax    小人散步的右邊界；ng＝這間有新年拜年；alt＝節日／巡演文字用「練習室版」
+     popTitle 這間集滿時，打開小窩會跳「前往下一個房間」彈窗的標題（沒填就不跳；下一間也已集滿時同樣不跳）
+     pct     完成度標籤；cap＝節日、完成、提示的下方文字；lock＝鎖著時的說明；unlocked＝前一間完成時彈窗上的文字 */
+  var ROOMS = [
+    { id: "nest", chip: "第 1 間", name: "彩蛋小窩", items: ITEMS, scene: scene, gate: null, lazy: false, wmax: 112, ng: true, alt: false,
+      pct: "小窩完成度", popTitle: "第一個房間完成了！",
+      cap: { anniv: "小窩也掛上彩旗了。", bd: "小窩為壽星布置好了。", done: "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……", hint: "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。" } },
+    { id: "prac", chip: "第 2 間", name: "練習室", items: ITEMS2, scene: scene2, gate: "nest", lazy: true, wmax: 108, ng: false, alt: true,
+      pub: ROOM2_PUBLIC, pv: ROOM2_PV, pvAll: P2ALL, pvStart: "room2",
+      pct: "練習室完成度",
+      cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
+      lock: { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" },
+      unlocked: "練習室開放了，快去看看。" }
+  ];
+  function roomIx(id) { for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i].id === id) return i; return -1; }
+  function roomN(i, st) { return count(st, ROOMS[i].items); }
+  function roomPct(i, st) { return Math.round((roomN(i, st) / ROOMS[i].items.length) * 100); }
+  function roomFull(i, st) { return roomN(i, st) >= ROOMS[i].items.length; }
+  function roomOpen(i, st) {
+    var r = ROOMS[i], g;
+    if (!r.gate || r.pv) return true;
+    g = roomIx(r.gate);
+    return !!r.pub && g >= 0 && roomOpen(g, st) && roomFull(g, st);
+  }
+  function startRoom() {
+    for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i].pvStart && PV.indexOf(ROOMS[i].pvStart) === 0) return i;
+    return 0;
+  }
+
   /* ===== 窗外煙火（只有小窩 100% 才有）：一格一格的像素，共 8 影格——前 3 格火箭上升，後 5 格爆開、變淡 ===== */
   function fwHtml(b, f) {
     var s = "", c1 = MC[b.c], c2 = MC[(b.c + 3) % 7];
@@ -1062,7 +1102,10 @@
       var et = b.querySelector(".et"), t = et && et.querySelector(".ftbd");
       if (!et) return;
       if (!t) { t = document.createElement("em"); et.appendChild(t); }
-      var n = count(r.st), pct = Math.round((n / ITEMS.length) * 100);
+      /* 總完成度：把所有「已開放」的房間加總（沒開放的房間不算，所以一般使用者在第 2 間開放前看到的數字跟以前一樣） */
+      var n = 0, tot = 0;
+      ROOMS.forEach(function (rm, i) { if (roomOpen(i, r.st)) { n += roomN(i, r.st); tot += rm.items.length; } });
+      var pct = Math.round((n / tot) * 100);
       t.className = "ftbd rmpb " + (pct >= 100 ? "done" : "todo");
       var hh = (pct >= 100 ? "<span>✓</span> " : "") + "<span>小窩完成度</span> <span>" + pct + '%</span><i class="rmpx" aria-hidden="true"><s style="width:' + pct + '%"></s></i>';
       if (t.__h !== hh) { t.__h = hh; t.innerHTML = hh; }
@@ -1140,20 +1183,27 @@
     ".dn .rmwb{transform-box:fill-box;transform-origin:50% 100%;animation:rmdn .4s steps(1) infinite}@keyframes rmdn{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-3px) rotate(5deg)}}" +
     ".po .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(7deg)}" +
     ".rmdd{cursor:pointer}.rmdd:focus,.rmdd:focus-visible{outline:none}.rmdb{animation:rmbob .5s steps(1) infinite}" +
-    ".rmrs{display:flex;gap:6px;margin-bottom:8px}.rmrs button{display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
+    ".rmrs{display:flex;gap:6px;margin-bottom:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px;scrollbar-width:thin}.rmrs button{flex:0 0 auto;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:800;padding:4px 10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmrs .rmpc{font-style:normal;font-size:11px;opacity:.8}.rmrs button[aria-pressed=true]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}.rmrs button.nx:not([aria-pressed=true]){border-color:var(--gold)}.rmrs button:focus-visible,.rmna button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}" +
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
     "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}}" +
     "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}";
   document.head.appendChild(css);
 
-  /* ===== 多房間：S.rm 0＝第一間（彩蛋小窩），1＝第二間（尚未推出，先顯示上鎖畫面）。
-     第 2 間（練習室）開放後，room2Open() 為 true 就顯示真場景，否則還是 lockedRoom() 的上鎖畫面 ===== */
+  /* ===== 多房間：S.rm 是 ROOMS 的索引（0＝彩蛋小窩，1＝練習室…）。
+     roomOpen(S.rm, st) 為 true 就顯示該房間的真場景，否則顯示 lockedRoom() 的上鎖畫面 ===== */
   var LOCK_SVG = '<svg viewBox="0 0 10 10" shape-rendering="crispEdges" width="10" height="10" aria-hidden="true" fill="currentColor"><rect x="3" y="0" width="4" height="1"/><rect x="2" y="1" width="1" height="3"/><rect x="7" y="1" width="1" height="3"/><rect x="1" y="4" width="8" height="5"/></svg>';
-  function chips(S, full, open2) {
-    return '<div class="rmrs" role="group"><button type="button" data-r="0" aria-pressed="' + (S.rm === 0) + '"><span>第 1 間</span></button>' +
-      '<button type="button" data-r="1" class="' + (full ? "nx" : "") + '" aria-pressed="' + (S.rm === 1) + '"><span>第 2 間</span>' + (open2 ? "" : LOCK_SVG) + "</button></div>";
+  /* 房間選擇器：每間一顆，開放的顯示完成度，鎖著的顯示鎖頭；前一間完成後，下一間的框會變金色。房間多了會左右捲動，方向鍵／Home／End 可在按鈕間移動 */
+  function roomPicker(S) {
+    var s = '<div class="rmrs" role="group" aria-label="' + esc(t("房間")) + '">';
+    ROOMS.forEach(function (r, i) {
+      var open = roomOpen(i, S.st), g = r.gate ? roomIx(r.gate) : -1, nx = g >= 0 && roomFull(g, S.st);
+      s += '<button type="button" data-r="' + i + '"' + (nx ? ' class="nx"' : "") + ' aria-pressed="' + (S.rm === i) + '"><span>' + esc(r.chip) + "</span>" +
+        (open ? '<em class="rmpc">' + roomPct(i, S.st) + "%</em>" : LOCK_SVG) + "</button>";
+    });
+    return s + "</div>";
   }
-  function lockedRoom(full, n) {
+  function lockedRoom(i, st) {
+    var r = ROOMS[i], g = r.gate ? roomIx(r.gate) : -1, gFull = g >= 0 && roomFull(g, st), lk = r.lock || { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" };
     var G = "#2e3452", K = "#aab2c8";
     var sv = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="img" aria-label="？？？">' +
       R(0, 0, 160, 66, "#3a4163") + R(0, 66, 160, 34, "#4b5273") + R(0, 64, 160, 3, "#59618a") +
@@ -1161,12 +1211,14 @@
       R(72, 30, 16, 4, K) + R(72, 34, 4, 12, K) + R(84, 34, 4, 12, K) +
       R(66, 46, 28, 22, K) + R(66, 46, 28, 2, "#c9cfe0") + R(78, 54, 4, 5, "#3a4163") + R(79, 59, 2, 5, "#3a4163") + "</svg>";
     return sv + '<div class="rmcap" aria-live="polite"><b>新房間即將推出</b><br>' +
-      (full ? "第一個房間已完成，新房間準備中。" : "<span>完成第一個房間後解鎖。</span> <small><span>" + n + " / " + ITEMS.length + "</span> <span>件</span></small>") + "</div>";
+      (gFull ? lk.ready : "<span>" + lk.wait + "</span> <small><span>" + (g >= 0 ? roomN(g, st) + " / " + ROOMS[g].items.length : "") + "</span> <span>件</span></small>") + "</div>";
   }
-  function nextPop(open2) {
+  /* 「前往下一個房間」彈窗：ix＝剛完成的房間編號。標題用 ROOMS[ix].popTitle，下一間開放就顯示 ROOMS[ix+1].unlocked */
+  function nextPop(ix, st) {
+    var open2 = roomOpen(ix + 1, st);
     var door = R(3, 0, 10, 16, "#8b5a2b") + R(4, 1, 8, 14, "#c99a6b") + R(5, 2, 6, 6, "#b07a45") + R(5, 9, 6, 5, "#b07a45") + R(10, 8, 1, 2, "#ffd23f") + R(0, 2, 1, 1, "#ffd23f") + R(14, 5, 1, 1, "#ffd23f") + R(1, 12, 1, 1, "#fff") + R(14, 13, 1, 1, "#ffd23f");
     return '<div class="rmnx"><div class="rmnc" role="alertdialog" aria-modal="true" aria-labelledby="rmnt"><svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">' + door + "</svg>" +
-      '<b id="rmnt">第一個房間完成了！</b><p>' + (open2 ? "練習室開放了，快去看看。" : "下一個房間即將推出，敬請期待。") + '</p>' +
+      '<b id="rmnt">' + ROOMS[ix].popTitle + '</b><p>' + (open2 ? ROOMS[ix + 1].unlocked : "下一個房間即將推出，敬請期待。") + '</p>' +
       '<div class="rmna"><button type="button" data-a="go">看看下一個房間</button><button type="button" data-a="cl">晚點再說</button></div></div></div>';
   }
 
@@ -1177,9 +1229,10 @@
     opener = document.activeElement;
     var bs = getBs(), L = bs.L, st = bs.st;
     /* ?preview=room2all：只在這次開啟，把練習室的物品全部當成已獲得（複製一份，不動 badgeSync 的資料） */
-    if (P2ALL) { st = Object.assign({}, st); var pd = new Date().toISOString().slice(0, 10); ITEMS2.forEach(function (it) { if (!st[it.b]) st[it.b] = pd; }); }
+    var PALL = ROOMS.some(function (r) { return r.pvAll; });
+    if (PALL) { st = Object.assign({}, st); var pd = new Date().toISOString().slice(0, 10); ROOMS.forEach(function (r) { if (r.pvAll) r.items.forEach(function (it) { if (!st[it.b]) st[it.b] = pd; }); }); }
     var S = { night: isNight(), lamp: isNight(), st: st, tab: "room", flt: "all", mem: Math.floor(Math.random() * WN.length), bias: false,
-      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: (PV.indexOf("room2") === 0 ? 1 : 0), pop: false, fi: 0, fnx: 0, fc: 0, gp: "dance", gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
+      wx: (window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches) ? 66 : 20 + Math.floor(Math.random() * 80), wd: 1, wst: "walk", wuntil: 0, wj: 0, wrug: false, wwalk: 0, wcd: 0, wtr: 0, wtt: 0, wjn: 0, wju: 0, fwn: 0, fwb: null, rm: startRoom(), pop: false, fi: 0, fnx: 0, fc: 0, gp: "dance", gpt: 0, dz: null, wdn: 0, capK: "", cph: 0 };
     /* 解鎖「偏心警告」（同一位成員打卡 5 個以上）就把那位本命固定放在房間裡，不再隨機、也不能換人 */
     (function () {
       var b = null;
@@ -1198,29 +1251,38 @@
        所以練習室開放前就拿到的物品，開放後第一次進去仍會有 NEW 星星。
        第一次打開（還沒存過）第 1 間只建立基準，不會全部標成新的；預覽 room2all 的假資料不比對也不存 */
     S.nw = {};
-    var seenOld = null, have1 = [], have2 = [];
-    ITEMS.forEach(function (it) { if (st[it.b]) have1.push(it.b); });
-    ITEMS2.forEach(function (it) { if (st[it.b]) have2.push(it.b); });
-    function saveSeen(v2) {
-      if (P2ALL) return;
+    var seenOld = null, have = ROOMS.map(function (r) { return r.items.filter(function (it) { return st[it.b]; }).map(function (it) { return it.b; }); });
+    /* ix＝剛進到的房間編號（-1＝沒有）；非 lazy 的房間打開就算看過，lazy 的房間只有進去那次（或之前已看過）才算 */
+    function saveSeen(ix) {
+      if (PALL) return;
       try {
-        var keep = have1.slice();
-        have2.forEach(function (b) { if (v2 || (seenOld && seenOld.indexOf(b) >= 0)) keep.push(b); });
+        var keep = [];
+        ROOMS.forEach(function (r, i) {
+          have[i].forEach(function (b) { if (!r.lazy || i === ix || (seenOld && seenOld.indexOf(b) >= 0)) keep.push(b); });
+        });
         localStorage.setItem("room-seen", JSON.stringify(keep));
         seenOld = keep;
       } catch (e) {}
     }
-    if (!P2ALL) {
+    if (!PALL) {
       try {
         var raw = localStorage.getItem("room-seen"), sn = raw ? JSON.parse(raw) : null;
         if (sn && typeof sn.indexOf === "function") seenOld = sn;
       } catch (e) {}
-      if (seenOld) have1.forEach(function (b) { if (seenOld.indexOf(b) < 0) S.nw[b] = 1; });
-      if (room2Open(st)) have2.forEach(function (b) { if (!seenOld || seenOld.indexOf(b) < 0) S.nw[b] = 1; });
-      saveSeen(S.rm === 1 && room2Open(st));
+      ROOMS.forEach(function (r, i) {
+        if (!r.lazy) { if (seenOld) have[i].forEach(function (b) { if (seenOld.indexOf(b) < 0) S.nw[b] = 1; }); }
+        else if (roomOpen(i, st)) have[i].forEach(function (b) { if (!seenOld || seenOld.indexOf(b) < 0) S.nw[b] = 1; });
+      });
+      saveSeen(S.rm > 0 && roomOpen(S.rm, st) ? S.rm : -1);
     }
     /* 第一間全部解鎖：打開小窩時跳出「前往下一個房間」視窗。不存任何東西，所以每次載入網頁只跳一次 */
-    if (count(st) >= ITEMS.length && !window.__roomNextSeen) { S.pop = true; window.__roomNextSeen = 1; }
+    /* 彈窗對象：最後一個「已完成、有 popTitle、下一間存在且還沒完成」的房間；每間房每次載入網頁只跳一次 */
+    S.popIx = -1;
+    window.__roomNextSeen = window.__roomNextSeen || {};
+    ROOMS.forEach(function (r, i) {
+      if (r.popTitle && i + 1 < ROOMS.length && roomOpen(i, st) && roomFull(i, st) && !roomFull(i + 1, st) && !window.__roomNextSeen[r.id]) S.popIx = i;
+    });
+    if (S.popIx >= 0) { S.pop = true; window.__roomNextSeen[ROOMS[S.popIx].id] = 1; }
     var nameOf = function (it) { for (var i = 0; i < L.length; i++) if (L[i].id === it.b) return L[i]; return null; };
     var o = document.createElement("div");
     o.id = "rmo";
@@ -1246,7 +1308,7 @@
     /* 換房間或換分頁時，把小人的動作重設成「散步」，避免帶著第 1 間的「看書、看日曆」狀態進到第 2 間 */
     function resetW() {
       S.wst = "walk"; S.wuntil = 0; S.wtt = 0; S.wtr = 0; S.wcd = 0; S.wdn = 0;
-      if (!(S.rm === 1 && S.gp === "enter")) S.wx = Math.max(6, Math.min(S.rm === 1 ? 108 : 112, S.wx));
+      if (S.gp !== "enter") S.wx = Math.max(6, Math.min(ROOMS[S.rm].wmax, S.wx));
     }
     function dzSay(i) {
       var cp = document.getElementById("rmcap");
@@ -1255,21 +1317,18 @@
     }
 
     function draw() {
-      var n = count(S.st), pct = Math.round((n / ITEMS.length) * 100), full = n >= ITEMS.length, h;
-      var r2 = room2Open(S.st), p2 = S.rm === 1 && r2, LIST = S.rm === 1 ? ITEMS2 : ITEMS;
-      var n2 = count(S.st, ITEMS2), pct2 = Math.round((n2 / ITEMS2.length) * 100), full2 = n2 >= ITEMS2.length;
+      var RM = ROOMS[S.rm], LIST = RM.items, locked = !roomOpen(S.rm, S.st), h;
+      var n = roomN(S.rm, S.st), pct = roomPct(S.rm, S.st), full = roomFull(S.rm, S.st);
       var nn = 0; LIST.forEach(function (it) { if (S.nw[it.b]) nn++; });
       var NWM = "<b>有新物品！</b><br>閃爍的星星是新獲得的，點一下看看。";
-      h = '<div class="rmc"><div class="rmh">' + (S.rm === 1 && !r2 ? "<b>？？？</b><span></span>" : "<b>" + (p2 ? "練習室" : "彩蛋小窩") + "</b><span><span>" + (p2 ? n2 : n) + " / " + (p2 ? ITEMS2.length : ITEMS.length) + "</span> <span>件</span></span>") + "</div>" + chips(S, full, r2) +
-        (S.rm === 1 && !r2 ? "" : '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div>') + '<div class="rmb">';
-      if (S.rm === 1 && !r2) {
-        h += lockedRoom(full, n);
+      h = '<div class="rmc"><div class="rmh">' + (locked ? "<b>？？？</b><span></span>" : "<b>" + RM.name + "</b><span><span>" + n + " / " + LIST.length + "</span> <span>件</span></span>") + "</div>" + roomPicker(S) +
+        (locked ? "" : '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div>') + '<div class="rmb">';
+      if (locked) {
+        h += lockedRoom(S.rm, S.st);
       } else if (S.tab === "room") {
-        h += (p2 ? scene2(S, full2) : scene(S, full)) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
-          (p2
-            ? (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>練習室也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>練習室為壽星布置好了。" : seasonKind() ? seasCap(true) : tourKind() ? tourCap(true) : nn ? NWM : full2 ? "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。" : "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。")
-            : (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>小窩也掛上彩旗了。" : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>小窩為壽星布置好了。" : seasonKind() ? seasCap(false) : tourKind() ? tourCap(false) : nn ? NWM : full ? "<b>小窩完成！</b><br>窗外好像有七個人影在揮手……" : "點房間裡的東西看看。暗暗的剪影是還沒解鎖的物品。")) + "</div>" +
-          '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + (p2 ? pct2 : pct) + '"><s style="width:' + (p2 ? pct2 : pct) + '%"></s></div><span><span>' + (p2 ? "練習室完成度" : "小窩完成度") + "</span> <span>" + (p2 ? pct2 : pct) + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
+        h += RM.scene(S, full) + '<div class="rmcap" id="rmcap" aria-live="polite">' +
+          (isAnniv() ? "<b>今天是 6/13，出道紀念日！</b><br>" + RM.cap.anniv : bdName() ? "<b>" + esc(bdName()) + "</b> <span>今天生日！</span><br>" + RM.cap.bd : seasonKind() ? seasCap(RM.alt) : tourKind() ? tourCap(RM.alt) : nn ? NWM : full ? RM.cap.done : RM.cap.hint) + "</div>" +
+          '<div class="rmbar"><div class="rmp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><s style="width:' + pct + '%"></s></div><span><span>' + RM.pct + "</span> <span>" + pct + '%</span></span><button type="button" class="rmn" id="rmdn">' + (S.night ? "☀ 切到白天" : "🌙 切到夜晚") + "</button></div>";
       } else {
         h += '<div class="rmf"><button type="button" data-f="all" aria-pressed="' + (S.flt === "all") + '">全部</button><button type="button" data-f="on" aria-pressed="' + (S.flt === "on") + '">已獲得</button><button type="button" data-f="off" aria-pressed="' + (S.flt === "off") + '">未獲得</button></div><div class="rml">';
         LIST.forEach(function (it) {
@@ -1282,8 +1341,10 @@
         h += "</div>";
       }
       h += '</div><button type="button" class="btn rmx">關閉</button></div>';
-      if (S.pop) h += nextPop(r2);
+      if (S.pop) h += nextPop(S.popIx, S.st);
       o.innerHTML = h;
+      var cur = o.querySelector('.rmrs button[aria-pressed="true"]');
+      if (cur && cur.scrollIntoView) { try { cur.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) {} }
       S.capK = ""; S.cph = performance.now() / 1000 + 4; /* 剛畫好的提示文字先留 4 秒，再換成小人的動作文字 */
       try { window.I18N && I18N.refresh(); } catch (e) {}
       if (S.pop) { var pb = o.querySelector(".rmnc button"); if (pb) pb.focus(); }
@@ -1403,7 +1464,7 @@
       }
     }
     function ngStart(now) {
-      if (S.ngA || S.rm === 1) return;
+      if (S.ngA || !ROOMS[S.rm].ng) return;
       S.ngA = now + 6;
       S.ngNext = S.ngA + 25 + Math.random() * 20;
       var cap = document.getElementById("rmcap");
@@ -1499,7 +1560,7 @@
         S.wtr = 0;
       }
     }
-    /* 練習室的動作迴圈（S.rm === 1 時由 tick 轉進來）：
+    /* 練習室的動作迴圈（TICKS.prac，在練習室開放且被選到時由 tick 轉進來）：
        單人：左右散步；走到左端（有三腳架）擺姿勢拍照、走到右端（有音響）跳舞、平常每 7～15 秒隨機跳一小段、夜晚走一陣子就打瞌睡。
        100%：七人在 FORM 的四種隊形之間換位（每 3.6 秒換一次），鏡子裡的倒影同步移動。 */
     function vis(e, on) {
@@ -1626,11 +1687,16 @@
       }
     }
 
+    /* 各房間專屬的動作迴圈（以房間 id 登記）。新房間要有自己的動作，就寫一個 tickX(now, dt) 加在這裡 */
+    var TICKS = { prac: tick2 };
+
     function tick(ts) {
       if (!document.body.contains(o)) return;
       var dt = Math.min(0.05, (ts - (lastTs || ts)) / 1000), now = ts / 1000, g = o.querySelector(".rmwx");
       lastTs = ts;
-      if (S.rm === 1) { S.ngA = 0; tick2(now, dt); raf = requestAnimationFrame(tick); return; }
+      /* 有自己動作迴圈的房間走 TICKS；沒登記的房間用預設迴圈（也就是第 1 間小窩的那一套）。鎖著的房間沒有小人，不跑任何迴圈 */
+      if (!roomOpen(S.rm, S.st)) { raf = requestAnimationFrame(tick); return; }
+      if (TICKS[ROOMS[S.rm].id]) { S.ngA = 0; TICKS[ROOMS[S.rm].id](now, dt); raf = requestAnimationFrame(tick); return; }
       if (seasonKind() === "ny") {
         if (!S.ngNext) S.ngNext = now + 6;
         if (!S.ngA && S.wst === "walk" && now >= S.ngNext) ngStart(now);
@@ -1702,12 +1768,12 @@
           if (S.wst === "walk" && isFest() && S.st["h-613"] && qok && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
           if (S.wst === "walk" && tourKind() === "eve" && qok && now >= (S.wfc || 0) && ((px < 92 && S.wx >= 92) || (px > 92 && S.wx <= 92)) && Math.random() < 0.6) { S.wx = 92; enter("pack", now); }
           /* 成員生日：經過禮物堆前（小窩 x≈46、練習室 x≈84）有機會停下來看一眼，禮物會跳一下 */
-          var gX = S.rm === 1 ? 72 : 33;
+          var gX = 33;
           if (S.wst === "walk" && bdName() && qok && now >= (S.wgf || 0) && ((px < gX && S.wx >= gX) || (px > gX && S.wx <= gX)) && Math.random() < 0.5) { S.wx = gX; S.wgf = now + 15; enter("bdg", now); }
-          var bX = S.rm === 1 ? 93 : 108;
+          var bX = 108;
           if (S.wst === "walk" && bdName() && qok && now >= (S.wbf || 0) && ((px < bX && S.wx >= bX) || (px > bX && S.wx <= bX)) && Math.random() < 0.4) { S.wx = bX; S.wbf = now + 15; enter("bdb", now); }
           /* 演唱會前一天／當天：經過海報前（小人中心對到海報 x≈72）有機會停下來抬頭看，看完繼續往原方向走 */
-          if (S.wst === "walk" && S.rm !== 1 && tourKind() && !seasonKind() && S.st["f-1"] && qok && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
+          if (S.wst === "walk" && tourKind() && !seasonKind() && S.st["f-1"] && qok && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
           var sk2 = seasonKind();
           if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && qok && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
@@ -1781,9 +1847,9 @@
       if (t === o || (t.closest && t.closest(".rmx"))) return close();
       if (t.classList && t.classList.contains("rmnx")) { S.pop = false; draw(); return; }
       var pab = t.closest && t.closest("[data-a]");
-      if (pab) { if (pab.getAttribute("data-a") === "go") { S.rm = 1; resetW(); if (room2Open(S.st)) saveSeen(true); } S.pop = false; draw(); return; }
+      if (pab) { if (pab.getAttribute("data-a") === "go") { S.rm = S.popIx + 1; resetW(); if (roomOpen(S.rm, S.st)) saveSeen(S.rm); } S.pop = false; draw(); return; }
       var rsb = t.closest && t.closest("[data-r]");
-      if (rsb) { S.rm = +rsb.getAttribute("data-r"); resetW(); if (S.rm === 1 && room2Open(S.st)) saveSeen(true); draw(); return; }
+      if (rsb) { S.rm = +rsb.getAttribute("data-r"); resetW(); if (S.rm > 0 && roomOpen(S.rm, S.st)) saveSeen(S.rm); draw(); return; }
       var tb = t.closest && t.closest("[data-t]");
       if (tb) { S.tab = tb.getAttribute("data-t"); draw(); return; }
       var ft = t.closest && t.closest("[data-f]");
@@ -1801,6 +1867,15 @@
       if (g) hit(g);
     });
     o.addEventListener("keydown", function (ev) {
+      /* 房間選擇器：左右方向鍵、Home、End 在按鈕之間移動焦點（按 Enter／空白才真的切換） */
+      var rb = ev.target.closest && ev.target.closest(".rmrs button");
+      if (rb && (ev.key === "ArrowLeft" || ev.key === "ArrowRight" || ev.key === "Home" || ev.key === "End")) {
+        var bs = [].slice.call(o.querySelectorAll(".rmrs button")), ci = bs.indexOf(rb);
+        var ni = ev.key === "Home" ? 0 : ev.key === "End" ? bs.length - 1 : (ci + (ev.key === "ArrowRight" ? 1 : -1) + bs.length) % bs.length;
+        ev.preventDefault();
+        bs[ni].focus();
+        return;
+      }
       if (ev.key !== "Enter" && ev.key !== " ") return;
       var g = ev.target.closest && ev.target.closest(".rmi,.rmwk,.rmdd,.rmfx,.rmnm");
       if (g) { ev.preventDefault(); if (g.classList.contains("rmnm")) ngSay(+g.getAttribute("data-i")); else if (g.classList.contains("rmfx")) fxHit(g); else if (g.classList.contains("rmwk")) walk(g); else if (g.classList.contains("rmdd")) dzSay(+g.getAttribute("data-i")); else hit(g); }
