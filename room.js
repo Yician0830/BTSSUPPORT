@@ -256,6 +256,8 @@
     "對著三腳架擺姿勢，看鏡頭！": ["Striking a pose for the tripod — look at the camera!", "삼각대 앞에서 포즈 중, 카메라를 봐요!", "三脚の前でポーズ。カメラを見て！"],
     "練習告一段落，大家先離開。": ["Practice is done for now — everyone heads out.", "연습이 끝나서 다들 나가요.", "練習は一区切り。みんなで退室。"],
     "新一輪練習，大家就位。": ["New round of practice — everyone to your spots.", "새 연습 시작, 다들 자리로!", "新しい練習、みんな位置について。"],
+    "去喝口水，馬上回來。": ["Off for a sip of water — back in a sec.", "물 한 모금 마시고 금방 올게요.", "ちょっと水を飲んでくる。すぐ戻るよ。"],
+    "拿毛巾擦擦汗，再回去跳。": ["Grabbing the towel to wipe off sweat, then back to dancing.", "수건으로 땀 닦고 다시 춤추러 갈게요.", "タオルで汗を拭いて、また踊りに戻るよ。"],
     "七人隊形": ["Seven-member formation", "일곱 멤버 대형", "7人フォーメーション"],
     "排成一排，整整齊齊。": ["Lined up in a row, neat and tidy.", "한 줄로 나란히, 가지런히 섰어요.", "一列に並んで、きれいにそろった。"],
     "拉成弧形，中間的往前站。": ["Curved into an arc, the middle steps forward.", "호를 그리며 가운데가 앞으로 나왔어요.", "弧を描いて、真ん中が前に出た。"],
@@ -2068,7 +2070,8 @@
             /* 練習日誌（解鎖才會）：往右走經過 x≈98，停在日誌左邊，低頭翻日誌、寫進度，日誌跳一下 */
             if (S.wst === "walk" && S.st["p-week"] && qok && now >= (S.wlf || 0) && px2 < 98 && S.wx >= 98 && Math.random() < 0.5) { S.wx = 98; S.wlf = now + 15; enter("plog", now); }
             if (S.wst === "walk" && qok && now >= S.wdn) { S.wst = "dn"; S.wuntil = now + 2.4; S.wdn = 0; if (S.st["p-game"]) popK("pspk"); }
-            if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; if (S.st["p-late"]) popK("pclock"); }
+            if (!S.wslT) S.wslT = 30 + Math.random() * 25;
+            if (S.wst === "walk" && S.night && qok && S.wwalk > S.wslT) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; S.wslT = 0; if (S.st["p-late"]) popK("pclock"); }
           }
         } else if (S.wst === "go") {
           /* 走向毛巾／水瓶：到了就開始擦汗／喝水 */
@@ -2120,11 +2123,23 @@
         [].forEach.call(ds.querySelectorAll(".rmdd"), function (e) { els[+e.getAttribute("data-i")] = e; });
         [].forEach.call(o.querySelectorAll(".rmdr"), function (e) { rf[+e.getAttribute("data-i")] = e; });
         if (ph === "dance") {
+          /* 偶爾一位成員慢慢走去水瓶（要解鎖水瓶）或毛巾（要解鎖毛巾），停幾秒再走回隊形 */
+          if (!S.dzn) S.dzn = now + 10 + Math.random() * 10;
+          if (!S.dzo && now >= S.dzn) {
+            var dacts = [];
+            if (S.st["p-chk"]) dacts.push({ a: "pwater", x: 96, y: 72, s: "去喝口水，馬上回來。" });
+            if (S.st["p-fav"]) dacts.push({ a: "ptowel", x: 38, y: 72, s: "拿毛巾擦擦汗，再回去跳。" });
+            if (dacts.length) {
+              var da = dacts[Math.floor(Math.random() * dacts.length)], di = Math.floor(Math.random() * 7);
+              S.dzo = { i: di, x: da.x, y: da.y, st: "go", until: 0, a: da.a, s: da.s };
+              if (fc && now >= S.cph) { fc.innerHTML = "<b>" + esc(WN[di]) + "</b><br>" + esc(t(da.s)); S.capK = "dzo"; S.cph = now + 3.5; }
+            } else S.dzn = now + 20;
+          }
           if (!S.fnx) S.fnx = now + 2.5;
           if (now >= S.fnx) {
             if (S.fc + 1 >= FORM.length) {
               /* 四種隊形各跳過一輪：七個人一起往右邊走出畫面 */
-              S.gp = ph = "leave"; S.fc = 0; S.fnx = 0; S.capK = "gl";
+              S.gp = ph = "leave"; S.dzo = null; S.dzn = 0; S.fc = 0; S.fnx = 0; S.capK = "gl";
               if (fc && now >= S.cph) fc.innerHTML = "<b>" + esc(t("七人隊形")) + "</b><br>" + esc(t("練習告一段落，大家先離開。"));
             } else {
               S.fc++;
@@ -2140,8 +2155,21 @@
           }
           for (i = 0; i < 7; i++) {
             d = S.dz[i]; tg = FORM[S.fi][i];
-            d.x += (tg[0] - d.x) * kk;
-            d.y += (tg[1] - d.y) * kk;
+            var zo = S.dzo;
+            if (zo && zo.i === i) {
+              if (zo.st !== "stay") {
+                if (zo.st === "go") tg = [zo.x, zo.y];
+                var zdx = tg[0] - d.x, zdy = tg[1] - d.y, zd = Math.sqrt(zdx * zdx + zdy * zdy), zs = 22 * dt;
+                if (zd <= zs) {
+                  d.x = tg[0]; d.y = tg[1];
+                  if (zo.st === "go") { zo.st = "stay"; zo.until = now + 3; popK(zo.a); }
+                  else { S.dzo = null; S.dzn = now + 20 + Math.random() * 20; }
+                } else { d.x += zdx / zd * zs; d.y += zdy / zd * zs; }
+              } else if (now >= zo.until) zo.st = "back";
+            } else {
+              d.x += (tg[0] - d.x) * kk;
+              d.y += (tg[1] - d.y) * kk;
+            }
           }
         } else if (ph === "leave") {
           var gone = true;
@@ -2316,7 +2344,8 @@
           var ctr = S.wx + 13, inRug = ctr >= 58 && ctr <= 106;
           if (inRug && !S.wrug && S.wj <= 0) S.wj = 0.5;
           S.wrug = inRug;
-          if (S.wst === "walk" && S.night && S.wwalk > 8) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; }
+          if (!S.wslT) S.wslT = 30 + Math.random() * 25;
+          if (S.wst === "walk" && S.night && qok && S.wwalk > S.wslT) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; S.wslT = 0; }
           /* 小人主動說話：安靜期過了、沒有其他互動、剛才沒點過東西時，停下來跳一下、頭上冒愛心，下方文字講一句（每 30～60 秒一次；第一次在開啟後約 10～18 秒） */
           if (!S.wsn) S.wsn = now + 10 + Math.random() * 8;
           if (S.wst === "walk" && !S.pop && now >= S.wsn && now >= S.cph && qok) enter("talk", now);
