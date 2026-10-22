@@ -88,6 +88,18 @@
     "看著海報，心跳已經開始加速。": ["Gazing at the poster, heart already racing.", "포스터를 보니 벌써 심장이 두근거려요.", "ポスターを見てるだけで、もうドキドキ。"],
     "看著海報，今天就是正式演出！": ["Looking at the poster — today is the real show!", "포스터를 보며… 오늘이 본공연이에요!", "ポスターを見つめる。今日が本番！"],
     "海報上的七個人，今天終於要見面了！": ["The seven on the poster — finally meeting them today!", "포스터 속 일곱 명, 오늘 드디어 만나요!", "ポスターの七人に、今日やっと会える！"],
+    "生日禮物": ["Birthday gifts", "생일 선물", "誕生日プレゼント"],
+    "是給壽星的，裡面是什麼呢？": ["It's for the birthday star — what could be inside?", "생일 주인공을 위한 선물, 안엔 뭐가 들었을까요?", "主役へのプレゼント。中身は何かな？"],
+    "包裝得好漂亮，不知道裝了什麼。": ["Beautifully wrapped — wonder what's inside.", "포장이 정말 예뻐요. 뭐가 들었는지 궁금해요.", "きれいに包まれてる。何が入ってるんだろう。"],
+    "七個人一起挑的禮物，藏不住心意。": ["A gift picked by all seven — the love shows.", "일곱 명이 함께 고른 선물, 마음이 가득해요.", "七人で選んだプレゼント。気持ちがあふれてる。"],
+    "停在禮物前面，猜猜裡面是什麼。": ["Stopping by the gifts, guessing what's inside.", "선물 앞에 멈춰서 안에 뭐가 들었는지 맞혀 봐요.", "プレゼントの前で足を止めて、中身を想像中。"],
+    "看著壽星的禮物，也跟著開心起來。": ["Looking at the birthday gifts, feeling happy too.", "생일 선물을 보니 덩달아 기분이 좋아져요.", "主役のプレゼントを見てたら、こっちまで嬉しくなる。"],
+    "生日氣球": ["Birthday balloons", "생일 풍선", "誕生日の風船"],
+    "氣球飄呀飄，今天是你的日子。": ["Balloons floating by — today is your day.", "풍선이 둥실둥실, 오늘은 당신의 날이에요.", "風船がふわふわ。今日は主役の日。"],
+    "輕輕一碰，氣球就晃了起來。": ["One gentle tap and the balloons start to sway.", "살짝 건드리니 풍선이 흔들려요.", "そっと触れたら、風船がゆらゆら。"],
+    "三顆氣球綁在一起，一起慶祝生日。": ["Three balloons tied together, celebrating the birthday.", "풍선 세 개가 함께 생일을 축하해요.", "三つの風船が一緒にお祝い。"],
+    "看著氣球飄呀飄，心情也輕飄飄的。": ["Watching the balloons float, feeling light too.", "풍선이 둥실둥실, 마음도 가벼워져요.", "風船を眺めてたら、気持ちもふわふわ。"],
+    "伸手碰了碰氣球，氣球晃了起來。": ["Reached out to touch the balloons — they sway.", "손을 뻗어 풍선을 건드리니 흔들려요.", "風船にそっと手を伸ばしたら、ゆらゆら揺れた。"],
     "整理行李：票、手燈、行動電源，都放進包包了。": ["Packing up: ticket, light stick, power bank — all in the bag.", "짐 챙기기: 티켓, 응원봉, 보조배터리 모두 가방에 넣었어요.", "荷造り：チケット、ペンライト、モバイルバッテリー、全部バッグへ。"],
     "拉開彩帶砲——砰！紙花滿天飛。": ["Pulling the party popper — pop! Confetti everywhere.", "파티 폭죽을 당겼어요. 펑! 색종이가 날아요.", "クラッカーをパーン！紙吹雪が舞った。"],
     "捧著小蛋糕許願，然後一口氣吹熄蠟燭。": ["Holding a little cake, making a wish, then blowing out the candle.", "작은 케이크를 들고 소원을 빌고, 촛불을 후— 불어요.", "ミニケーキを持って願いごと、ふーっとろうそくを吹き消す。"],
@@ -203,6 +215,8 @@
     blow: ["捧著小蛋糕許願，然後一口氣吹熄蠟燭。"],
     out: ["帶著手燈出門，去現場囉！"],
     back: ["回來了，還在回味演唱會的感動。"],
+    bdb: ["看著氣球飄呀飄，心情也輕飄飄的。", "伸手碰了碰氣球，氣球晃了起來。"],
+    bdg: ["停在禮物前面，猜猜裡面是什麼。", "看著壽星的禮物，也跟著開心起來。"],
     posterE: ["抬頭看著海報，明天就要見面了。", "看著海報，心跳已經開始加速。"],
     posterT: ["看著海報，今天就是正式演出！", "海報上的七個人，今天終於要見面了！"],
     pack: ["整理行李：票、手燈、行動電源，都放進包包了。", "票帶了嗎？手燈充飽了嗎？再確認一次！"],
@@ -371,12 +385,12 @@
       return st.last === td;
     } catch (e) { return false; }
   }
-  /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/31 萬聖節、12/24–25 聖誕、2/4–2/10 新年。
+  /* 節日造型（跟首頁彩蛋、桌寵同一批日期）：10/29–10/31 萬聖節、12/24–25 聖誕、2/4–2/10 新年。
      預覽：網址加 ?preview=hw／xmas／ny。6/13 和成員生日的布置優先，節日不會疊上去 */
   function seasonKind() {
     if (isAnniv() || bdName()) return "";
     var d = new Date(), m = d.getMonth() + 1, dy = d.getDate();
-    if (PV === "hw" || (m === 10 && dy === 31)) return "hw";
+    if (PV === "hw" || (m === 10 && dy >= 29 && dy <= 31)) return "hw";
     if (PV === "xmas" || (m === 12 && (dy === 24 || dy === 25))) return "xmas";
     if (PV === "ny" || (m === 2 && dy >= 4 && dy <= 10)) return "ny";
     return "";
@@ -515,6 +529,8 @@
     nylan: { an: "shake", n: "燈籠", say: ["紅燈籠高高掛，過年的味道。", "燈籠晃呀晃，喜氣洋洋。"] },
     nyhb: { an: "hop", n: "紅包", say: ["新年快樂，恭喜發財！", "紅包拿來，裡面是滿滿的祝福。"] },
     nyingot: { an: "hop", n: "金元寶", say: ["金光閃閃，今年一定順順利利。", "沉甸甸的，好有福氣。"] },
+    bdballoon: { an: "hop", n: "生日氣球", say: ["氣球飄呀飄，今天是你的日子。", "輕輕一碰，氣球就晃了起來。", "三顆氣球綁在一起，一起慶祝生日。"] },
+    bdgift: { an: "hop", n: "生日禮物", say: ["是給壽星的，裡面是什麼呢？", "包裝得好漂亮，不知道裝了什麼。", "七個人一起挑的禮物，藏不住心意。"] },
     prbottle: { an: "hop", n: "水壺和毛巾", say: ["練舞練到口渴，先喝口水補充體力。", "毛巾搭在水壺上，等一下還要擦汗。", "多喝水，七個人一起跳才不會累倒。"] },
     prshoes: { an: "shake", n: "運動鞋", say: ["練舞的球鞋，鞋底都快磨平了。", "有一隻歪倒了，趕快擺好再出發。", "鞋帶綁緊，今天也要練到最後一刻。"] }
   };
@@ -579,12 +595,13 @@
     }
     return '<g pointer-events="none">' + s + "</g>";
   }
-  /* 生日當天的禮物堆（壽星的顏色）和三顆會輕輕上下飄的氣球；只是裝飾 */
-  function bdDeco(n, x, y) {
+  /* 生日當天的禮物堆（壽星的顏色，在 x,y）和三顆會輕輕上下飄的氣球（往右偏移 bx）；只是裝飾 */
+  function bdDeco(n, x, y, bx) {
     var c = MC[WN.indexOf(n) % 7], c2 = MC[(WN.indexOf(n) + 3) % 7];
     var bal = function (bx, by, col, d) { return '<g transform="translate(' + bx + "," + by + ')"><g class="rbal ' + d + '">' + R(1, 0, 3, 1, col) + R(0, 1, 5, 4, col) + R(1, 5, 3, 1, col) + R(1, 1, 1, 1, "#fff", 0.6) + R(2, 6, 1, 12, "#8b5a2b", 0.6) + "</g></g>"; };
-    return '<g transform="translate(' + x + "," + y + ')" pointer-events="none">' + bal(2, -22, c, "") + bal(8, -26, "#fff", "d1") + bal(14, -21, c2, "d2") +
-      giftArt(0, 4, 9, 6, c, "#fff") + giftArt(10, 6, 7, 4, "#fff", c) + giftArt(3, -1, 6, 5, "#ffd23f", "#e0457b") + "</g>";
+    var gifts = giftArt(0, 4, 9, 6, c, "#fff") + giftArt(10, 6, 7, 4, "#fff", c) + giftArt(3, -1, 6, 5, "#ffd23f", "#e0457b");
+    return '<g transform="translate(' + x + "," + y + ')">' + '<g transform="translate(' + (bx || 0) + ',0)">' + fxG("bdballoon", bal(2, -22, c, "") + bal(8, -26, "#fff", "d1") + bal(14, -21, c2, "d2"), [1, -27, 18, 22]) + "</g>" +
+      fxG("bdgift", gifts, [0, -1, 17, 11]) + "</g>";
   }
   /* 彩紙：14 小片用 CSS 慢慢飄下來，畫在最上層、不擋點擊 */
   function confArt() {
@@ -878,7 +895,7 @@
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : "") + (tourKind() === "today" ? " ls" : "");
+    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" || S.wst === "bdg" || S.wst === "bdb" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : "") + (tourKind() === "today" ? " ls" : "");
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
       R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
   }
@@ -912,7 +929,7 @@
     else if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt();
     if (tourKind() === "eve" && !seasonKind() && !isFest()) s += eveGoodsArt(false) + chargingStickArt();
     if (p7 && !S.g7) { S.g7 = "in"; S.g7x = G7X.map(function (v, i) { return -24 - i * 12; }); S.g7t = 0; }
-    return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
+    return s + festProp() + (isFest() ? popperArt(bn ? 148 : 140, 80) : "") + (bn ? bdDeco(bn, 38, 80, 76) : "") + (p7 ? '<g id="rmwv7"' + (S.g7 === "done" ? "" : ' display="none"') + ">" + walker(S) + "</g>" + party7(S) : walker(S)) + (isFest() ? popBurstArt(bn ? 151 : 143, 79) : "") + (p7 ? popBurstArt(80, 72, "rpb7") : "") + (isAnniv() || bn ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 練習室的場景：鏡牆（小人的倒影）＋ 把杆 ＋ 木地板。小人的倒影只畫在鏡子裡（clip），100% 時七個人各有一個 ===== */
@@ -1006,7 +1023,8 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.art + (it.k === "pboard" && on && bn ? bdBoardArt(bn) : "") + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
-    if (fest) s += popperArt(36, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 48, 79) : "");
+    /* 練習室的慶祝物品放在地板中間偏右，左邊留給水壺和運動鞋 */
+    if (fest) s += popperArt(118, 80) + letterBanner(isAnniv() ? 40 : 36, 21, bn) + (bn ? bdDeco(bn, 76, 79, 20) : "");
     s += festProp(true);
     s += practiceFloorArt();
     if (tourKind() === "today" && !seasonKind() && !isFest()) s += tourGoodsArt(84);
@@ -1016,7 +1034,7 @@
       s += '<g id="rmwv"' + (wShow ? "" : ' display="none"') + ">" + walker(S) + "</g>";
       s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
     } else s += walker(S);
-    return s + (fest ? popBurstArt(39, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
+    return s + (fest ? popBurstArt(121, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -1458,6 +1476,8 @@
       S.wst = w;
       if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
       else if (w === "poster") { S.wuntil = now + 3; }
+      else if (w === "bdb") { S.wuntil = now + 2.8; popFxK("bdballoon"); }
+      else if (w === "bdg") { S.wuntil = now + 2.8; popFxK("bdgift"); }
       else if (w === "candy") { S.wuntil = now + 2.8; popFxK("hwcandy"); }
       else if (w === "broom") { S.wuntil = now + 3; popFxK("hwbroom"); }
       else if (w === "cookie") { S.wuntil = now + 3.2; S.wd = -1; popFxK("xcookie"); }
@@ -1678,6 +1698,11 @@
           if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
           if (S.wst === "walk" && isFest() && S.st["h-613"] && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
           if (S.wst === "walk" && tourKind() === "eve" && now >= (S.wfc || 0) && ((px < 92 && S.wx >= 92) || (px > 92 && S.wx <= 92)) && Math.random() < 0.6) { S.wx = 92; enter("pack", now); }
+          /* 成員生日：經過禮物堆前（小窩 x≈46、練習室 x≈84）有機會停下來看一眼，禮物會跳一下 */
+          var gX = S.rm === 1 ? 72 : 33;
+          if (S.wst === "walk" && bdName() && now >= (S.wgf || 0) && ((px < gX && S.wx >= gX) || (px > gX && S.wx <= gX)) && Math.random() < 0.5) { S.wx = gX; S.wgf = now + 15; enter("bdg", now); }
+          var bX = S.rm === 1 ? 93 : 108;
+          if (S.wst === "walk" && bdName() && now >= (S.wbf || 0) && ((px < bX && S.wx >= bX) || (px > bX && S.wx <= bX)) && Math.random() < 0.4) { S.wx = bX; S.wbf = now + 15; enter("bdb", now); }
           /* 演唱會前一天／當天：經過海報前（小人中心對到海報 x≈72）有機會停下來抬頭看，看完繼續往原方向走 */
           if (S.wst === "walk" && S.rm !== 1 && tourKind() && !seasonKind() && S.st["f-1"] && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
           var sk2 = seasonKind();
