@@ -178,7 +178,9 @@
     sleep: ["正在休息，zZ…", "打瞌睡中，夜深了。", "趴著睡著了，zzZ…"],
     w2: ["在練習室裡熱身走動。", "一邊走一邊默默數拍子。"],
     dn: ["跳舞中，節拍跟上！", "練舞練到停不下來。"],
-    pose: ["對著三腳架擺姿勢，看鏡頭！"]
+    pose: ["對著三腳架擺姿勢，看鏡頭！"],
+    candy: ["蹲在地上撿糖果，偷吃一顆。", "不給糖就搗蛋，先吃一顆再說。"],
+    broom: ["拿起掃帚，假裝要飛起來。", "把掃帚扶正，女巫帽也戴好了。"]
   };
   var CAPF = ["排成一排，整整齊齊。", "拉成弧形，中間的往前站。", "高低交錯，換成錯位隊形。", "排成斜線，一階一階往上。"];
   /* 彩蛋小窩開關：跟「藝人同款足跡」一樣的鎖法。
@@ -333,7 +335,16 @@
     else if (k === "xmas") s = R(5, 0, 2, 1, "#ffd23f") + R(5, 1, 2, 1, "#2dbf8f") + R(4, 2, 4, 2, "#2dbf8f") + R(3, 4, 6, 2, "#2dbf8f") + R(2, 6, 8, 2, "#2dbf8f") + R(1, 8, 10, 2, "#2dbf8f") + R(5, 10, 2, 2, "#8b5a2b") + R(4, 5, 1, 1, "#e0453a") + R(7, 7, 1, 1, "#ffd23f") + R(3, 9, 1, 1, "#6fb7ff");
     return (s ? '<g transform="translate(30,78)" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? candyArt() + broomArt() : "");
   }
-  /* 萬聖節：斜靠在書架旁的掃帚（棕色柄、紫色綁帶、黃色掃帚頭；只是裝飾，不能點） */
+  /* 萬聖節的互動裝飾：糖果和掃帚可以點（跳一下／抖一下＋台詞），小人散步時也會自己去撿糖、拿掃帚。
+     只在萬聖節出現（festProp 才會畫），class="rmfx"，由 fxHit() 處理 */
+  var FXI = {
+    hwcandy: { an: "hop", n: "糖果", say: ["不給糖就搗蛋！", "偷偷吃一顆，不會被發現吧。", "甜甜的，今天是萬聖節。"] },
+    hwbroom: { an: "shake", n: "掃帚", say: ["女巫的掃帚，騎上去好像就能飛。", "掃帚靠在書架旁，隨時可以出發。"] }
+  };
+  function fxG(k, a, hit) {
+    return '<g class="rmfx" data-k="' + k + '" tabindex="0" role="button" aria-label="' + esc(t(FXI[k].n)) + '">' + (hit ? R(hit[0], hit[1], hit[2], hit[3], "transparent") : "") + a + "</g>";
+  }
+  /* 斜靠在書架旁的掃帚（深咖啡柄、紫色綁帶、黃色掃帚頭） */
   function broomArt() {
     var s = "", i, j, x0;
     for (i = 0; i < 20; i++) s += R(10 - Math.floor(i * 0.35), 64 + i, 2, 1, "#2e1a0c");
@@ -342,15 +353,13 @@
       x0 = 2 - Math.floor(j * 0.3);
       s += R(x0, 84 + j, 5 + Math.floor(j * 0.4), 1, "#e0a800") + R(x0 + 2, 84 + j, 1, 1, "#b87333");
     }
-    return '<g pointer-events="none">' + s + "</g>";
+    return fxG("hwbroom", s, [0, 70, 12, 24]);
   }
-  /* 萬聖節：地板上散落的糖果和一根棒棒糖（只是裝飾，不能點、不擋點擊） */
+  /* 地板上散落的糖果和一根棒棒糖：每一顆都能單獨點 */
   function candyArt() {
-    var cd = function (x, y, c, e) { return R(x + 1, y, 3, 2, c) + R(x, y, 1, 2, e) + R(x + 4, y, 1, 2, e); };
-    return '<g pointer-events="none">' +
-      cd(116, 86, "#ff8a1f", "#ffd9a8") + cd(125, 91, "#7b4fd6", "#cdb8ff") + cd(134, 85, "#ff8fb3", "#ffd6e4") + cd(143, 92, "#ff8a1f", "#ffd9a8") + cd(46, 94, "#7b4fd6", "#cdb8ff") +
-      '<g transform="translate(120,76)">' + R(1, 0, 3, 5, "#ff8fb3") + R(0, 1, 5, 3, "#ff8fb3") + R(2, 1, 1, 3, "#fff") + R(1, 2, 3, 1, "#fff") + R(2, 5, 1, 5, "#e8e8e8") + "</g>" +
-      "</g>";
+    var cd = function (x, y, c, e) { return fxG("hwcandy", R(x + 1, y, 3, 2, c) + R(x, y, 1, 2, e) + R(x + 4, y, 1, 2, e), [x - 1, y - 2, 7, 6]); };
+    return cd(116, 86, "#ff8a1f", "#ffd9a8") + cd(125, 91, "#7b4fd6", "#cdb8ff") + cd(134, 85, "#ff8fb3", "#ffd6e4") + cd(143, 92, "#ff8a1f", "#ffd9a8") + cd(46, 94, "#7b4fd6", "#cdb8ff") +
+      fxG("hwcandy", '<g transform="translate(120,76)">' + R(1, 0, 3, 5, "#ff8fb3") + R(0, 1, 5, 3, "#ff8fb3") + R(2, 1, 1, 3, "#fff") + R(1, 2, 3, 1, "#fff") + R(2, 5, 1, 5, "#e8e8e8") + "</g>", [119, 75, 7, 12]);
   }
   /* 節日的下方說明文字（r2＝練習室） */
   function seasCap(r2) {
@@ -788,7 +797,7 @@
     "@media(prefers-reduced-motion:reduce){.rmpx s{transition:none}}" +
     ".rnw{pointer-events:none;animation:rmblink 1s steps(1) infinite}.rmnw{font-style:normal;font-size:10px;font-weight:800;padding:1px 4px;background:var(--gold);color:var(--dark)}" +
     "@media(prefers-reduced-motion:reduce){.rnw{animation:none}}" +
-    ".rmwk{cursor:pointer}.rmwk:focus,.rmwk:focus-visible{outline:none}" +
+    ".rmwk{cursor:pointer}.rmwk:focus,.rmwk:focus-visible{outline:none}.rmfx{cursor:pointer;transform-box:fill-box;transform-origin:50% 100%}.rmfx:focus,.rmfx:focus-visible{outline:none}" +
     ".rmwb{animation:rmbob .5s steps(1,end) infinite}@keyframes rmbob{0%{transform:translateY(0)}50%{transform:translateY(-2px)}100%{transform:translateY(0)}}" +
     ".pz .rmwb{animation:none}.slp .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:rotate(9deg)}" +
     ".rmzz{display:none}.slp .rmzz{display:block}.rz{fill:#fff;stroke:#062a6e;stroke-width:.5;paint-order:stroke;font-weight:900;opacity:0;transform-box:fill-box;animation:rmz 2.4s ease-out infinite}.rz:nth-child(2){animation-delay:.8s}.rz:nth-child(3){animation-delay:1.6s}@keyframes rmz{0%{opacity:0;transform:translate(0,3px)}30%{opacity:1}100%{opacity:0;transform:translate(4px,-8px)}}" +
@@ -1051,6 +1060,28 @@
     var raf = 0, lastTs = 0, SPD = 12.5;
     var reduceM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches);
     /* 新動作：走到書架（左邊）看書、走到日曆／時鐘下（中間）抬頭看。解鎖對應物品才會做 */
+    /* 萬聖節的糖果／掃帚：跳一下或抖一下；rand＝小人自己去玩時隨機挑一個 */
+    function popFx(g) {
+      var f = FXI[g.getAttribute("data-k")];
+      if (!f) return;
+      var c = "a-" + f.an;
+      g.classList.remove(c);
+      void g.getBoundingClientRect();
+      g.classList.add(c);
+      setTimeout(function () { g.classList.remove(c); }, 1500);
+    }
+    function popFxK(k) {
+      var l = o.querySelectorAll('.rmfx[data-k="' + k + '"]');
+      if (l.length) popFx(l[Math.floor(Math.random() * l.length)]);
+    }
+    function fxHit(g) {
+      var f = FXI[g.getAttribute("data-k")];
+      if (!f) return;
+      popFx(g);
+      var cap = document.getElementById("rmcap");
+      if (cap) cap.innerHTML = "<b>" + esc(t(f.n)) + "</b><br>" + esc(t(f.say[Math.floor(Math.random() * f.say.length)]));
+      S.capK = ""; S.cph = performance.now() / 1000 + 5;
+    }
     function popK(k) {
       var it = ALL.filter(function (x) { return x.k === k; })[0], gg = o.querySelector('.rmi[data-k="' + k + '"]');
       if (it && gg) pop(gg, it);
@@ -1085,6 +1116,8 @@
     function enter(w, now) {
       S.wst = w;
       if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
+      else if (w === "candy") { S.wuntil = now + 2.8; popFxK("hwcandy"); }
+      else if (w === "broom") { S.wuntil = now + 3; popFxK("hwbroom"); }
       else if (w === "clk") {
         S.wuntil = now + 3.2;
         popK("clock");
@@ -1196,9 +1229,11 @@
             var lo = [];
             if (S.st["fp-1"]) lo.push("look");
             if (S.st["v-fav"]) lo.push("read");
+            if (seasonKind() === "hw") lo.push("broom");
             var pk = lo.length ? lo[Math.floor(Math.random() * lo.length)] : "";
             if (pk === "look") { S.wst = "look"; S.wuntil = now + 2.2; }
             else if (pk === "read") enter("read", now);
+            else if (pk === "broom") enter("broom", now);
             else S.wd = 1;
           }
           if (S.wst === "walk" && now >= S.wcd && ((px < CLX && S.wx >= CLX) || (px > CLX && S.wx <= CLX))) {
@@ -1207,6 +1242,7 @@
             if (S.st["h-last"]) op.push("cal");
             if (op.length && Math.random() < 0.6) { S.wx = CLX; enter(op[Math.floor(Math.random() * op.length)], now); }
           }
+          if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
           var ctr = S.wx + 13, inRug = ctr >= 58 && ctr <= 106;
           if (inRug && !S.wrug && S.wj <= 0) S.wj = 0.5;
           S.wrug = inRug;
@@ -1214,7 +1250,7 @@
         } else {
           if (S.wst === "cal" && S.wtt && now >= S.wtt) { S.wtt = 0; S.wtr = now + 1.5; popK("cal"); }
           if (now >= S.wuntil) {
-            if (S.wst === "look" || S.wst === "read") S.wd = 1;
+            if (S.wst === "look" || S.wst === "read" || S.wst === "broom") S.wd = 1;
             S.wst = "walk";
             S.wtt = 0;
             S.wtr = 0;
@@ -1273,13 +1309,15 @@
       if (dd) { dzSay(+dd.getAttribute("data-i")); return; }
       var w = t.closest && t.closest(".rmwk");
       if (w) { walk(w); return; }
+      var fx = t.closest && t.closest(".rmfx");
+      if (fx) { fxHit(fx); return; }
       var g = t.closest && t.closest(".rmi");
       if (g) hit(g);
     });
     o.addEventListener("keydown", function (ev) {
       if (ev.key !== "Enter" && ev.key !== " ") return;
-      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk,.rmdd");
-      if (g) { ev.preventDefault(); if (g.classList.contains("rmwk")) walk(g); else if (g.classList.contains("rmdd")) dzSay(+g.getAttribute("data-i")); else hit(g); }
+      var g = ev.target.closest && ev.target.closest(".rmi,.rmwk,.rmdd,.rmfx");
+      if (g) { ev.preventDefault(); if (g.classList.contains("rmfx")) fxHit(g); else if (g.classList.contains("rmwk")) walk(g); else if (g.classList.contains("rmdd")) dzSay(+g.getAttribute("data-i")); else hit(g); }
     });
     document.addEventListener("keydown", ky);
     draw();
