@@ -77,6 +77,17 @@
     "帶著手燈出門，去現場囉！": ["Heading out with the light stick — off to the venue!", "응원봉을 들고 공연장으로 출발!", "ペンライトを持って、会場へ出発！"],
     "回來了，還在回味演唱會的感動。": ["Back home, still glowing from the concert.", "돌아왔어요. 아직 콘서트의 여운이 남아 있어요.", "帰ってきた。まだコンサートの余韻の中。"],
     "票帶了嗎？手燈充飽了嗎？再確認一次！": ["Got the ticket? Light stick charged? One more check!", "티켓 챙겼나? 응원봉 충전은? 한 번 더 확인!", "チケットは持った？ペンライトは充電した？もう一回確認！"],
+    "水壺和毛巾": ["Water bottle & towel", "물병과 수건", "ボトルとタオル"], "運動鞋": ["Sneakers", "운동화", "スニーカー"],
+    "練舞練到口渴，先喝口水補充體力。": ["Thirsty from dancing — time for a sip of water.", "연습하다 목이 말라요. 물 한 모금 마시고 힘내요.", "踊り疲れて喉がカラカラ。まずは水分補給。"],
+    "毛巾搭在水壺上，等一下還要擦汗。": ["The towel is draped over the bottle, ready to wipe off sweat.", "수건을 물병에 걸어 뒀어요. 곧 땀을 닦아야 해요.", "タオルをボトルに掛けた。あとで汗を拭くよ。"],
+    "多喝水，七個人一起跳才不會累倒。": ["Drink up — all seven need energy to dance together.", "물 많이 마셔요. 일곱 명이 함께 춰야 하니까요.", "水をたくさん飲もう。七人で踊るなら体力が大事。"],
+    "練舞的球鞋，鞋底都快磨平了。": ["Dance sneakers — the soles are almost worn flat.", "연습용 운동화예요. 밑창이 거의 다 닳았어요.", "練習用のスニーカー。ソールがすり減ってきた。"],
+    "有一隻歪倒了，趕快擺好再出發。": ["One has tipped over — set it straight before heading out.", "한 짝이 쓰러졌어요. 바로 세워 놓고 출발!", "片方が倒れてる。直してから出発しよう。"],
+    "鞋帶綁緊，今天也要練到最後一刻。": ["Laces tight — practice to the very last minute again today.", "신발끈 단단히! 오늘도 끝까지 연습해요.", "靴ひもをしっかり結んで、今日も最後まで練習。"],
+    "抬頭看著海報，明天就要見面了。": ["Looking up at the poster — see them tomorrow.", "포스터를 올려다봐요. 내일이면 만나요.", "ポスターを見上げてる。明日はいよいよ会える。"],
+    "看著海報，心跳已經開始加速。": ["Gazing at the poster, heart already racing.", "포스터를 보니 벌써 심장이 두근거려요.", "ポスターを見てるだけで、もうドキドキ。"],
+    "看著海報，今天就是正式演出！": ["Looking at the poster — today is the real show!", "포스터를 보며… 오늘이 본공연이에요!", "ポスターを見つめる。今日が本番！"],
+    "海報上的七個人，今天終於要見面了！": ["The seven on the poster — finally meeting them today!", "포스터 속 일곱 명, 오늘 드디어 만나요!", "ポスターの七人に、今日やっと会える！"],
     "整理行李：票、手燈、行動電源，都放進包包了。": ["Packing up: ticket, light stick, power bank — all in the bag.", "짐 챙기기: 티켓, 응원봉, 보조배터리 모두 가방에 넣었어요.", "荷造り：チケット、ペンライト、モバイルバッテリー、全部バッグへ。"],
     "拉開彩帶砲——砰！紙花滿天飛。": ["Pulling the party popper — pop! Confetti everywhere.", "파티 폭죽을 당겼어요. 펑! 색종이가 날아요.", "クラッカーをパーン！紙吹雪が舞った。"],
     "捧著小蛋糕許願，然後一口氣吹熄蠟燭。": ["Holding a little cake, making a wish, then blowing out the candle.", "작은 케이크를 들고 소원을 빌고, 촛불을 후— 불어요.", "ミニケーキを持って願いごと、ふーっとろうそくを吹き消す。"],
@@ -192,6 +203,8 @@
     blow: ["捧著小蛋糕許願，然後一口氣吹熄蠟燭。"],
     out: ["帶著手燈出門，去現場囉！"],
     back: ["回來了，還在回味演唱會的感動。"],
+    posterE: ["抬頭看著海報，明天就要見面了。", "看著海報，心跳已經開始加速。"],
+    posterT: ["看著海報，今天就是正式演出！", "海報上的七個人，今天終於要見面了！"],
     pack: ["整理行李：票、手燈、行動電源，都放進包包了。", "票帶了嗎？手燈充飽了嗎？再確認一次！"],
     pop: ["拉開彩帶砲——砰！紙花滿天飛。"],
     walk: ["在小窩裡散步，再點一下換下一位。", "慢慢晃來晃去，心情不錯。", "東看看西看看，巡視自己的小窩。"],
@@ -501,7 +514,9 @@
     xsock: { an: "shake", n: "聖誕襪", say: ["掛好聖誕襪，等著收禮物。", "襪子裡好像有顆糖果。"] },
     nylan: { an: "shake", n: "燈籠", say: ["紅燈籠高高掛，過年的味道。", "燈籠晃呀晃，喜氣洋洋。"] },
     nyhb: { an: "hop", n: "紅包", say: ["新年快樂，恭喜發財！", "紅包拿來，裡面是滿滿的祝福。"] },
-    nyingot: { an: "hop", n: "金元寶", say: ["金光閃閃，今年一定順順利利。", "沉甸甸的，好有福氣。"] }
+    nyingot: { an: "hop", n: "金元寶", say: ["金光閃閃，今年一定順順利利。", "沉甸甸的，好有福氣。"] },
+    prbottle: { an: "hop", n: "水壺和毛巾", say: ["練舞練到口渴，先喝口水補充體力。", "毛巾搭在水壺上，等一下還要擦汗。", "多喝水，七個人一起跳才不會累倒。"] },
+    prshoes: { an: "shake", n: "運動鞋", say: ["練舞的球鞋，鞋底都快磨平了。", "有一隻歪倒了，趕快擺好再出發。", "鞋帶綁緊，今天也要練到最後一刻。"] }
   };
   function fxG(k, a, hit, inert) {
     if (inert) return '<g pointer-events="none">' + a + "</g>";
@@ -831,13 +846,13 @@
       R(0, 1, 5, 4, "#b794ff") + R(1, 2, 2, 2, "#fff") + R(5, 2, 1, 2, "#9d7be8") + R(6, 2, 6, 2, "#444") + R(12, 1, 2, 4, "#222") +
       card(18, 0, "#ff8fb3") + card(22, 2, "#6fb7ff") + card(27, 0, "#ffd23f") + "</g>";
   }
-  /* 練習室左邊地板：搭著毛巾的水壺、一雙運動鞋（一隻歪倒）。平常就有，只是裝飾，不擋點擊 */
+  /* 練習室左邊地板：搭著毛巾的水壺、一雙運動鞋（一隻歪倒）。平常就有，可以點（水壺跳一下、鞋子抖一下＋台詞），不算進完成度 */
   function practiceFloorArt() {
     var bottle = '<g transform="translate(12,84)">' + R(0, 9, 8, 1, "#00000022") + R(2, -1, 3, 1, "#444") + R(1, 0, 5, 9, "#6fb7ff") + R(2, 1, 1, 6, "#bfe3ff") +
       R(0, 1, 7, 2, "#fff") + R(0, 3, 2, 5, "#fff") + R(0, 5, 2, 1, "#b794ff") + "</g>";
     var shoes = '<g transform="translate(40,88)">' + R(0, 5, 17, 1, "#00000022") + R(0, 1, 6, 3, "#f3f3f8") + R(6, 2, 3, 2, "#f3f3f8") + R(1, 2, 3, 1, "#b794ff") + R(0, 4, 9, 1, "#9aa3c7") +
       R(11, 0, 3, 5, "#f3f3f8") + R(14, 0, 1, 5, "#9aa3c7") + R(11, 1, 3, 1, "#b794ff") + "</g>";
-    return '<g pointer-events="none">' + bottle + shoes + "</g>";
+    return fxG("prbottle", bottle, [10, 82, 10, 12]) + fxG("prshoes", shoes, [39, 87, 19, 7]);
   }
   /* 演唱會前一天：地板上摺好的外套（紫色，上面一件白 T）＋牆上貼的「明天」便條。小窩跟練習室都有，位置各自避開原本的物品；只是裝飾，不擋點擊 */
   function eveGoodsArt(r2) {
@@ -863,7 +878,7 @@
     var hat = isAnniv() || bdName() === WN[S.mem]
       ? '<g transform="rotate(-10 13 3)">' + R(12, -6, 2, 2, "#ffd23f") + R(11, -4, 4, 2, "#ff8fb3") + R(10, -2, 6, 2, "#fff") + R(9, 0, 8, 1, "#6fb7ff") + "</g>" : festHat(seasonKind());
     var zz = '<g class="rmzz"><text class="rz" x="23" y="3" font-size="5">Z</text><text class="rz" x="26" y="-1" font-size="6">Z</text><text class="rz" x="29" y="-5" font-size="7">Z</text></g>';
-    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : "") + (tourKind() === "today" ? " ls" : "");
+    var st = (S.wst === "dn" ? " dn" : S.wst === "pose" ? " po pz" : S.wst === "sleep" ? " slp pz" : S.wst === "look" || S.wst === "poster" ? " pz" : S.wst === "read" ? " rd pz" : S.wst === "cal" ? " cu pz" : S.wst === "clk" ? " ck pz" : S.wst === "blow" ? " bl pz" : S.wst === "pop" ? " pp pz" : S.wst === "pack" ? " pp pz" : "") + (tourKind() === "today" ? " ls" : "");
     return '<g transform="translate(0,66)"><g class="rmwx' + st + '" transform="translate(' + S.wx.toFixed(2) + ',0)"><g class="rmwf"' + (S.wd < 0 ? ' transform="translate(26,0) scale(-1,1)"' : "") + '><g class="rmwk" tabindex="0" role="button" aria-label="' + esc(label) + '">' +
       R(0, 0, 26, 26, "transparent") + '<g class="rmwb"><image class="rmwa" href="' + esc(avUrl(WN[S.mem])) + '" x="0" y="0" width="26" height="26" preserveAspectRatio="xMidYMax meet"/>' + hat + "</g></g>" + DUST + "</g>" + zz + PROPS + '<g class="rmck">' + (S.wst === "clk" ? tmBub() : "") + "</g></g></g>";
   }
@@ -1424,7 +1439,7 @@
       var tx;
       if (key === "clk") tx = clockSay();
       else {
-        var a = CAPS[key];
+        var a = CAPS[key === "poster" ? (tourKind() === "today" ? "posterT" : "posterE") : key];
         if (!a) return;
         var lo = (key === "walk" && S.bias) ? 1 : 0;
         tx = t(a[lo + Math.floor(Math.random() * (a.length - lo))]);
@@ -1442,6 +1457,7 @@
     function enter(w, now) {
       S.wst = w;
       if (w === "read") { S.wuntil = now + 3.4; popK("shelf"); }
+      else if (w === "poster") { S.wuntil = now + 3; }
       else if (w === "candy") { S.wuntil = now + 2.8; popFxK("hwcandy"); }
       else if (w === "broom") { S.wuntil = now + 3; popFxK("hwbroom"); }
       else if (w === "cookie") { S.wuntil = now + 3.2; S.wd = -1; popFxK("xcookie"); }
@@ -1662,6 +1678,8 @@
           if (S.wst === "walk" && seasonKind() === "hw" && S.wd > 0 && px < 104 && S.wx >= 104 && now >= (S.wfc || 0) && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter("candy", now); }
           if (S.wst === "walk" && isFest() && S.st["h-613"] && now >= (S.wfc || 0) && ((px < 84 && S.wx >= 84) || (px > 84 && S.wx <= 84)) && Math.random() < 0.6) { S.wx = 84; enter("blow", now); }
           if (S.wst === "walk" && tourKind() === "eve" && now >= (S.wfc || 0) && ((px < 92 && S.wx >= 92) || (px > 92 && S.wx <= 92)) && Math.random() < 0.6) { S.wx = 92; enter("pack", now); }
+          /* 演唱會前一天／當天：經過海報前（小人中心對到海報 x≈72）有機會停下來抬頭看，看完繼續往原方向走 */
+          if (S.wst === "walk" && S.rm !== 1 && tourKind() && !seasonKind() && S.st["f-1"] && now >= (S.wpf || 0) && ((px < 59 && S.wx >= 59) || (px > 59 && S.wx <= 59)) && Math.random() < 0.5) { S.wx = 59; S.wpf = now + 15; enter("poster", now); }
           var sk2 = seasonKind();
           if (S.wst === "walk" && (sk2 === "xmas" || sk2 === "ny") && now >= (S.wfc || 0)) {
             if (S.wd > 0 && px < 104 && S.wx >= 104 && Math.random() < 0.7) { S.wx = 104; S.wfc = now + 10; enter(sk2 === "ny" ? "hb" : (Math.random() < 0.5 ? "gift" : "sock"), now); }
