@@ -1,6 +1,6 @@
 /* 彩蛋小窩：像素房間。解鎖徽章／彩蛋，房間就會多一件物品。
    新增物品：在 ITEMS 加一筆 {k 代號, b 對應徽章代號, n 名稱, hid 是否隱藏, x,y,w,h 固定位置與大小, art 像素圖, an 點擊動畫, say 點擊台詞}
-   只讀取 badgeSync() 的結果，不改任何徽章資料。唯一會存的東西是 localStorage: room-seen（已看過的物品代號，用來標「新獲得」的閃爍星星）；檯燈開關、晝夜切換只在這次開啟有效。 */
+   只讀取 badgeSync() 的結果，不改任何徽章資料。會存的東西只有三個：localStorage: room-seen（已看過的物品代號，用來標「新獲得」的閃爍星星）、room-fest（每個節日今年是否已經打過招呼）、room-ng（上一次七人進場的時間，七人一小時才進場一次）；檯燈開關、晝夜切換只在這次開啟有效。 */
 (function () {
   "use strict";
   if (window.__roomLoaded) return;
@@ -209,6 +209,16 @@
     "等天黑再點亮，會更有氣氛。": ["Light it again when it gets dark for more atmosphere.", "어두워지면 다시 켜요. 분위기가 더 좋아요.", "暗くなったらまた点けよう。もっと雰囲気が出るよ。"],
     "七個人給的紅包，收到了！新年快樂。": ["Got the red envelopes from all seven — Happy New Year!", "일곱 명이 준 세뱃돈 받았어요. 새해 복 많이 받으세요!", "七人からのお年玉、受け取ったよ！あけましておめでとう。"],
     "收到大家的紅包，開心到想跳一下。": ["Got everyone's red envelopes — so happy I could jump.", "모두에게 세뱃돈을 받아서 신나서 폴짝 뛰고 싶어요.", "みんなからお年玉をもらって、うれしくてジャンプしたい。"],
+    "00:00，新的一年開始了。": ["00:00 — a brand-new year begins.", "00:00, 새로운 한 해가 시작됐어요.", "0:00、新しい年が始まったよ。"],
+    "萬聖節快樂！不給糖就搗蛋～": ["Happy Halloween! Trick or treat~", "해피 할로윈! 트릭 오어 트릿~", "ハッピーハロウィン！トリック・オア・トリート～"],
+    "聖誕快樂！今年也要一起過節。": ["Merry Christmas! Let's celebrate together again this year.", "메리 크리스마스! 올해도 함께 보내요.", "メリークリスマス！今年も一緒にお祝いしよう。"],
+    "新年快樂！新的一年也要在一起。": ["Happy New Year! Let's stay together this year too.", "새해 복 많이 받으세요! 올해도 함께해요.", "あけましておめでとう！今年も一緒にいようね。"],
+    "情人節快樂！把滿滿的愛心送給你。": ["Happy Valentine's Day! Sending you lots of love.", "해피 밸런타인데이! 사랑을 가득 보내요.", "ハッピーバレンタイン！たくさんの愛を贈るよ。"],
+    "中秋節快樂！今晚的月亮好圓。": ["Happy Mid-Autumn! The moon is so round tonight.", "즐거운 추석! 오늘 밤 달이 정말 둥글어요.", "中秋節おめでとう！今夜の月はまんまる。"],
+    "跨年快樂！等一下一起倒數。": ["Happy New Year's Eve! Let's count down together later.", "새해 전야 즐거워요! 이따가 같이 카운트다운해요.", "良いお年を！あとで一緒にカウントダウンしよう。"],
+    "哇！南瓜突然亮起來，嚇我一跳！": ["Whoa! The pumpkin lit up out of nowhere — you scared me!", "으악! 호박이 갑자기 켜져서 깜짝 놀랐어요!", "わっ！カボチャが急に光ってびっくりした！"],
+    "嚇死我了，原來是南瓜燈。": ["You scared me to death — it was just the jack-o'-lantern.", "간 떨어질 뻔했어요. 잭오랜턴이었네요.", "びっくりした、ジャック・オ・ランタンか。"],
+    "咦？它剛剛是不是瞪我？": ["Huh? Did it just glare at me?", "어? 방금 저를 노려본 거 아니에요?", "あれ？今、こっちをにらんだ？"],
     "跨年零食桌": ["New Year's Eve snack table", "새해 전야 간식 상", "年越しのおやつテーブル"],
     "橘子和年糕，跨年一定要吃點好彩頭。": ["Tangerines and rice cake — a little good luck for New Year's Eve.", "귤과 떡, 새해 전야엔 복을 챙겨야죠.", "みかんとお餅、年越しには縁起物を。"],
     "偷拿一塊年糕，邊吃邊等倒數。": ["Sneaking a piece of rice cake while waiting for the countdown.", "떡 한 조각 몰래 집어먹으며 카운트다운을 기다려요.", "お餅をこっそり一つ、カウントダウンを待ちながら。"],
@@ -381,9 +391,28 @@
   /* 跨年夜（12/31）：窗外夜晚不論完成度都放煙火、放得比較密，點時鐘改成跨年倒數。預覽：網址加 ?preview=nye（倒數照現在的時間算到午夜） */
   function isNye() {
     var d = new Date();
-    return PV === "nye" || (d.getMonth() === 11 && d.getDate() === 31);
+    return PV === "nye" || (d.getMonth() === 11 && d.getDate() === 31) || nyeAfter();
+  }
+  /* 跨過午夜之後的 10 分鐘（1/1 00:00–00:09）：還算跨年夜，煙火、零食桌都還在；00:00 小儀式也是在這段時間放 */
+  function nyeAfter() {
+    var d = new Date();
+    return d.getMonth() === 0 && d.getDate() === 1 && d.getHours() === 0 && d.getMinutes() < 10;
+  }
+  /* 節日代號（給「節日第一次開啟」用）：萬聖節 hw、聖誕 xmas、新年 ny、情人節 vd、中秋 mid、跨年夜 nye；不是這些節日就回傳空字串 */
+  function festKey() {
+    var k = seasonKind();
+    if (k === "hw" || k === "xmas" || k === "ny" || k === "vd" || k === "mid") return k;
+    return isNye() && !k ? "nye" : "";
+  }
+  /* 這個節日今年有沒有打過招呼了（localStorage: room-fest，{節日代號: 年份}） */
+  function festSeen(k) {
+    try { var f = JSON.parse(localStorage.getItem("room-fest") || "{}") || {}; return f[k] === new Date().getFullYear(); } catch (e) { return false; }
+  }
+  function festMark(k) {
+    try { var f = JSON.parse(localStorage.getItem("room-fest") || "{}") || {}; f[k] = new Date().getFullYear(); localStorage.setItem("room-fest", JSON.stringify(f)); } catch (e) {}
   }
   function nyeSay() {
+    if (nyeAfter()) { var LA = lang(); return LA === "en" ? "Happy New Year! A brand-new year has begun." : LA === "ko" ? "새해 복 많이 받으세요! 새로운 한 해가 시작됐어요." : LA === "ja" ? "あけましておめでとう！新しい年が始まったよ。" : "新年快樂！新的一年開始了。"; }
     var d = new Date(), L = lang(), tot = Math.max(1, Math.ceil((new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d) / 60000)), h = Math.floor(tot / 60), m = tot % 60;
     if (L === "en") return h > 0 ? "New Year countdown: " + h + "h " + m + "m to go." : "New Year countdown: only " + m + " min left!";
     if (L === "ko") return h > 0 ? "새해까지 " + h + "시간 " + m + "분 남았어요." : "새해까지 " + m + "분 남았어요!";
@@ -453,6 +482,13 @@
     mwatch: ["停在窗邊賞月，今晚的月亮好圓。", "抬頭看圓圓的月亮，團圓的日子。"],
     hum: ["邊揮手燈邊哼歌，今天的演唱會還在耳邊。", "揮著手燈哼著歌，回味剛剛的現場。"],
     hbg: ["七個人給的紅包，收到了！新年快樂。", "收到大家的紅包，開心到想跳一下。"],
+    greethw: ["萬聖節快樂！不給糖就搗蛋～"],
+    greetxmas: ["聖誕快樂！今年也要一起過節。"],
+    greetny: ["新年快樂！新的一年也要在一起。"],
+    greetvd: ["情人節快樂！把滿滿的愛心送給你。"],
+    greetmid: ["中秋節快樂！今晚的月亮好圓。"],
+    greetnye: ["跨年快樂！等一下一起倒數。"],
+    scare: ["哇！南瓜突然亮起來，嚇我一跳！", "嚇死我了，原來是南瓜燈。", "咦？它剛剛是不是瞪我？"],
     sleep: ["正在休息，zZ…", "打瞌睡中，夜深了。", "趴著睡著了，zzZ…"],
     w2: ["在練習室裡熱身走動。", "一邊走一邊默默數拍子。"],
     dn: ["跳舞中，節拍跟上！", "練舞練到停不下來。"],
@@ -823,12 +859,12 @@
   /* 地板上的情書：每寄出一封，換成下一種顏色的新信（白、粉、藍、奶油色輪流） */
   function letterArt(n, lx) {
     var v = LETV[n % 4];
-    return '<g class="rlt" transform="translate(' + lx + ',88)">' + R(0, 0, 10, 7, v[0]) + R(0, 6, 10, 1, v[1]) + R(1, 1, 2, 1, v[1]) + R(3, 2, 2, 1, v[1]) + R(5, 2, 2, 1, v[1]) + R(7, 1, 2, 1, v[1]) +
+    return '<g class="rlt" transform="translate(' + lx + ',83)">' + R(0, 0, 10, 7, v[0]) + R(0, 6, 10, 1, v[1]) + R(1, 1, 2, 1, v[1]) + R(3, 2, 2, 1, v[1]) + R(5, 2, 2, 1, v[1]) + R(7, 1, 2, 1, v[1]) +
       R(3, 3, 1, 1, v[2]) + R(5, 3, 1, 1, v[2]) + R(3, 4, 3, 1, v[2]) + R(4, 5, 1, 1, v[2]) + "</g>";
   }
   /* 郵筒（只有小窩有）：圓頂紅色，左邊一支小旗子，有信投進去後旗子升起 */
   function mailArt() {
-    return '<g class="rmml' + (vdMailUp ? " up" : "") + '" transform="translate(149,80)">' + R(2, 0, 6, 1, "#e0453a") + R(1, 1, 8, 1, "#e0453a") + R(0, 2, 10, 10, "#e0453a") + R(0, 2, 1, 10, "#ff8a7a", 0.5) + R(9, 2, 1, 10, "#b02a20") + R(1, 12, 8, 1, "#b02a20") +
+    return '<g class="rmml' + (vdMailUp ? " up" : "") + '" transform="translate(149,75)">' + R(2, 0, 6, 1, "#e0453a") + R(1, 1, 8, 1, "#e0453a") + R(0, 2, 10, 10, "#e0453a") + R(0, 2, 1, 10, "#ff8a7a", 0.5) + R(9, 2, 1, 10, "#b02a20") + R(1, 12, 8, 1, "#b02a20") +
       R(2, 4, 6, 1, "#3a1f17") + R(3, 7, 1, 1, "#fff") + R(5, 7, 1, 1, "#fff") + R(3, 8, 3, 1, "#fff") + R(4, 9, 1, 1, "#fff") + R(4, 13, 2, 3, "#555") + R(-1, 3, 1, 8, "#555") +
       '<g class="rmfd">' + R(-4, 8, 3, 2, "#ffd23f") + '</g><g class="rmfu">' + R(-4, 3, 3, 2, "#ffd23f") + "</g></g>";
   }
@@ -842,7 +878,7 @@
       R(2, 10, 5, 1, "#bfe3ff") + R(1, 11, 7, 4, "#bfe3ff") + R(2, 15, 5, 1, "#9ad0ff") + R(2, 12, 1, 2, "#ffffff") + R(1, 13, 7, 1, "#ff8fb3") + "</g>";
     var letter = letterArt(vdLetterN, lx);
     return fxG("vdchoc", box, [29, 78, 14, 12], r2) + fxG("vdheart", hearts, [43, 72, 16, 14], r2) +
-      fxG("vdrose", rose, [rx - 1, 79, 11, 17], r2) + fxG("vdletter", letter, [lx - 1, 87, 12, 9], r2) + (r2 ? "" : fxG("vdmail", mailArt(), [144, 80, 16, 17]));
+      fxG("vdrose", rose, [rx - 1, 79, 11, 17], r2) + fxG("vdletter", letter, [lx - 1, 82, 12, 9], r2) + (r2 ? "" : fxG("vdmail", mailArt(), [144, 75, 16, 17]));
   }
   /* 中秋節的地板擺飾：左邊一盤月餅（兩個），右邊一顆柚子。都只是裝飾，不能點 */
   function midMoonCakes() {
@@ -850,8 +886,8 @@
       R(2, 5, 7, 4, "#c68642") + R(3, 4, 5, 1, "#c68642") + R(4, 6, 3, 2, "#8a5a2a") + R(2, 5, 7, 1, "#ffffff", 0.2) +
       R(10, 6, 6, 3, "#d9964f") + R(11, 5, 4, 1, "#d9964f") + R(12, 6, 2, 2, "#8a5a2a");
   }
-  function midPomelo() {
-    return '<g transform="translate(140,80)">' + R(4, 0, 2, 2, "#2dbf8f") + R(2, 2, 6, 1, "#c9d83f") + R(1, 3, 8, 6, "#c9d83f") + R(2, 9, 6, 1, "#a9b82a") +
+  function midPomelo(px) {
+    return '<g transform="translate(' + (px || 140) + ',80)">' + R(4, 0, 2, 2, "#2dbf8f") + R(2, 2, 6, 1, "#c9d83f") + R(1, 3, 8, 6, "#c9d83f") + R(2, 9, 6, 1, "#a9b82a") +
       R(3, 4, 2, 2, "#e8f08a") + R(7, 6, 2, 3, "#a9b82a") + "</g>";
   }
   /* 中秋節窗外的月亮：夜晚是一顆大圓月（左上那一格窗，外面一圈淡淡的月暈）；白天只有一顆淡淡的月亮 */
@@ -872,9 +908,10 @@
   }
   /* 中秋節的裝飾：牆上兩盞兔子燈、地板左邊的月餅、右邊的柚子。都可以點（燈籠抖、月餅和柚子跳），練習室（r2）只當裝飾 */
   function midDeco(r2) {
+    var pxm = r2 ? 104 : 140; /* 練習室右邊的運動包佔了 x≈140–156，柚子改放到它左邊的空地 */
     return fxG("midlan", rabbitLan(31, 4, "#ffffff", "#e8eef5"), [30, 0, 10, 16], r2) + fxG("midlan", rabbitLan(151, 4, "#fff1a8", "#e8d27a"), [150, 0, 10, 16], r2) +
       fxG("midcake", '<g transform="translate(30,78)">' + midMoonCakes() + "</g>", [29, 80, 20, 12], r2) +
-      fxG("midpomelo", midPomelo(), [139, 79, 12, 12], r2);
+      fxG("midpomelo", midPomelo(pxm), [pxm - 1, 79, 12, 12], r2);
   }
   /* 萬聖節的南瓜燈（可以點：亮燈／熄燈，亮燈時眼睛和嘴巴發黃光、外圍一圈會閃的橘色光暈）；點的時候 fxHit 會直接換掉這一層的內容 */
   function pumpkinArt() {
@@ -887,7 +924,7 @@
   /* 地板上的小擺飾（只是裝飾，不能點）：萬聖節南瓜、聖誕樹、情人節巧克力；新年只有彩旗和皇冠 */
   function festProp(r2) {
     var k = seasonKind(), s = "";
-    return (s ? '<g transform="translate(' + (k === "xmas" ? "138,72" : "30,78") + ')" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? fxG("hwpump", hwPumpInner(), null, r2) + candyArt() + broomArt() : "") + (k === "xmas" ? xmasDeco(r2) : "") + (k === "mid" ? midDeco(r2) : "") + (k === "ny" ? nyDeco(r2) : "") + (k === "vd" ? vdDeco(r2) : "") + (isNye() && !k ? nyeDeco(r2) : "");
+    return (s ? '<g transform="translate(' + (k === "xmas" ? "138,72" : "30,78") + ')" pointer-events="none">' + s + "</g>" : "") + (k === "hw" ? fxG("hwpump", hwPumpInner(), null, r2) + candyArt(r2) + broomArt() : "") + (k === "xmas" ? xmasDeco(r2) : "") + (k === "mid" ? midDeco(r2) : "") + (k === "ny" ? nyDeco(r2) : "") + (k === "vd" ? vdDeco(r2) : "") + (isNye() && !k ? nyeDeco(r2) : "");
   }
   /* 聖誕樹（可以點：亮燈／關燈，亮燈時窗外也會下雪）；點的時候 fxHit 會直接換掉這一層的內容 */
   function xtreeInner() { return R(137, 70, 18, 21, "transparent") + '<g transform="translate(138,72)">' + xmasTree() + "</g>"; }
@@ -917,10 +954,11 @@
     var cookie = '<g transform="translate(36,86)">' + R(0, 5, 10, 2, "#e8eef5") + R(1, 6, 8, 1, "#c7d2e0") +
       R(1, 2, 4, 3, "#c68642") + R(2, 3, 1, 1, "#5a3a1a") + R(4, 2, 1, 1, "#5a3a1a") + R(5, 3, 4, 2, "#c68642") + R(6, 3, 1, 1, "#5a3a1a") +
       R(11, 0, 5, 7, "#dfeefa") + R(11, 2, 5, 5, "#ffffff") + R(11, 6, 5, 1, "#c7d2e0") + "</g>";
-    var s = fxG("xtree", xtreeInner(), null, r2) + fxG("xgift", giftArt(128, 84, 9, 8, "#e0453a", "#ffd23f"), [127, 82, 11, 11], r2) +
+    var big = fxG("xtree", xtreeInner(), null, r2) + fxG("xgift", giftArt(128, 84, 9, 8, "#e0453a", "#ffd23f"), [127, 82, 11, 11], r2) +
       fxG("xgift", giftArt(150, 86, 8, 6, "#2a7de1", "#ffffff"), [149, 84, 10, 9], r2) +
-      fxG("xgift", giftArt(141, 89, 6, 4, "#ffd23f", "#e0453a"), [140, 87, 8, 7], r2) +
-      fxG("xcookie", cookie, [35, 84, 18, 10], r2);
+      fxG("xgift", giftArt(141, 89, 6, 4, "#ffd23f", "#e0453a"), [140, 87, 8, 7], r2);
+    /* 練習室右邊有筆記本和運動包，樹和禮物整組往左移到空地 */
+    var s = (r2 ? '<g transform="translate(-48,0)">' + big + "</g>" : big) + fxG("xcookie", cookie, [35, 84, 18, 10], r2);
     if (!r2) s += fxG("xsock", sockArt(120, 57, "#e0453a"), [119, 55, 10, 12]) + fxG("xsock", sockArt(134, 57, "#2dbf8f"), [133, 55, 10, 12]);
     return s;
   }
@@ -976,6 +1014,7 @@
   }
   /* 日曆：跨年夜顯示「31」最後一頁；小人撕掉之後換成「1」加金色亮點（nyCalFlip） */
   function calNyArt() {
+    if (nyeAfter()) nyCalFlip = true;
     var D = "#0b2a5b", r = R(0, 0, 12, 14, "#fff") + R(0, 0, 12, 4, "#e0457b") + R(2, 0, 1, 2, "#555") + R(9, 0, 1, 2, "#555") + R(0, 13, 12, 1, "#b9dcf5");
     if (nyCalFlip) return r + dgStr(1, 4, 6, D) + R(9, 5, 1, 1, "#ffd23f") + R(8, 6, 3, 1, "#ffd23f") + R(9, 7, 1, 1, "#ffd23f") + R(1, 11, 2, 1, "#ffd23f");
     return r + dgStr(3, 3, 6, D) + dgStr(1, 7, 6, D);
@@ -986,7 +1025,8 @@
     var orange = R(3, -5, 4, 4, "#ff9f1c") + R(4, -6, 1, 1, "#2dbf8f") + R(8, -4, 4, 3, "#ff9f1c") + R(9, -5, 1, 1, "#2dbf8f") + R(2, -1, 11, 1, "#e8eef5");
     var cake = R(17, -3, 7, 3, "#e8eef5") + R(18, -5, 5, 2, "#ffffff") + R(20, -6, 1, 1, "#e0453a") + R(17, -1, 7, 1, "#c7d2e0");
     var star = R(26, -2, 2, 2, "#ffd23f") + R(26, -3, 2, 1, "#fff1a8");
-    return fxG("nyesnack", '<g transform="translate(122,80)">' + t0 + orange + cake + star + "</g>", [121, 72, 32, 21], r2);
+    var tx = r2 ? 76 : 122; /* 練習室右邊有筆記本（x≈122–134）和運動包（x≈140–156），桌子改放到它們左邊的空地 */
+    return fxG("nyesnack", '<g transform="translate(' + tx + ',80)">' + t0 + orange + cake + star + "</g>", [tx - 1, 72, 32, 21], r2);
   }
   /* 新年的裝飾：牆上兩盞紅燈籠、地板右邊的紅包、左邊的金元寶。可以點（燈籠抖、紅包和元寶跳），練習室（r2）只當裝飾 */
   function lanternArt(x, y) {
@@ -999,7 +1039,7 @@
   function nyDeco(r2) {
     var ingot = '<g transform="translate(34,86)">' + R(3, 0, 6, 2, "#ffe27a") + R(4, 0, 2, 1, "#ffffff") + R(0, 2, 12, 2, "#ffd23f") + R(1, 4, 10, 2, "#e0a800") + R(2, 6, 8, 1, "#b87333") + "</g>";
     return fxG("nylan", lanternArt(31, 4), [30, 0, 10, 16], r2) + fxG("nylan", lanternArt(151, 4), [150, 0, 10, 16], r2) +
-      fxG("nyhb", envArt(128, 86), [127, 85, 8, 10], r2) + fxG("nyhb", envArt(135, 90), [134, 89, 8, 10], r2) + fxG("nyhb", envArt(142, 86), [141, 85, 8, 10], r2) +
+      (r2 ? '<g transform="translate(-46,0)">' : "") + fxG("nyhb", envArt(128, 86), [127, 85, 8, 10], r2) + fxG("nyhb", envArt(135, 90), [134, 89, 8, 10], r2) + fxG("nyhb", envArt(142, 86), [141, 85, 8, 10], r2) + (r2 ? "</g>" : "") +
       fxG("nyingot", ingot, [33, 85, 14, 9], r2);
   }
   /* 聖誕樹：放在地板右側，16×18 格（比原本大），只是裝飾，不能點 */
@@ -1063,10 +1103,11 @@
     return fxG("hwbroom", s, [0, 70, 12, 24]);
   }
   /* 地板上散落的糖果和一根棒棒糖：每一顆都能單獨點 */
-  function candyArt() {
+  function candyArt(r2) {
+    var sx = r2 ? -46 : 0; /* 練習室右邊的筆記本和運動包會被蓋到，右半邊的糖果往左移 */
     var cd = function (x, y, c, e) { return fxG("hwcandy", R(x + 1, y, 3, 2, c) + R(x, y, 1, 2, e) + R(x + 4, y, 1, 2, e), [x - 1, y - 2, 7, 6]); };
-    return cd(116, 86, "#ff8a1f", "#ffd9a8") + cd(125, 91, "#7b4fd6", "#cdb8ff") + cd(134, 85, "#ff8fb3", "#ffd6e4") + cd(143, 92, "#ff8a1f", "#ffd9a8") + cd(46, 94, "#7b4fd6", "#cdb8ff") +
-      fxG("hwcandy", '<g transform="translate(120,76)">' + R(1, 0, 3, 5, "#ff8fb3") + R(0, 1, 5, 3, "#ff8fb3") + R(2, 1, 1, 3, "#fff") + R(1, 2, 3, 1, "#fff") + R(2, 5, 1, 5, "#e8e8e8") + "</g>", [119, 75, 7, 12]);
+    return cd(116 + sx, 86, "#ff8a1f", "#ffd9a8") + cd(125 + sx, 91, "#7b4fd6", "#cdb8ff") + cd(134 + sx, 85, "#ff8fb3", "#ffd6e4") + cd(143 + sx, 92, "#ff8a1f", "#ffd9a8") + cd(46, 94, "#7b4fd6", "#cdb8ff") +
+      fxG("hwcandy", '<g transform="translate(' + (120 + sx) + ',76)">' + R(1, 0, 3, 5, "#ff8fb3") + R(0, 1, 5, 3, "#ff8fb3") + R(2, 1, 1, 3, "#fff") + R(1, 2, 3, 1, "#fff") + R(2, 5, 1, 5, "#e8e8e8") + "</g>", [119 + sx, 75, 7, 12]);
   }
   /* 節日的下方說明文字（r2＝練習室） */
   function seasCap(r2) {
@@ -1309,6 +1350,8 @@
 
   /* ===== 窗外煙火（只有小窩 100% 才有）：一格一格的像素，共 8 影格——前 3 格火箭上升，後 5 格爆開、變淡 ===== */
   var HFW = ["011000110", "111101111", "111111111", "111111111", "011111110", "001111100", "000111000", "000010000"];
+  /* 00:00 小儀式的三輪煙火：每輪 5～6 發「同時」升空、同時爆開（x, y, 顏色編號） */
+  var NYR = [[[70, 17, 0], [78, 22, 2], [86, 16, 4], [91, 22, 5], [82, 13, 6]], [[73, 19, 1], [81, 15, 3], [88, 20, 6], [69, 23, 5], [92, 15, 2]], [[68, 16, 0], [75, 22, 3], [82, 17, 5], [89, 23, 1], [92, 16, 4], [80, 25, 6]]];
   function fwHtml(b, f) {
     var s = "", c1 = MC[b.c], c2 = MC[(b.c + 3) % 7];
     if (b.h && f >= 3) {
@@ -2068,6 +2111,15 @@
         if (nyParty && !o.querySelector("#rmscrap")) { var sv2 = o.querySelector("#rmsv"); if (sv2) sv2.insertAdjacentHTML("beforeend", nyScrapArt()); }
       }
     }
+    /* 七人進場（新年、情人節、中秋、跨年夜）改成一個小時一次：上一次進場的時間存在 localStorage: room-ng，重新開啟小窩也要等滿一小時（第一次或超過一小時沒進場，開啟後約 6 秒就會進場）。預覽（?preview=）時不限，維持每 25～45 秒一次方便測試；點車票／照片手動觸發不受限制 */
+    function ngWait(now) {
+      if (PV) return now + 6;
+      var last = 0;
+      try { last = +localStorage.getItem("room-ng") || 0; } catch (e) {}
+      return now + Math.max(6, Math.min(3600, (last + 3600000 - Date.now()) / 1000));
+    }
+    function ngAfter(now) { return PV ? now + 25 + Math.random() * 20 : now + 3580; }
+    function ngMark() { try { localStorage.setItem("room-ng", String(Date.now())); } catch (e) {} }
     function ngStart(now) {
       if (S.ngA || S.ngW || !ROOMS[S.rm].ng) return;
       /* 七人要進場前，一定要等單人已經離場：先讓單人往右走出畫面（ngW），走完才由 tick 呼叫 ngGo 讓七人進來 */
@@ -2084,7 +2136,8 @@
       S.ngx = WN.map(function (n, i) { return reduceM ? 8 + i * 21 : -24 - i * 12; });
       S.ngP = reduceM ? "hold" : "in";
       S.ngA = !reduceM ? 1e12 : now + 6;
-      S.ngNext = !reduceM ? now + 1e9 : S.ngA + 25 + Math.random() * 20;
+      S.ngNext = !reduceM ? now + 1e9 : ngAfter(S.ngA);
+      ngMark();
       var cap = document.getElementById("rmcap");
       if (seasonKind() === "mid") { if (cap) cap.innerHTML = "<b>" + esc(t("七個人一起賞月！")) + "</b><br>" + esc(t("中秋節快樂，月亮好圓。")); } else
       if (isNye() && !seasonKind()) { nyParty = true; if (cap) cap.innerHTML = "<b>" + esc(t("七個人一起跨年！")) + "</b><br>" + esc(t("乾杯，倒數完就是新的一年了。")); } else
@@ -2115,6 +2168,13 @@
       var sy = g.getAttribute("data-k") === "vdchoc" && vdChoc <= 0 ? CAPS.chocE : (g.getAttribute("data-k") === "xtree" && !xmasLit) || (g.getAttribute("data-k") === "hwpump" && !hwLit) ? f.off : f.say;
       if (cap) cap.innerHTML = "<b>" + esc(t(f.n)) + "</b><br>" + esc(t(sy[Math.floor(Math.random() * sy.length)]));
       S.capK = ""; S.cph = performance.now() / 1000 + 5;
+      /* 萬聖節：點亮南瓜的那一刻，小人（在散步、沒在忙別的）被嚇一跳：連跳兩下、頭上冒驚嘆號、轉向南瓜，下方文字換成他自己的反應 */
+      if (g.getAttribute("data-k") === "hwpump" && hwLit && S.wst === "walk" && !S.ngA && !S.ngW && !S.pop) {
+        var t1 = performance.now() / 1000, sc = CAPS.scare;
+        enter("scare", t1);
+        if (cap) cap.innerHTML = "<b>" + esc(WN[S.mem]) + "</b><br>" + esc(t(sc[Math.floor(Math.random() * sc.length)]));
+        S.capK = "scare"; S.cph = t1 + 4;
+      }
     }
     /* 小人偷吃一顆：盒子裡最後那顆消失 */
     function chocEat() {
@@ -2143,6 +2203,7 @@
       var cp = document.getElementById("rmcap");
       if (!cp || now < S.cph || S.capK === key) return;
       if ((key === "out" || key === "back") && S.wng) key = key === "out" ? "outG" : "backG";
+      if (key === "greet") key = "greet" + festKey();
       if (isNye()) { if (key === "cal") key = "calN"; else if (key === "tear") key = "tearN"; }
       if (S.capK === key) return;
       S.capK = key;
@@ -2254,6 +2315,8 @@
       else if (w === "hb") { S.wuntil = now + 2.8; popFxK("nyhb"); }
       else if (w === "snack") { S.wuntil = now + 3; S.wd = 1; popFxK("nyesnack"); }
       else if (w === "fwatch") { S.wuntil = now + 5; S.wd = 1; }
+      else if (w === "scare") { S.wuntil = now + 2.8; S.wd = S.wx > 36 ? -1 : 1; S.wj = 0.5; S.wsc = 1; var sb = o.querySelector(".rmtk"); if (sb) sb.innerHTML = talkBub("!"); }
+      else if (w === "greet") { S.wuntil = now + 4; S.wd = 1; S.wj = 0.5; var gbb = o.querySelector(".rmtk"); if (gbb) gbb.innerHTML = talkBub(); }
       else if (w === "hbg") { S.wuntil = now + 3; S.wd = 1; S.wj = 0.5; }
       else if (w === "hum") { S.wuntil = now + 6.5; S.wd = 1; }
       else if (w === "mcake") { S.wuntil = now + 3.2; S.wd = -1; popFxK("midcake"); }
@@ -2339,7 +2402,7 @@
           S.wd = 1;
           if (!S.wot) { S.wx += SPD * 1.3 * dt; if (S.wx >= 172) { S.wot = 1; S.wouti = now + 6; } }
           else if (S.wot === 1) { if (now >= S.wouti && !S.wdep) { S.wot = 2; S.wx = -30; } }
-          else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN;  if (S.wgiv) { S.wgiv = 0; enter("hbg", now); } else if (tourBack()) { S.whm = now + 40; enter("hum", now); } } }
+          else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wng = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN;  if (S.wgiv) { S.wgiv = 0; enter("hbg", now); } else if (tourBack()) { S.whm = now + 40; enter("hum", now); } } }
         } else if (now >= S.wuntil) {
           var was = S.wst;
           S.wst = "walk"; S.wq = now + QMIN + Math.random() * QSPAN;
@@ -2486,7 +2549,7 @@
       if (!roomOpen(S.rm, S.st)) { raf = requestAnimationFrame(tick); return; }
       if (TICKS[ROOMS[S.rm].id]) { S.ngA = 0; TICKS[ROOMS[S.rm].id](now, dt); raf = requestAnimationFrame(tick); return; }
       if (seasonKind() === "ny" || seasonKind() === "vd" || seasonKind() === "mid" || isNye()) {
-        if (!S.ngNext) S.ngNext = now + 6;
+        if (!S.ngNext) S.ngNext = ngWait(now);
         if (!S.ngA && !S.ngW && S.wst === "walk" && now >= S.ngNext) ngStart(now);
       }
       if (S.ngW && S.wst === "out" && S.wot === 1) { S.ngW = 0; ngGo(now); } /* 單人已離場，七人才進場 */
@@ -2503,9 +2566,9 @@
         } else {
           for (nk = 0; nk < 7; nk++) { S.ngx[nk] += 40 * dt; if (S.ngx[nk] < 162) nok = false; }
           if (nok) {
-            S.ngA = 0; S.ngP = ""; S.ngNext = now + 25 + Math.random() * 20;
+            S.ngA = 0; S.ngP = ""; S.ngNext = ngAfter(now);
             /* 七人全部離場後，單人才從左邊走回來 */
-            if (S.wdep && S.wst === "out") { S.wdep = 0; S.wng = 0; S.wot = 2; S.wx = -30; S.wd = 1; }
+            if (S.wdep && S.wst === "out") { S.wdep = 0; S.wot = 2; S.wx = -30; S.wd = 1; }
           }
         }
         if (ngr) {
@@ -2538,11 +2601,35 @@
         var w7 = o.querySelector("#rmwv7");
         if (w7) { if (S.g7 === "done") w7.removeAttribute("display"); fadeEl(w7, S.g7 === "done" ? 1 : 0); }
       }
+      /* 跨年 00:00 小儀式（約 5.6 秒）：時鐘閃兩下、日曆翻成新的一年、三輪煙火「同時」爆開、字幕變「新年快樂」。真的跨過午夜才放（1/1 00:00–00:09 內第一次）；預覽 ?preview=nye 開啟 8 秒後放一次，之後每 45 秒一次。煙火要切到夜晚才看得到 */
+      if (!S.nyr && ((nyeAfter() && !S.nyrDone) || (PV === "nye" && now >= (S.nyrNext || (S.nyrNext = now + 8))))) {
+        S.nyrDone = 1; S.nyrNext = now + 45; S.nyr = { t: now, k: -1 }; S.fwb = null; S.fwn = now + 9;
+        popK("clock");
+        var nsv = o.querySelector("#rmsv"), nof = o.querySelector("#rmnyf");
+        if (nof) nof.remove();
+        if (nsv) nsv.insertAdjacentHTML("beforeend", '<g id="rmnyf" style="pointer-events:none">' + R(36, 2, 24, 24, "#ffd23f", 0.22) + R(41, 7, 14, 14, "#fff7c2", 0.8) + "</g>");
+        if (!nyCalFlip) { nyCalFlip = true; var ncg = o.querySelector('.rmi[data-k="cal"]'); if (ncg) ncg.innerHTML = R(0, 0, 12, 14, "transparent") + calNyArt(); }
+        var ncp = document.getElementById("rmcap");
+        if (ncp) { ncp.innerHTML = "<b>" + esc(t("新年快樂！")) + "</b><br>" + esc(t("00:00，新的一年開始了。")); S.capK = ""; S.cph = now + 9; }
+        if (S.wst === "walk") S.wj = 0.5;
+      }
+      if (S.nyr) {
+        var nt = now - S.nyr.t, nfw = o.querySelector("#rmfw"), nfl = o.querySelector("#rmnyf");
+        if (nfl) { nfl.style.opacity = (nt < 0.25 || (nt >= 0.4 && nt < 0.65)) ? "1" : "0"; if (nt > 0.8) nfl.remove(); }
+        if (nfw && nt >= 0.4) {
+          var nv = Math.floor((nt - 0.4) / 1.6), nf = Math.floor(((nt - 0.4) - nv * 1.6) / 0.18), nk = nv < 3 ? nv * 100 + Math.min(nf, 9) : -2;
+          if (nk !== S.nyr.k) {
+            S.nyr.k = nk;
+            nfw.innerHTML = nv < 3 && nf <= 8 ? NYR[nv].map(function (b) { return fwHtml({ x: b[0], y: b[1], c: b[2] }, nf); }).join("") : "";
+          }
+        }
+        if (nt > 5.6) { S.nyr = null; S.fwn = now + 3; var nfw2 = o.querySelector("#rmfw"); if (nfw2) nfw2.innerHTML = ""; }
+      }
       /* 窗外煙火：小窩 100% 才有。每隔 5～12 秒放一發，每發約 1.4 秒 */
       var fw = o.querySelector("#rmfw");
       if (fw) {
         if (!S.fwn) S.fwn = now + 2.5 + Math.random() * 3;
-        if (S.wst === "fwatch" && !S.fwb && S.fwn > now + 1) S.fwn = now + 0.6;
+        if (S.wst === "fwatch" && !S.fwb && !S.nyr && S.fwn > now + 1) S.fwn = now + 0.6;
         if (!S.fwb && now >= S.fwn) S.fwb = { t: now, x: 70 + Math.floor(Math.random() * 21), y: 15 + Math.floor(Math.random() * 10), c: Math.floor(Math.random() * 7), f: -1, h: seasonKind() === "vd" && Math.random() < 0.6 };
         if (S.fwb) {
           var ff = Math.floor((now - S.fwb.t) / 0.18);
@@ -2643,6 +2730,9 @@
           if (S.wst === "walk" && S.night && qok && S.wwalk > S.wslT) { S.wst = "sleep"; S.wuntil = now + 5; S.wwalk = 0; S.wslT = 0; }
           /* 小人主動說話：安靜期過了、沒有其他互動、剛才沒點過東西時，停下來跳一下、頭上冒愛心，下方文字講一句（每 30～60 秒一次；第一次在開啟後約 10～18 秒） */
           if (!S.wsn) S.wsn = now + 10 + Math.random() * 8;
+          /* 節日第一次開啟：小人先說一句應景的話（每個節日每年一次；預覽 ?preview=xmas 等每次開啟都會說） */
+          if (!S.gdn) { S.gdn = 1; var fk0 = festKey(); if (fk0 && (PV || !festSeen(fk0))) { if (!PV) festMark(fk0); S.gpend = now + 1.2; } }
+          if (S.gpend && S.wst === "walk" && !S.ngA && !S.ngW && !S.pop && now >= S.gpend) { S.gpend = 0; enter("greet", now); }
           if (S.wst === "walk" && !S.pop && now >= S.wsn && now >= S.cph && qok) enter("talk", now);
           /* 演唱會回來之後（22:00 起，預覽 ?preview=tourback）：小人偶爾停下來邊揮手燈邊哼歌 */
           if (S.wst === "walk" && tourBack() && qok && now >= (S.whm || 0)) { S.whm = now + 35 + Math.random() * 25; enter("hum", now); }
@@ -2654,7 +2744,7 @@
             S.wd = 1;
             if (!S.wot) { S.wx += SPD * 1.3 * dt; if (S.wx >= 172) { S.wot = 1; S.wouti = now + 6; } }
             else if (S.wot === 1) { if (now >= S.wouti && !S.wdep) { S.wot = 2; S.wx = -30; } }
-            else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN;  if (S.wgiv) { S.wgiv = 0; enter("hbg", now); } else if (tourBack()) { S.whm = now + 40; enter("hum", now); } } }
+            else { S.wx += SPD * 1.3 * dt; if (S.wx >= 40) { S.wst = "walk"; S.wot = 0; S.wuntil = 0; S.wng = 0; S.wcd = now + 6; S.wq = now + QMIN + Math.random() * QSPAN;  if (S.wgiv) { S.wgiv = 0; enter("hbg", now); } else if (tourBack()) { S.whm = now + 40; enter("hum", now); } } }
           }
           if (S.wst === "tubeR" && !S.wtbj && now - S.wtbs > 1.6) { S.wtbj = 1; popK("tube"); }
           if (S.wst === "lamp") lampStep(now);
@@ -2688,7 +2778,7 @@
         if (S.wj > 0) {
           S.wj -= dt;
           dy = S.wj > 0 ? -6 * Math.sin(Math.PI * (1 - S.wj / 0.5)) : 0;
-        }
+        } else if (S.wsc && S.wst === "scare") { S.wsc = 0; S.wj = 0.5; } /* 被嚇到：第一下跳完再跳第二下 */
         capSt(now, S.wst === "walk" ? (now < S.wju ? "run" : "walk") : (S.wst === "cal" && now < S.wtr) ? "tear" : S.wst === "out" && S.wot === 2 ? "back" : S.wst === "lamp" ? (S.wlK || "loff") : S.wst);
         g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + "," + dy.toFixed(2) + ")");
         g.classList.toggle("pz", S.wst !== "walk" && S.wst !== "out" && S.wst !== "mailgo");
