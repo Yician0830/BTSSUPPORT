@@ -241,6 +241,7 @@
     "這次打卡的紀念，好好收著。": ["A keepsake from this check-in — keep it safe.", "이번 체크인의 기념품이에요. 잘 간직해요.", "今回のチェックインの記念。大切にしまっておこう。"],
     "多了一張新的打卡票根，小窩又滿一點了。": ["A new check-in stub — the nest is a little fuller.", "새 체크인 티켓이 생겼어요. 둥지가 조금 더 채워졌어요.", "新しい半券が1枚増えた。小窩がまた少し賑やかに。"],
     "多了幾張新的打卡票根，小窩越來越滿了。": ["New check-in stubs — the nest keeps filling up.", "새 체크인 티켓이 늘었어요. 둥지가 점점 가득 차요.", "新しい半券が増えた。小窩がどんどん賑やかに。"],
+    "生日應援海報": ["Birthday support poster", "생일 응원 포스터", "バースデー応援ポスター"],
     "跨年零食桌": ["New Year's Eve snack table", "새해 전야 간식 상", "年越しのおやつテーブル"],
     "橘子和年糕，跨年一定要吃點好彩頭。": ["Tangerines and rice cake — a little good luck for New Year's Eve.", "귤과 떡, 새해 전야엔 복을 챙겨야죠.", "みかんとお餅、年越しには縁起物を。"],
     "偷拿一塊年糕，邊吃邊等倒數。": ["Sneaking a piece of rice cake while waiting for the countdown.", "떡 한 조각 몰래 집어먹으며 카운트다운을 기다려요.", "お餅をこっそり一つ、カウントダウンを待ちながら。"],
@@ -425,7 +426,7 @@
      活動名稱和地點從全域 DATA 找（title、place），找不到就只顯示日期。預覽 ?preview=stubs 會用 23 張假資料。 ===== */
   function stubList() {
     var ids = [], dd = {}, tt = {}, data = [], out = [], i, j, d, id, dt;
-    if (PVL.indexOf("stubs") >= 0) { for (i = 0; i < 23; i++) out.push({ id: "t" + i, date: "10/" + (i + 1), title: "測試應援活動 " + (i + 1), place: "測試地點" }); return out; }
+    if (PVL.indexOf("stubs") >= 0) { for (i = 0; i < 23; i++) out.push({ id: "t" + i, date: "10/" + (i + 1), title: "測試應援活動 " + (i + 1), place: "測試地點", bd: i % 4 === 3 }); return out; }
     try { ids = JSON.parse(localStorage.getItem("kh-done") || "[]"); if (!Array.isArray(ids)) ids = []; } catch (e) { ids = []; }
     try { dd = JSON.parse(localStorage.getItem("kh-donedate") || "{}") || {}; } catch (e) { dd = {}; }
     try { tt = JSON.parse(localStorage.getItem("kh-donetime") || "{}") || {}; } catch (e) { tt = {}; }
@@ -434,7 +435,7 @@
       id = ids[i]; d = null;
       for (j = 0; j < data.length; j++) if (data[j] && data[j].id === id) { d = data[j]; break; }
       dt = dd[id] || (tt[id] ? String(tt[id]).slice(5, 10).replace("-", "/").replace(/^0/, "").replace("/0", "/") : "");
-      out.push({ id: id, date: dt, title: d && d.title ? String(d.title) : "", place: d && d.place ? String(d.place) : "" });
+      out.push({ id: id, date: dt, title: d && d.title ? String(d.title) : "", place: d && d.place ? String(d.place) : "", bd: !!(d && d.sec === "birthday") });
     }
     return out;
   }
@@ -443,14 +444,15 @@
   function stubMark(n) { if (PVL.indexOf("stubs") >= 0) return; try { localStorage.setItem("room-stubn", String(n)); } catch (e) {} }
   /* 一排小票根：最多 20 張（超過就只顯示最新 20 張，最左邊多一格「+N」）；nw＝這次開啟後才多出來的張數，最新的 nw 張會閃一下 */
   function stubsArt(list, nw) {
-    var n = list.length, MAXS = 20, start = Math.max(0, n - MAXS), x0 = n > MAXS ? 13 : 6, s = "", k, i, x, y, c;
+    var n = list.length, MAXS = 20, start = Math.max(0, n - MAXS), x0 = n > MAXS ? 13 : 6, s = "", k, i, x, y, c, bd;
     if (!n) return "";
     if (n > MAXS) s += '<text x="6" y="97" font-size="4" fill="#ffffff" stroke="#3a2a1a" stroke-width=".5" paint-order="stroke" pointer-events="none">+' + start + "</text>";
     for (k = start; k < n; k++) {
-      i = k - start; x = x0 + i * 7; y = i % 2 ? 94 : 93; c = MC[k % 7];
-      s += '<g class="rmfx" data-k="stub" data-i="' + k + '" tabindex="0" role="button" aria-label="' + esc(t("打卡票根")) + '">' + R(x - 1, y - 1, 8, 6, "transparent") +
-        (k >= n - nw ? '<g class="xlA">' + R(x - 1, y - 1, 8, 6, "#fff1a8", 0.55) + "</g>" : "") +
-        R(x, y, 6, 4, c) + R(x, y + 1, 1, 2, "#000000", 0.25) + R(x + 5, y + 1, 1, 2, "#000000", 0.25) + R(x + 2, y + 1, 2, 1, "#ffffff", 0.85) + R(x + 2, y + 2, 1, 1, "#ffffff", 0.6) + "</g>";
+      i = k - start; x = x0 + i * 7; y = i % 2 ? 94 : 93; c = MC[k % 7]; bd = !!(list[k] && list[k].bd);
+      s += '<g class="rmfx" data-k="stub" data-i="' + k + '" tabindex="0" role="button" aria-label="' + esc(t(bd ? "生日應援海報" : "打卡票根")) + '">' + R(x - 1, y - 1, 8, 7, "transparent") +
+        (k >= n - nw ? '<g class="xlA">' + R(x - 1, y - 1, 8, 7, "#fff1a8", 0.55) + "</g>" : "") +
+        (bd ? R(x, y - 1, 6, 6, "#fff7e6") + R(x + 1, y, 4, 4, c) + R(x + 2, y + 1, 2, 2, "#ffffff") + R(x + 5, y, 1, 5, "#000000", 0.15)
+          : R(x, y, 6, 4, c) + R(x, y + 1, 1, 2, "#000000", 0.25) + R(x + 5, y + 1, 1, 2, "#000000", 0.25) + R(x + 2, y + 1, 2, 1, "#ffffff", 0.85) + R(x + 2, y + 2, 1, 1, "#ffffff", 0.6)) + "</g>";
     }
     return s;
   }
@@ -941,11 +943,11 @@
     var hearts = '<g transform="translate(44,74)"><g class="rbal d1">' + vdHeart(0, 0, "#e0457b") + "</g></g>" +
       '<g transform="translate(52,78)"><g class="rbal d2">' + vdHeart(0, 0, "#ff8fb3") + "</g></g>";
     var rx = r2 ? 104 : 124, lx = r2 ? 116 : 138;
-    var rose = '<g transform="translate(' + rx + ',80)">' + R(3, 0, 3, 1, "#e0457b") + R(2, 1, 5, 3, "#e0457b") + R(3, 4, 3, 1, "#e0457b") + R(4, 1, 1, 2, "#ff8fb3") + R(4, 5, 1, 5, "#2dbf8f") + R(2, 7, 2, 1, "#2dbf8f") + R(5, 8, 2, 1, "#2dbf8f") +
+    var rose = '<g transform="translate(' + rx + ',76)">' + R(3, 0, 3, 1, "#e0457b") + R(2, 1, 5, 3, "#e0457b") + R(3, 4, 3, 1, "#e0457b") + R(4, 1, 1, 2, "#ff8fb3") + R(4, 5, 1, 5, "#2dbf8f") + R(2, 7, 2, 1, "#2dbf8f") + R(5, 8, 2, 1, "#2dbf8f") +
       R(2, 10, 5, 1, "#bfe3ff") + R(1, 11, 7, 4, "#bfe3ff") + R(2, 15, 5, 1, "#9ad0ff") + R(2, 12, 1, 2, "#ffffff") + R(1, 13, 7, 1, "#ff8fb3") + "</g>";
     var letter = letterArt(vdLetterN, lx);
     return fxG("vdchoc", box, [29, 78, 14, 12], r2) + fxG("vdheart", hearts, [43, 72, 16, 14], r2) +
-      fxG("vdrose", rose, [rx - 1, 79, 11, 17], r2) + fxG("vdletter", letter, [lx - 1, 82, 12, 9], r2) + (r2 ? "" : fxG("vdmail", mailArt(), [144, 75, 16, 17]));
+      fxG("vdrose", rose, [rx - 1, 75, 11, 17], r2) + fxG("vdletter", letter, [lx - 1, 82, 12, 9], r2) + (r2 ? "" : fxG("vdmail", mailArt(), [144, 75, 16, 17]));
   }
   /* 中秋節的地板擺飾：左邊一盤月餅（兩個），右邊一顆柚子。都只是裝飾，不能點 */
   function midMoonCakes() {
@@ -1018,14 +1020,14 @@
     return R(x, y, 6, 2, "#ffffff") + R(x + 5, y - 1, 1, 1, "#ffd23f") + R(x + 1, y + 2, 4, 5, c) + R(x + 1, y + 4, 4, 1, "#ffffff") + R(x + 1, y + 7, 7, 3, c) + R(x + 6, y + 7, 2, 3, "#ffffff");
   }
   function xmasDeco(r2) {
-    var cookie = '<g transform="translate(36,86)">' + R(0, 5, 10, 2, "#e8eef5") + R(1, 6, 8, 1, "#c7d2e0") +
+    var cookie = '<g transform="translate(36,84)">' + R(0, 5, 10, 2, "#e8eef5") + R(1, 6, 8, 1, "#c7d2e0") +
       R(1, 2, 4, 3, "#c68642") + R(2, 3, 1, 1, "#5a3a1a") + R(4, 2, 1, 1, "#5a3a1a") + R(5, 3, 4, 2, "#c68642") + R(6, 3, 1, 1, "#5a3a1a") +
       R(11, 0, 5, 7, "#dfeefa") + R(11, 2, 5, 5, "#ffffff") + R(11, 6, 5, 1, "#c7d2e0") + "</g>";
     var big = fxG("xtree", xtreeInner(), null, r2) + fxG("xgift", giftArt(128, 84, 9, 8, "#e0453a", "#ffd23f"), [127, 82, 11, 11], r2) +
       fxG("xgift", giftArt(150, 86, 8, 6, "#2a7de1", "#ffffff"), [149, 84, 10, 9], r2) +
-      fxG("xgift", giftArt(141, 89, 6, 4, "#ffd23f", "#e0453a"), [140, 87, 8, 7], r2);
+      fxG("xgift", giftArt(141, 87, 6, 4, "#ffd23f", "#e0453a"), [140, 85, 8, 7], r2);
     /* 練習室右邊有筆記本和運動包，樹和禮物整組往左移到空地 */
-    var s = (r2 ? '<g transform="translate(-48,0)">' + big + "</g>" : big) + fxG("xcookie", cookie, [35, 84, 18, 10], r2);
+    var s = (r2 ? '<g transform="translate(-48,0)">' + big + "</g>" : big) + fxG("xcookie", cookie, [35, 82, 18, 10], r2);
     if (!r2) s += fxG("xsock", sockArt(120, 57, "#e0453a"), [119, 55, 10, 12]) + fxG("xsock", sockArt(134, 57, "#2dbf8f"), [133, 55, 10, 12]);
     return s;
   }
@@ -1104,10 +1106,10 @@
     return R(x, y, 6, 8, "#e0453a") + R(x + 1, y + 1, 4, 1, "#b02a20") + R(x + 2, y + 4, 2, 2, "#ffd23f");
   }
   function nyDeco(r2) {
-    var ingot = '<g transform="translate(34,86)">' + R(3, 0, 6, 2, "#ffe27a") + R(4, 0, 2, 1, "#ffffff") + R(0, 2, 12, 2, "#ffd23f") + R(1, 4, 10, 2, "#e0a800") + R(2, 6, 8, 1, "#b87333") + "</g>";
+    var ingot = '<g transform="translate(34,84)">' + R(3, 0, 6, 2, "#ffe27a") + R(4, 0, 2, 1, "#ffffff") + R(0, 2, 12, 2, "#ffd23f") + R(1, 4, 10, 2, "#e0a800") + R(2, 6, 8, 1, "#b87333") + "</g>";
     return fxG("nylan", lanternArt(31, 4), [30, 0, 10, 16], r2) + fxG("nylan", lanternArt(151, 4), [150, 0, 10, 16], r2) +
-      (r2 ? '<g transform="translate(-46,0)">' : "") + fxG("nyhb", envArt(128, 86), [127, 85, 8, 10], r2) + fxG("nyhb", envArt(135, 90), [134, 89, 8, 10], r2) + fxG("nyhb", envArt(142, 86), [141, 85, 8, 10], r2) + (r2 ? "</g>" : "") +
-      fxG("nyingot", ingot, [33, 85, 14, 9], r2);
+      (r2 ? '<g transform="translate(-46,0)">' : "") + fxG("nyhb", envArt(128, 83), [127, 82, 8, 10], r2) + fxG("nyhb", envArt(135, 81), [134, 80, 8, 10], r2) + fxG("nyhb", envArt(142, 83), [141, 82, 8, 10], r2) + (r2 ? "</g>" : "") +
+      fxG("nyingot", ingot, [33, 83, 14, 9], r2);
   }
   /* 聖誕樹：放在地板右側，16×18 格（比原本大），只是裝飾，不能點 */
   function xmasTree() {
@@ -1174,7 +1176,7 @@
   function candyArt(r2) {
     var sx = r2 ? -46 : 0; /* 練習室右邊的筆記本和運動包會被蓋到，右半邊的糖果往左移 */
     var cd = function (x, y, c, e) { return fxG("hwcandy", R(x + 1, y, 3, 2, c) + R(x, y, 1, 2, e) + R(x + 4, y, 1, 2, e), [x - 1, y - 2, 7, 6]); };
-    return cd(116 + sx, 86, "#ff8a1f", "#ffd9a8") + cd(125 + sx, 91, "#7b4fd6", "#cdb8ff") + cd(134 + sx, 85, "#ff8fb3", "#ffd6e4") + cd(143 + sx, 92, "#ff8a1f", "#ffd9a8") + cd(46, 94, "#7b4fd6", "#cdb8ff") +
+    return cd(116 + sx, 86, "#ff8a1f", "#ffd9a8") + cd(125 + sx, 88, "#7b4fd6", "#cdb8ff") + cd(134 + sx, 85, "#ff8fb3", "#ffd6e4") + cd(143 + sx, 88, "#ff8a1f", "#ffd9a8") + cd(46, 88, "#7b4fd6", "#cdb8ff") +
       fxG("hwcandy", '<g transform="translate(' + (120 + sx) + ',76)">' + R(1, 0, 3, 5, "#ff8fb3") + R(0, 1, 5, 3, "#ff8fb3") + R(2, 1, 1, 3, "#fff") + R(1, 2, 3, 1, "#fff") + R(2, 5, 1, 5, "#e8e8e8") + "</g>", [119 + sx, 75, 7, 12]);
   }
   /* 節日的下方說明文字（r2＝練習室） */
@@ -2257,7 +2259,7 @@
         var si = +g.getAttribute("data-i"), sit = (S.stubs || [])[si], scp = document.getElementById("rmcap");
         if (sit && scp) {
           var snm = sit.title ? sit.title + (sit.place ? "｜" + sit.place : "") : t("這次打卡的紀念，好好收著。");
-          scp.innerHTML = "<b>" + esc(t("打卡票根")) + " #" + (si + 1) + (sit.date ? " ・ " + esc(sit.date) : "") + "</b><br>" + esc(snm);
+          scp.innerHTML = "<b>" + esc(t(sit.bd ? "生日應援海報" : "打卡票根")) + " #" + (si + 1) + (sit.date ? " ・ " + esc(sit.date) : "") + "</b><br>" + esc(snm);
           S.capK = ""; S.cph = performance.now() / 1000 + 5;
         }
         return;
