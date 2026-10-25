@@ -300,6 +300,7 @@
     "站牌上貼著應援，等車也不無聊。": ["The bus stop is covered in support messages — waiting isn't boring.", "정류장에 응원이 붙어 있어서 기다려도 지루하지 않아요.", "バス停に応援が貼ってあって、待ち時間も退屈しない。"],
     "應援咖啡廳的杯套好可愛，一定要帶一個走。": ["The support café's cup sleeves are so cute — I have to take one home.", "응원 카페 컵 슬리브가 너무 귀여워요. 꼭 하나 가져갈래요.", "応援カフェのカップスリーブがかわいい。絶対持ち帰る。"],
     "排隊領杯套，慢慢等也值得。": ["Queuing for a cup sleeve — worth the wait.", "슬리브 받으려고 줄을 서요. 천천히 기다려도 아깝지 않아요.", "カップスリーブの列に並ぶ。ゆっくり待つ価値あり。"],
+    "尚未開放：應援累積得夠多就會出現。": ["Not open yet — it appears once there are enough support spots.", "아직 열리지 않았어요. 응원이 충분히 쌓이면 나타나요.", "まだ開放前。応援が十分たまると登場するよ。"],
     "跨年零食桌": ["New Year's Eve snack table", "새해 전야 간식 상", "年越しのおやつテーブル"],
     "橘子和年糕，跨年一定要吃點好彩頭。": ["Tangerines and rice cake — a little good luck for New Year's Eve.", "귤과 떡, 새해 전야엔 복을 챙겨야죠.", "みかんとお餅、年越しには縁起物を。"],
     "偷拿一塊年糕，邊吃邊等倒數。": ["Sneaking a piece of rice cake while waiting for the countdown.", "떡 한 조각 몰래 집어먹으며 카운트다운을 기다려요.", "お餅をこっそり一つ、カウントダウンを待ちながら。"],
@@ -1513,7 +1514,7 @@
       cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", aw: "練習室先掛上彩旗了。", ax: "練習室的彩旗還沒收，捨不得。", nye: "練習室也迎接新的一年了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
       lock: { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" },
       unlocked: "練習室開放了，快去看看。" },
-    { id: "street", chip: "第 3 間", name: "應援街區", items: ITEMS3, scene: scene3, gate: "prac", lazy: true, wmax: 128, ng: false, alt: false,
+    { id: "street", chip: "第 3 間", name: "應援街區", items: ITEMS3, scene: scene3, gate: "prac", lazy: true, wmax: 128, soft: true, ng: false, alt: false,
       pub: ROOM3_PUBLIC, pv: ROOM3_PV, pvAll: P3ALL, pvStart: "room3",
       pct: "街區完成度",
       cap: { anniv: "街上也掛滿彩旗了。", bd: "街區為壽星亮燈了。", bw: "街區先掛上彩旗了。", aw: "街區先掛上彩旗了。", ax: "街區的彩旗還沒收，捨不得。", nye: "街區也迎接新的一年了。", done: "<b>應援街區完成！</b><br>整條街的燈都亮了。", hint: "點街上的東西看看。暗暗的剪影是還沒解鎖的物品。" },
@@ -1521,9 +1522,21 @@
       unlocked: "應援街區開放了，快去看看。" }
   ];
   function roomIx(id) { for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i].id === id) return i; return -1; }
-  function roomN(i, st) { return count(st, ROOMS[i].items); }
-  function roomPct(i, st) { return Math.round((roomN(i, st) / ROOMS[i].items.length) * 100); }
-  function roomFull(i, st) { return roomN(i, st) >= ROOMS[i].items.length; }
+  /* 這間房要算完成度的物品。soft 房間（應援街區）的物品綁的是「資料夠了才會出現」的徽章（某個類型要有 2 個以上的活動才有「類型達人」），
+     徽章還不存在、也還沒解鎖的物品先不算進完成度，等網站有了那個徽章才自動算進來；讀不到徽章清單時，照原本全部算 */
+  function roomItems(i) {
+    var its = ROOMS[i].items;
+    if (!ROOMS[i].soft) return its;
+    try {
+      var have = {}, a;
+      getBs().L.forEach(function (b) { have[b.id] = 1; });
+      a = its.filter(function (it) { return have[it.b]; });
+      return a.length ? a : its;
+    } catch (e) { return its; }
+  }
+  function roomN(i, st) { return count(st, roomItems(i)); }
+  function roomPct(i, st) { return Math.round((roomN(i, st) / roomItems(i).length) * 100); }
+  function roomFull(i, st) { return roomN(i, st) >= roomItems(i).length; }
   function roomOpen(i, st) {
     var r = ROOMS[i], g;
     if (!r.gate || r.pv) return true;
@@ -1965,7 +1978,7 @@
       if (!t) { t = document.createElement("em"); et.appendChild(t); }
       /* 總完成度：把所有「已開放」的房間加總（沒開放的房間不算，所以一般使用者在第 2 間開放前看到的數字跟以前一樣） */
       var n = 0, tot = 0;
-      ROOMS.forEach(function (rm, i) { if (roomOpen(i, r.st)) { n += roomN(i, r.st); tot += rm.items.length; } });
+      ROOMS.forEach(function (rm, i) { if (roomOpen(i, r.st)) { n += roomN(i, r.st); tot += roomItems(i).length; } });
       var pct = Math.round((n / tot) * 100);
       t.className = "ftbd rmpb " + (pct >= 100 ? "done" : "todo");
       var hh = (pct >= 100 ? "<span>✓</span> " : "") + "<span>小窩完成度</span> <span>" + pct + '%</span><i class="rmpx" aria-hidden="true"><s style="width:' + pct + '%"></s></i>';
@@ -2094,7 +2107,7 @@
       R(72, 30, 16, 4, K) + R(72, 34, 4, 12, K) + R(84, 34, 4, 12, K) +
       R(66, 46, 28, 22, K) + R(66, 46, 28, 2, "#c9cfe0") + R(78, 54, 4, 5, "#3a4163") + R(79, 59, 2, 5, "#3a4163") + "</svg>";
     return sv + '<div class="rmcap" aria-live="polite"><b>新房間即將推出</b><br>' +
-      (gFull ? lk.ready : "<span>" + lk.wait + "</span> <small><span>" + (g >= 0 ? roomN(g, st) + " / " + ROOMS[g].items.length : "") + "</span> <span>件</span></small>") + "</div>";
+      (gFull ? lk.ready : "<span>" + lk.wait + "</span> <small><span>" + (g >= 0 ? roomN(g, st) + " / " + roomItems(g).length : "") + "</span> <span>件</span></small>") + "</div>";
   }
   /* 「前往下一個房間」彈窗：ix＝剛完成的房間編號。標題用 ROOMS[ix].popTitle，下一間開放就顯示 ROOMS[ix+1].unlocked */
   function nextPop(ix, st) {
@@ -2182,7 +2195,7 @@
       if (!on) {
         return it.hid
           ? "<b>？？？</b><br><small>隱藏物品，達成後才會揭曉。</small>"
-          : "<b>" + esc(it.n) + "</b> <small>尚未解鎖</small><br>" + (bd ? esc(bd.desc) : "<span>解鎖徽章：</span><span>" + esc(it.fb) + "</span>");
+          : "<b>" + esc(it.n) + "</b> <small>尚未解鎖</small><br>" + (bd ? esc(bd.desc) : ROOMS[S.rm].soft ? "<span>尚未開放：應援累積得夠多就會出現。</span>" : "<span>解鎖徽章：</span><span>" + esc(it.fb) + "</span>");
       }
       var say = it.say === "lamp" ? (S.lamp ? "檯燈亮了。" : "檯燈關了。") : (it.k === "tube" && drewToday() ? "今天已經抽過籤了，明天再來搖一搖。" : it.say);
       var tail = it.say === "clock" ? esc(clockSay()) : it.say === "pclock" ? esc(practiceClockSay()) : esc(say);
@@ -2206,7 +2219,7 @@
       var n = roomN(S.rm, S.st), pct = roomPct(S.rm, S.st), full = roomFull(S.rm, S.st);
       var nn = 0; LIST.forEach(function (it) { if (S.nw[it.b]) nn++; });
       var NWM = "<b>有新物品！</b><br>閃爍的星星是新獲得的，點一下看看。";
-      h = '<div class="rmc"><div class="rmh">' + (locked ? "<b>？？？</b><span></span>" : "<b>" + RM.name + "</b><span><span>" + n + " / " + LIST.length + "</span> <span>件</span></span>") + "</div>" + roomPicker(S) +
+      h = '<div class="rmc"><div class="rmh">' + (locked ? "<b>？？？</b><span></span>" : "<b>" + RM.name + "</b><span><span>" + n + " / " + roomItems(S.rm).length + "</span> <span>件</span></span>") + "</div>" + roomPicker(S) +
         (locked ? "" : '<div class="rmt" role="tablist"><button type="button" role="tab" data-t="room" aria-selected="' + (S.tab === "room") + '">房間</button><button type="button" role="tab" data-t="list" aria-selected="' + (S.tab === "list") + '">收藏清單</button></div>') + '<div class="rmb">';
       if (locked) {
         h += lockedRoom(S.rm, S.st);
@@ -2221,7 +2234,7 @@
           if ((S.flt === "on" && !on) || (S.flt === "off" && on)) return;
           var bd = nameOf(it);
           h += '<div class="rmk' + (on ? " on" : "") + '"><svg viewBox="0 0 ' + it.w + " " + it.h + '" shape-rendering="crispEdges" aria-hidden="true" class="' + (on ? "" : "lk") + '">' + it.art + "</svg><b>" + (on || !it.hid ? esc(it.n) : "？？？") + "</b>" + (S.nw[it.b] ? '<em class="rmnw">NEW</em>' : "") + "<small>" +
-            (on ? "<span>獲得於</span> <span>" + esc(dstr(S.st[it.b])) + "</span>" : it.hid ? "隱藏物品" : (bd ? esc(bd.desc) : "<span>解鎖徽章：</span><span>" + esc(it.fb) + "</span>")) + "</small></div>";
+            (on ? "<span>獲得於</span> <span>" + esc(dstr(S.st[it.b])) + "</span>" : it.hid ? "隱藏物品" : (bd ? esc(bd.desc) : ROOMS[S.rm].soft ? "<span>尚未開放：應援累積得夠多就會出現。</span>" : "<span>解鎖徽章：</span><span>" + esc(it.fb) + "</span>")) + "</small></div>";
         });
         h += "</div>";
       }
