@@ -12,7 +12,7 @@
   try {
     var pvRaw = window.__PV || new URLSearchParams(location.search).getAll("preview").join(",");
     PVL = String(pvRaw || "").split(/[,+\s]+/).filter(Boolean);
-    PV = PVL.filter(function (x) { return x !== "room1all" && x !== "room2all"; })[0] || (PVL[0] || "");
+    PV = PVL.filter(function (x) { return x !== "room1all" && x !== "room2all" && x !== "room3all"; })[0] || (PVL[0] || "");
   } catch (e) {}
 
   var R = function (x, y, w, h, c, o) {
@@ -237,6 +237,69 @@
     "今年的最後一天，辛苦了，也謝謝一路陪著。": ["The last day of the year — thank you for all your hard work and for staying with me.", "올해 마지막 날, 수고했어요. 끝까지 함께해 줘서 고마워요.", "今年最後の日。おつかれさま、ずっと一緒にいてくれてありがとう。"],
     "零食準備好了，一起等煙火吧。": ["Snacks are ready — let's wait for the fireworks together.", "간식 준비 끝, 같이 불꽃놀이 기다려요.", "おやつの準備できたよ。一緒に花火を待とう。"],
     "倒數之前，先許個願望好不好？": ["Before the countdown, shall we make a wish?", "카운트다운 전에 소원 하나 빌어 볼까요?", "カウントダウンの前に、願い事をしない？"],
+    "應援街區": ["Support Street", "응원 거리", "応援ストリート"],
+    "街區完成度": ["Street progress", "거리 완성도", "ストリート達成度"],
+    "第 3 間": ["Room 3", "3번째 방", "3つ目の部屋"],
+    "應援旗": ["Support flags", "응원 깃발", "応援フラッグ"],
+    "LED 電視牆": ["LED video wall", "LED 전광판", "LEDビジョン"],
+    "霓虹招牌": ["Neon sign", "네온사인", "ネオンサイン"],
+    "展覽": ["Exhibition", "전시", "展示"],
+    "快閃店": ["Pop-up store", "팝업스토어", "ポップアップストア"],
+    "燈箱看板": ["Lightbox sign", "라이트박스", "ライトボックス"],
+    "咖啡廳": ["Café", "카페", "カフェ"],
+    "公車站牌": ["Bus stop", "버스 정류장", "バス停"],
+    "應援咖啡廳": ["Support café", "응원 카페", "応援カフェ"],
+    "LED 廣告車": ["LED ad truck", "LED 광고 차량", "LED広告トラック"],
+    "應援企劃達人": ["Support Project Pro", "응원 기획 달인", "応援企画の達人"],
+    "LED電視牆達人": ["LED Wall Pro", "LED 전광판 달인", "LEDビジョンの達人"],
+    "全類型收集": ["All Types Collected", "전체 유형 수집", "全タイプ収集"],
+    "展覽達人": ["Exhibition Pro", "전시 달인", "展示の達人"],
+    "快閃店達人": ["Pop-up Pro", "팝업스토어 달인", "ポップアップの達人"],
+    "燈箱/看板達人": ["Lightbox Pro", "라이트박스 달인", "ライトボックスの達人"],
+    "咖啡廳達人": ["Café Pro", "카페 달인", "カフェの達人"],
+    "公車站牌達人": ["Bus Stop Pro", "버스 정류장 달인", "バス停の達人"],
+    "應援咖啡廳達人": ["Support Café Pro", "응원 카페 달인", "応援カフェの達人"],
+    "LED廣告車達人": ["LED Ad Truck Pro", "LED 광고 차량 달인", "LED広告トラックの達人"],
+    "彩旗一面一面掛起來，整條街都是應援的味道。": ["Flags go up one by one — the whole street smells of fan support.", "깃발이 하나둘 걸리고, 거리 전체에 응원의 기운이 가득해요.", "フラッグが一枚ずつ掛かって、通り全体に応援の空気。"],
+    "大螢幕亮起來了，節拍跟著畫面一起跳。": ["The big screen lights up, the beat jumping along with the picture.", "큰 화면이 켜지고, 박자가 영상과 함께 뛰어요.", "大きなスクリーンが点いて、ビートが映像と一緒に弾む。"],
+    "每一種應援都集齊了，整條街的燈全部亮起。": ["Every kind of support collected — the whole street lights up.", "모든 종류의 응원을 모았어요. 거리 전체에 불이 켜져요.", "すべての種類を集めて、通り中の明かりが灯った。"],
+    "展覽開幕了，進去慢慢看，別急。": ["The exhibition is open — take your time inside.", "전시가 시작됐어요. 천천히 둘러보세요.", "展示がオープン。ゆっくり見ていってね。"],
+    "快閃店限定周邊，今天也排了好長的隊。": ["Limited pop-up goods, and the line is long again today.", "팝업 한정 굿즈, 오늘도 줄이 길어요.", "ポップアップ限定グッズ、今日も長蛇の列。"],
+    "燈箱亮著，路過的人都會停下來拍一張。": ["The lightbox glows and passersby stop for a photo.", "라이트박스가 빛나서 지나가던 사람들이 사진을 찍어요.", "ライトボックスが光って、通りがかりの人も写真を撮っていく。"],
+    "坐下來喝杯咖啡，等下一站再出發。": ["Sit down for a coffee before the next stop.", "앉아서 커피 한 잔 하고 다음 장소로 가요.", "座ってコーヒーを一杯、次の場所へ行く前に。"],
+    "站牌旁邊拍照打卡，公車來了先讓它過。": ["Photo at the bus stop — let the bus pass first.", "정류장에서 인증샷, 버스는 먼저 보내요.", "バス停で写真を一枚。バスが来たら先に通してあげよう。"],
+    "應援咖啡廳的杯套今天也很好看。": ["The cup sleeves at the support café look lovely again today.", "응원 카페의 컵 홀더가 오늘도 예뻐요.", "応援カフェのカップスリーブ、今日もかわいい。"],
+    "廣告車慢慢開過去，整條街都跟著抬頭看。": ["The ad truck rolls slowly by and the whole street looks up.", "광고 차량이 천천히 지나가고 거리 전체가 올려다봐요.", "広告トラックがゆっくり通り過ぎて、通りじゅうが見上げる。"],
+    "街上也掛滿彩旗了。": ["The street is hung with flags too.", "거리에도 깃발이 가득 걸렸어요.", "通りにもフラッグがいっぱい。"],
+    "街區為壽星亮燈了。": ["The street lit up for the birthday star.", "거리가 생일의 주인공을 위해 불을 밝혔어요.", "通りが主役のために明かりを灯した。"],
+    "街區先掛上彩旗了。": ["The street put up flags in advance.", "거리에 먼저 깃발을 걸었어요.", "通りに先にフラッグを掛けた。"],
+    "街區的彩旗還沒收，捨不得。": ["The street's flags are still up — hard to take down.", "거리의 깃발을 아직 못 걷었어요. 아쉬워서요.", "通りのフラッグはまだ片付けられない。名残惜しくて。"],
+    "街區也迎接新的一年了。": ["The street welcomes the new year too.", "거리도 새해를 맞이했어요.", "通りも新しい年を迎えた。"],
+    "應援街區完成！": ["Support Street complete!", "응원 거리 완성!", "応援ストリート完成！"],
+    "整條街的燈都亮了。": ["Every light on the street is on.", "거리의 불이 모두 켜졌어요.", "通りの明かりが全部灯った。"],
+    "點街上的東西看看。暗暗的剪影是還沒解鎖的物品。": ["Tap things on the street. Dark silhouettes are items not yet unlocked.", "거리의 물건을 눌러 보세요. 어두운 실루엣은 아직 잠긴 물건이에요.", "通りのものをタップしてみよう。暗いシルエットは未解放のアイテム。"],
+    "完成第二個房間後解鎖。": ["Unlocks after completing the second room.", "두 번째 방을 완성하면 열려요.", "2つ目の部屋を完成させると解放されます。"],
+    "第二個房間已完成，新房間準備中。": ["The second room is complete. A new room is on its way.", "두 번째 방을 완성했어요. 새 방을 준비 중이에요.", "2つ目の部屋は完成。新しい部屋を準備中です。"],
+    "應援街區開放了，快去看看。": ["Support Street is open — go take a look.", "응원 거리가 열렸어요. 가 보세요.", "応援ストリートが開放されたよ。見に行こう。"],
+    "一邊走一邊看街上的應援。": ["Walking along, taking in the support displays on the street.", "걸으면서 거리의 응원을 구경해요.", "歩きながら、街の応援を眺めてる。"],
+    "路過的人都在拍照打卡。": ["Everyone passing by is taking photos and checking in.", "지나가는 사람들이 모두 사진 찍고 체크인해요.", "通りがかりの人がみんな写真を撮ってチェックインしてる。"],
+    "今天的街上好熱鬧。": ["The street is so lively today.", "오늘 거리가 정말 북적여요.", "今日の街はにぎやか。"],
+    "街上還空空的，等著一個一個被打卡的應援。": ["The street is still empty, waiting for each support spot to be checked in.", "거리가 아직 비어 있어요. 하나씩 체크인될 응원을 기다려요.", "街はまだ空っぽ。ひとつずつチェックインされる応援を待ってる。"],
+    "打卡一個類型的應援，街上就多一處景。": ["Check in one type of support and the street gets a new sight.", "한 종류의 응원을 체크인하면 거리에 볼거리가 하나 늘어요.", "ひとつの種類の応援をチェックインすると、街に新しい景色が増えるよ。"],
+    "走進展覽慢慢看，每一件都想多看一眼。": ["Walking through the exhibition slowly — I want a second look at every piece.", "전시를 천천히 둘러봐요. 하나하나 다시 보고 싶어요.", "展覧会をゆっくり見て回る。どれも二度見したくなる。"],
+    "展覽的燈光好舒服，捨不得這麼快出來。": ["The exhibition lighting is so soothing — I don't want to leave so soon.", "전시장 조명이 편안해서 금방 나오기 아쉬워요.", "展示の照明が心地よくて、すぐには出たくない。"],
+    "快閃店排了好長的隊，我也來湊個熱鬧。": ["The pop-up store has a long line — let me join the fun.", "팝업스토어 줄이 길어요. 저도 구경하러 왔어요.", "ポップアップストアは長い行列。私も混ざってみよう。"],
+    "限定周邊要搶，先看看有哪些。": ["The limited merch goes fast — let me see what's there first.", "한정 굿즈는 금방 나가요. 먼저 뭐가 있나 볼게요.", "限定グッズは争奪戦。まず何があるか見てみよう。"],
+    "站在燈箱前拍一張，今天也到此一遊。": ["A photo in front of the light box — I was here today.", "라이트박스 앞에서 한 장, 오늘도 다녀갔어요.", "ライトボックスの前で一枚。今日も来たよ。"],
+    "燈箱亮亮的，拍起來特別好看。": ["The light box glows — it makes for a great photo.", "라이트박스가 환해서 사진이 특히 예쁘게 나와요.", "ライトボックスが明るくて、写真がきれいに撮れる。"],
+    "買杯咖啡，坐下來歇一會。": ["Grabbing a coffee and sitting down for a rest.", "커피 한 잔 사서 앉아 쉬어요.", "コーヒーを買って、座ってひと休み。"],
+    "拿到杯套了，今天的咖啡特別香。": ["Got the cup sleeve — today's coffee smells extra good.", "컵 슬리브를 받았어요. 오늘 커피는 유난히 향긋해요.", "カップスリーブをゲット。今日のコーヒーはいつもより香ばしい。"],
+    "抬頭看大螢幕，節拍跟著畫面一起跳。": ["Looking up at the big screen — the beat bounces along with the picture.", "큰 화면을 올려다봐요. 박자가 화면과 함께 뛰어요.", "大きな画面を見上げる。ビートが映像と一緒に跳ねる。"],
+    "大螢幕在播應援影片，看到都不想走。": ["The big screen is playing a support video — I don't want to walk away.", "큰 화면에서 응원 영상이 나와서 떠나고 싶지 않아요.", "大画面で応援映像が流れてて、離れたくない。"],
+    "在站牌旁等公車，順便拍張照打卡。": ["Waiting for the bus by the stop, snapping a check-in photo while I'm at it.", "정류장에서 버스를 기다리며 체크인 사진도 찍어요.", "バス停でバスを待ちながら、チェックインの写真も撮る。"],
+    "站牌上貼著應援，等車也不無聊。": ["The bus stop is covered in support messages — waiting isn't boring.", "정류장에 응원이 붙어 있어서 기다려도 지루하지 않아요.", "バス停に応援が貼ってあって、待ち時間も退屈しない。"],
+    "應援咖啡廳的杯套好可愛，一定要帶一個走。": ["The support café's cup sleeves are so cute — I have to take one home.", "응원 카페 컵 슬리브가 너무 귀여워요. 꼭 하나 가져갈래요.", "応援カフェのカップスリーブがかわいい。絶対持ち帰る。"],
+    "排隊領杯套，慢慢等也值得。": ["Queuing for a cup sleeve — worth the wait.", "슬리브 받으려고 줄을 서요. 천천히 기다려도 아깝지 않아요.", "カップスリーブの列に並ぶ。ゆっくり待つ価値あり。"],
     "跨年零食桌": ["New Year's Eve snack table", "새해 전야 간식 상", "年越しのおやつテーブル"],
     "橘子和年糕，跨年一定要吃點好彩頭。": ["Tangerines and rice cake — a little good luck for New Year's Eve.", "귤과 떡, 새해 전야엔 복을 챙겨야죠.", "みかんとお餅、年越しには縁起物を。"],
     "偷拿一塊年糕，邊吃邊等倒數。": ["Sneaking a piece of rice cake while waiting for the countdown.", "떡 한 조각 몰래 집어먹으며 카운트다운을 기다려요.", "お餅をこっそり一つ、カウントダウンを待ちながら。"],
@@ -509,6 +572,15 @@
     scare: ["哇！南瓜突然亮起來，嚇我一跳！", "嚇死我了，原來是南瓜燈。", "咦？它剛剛是不是瞪我？"],
     sleep: ["正在休息，zZ…", "打瞌睡中，夜深了。", "趴著睡著了，zzZ…"],
     w2: ["在練習室裡熱身走動。", "一邊走一邊默默數拍子。"],
+    w3: ["一邊走一邊看街上的應援。", "路過的人都在拍照打卡。", "今天的街上好熱鬧。"],
+    w3e: ["街上還空空的，等著一個一個被打卡的應援。", "打卡一個類型的應援，街上就多一處景。"],
+    sr_sexh: ["走進展覽慢慢看，每一件都想多看一眼。", "展覽的燈光好舒服，捨不得這麼快出來。"],
+    sr_skm: ["快閃店排了好長的隊，我也來湊個熱鬧。", "限定周邊要搶，先看看有哪些。"],
+    sr_slb: ["站在燈箱前拍一張，今天也到此一遊。", "燈箱亮亮的，拍起來特別好看。"],
+    sr_scf: ["買杯咖啡，坐下來歇一會。", "拿到杯套了，今天的咖啡特別香。"],
+    sr_sled: ["抬頭看大螢幕，節拍跟著畫面一起跳。", "大螢幕在播應援影片，看到都不想走。"],
+    sr_sbus: ["在站牌旁等公車，順便拍張照打卡。", "站牌上貼著應援，等車也不無聊。"],
+    sr_scafe: ["應援咖啡廳的杯套好可愛，一定要帶一個走。", "排隊領杯套，慢慢等也值得。"],
     dn: ["跳舞中，節拍跟上！", "練舞練到停不下來。"],
     pose: ["對著三腳架擺姿勢，看鏡頭！"],
     wipe: ["跳完舞，先擦擦汗。", "拿毛巾擦擦臉，等一下再來一遍。"],
@@ -538,11 +610,12 @@
   var ROOM_OPEN = ROOM_PUBLIC || (function () {
     try {
       var v = PV;
-      if (PVL.indexOf("room1all") >= 0 || PVL.indexOf("room2all") >= 0) return true;
-      if (v === "room" || v === "room2") localStorage.setItem("room-preview", "1");
+      if (PVL.indexOf("room1all") >= 0 || PVL.indexOf("room2all") >= 0 || PVL.indexOf("room3all") >= 0) return true;
+      if (v === "room" || v === "room2" || v === "room3") localStorage.setItem("room-preview", "1");
+      if (v === "room3") localStorage.setItem("room3-preview", "1");
       if (v === "room2") localStorage.setItem("room2-preview", "1");
-      else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); }
-      if (v === "613" || v === "613w" || v === "613a" || v === "nye" || v === "tour" || v === "eve" || v === "room2all" || v === "room1all" || v === "hw" || v === "xmas" || v === "ny" || v === "vd" || v === "mid" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
+      else if (v === "off") { localStorage.removeItem("room-preview"); localStorage.removeItem("room2-preview"); localStorage.removeItem("room3-preview"); }
+      if (v === "613" || v === "613w" || v === "613a" || v === "nye" || v === "tour" || v === "eve" || v === "room2all" || v === "room1all" || v === "room3all" || v === "hw" || v === "xmas" || v === "ny" || v === "vd" || v === "mid" || v.indexOf("bd-") === 0 || v.indexOf("bdw-") === 0 || v.indexOf("bda-") === 0) return true; /* 只預覽 6/13、成員生日：這次直接開放小窩，不用先 ?preview=room，也不存任何東西 */
       return localStorage.getItem("room-preview") === "1";
     } catch (e) { return false; }
   })();
@@ -556,6 +629,15 @@
   var P1ALL = PVL.indexOf("room1all") >= 0;
   var ROOM2_PV = P2ALL || PV === "room2" || (function () {
     try { return localStorage.getItem("room2-preview") === "1"; } catch (e) { return false; }
+  })();
+  /* 應援街區（第 3 間）開關，用法跟練習室一樣。
+     ROOM3_PUBLIC=false＝一般使用者還看不到第 3 間（要正式開放就改成 true，開放後仍要先完成第 2 間，並把 sw.js 的 VER 換一個值）。
+     自己預覽：用 ?preview=room3 開一次，這台裝置就能直接進街區（存在 localStorage: room3-preview，也會一併解鎖小窩入口）；
+     ?preview=room3all 只在這次開啟把街區 10 件物品全部當成已解鎖，不存任何東西；?preview=off 會把所有預覽都關掉 */
+  var ROOM3_PUBLIC = false;
+  var P3ALL = PVL.indexOf("room3all") >= 0;
+  var ROOM3_PV = P3ALL || PV === "room3" || (function () {
+    try { return localStorage.getItem("room3-preview") === "1"; } catch (e) { return false; }
   })();
   /* 房間是否開放，統一由下面 ROOMS 區塊的 roomOpen(i, st) 判斷（ROOM2_PUBLIC／ROOM2_PV／P2ALL 現在只是第 2 間在 ROOMS 裡的設定值） */
 
@@ -1324,7 +1406,88 @@
     { k: "plog", b: "p-week", fb: "每日練習", hid: 1, n: "練習日誌", x: 122, y: 72, w: 12, h: 7, an: "hop", say: "今天也有好好練習。", art: artPlog() },
     { k: "psched", b: "m10", fb: "應援高手", n: "練習課表", x: 30, y: 3, w: 22, h: 14, an: "shake", say: "這週的課表排得滿滿的，照表操課。", art: artPsched() }
   ];
-  var ALL = ITEMS.concat(ITEMS2);
+
+  /* ===== 第 3 間：應援街區 =====
+     一條夜晚的小街，用網站「類型達人」徽章（t-類型）蓋起來：9 種打卡類型各一處，加上「全類型收集」（t-all）整條街亮燈。
+     網站只有某個類型至少有 2 個活動才會產生那個類型的徽章，所以目前資料裡還沒有徽章的類型，物品會一直是暗暗的剪影，等活動變多就會自己解鎖。
+     artf(nt)＝場景裡用的畫法（nt 為 true 是夜晚，招牌、螢幕、窗戶會發光）；art＝收藏清單裡用的（亮著的樣子）。 */
+  var PCS = ["#8e6bd8", "#ff8fb3", "#ffd23f", "#2dbf8f", "#6fb7ff", "#ff9f1c", "#b794ff"];
+  function stArt(k, nt) {
+    var s = "", i, c, o = nt ? 1 : 0.55;
+    var BH = [8, 12, 6, 14, 10, 16, 7, 12, 9, 13, 6, 11], TH = [4, 7, 5, 9, 6, 8, 4, 7];
+    var G = { A: ["0110", "1001", "1111", "1001", "1001"], R: ["1110", "1001", "1110", "1010", "1001"], M: ["1001", "1111", "1111", "1001", "1001"], Y: ["1001", "1001", "0110", "0010", "0010"] }, W = "ARMY", li, ry, cx, g;
+    switch (k) {
+      case "sflag": /* 應援旗串：整條街頂上掛一排七種顏色的小旗 */
+        s = R(0, 2, 156, 1, "#c9b28a");
+        for (i = 0; i < 26; i++) { c = PCS[i % 7]; s += R(i * 6, 3, 5, 2, c) + R(i * 6 + 1, 5, 3, 2, c) + R(i * 6 + 2, 7, 1, 1, c); }
+        break;
+      case "sled": /* LED 電視牆：黑框、螢幕裡七種顏色的節拍條 */
+        s = (nt ? R(-2, -2, 50, 30, "#8e6bd8", 0.18) : "") + R(0, 0, 46, 26, "#1c2038") + R(2, 2, 42, 22, nt ? "#0d1230" : "#3a4062");
+        for (i = 0; i < 12; i++) s += R(4 + i * 3, 22 - BH[i], 2, BH[i], PCS[i % 7], o);
+        s += R(2, 2, 42, 1, "#ffffff", 0.15);
+        break;
+      case "sneon": /* 全類型收集：霓虹招牌 ♥ARMY♥ */
+        s = (nt ? R(-2, -2, 36, 16, "#ff8fd0", 0.18) : "") + R(0, 0, 32, 12, "#1c2038") + R(1, 1, 30, 10, "#2a2f5a");
+        c = nt ? "#ff8fd0" : "#8a90c0";
+        s += R(2, 4, 1, 1, c) + R(4, 4, 1, 1, c) + R(2, 5, 3, 1, c) + R(3, 6, 1, 1, c) + R(27, 4, 1, 1, c) + R(29, 4, 1, 1, c) + R(27, 5, 3, 1, c) + R(28, 6, 1, 1, c);
+        for (li = 0; li < 4; li++) { g = G[W.charAt(li)]; for (ry = 0; ry < 5; ry++) for (cx = 0; cx < 4; cx++) if (g[ry].charAt(cx) === "1") s += R(6 + li * 5 + cx, 3 + ry, 1, 1, nt ? (li < 2 ? "#ffffff" : "#d8c8ff") : "#aab0d0"); }
+        break;
+      case "sexh": /* 展覽：立式海報框（裡面一顆紫色愛心）、上面一盞投射燈 */
+        s = (nt ? R(3, 5, 16, 14, "#fff1a8", 0.16) : "") + R(9, 0, 4, 2, "#6b7391") + R(10, 2, 2, 3, "#6b7391") + R(2, 8, 18, 22, "#d9c7a0") + R(4, 10, 14, 18, nt ? "#2a2f5a" : "#ece8ff") +
+          R(7, 13, 3, 3, "#7b4fd6") + R(12, 13, 3, 3, "#7b4fd6") + R(7, 16, 8, 3, "#7b4fd6") + R(8, 19, 6, 2, "#7b4fd6") + R(10, 21, 2, 1, "#7b4fd6") +
+          R(6, 24, 10, 1, nt ? "#8a90c0" : "#aab0d0") + R(8, 26, 6, 1, nt ? "#8a90c0" : "#aab0d0") + R(4, 30, 2, 4, "#8b5a2b") + R(16, 30, 2, 4, "#8b5a2b");
+        break;
+      case "skm": /* 快閃店：粉白條紋的棚子、櫃檯上三樣周邊、一顆氣球 */
+        for (i = 0; i < 11; i++) s += R(1 + i * 2, 4, 2, 5, i % 2 ? "#ffffff" : "#ff5d8f") + R(1 + i * 2, 9, 2, 1, i % 2 ? "#ffffff" : "#ff5d8f");
+        s += R(0, 3, 22, 2, "#e04a7a") + R(1, 10, 2, 14, "#8b5a2b") + R(19, 10, 2, 14, "#8b5a2b") + R(3, 17, 16, 7, "#b07a45") + R(3, 17, 16, 2, "#d9a96b") +
+          R(5, 14, 3, 3, "#7b4fd6") + R(10, 14, 3, 3, "#ffd23f") + R(15, 14, 3, 3, "#2dbf8f") + R(18, 0, 3, 3, "#ff8fb3") + R(19, 3, 1, 4, "#aab0d0") + (nt ? R(2, 10, 18, 3, "#fff1a8", 0.25) : "");
+        break;
+      case "slb": /* 燈箱／看板：立在柱子上的發光看板，裡面一顆紫色愛心 */
+        s = (nt ? R(-1, -1, 20, 22, "#fff6c4", 0.2) : "") + R(1, 0, 16, 20, "#cfd5ea") + R(3, 2, 12, 16, nt ? "#fff6c4" : "#e8ecff") +
+          R(5, 5, 3, 3, "#7b4fd6") + R(10, 5, 3, 3, "#7b4fd6") + R(5, 8, 8, 3, "#7b4fd6") + R(6, 11, 6, 2, "#7b4fd6") + R(8, 13, 1, 1, "#7b4fd6") + R(9, 13, 1, 1, "#7b4fd6") + R(5, 15, 8, 1, "#9aa0c0") +
+          R(8, 20, 2, 10, "#6b7391") + R(5, 30, 8, 2, "#6b7391");
+        break;
+      case "scf": /* 咖啡廳：黃白條紋的陽傘、小圓桌、兩張椅子 */
+        for (i = 0; i < 6; i++) s += R(2 + i * 3, 0, 3, 3, i % 2 ? "#ffffff" : "#ffd23f");
+        s += R(1, 3, 20, 1, "#e0b020") + R(10, 4, 2, 7, "#8b5a2b") + R(4, 11, 14, 1, "#b07a45") + R(6, 12, 1, 4, "#8b5a2b") + R(15, 12, 1, 4, "#8b5a2b") +
+          R(8, 9, 2, 2, "#ffffff") + R(13, 9, 2, 2, "#ffffff") + R(0, 10, 3, 6, "#c9a06a") + R(19, 10, 3, 6, "#c9a06a") + (nt ? R(3, 4, 16, 6, "#fff1a8", 0.18) : "");
+        break;
+      case "sbus": /* 公車站牌：玻璃候車亭、長椅、旁邊立著藍色站牌 */
+        s = R(0, 6, 15, 2, "#5a6a9a") + R(1, 8, 13, 16, nt ? "#3a4f9a" : "#cfe8f5", nt ? 0.9 : 0.6) + R(3, 19, 10, 2, "#b07a45") + R(4, 21, 1, 3, "#8b5a2b") + R(11, 21, 1, 3, "#8b5a2b") +
+          R(17, 0, 2, 28, "#6b7391") + R(14, 0, 6, 8, "#2d6bd6") + R(15, 2, 4, 3, "#ffffff") + R(15, 6, 4, 1, "#ffd23f") + (nt ? R(3, 9, 10, 1, "#fff6c4") + R(1, 8, 13, 16, "#fff6c4", 0.08) : "");
+        break;
+      case "scafe": /* 應援咖啡廳：紫白遮陽棚的店面、發光的窗和兩只杯子、粉紅愛心招牌 */
+        s = (nt ? R(-2, 4, 46, 38, "#ffe9a8", 0.1) : "") + R(0, 8, 42, 32, nt ? "#5b4a8a" : "#cdbbe8");
+        for (i = 0; i < 14; i++) s += R(i * 3, 8, 3, 6, i % 2 ? "#ffffff" : "#7b4fd6") + R(i * 3, 14, 3, 2, i % 2 ? "#ffffff" : "#7b4fd6");
+        s += R(4, 18, 22, 16, nt ? "#ffe9a8" : "#bfe3f5") + R(14, 18, 1, 16, "#8b5a2b") + R(8, 27, 4, 5, "#ffffff") + R(9, 24, 1, 2, "#e8e8f4") + R(18, 27, 4, 5, "#ffffff") + R(19, 24, 1, 2, "#e8e8f4") +
+          R(29, 18, 9, 22, "#8b5a2b") + R(30, 19, 7, 20, "#b07a45") + R(35, 29, 1, 2, "#ffd23f") +
+          R(18, 0, 2, 2, "#ff5d8f") + R(22, 0, 2, 2, "#ff5d8f") + R(18, 2, 6, 2, "#ff5d8f") + R(19, 4, 4, 1, "#ff5d8f") + R(20, 5, 2, 1, "#ff5d8f");
+        break;
+      case "struck": /* LED 廣告車：白色車廂（整面 LED 節拍條）、紫色車頭、兩個輪子 */
+        s = R(0, 2, 42, 17, "#e4e8f6") + R(0, 2, 42, 2, "#c9cfe6") + R(2, 5, 38, 12, nt ? "#101840" : "#3a4062");
+        for (i = 0; i < 8; i++) s += R(4 + i * 4, 17 - TH[i], 3, TH[i], PCS[i % 7], o);
+        s += R(42, 7, 12, 12, "#7b4fd6") + R(42, 7, 12, 2, "#6a42c0") + R(46, 9, 6, 5, "#bfe3f5") + R(53, 15, 3, 4, "#c9cfe6") +
+          R(6, 17, 9, 6, "#1c2038") + R(8, 19, 5, 3, "#8a90a8") + R(36, 17, 9, 6, "#1c2038") + R(38, 19, 5, 3, "#8a90a8") + (nt ? R(54, 14, 2, 2, "#fff1a8") + R(56, 13, 4, 4, "#ffe9a8", 0.45) : "");
+        break;
+    }
+    return s;
+  }
+  function stItem(k, b, fb, n, x, y, w, h, an, say) {
+    return { k: k, b: b, fb: fb, n: n, x: x, y: y, w: w, h: h, an: an, say: say, art: stArt(k, true), artf: function (nt) { return stArt(k, nt); } };
+  }
+  var ITEMS3 = [
+    stItem("sflag", "t-應援企劃", "應援企劃達人", "應援旗", 2, 1, 156, 9, "sway", "彩旗一面一面掛起來，整條街都是應援的味道。"),
+    stItem("sled", "t-LED電視牆", "LED電視牆達人", "LED 電視牆", 50, 10, 46, 26, "flash", "大螢幕亮起來了，節拍跟著畫面一起跳。"),
+    stItem("sneon", "t-all", "全類型收集", "霓虹招牌", 100, 13, 32, 12, "flash", "每一種應援都集齊了，整條街的燈全部亮起。"),
+    stItem("sexh", "t-展覽", "展覽達人", "展覽", 2, 36, 22, 34, "hop", "展覽開幕了，進去慢慢看，別急。"),
+    stItem("skm", "t-快閃店", "快閃店達人", "快閃店", 26, 46, 22, 24, "bounce", "快閃店限定周邊，今天也排了好長的隊。"),
+    stItem("slb", "t-燈箱/看板", "燈箱/看板達人", "燈箱看板", 50, 38, 18, 32, "flash", "燈箱亮著，路過的人都會停下來拍一張。"),
+    stItem("scf", "t-咖啡廳", "咖啡廳達人", "咖啡廳", 68, 54, 22, 16, "sway", "坐下來喝杯咖啡，等下一站再出發。"),
+    stItem("sbus", "t-公車站牌", "公車站牌達人", "公車站牌", 94, 42, 20, 28, "shake", "站牌旁邊拍照打卡，公車來了先讓它過。"),
+    stItem("scafe", "t-應援咖啡廳", "應援咖啡廳達人", "應援咖啡廳", 116, 30, 42, 40, "bounce", "應援咖啡廳的杯套今天也很好看。"),
+    stItem("struck", "t-LED廣告車", "LED廣告車達人", "LED 廣告車", 12, 74, 60, 24, "hop", "廣告車慢慢開過去，整條街都跟著抬頭看。")
+  ];
+  var ALL = ITEMS.concat(ITEMS2, ITEMS3);
 
   /* ===== 房間表 =====
      新增房間：在 ROOMS 加一筆，再補上該房間的 items、scene 函式（以及需要時的 tick 函式，見 open() 裡的 TICKS）。
@@ -1349,7 +1512,13 @@
       pct: "練習室完成度",
       cap: { anniv: "練習室也掛上彩旗了。", bd: "練習室為壽星布置好了。", bw: "練習室先掛上彩旗和氣球了。", aw: "練習室先掛上彩旗了。", ax: "練習室的彩旗還沒收，捨不得。", nye: "練習室也迎接新的一年了。", done: "<b>練習室完成！</b><br>七個人站好位置了，準備開跳。", hint: "點練習室裡的東西看看。暗暗的剪影是還沒解鎖的物品。" },
       lock: { wait: "完成第一個房間後解鎖。", ready: "第一個房間已完成，新房間準備中。" },
-      unlocked: "練習室開放了，快去看看。" }
+      unlocked: "練習室開放了，快去看看。" },
+    { id: "street", chip: "第 3 間", name: "應援街區", items: ITEMS3, scene: scene3, gate: "prac", lazy: true, wmax: 128, ng: false, alt: false,
+      pub: ROOM3_PUBLIC, pv: ROOM3_PV, pvAll: P3ALL, pvStart: "room3",
+      pct: "街區完成度",
+      cap: { anniv: "街上也掛滿彩旗了。", bd: "街區為壽星亮燈了。", bw: "街區先掛上彩旗了。", aw: "街區先掛上彩旗了。", ax: "街區的彩旗還沒收，捨不得。", nye: "街區也迎接新的一年了。", done: "<b>應援街區完成！</b><br>整條街的燈都亮了。", hint: "點街上的東西看看。暗暗的剪影是還沒解鎖的物品。" },
+      lock: { wait: "完成第二個房間後解鎖。", ready: "第二個房間已完成，新房間準備中。" },
+      unlocked: "應援街區開放了，快去看看。" }
   ];
   function roomIx(id) { for (var i = 0; i < ROOMS.length; i++) if (ROOMS[i].id === id) return i; return -1; }
   function roomN(i, st) { return count(st, ROOMS[i].items); }
@@ -1711,6 +1880,36 @@
       s += '<g id="rmdzw"' + (S.gp === "away" ? ' display="none"' : "") + ">" + dancers(S) + "</g>";
     } else s += walker(S);
     return s + (fest ? popBurstArt(39, 79) : "") + (fest ? confArt() : "") + snowArt() + "</svg>";
+  }
+
+
+  /* 應援街區（第 3 間）的場景：夜空或晴空、後面一排大樓、人行道和馬路；10 件物品站在街上（沒解鎖的是暗暗的剪影）。
+     小人走在人行道前緣，經過已解鎖的物品會停下來；目前沒有節日、生日的佈置（之後再加）。 */
+  function scene3(S, full) {
+    var nt = S.night, s = '<svg id="rmsv" viewBox="0 0 160 100" shape-rendering="crispEdges" role="group" aria-label="' + esc(t("應援街區")) + '">', i, j, x, lit;
+    s += R(0, 0, 160, 66, nt ? "#0c1238" : "#a8d8ff") + R(0, 28, 160, 20, nt ? "#141d52" : "#bfe2ff") + R(0, 46, 160, 20, nt ? "#1e2a66" : "#d7efff");
+    if (nt) {
+      [[14, 6], [38, 14], [74, 4], [88, 18], [112, 9], [148, 6], [154, 20], [6, 22], [60, 24], [132, 24]].forEach(function (p) { s += R(p[0], p[1], 1, 1, "#ffffff", 0.9); });
+      s += R(147, 12, 5, 1, "#fff6c4") + R(146, 13, 7, 5, "#fff6c4") + R(147, 18, 5, 1, "#fff6c4") + R(149, 12, 5, 1, "#0c1238") + R(148, 13, 7, 5, "#0c1238") + R(149, 18, 5, 1, "#0c1238");
+    } else {
+      s += R(10, 8, 8, 8, "#fff1a8") + R(8, 10, 12, 4, "#fff1a8", 0.5) + R(30, 12, 14, 3, "#ffffff") + R(33, 10, 8, 2, "#ffffff") + R(108, 16, 16, 3, "#ffffff") + R(111, 14, 9, 2, "#ffffff");
+    }
+    [[0, 26, 26, 44, "#161c46", "#c5cbe3"], [26, 36, 22, 34, "#1b2354", "#d3d8ee"], [48, 8, 50, 62, "#141a40", "#b9bfdc"], [98, 28, 18, 42, "#1a2150", "#cdd3ea"], [116, 22, 44, 48, "#181e4a", "#c0c7e2"]].forEach(function (b) {
+      s += R(b[0], b[1], b[2], b[3], nt ? b[4] : b[5]);
+      for (j = b[1] + 4; j < 62; j += 6) for (i = b[0] + 3; i < b[0] + b[2] - 3; i += 5) { lit = (i * 7 + j * 13) % 5 < 2; s += R(i, j, 2, 2, nt ? (lit ? "#ffd86b" : "#232c63") : "#e8f0ff"); }
+    });
+    s += R(0, 66, 160, 8, nt ? "#4a5078" : "#b7bdd6") + R(0, 73, 160, 2, nt ? "#2a2f50" : "#8a90a8");
+    for (x = 8; x < 160; x += 16) s += R(x, 66, 1, 7, nt ? "#3a4068" : "#a3aac8");
+    s += R(0, 75, 160, 25, nt ? "#23273f" : "#555b78") + R(0, 97, 160, 3, nt ? "#1a1e33" : "#444a66");
+    for (x = 6; x < 160; x += 20) s += R(x, 86, 10, 1, "#ffd23f", 0.8);
+    ITEMS3.forEach(function (it) {
+      var on = !!S.st[it.b], cls = "rmi" + (on ? "" : " lk");
+      var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
+      s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.artf(nt) + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
+    });
+    /* 小人：走在人行道的前緣（walker() 預設腳在 y=92，上移 16 讓腳站在 y≈76），畫在所有物品的前面 */
+    s += '<g id="rmwv3" transform="translate(0,-16)">' + walker(S) + "</g>";
+    return s + "</svg>";
   }
 
   /* ===== 狀態 ===== */
@@ -2575,8 +2774,43 @@
       }
     }
 
+    /* 應援街區的動作迴圈（TICKS.street）：小人在人行道散步、經過已解鎖的物品會停下來；之後可以再加（廣告車開過、LED 螢幕跳動…） */
+    /* 應援街區的小人停靠點：{k 物品代號, b 解鎖徽章, x 小人左邊界（小人寬 26，站在物品正前方）}，由左到右；只有解鎖的物品才會停 */
+    var STSPOT = [{ k: "sexh", b: "t-展覽", x: 6 }, { k: "skm", b: "t-快閃店", x: 24 }, { k: "slb", b: "t-燈箱/看板", x: 34 }, { k: "scf", b: "t-咖啡廳", x: 52 }, { k: "sled", b: "t-LED電視牆", x: 66 }, { k: "sbus", b: "t-公車站牌", x: 91 }, { k: "scafe", b: "t-應援咖啡廳", x: 124 }];
+    function tick3(now, dt) {
+      var g = o.querySelector(".rmwx"), i, sp, px, qok, anyOn = false;
+      if (!g) return;
+      /* 從別的房間帶過來的動作（走向毛巾、出門…）在這裡沒有意義，直接回到散步 */
+      if (S.wst !== "walk" && S.wst !== "sr") { S.wst = "walk"; S.wuntil = 0; S.wot = 0; S.wdep = 0; S.wd = S.wd || 1; }
+      ITEMS3.forEach(function (it) { if (S.st[it.b]) anyOn = true; });
+      px = S.wx; qok = now >= (S.wq || 0);
+      if (S.wst === "walk") {
+        S.wx += S.wd * SPD * dt;
+        if (S.wx >= 128) { S.wx = 128; S.wd = -1; } else if (S.wx <= 6) { S.wx = 6; S.wd = 1; }
+        /* 走過已解鎖物品的正前方，有機會停下來 3 秒，那個物品也會動一下 */
+        if (qok && now >= (S.wsr || 0)) {
+          for (i = 0; i < STSPOT.length; i++) {
+            sp = STSPOT[i];
+            if (S.st[sp.b] && ((px < sp.x && S.wx >= sp.x) || (px > sp.x && S.wx <= sp.x)) && Math.random() < 0.55) {
+              S.wx = sp.x; S.wst = "sr"; S.wsk = sp.k; S.wuntil = now + 3.2; S.wsr = now + 10; popK(sp.k);
+              break;
+            }
+          }
+        }
+      } else if (now >= S.wuntil) { S.wst = "walk"; S.wq = now + QMIN + Math.random() * QSPAN; }
+      capSt(now, S.wst === "walk" ? (anyOn ? "w3" : "w3e") : "sr_" + S.wsk);
+      g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + ",0)");
+      g.classList.toggle("pz", S.wst === "sr");
+      g.classList.toggle("po", S.wst === "sr" && S.wsk === "slb");
+      g.classList.toggle("up", S.wst === "sr" && S.wsk === "sled");
+      var f = g.querySelector(".rmwf"), want = S.wd < 0;
+      if (f && f.__fl !== want) {
+        f.__fl = want;
+        if (want) f.setAttribute("transform", "translate(26,0) scale(-1,1)"); else f.removeAttribute("transform");
+      }
+    }
     /* 各房間專屬的動作迴圈（以房間 id 登記）。新房間要有自己的動作，就寫一個 tickX(now, dt) 加在這裡 */
-    var TICKS = { prac: tick2 };
+    var TICKS = { prac: tick2, street: tick3 };
 
     function tick(ts) {
       if (!document.body.contains(o)) return;
