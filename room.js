@@ -301,6 +301,8 @@
     "應援咖啡廳的杯套好可愛，一定要帶一個走。": ["The support café's cup sleeves are so cute — I have to take one home.", "응원 카페 컵 슬리브가 너무 귀여워요. 꼭 하나 가져갈래요.", "応援カフェのカップスリーブがかわいい。絶対持ち帰る。"],
     "排隊領杯套，慢慢等也值得。": ["Queuing for a cup sleeve — worth the wait.", "슬리브 받으려고 줄을 서요. 천천히 기다려도 아깝지 않아요.", "カップスリーブの列に並ぶ。ゆっくり待つ価値あり。"],
     "尚未開放：應援累積得夠多就會出現。": ["Not open yet — it appears once there are enough support spots.", "아직 열리지 않았어요. 응원이 충분히 쌓이면 나타나요.", "まだ開放前。応援が十分たまると登場するよ。"],
+    "整條街都亮了！": ["The whole street is lit up!", "거리 전체에 불이 켜졌어요!", "通り全体に明かりがついた！"],
+    "每一種應援都集齊了，謝謝你一個一個打卡。": ["Every kind of support is collected — thank you for checking in, one by one.", "모든 종류의 응원을 모았어요. 하나하나 체크인해 줘서 고마워요.", "すべての種類の応援がそろった。ひとつずつチェックインしてくれてありがとう。"],
     "跨年零食桌": ["New Year's Eve snack table", "새해 전야 간식 상", "年越しのおやつテーブル"],
     "橘子和年糕，跨年一定要吃點好彩頭。": ["Tangerines and rice cake — a little good luck for New Year's Eve.", "귤과 떡, 새해 전야엔 복을 챙겨야죠.", "みかんとお餅、年越しには縁起物を。"],
     "偷拿一塊年糕，邊吃邊等倒數。": ["Sneaking a piece of rice cake while waiting for the countdown.", "떡 한 조각 몰래 집어먹으며 카운트다운을 기다려요.", "お餅をこっそり一つ、カウントダウンを待ちながら。"],
@@ -1476,6 +1478,17 @@
   function stItem(k, b, fb, n, x, y, w, h, an, say) {
     return { k: k, b: b, fb: fb, n: n, x: x, y: y, w: w, h: h, an: an, say: say, art: stArt(k, true), artf: function (nt) { return stArt(k, nt); } };
   }
+  /* 全類型收集的「街燈」：夜晚、拿到全類型收集之後，整條街多一排串燈、人行道上暖黃色的光和大樓的暖色反光。
+     分成 10 段由左到右，平常整層都亮著；點亮儀式開始時（加上 .go）會一段一段從暗變亮。還沒播過的新解鎖（.pend）一開始是暗的 */
+  function stLitArt(S) {
+    var r = '<g id="rmsl" class="' + (S.nw && S.nw["t-all"] && !S.slDone ? "pend" : "") + '">', i, x, y;
+    for (i = 0; i < 10; i++) {
+      x = i * 16; y = 28 + (i % 3) * 3;
+      r += '<g class="slg" style="--i:' + i + '">' + R(x, 34, 16, 32, "#ffd98a", 0.05) + R(x + 1, 66, 14, 2, "#ffd98a", 0.3) + R(x + 3, 68, 10, 2, "#ffd98a", 0.2) +
+        R(x + 7, y - 1, 2, 4, "#fff1a8", 0.3) + R(x + 6, y, 4, 2, "#fff1a8", 0.3) + R(x + 7, y, 2, 2, "#fff1a8") + "</g>";
+    }
+    return r + "</g>";
+  }
   var ITEMS3 = [
     stItem("sflag", "t-應援企劃", "應援企劃達人", "應援旗", 2, 1, 156, 9, "sway", "彩旗一面一面掛起來，整條街都是應援的味道。"),
     stItem("sled", "t-LED電視牆", "LED電視牆達人", "LED 電視牆", 50, 10, 46, 26, "flash", "大螢幕亮起來了，節拍跟著畫面一起跳。"),
@@ -1920,6 +1933,7 @@
       var label = (on || !it.hid ? t(it.n) : "???") + (lang() === "zh" ? "，" : ", ") + t(on ? "已解鎖" : "未解鎖");
       s += '<g transform="translate(' + it.x + "," + it.y + ')"><g class="' + cls + '" data-k="' + it.k + '" tabindex="0" role="button" aria-label="' + esc(label) + '">' + R(0, 0, it.w, it.h, "transparent") + it.artf(nt) + "</g>" + (S.nw && S.nw[it.b] ? newMark(it) : "") + "</g>";
     });
+    if (nt && S.st && S.st["t-all"]) s += stLitArt(S);
     /* 小人：走在人行道的前緣（walker() 預設腳在 y=92，上移 16 讓腳站在 y≈76），畫在所有物品的前面 */
     s += '<g id="rmwv3" transform="translate(0,-16)">' + walker(S) + "</g>";
     return s + "</svg>";
@@ -2066,7 +2080,7 @@
     ".rsp{animation:rmsp 1.2s steps(1) infinite}.rsp.d1{animation-delay:.4s}.rsp.d2{animation-delay:.8s}@keyframes rmsp{0%{opacity:1}50%{opacity:0}}" +
     ".jg .rmwb{animation-duration:.25s}" +
     ".rdp{animation:rmdu .45s steps(3) infinite}.rdp.d1{animation-delay:.15s}.rdp.d2{animation-delay:.3s}@keyframes rmdu{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(-4px,-3px)}}" +
-    ".rcfs{pointer-events:none}.rcf{animation:rmcf 6s steps(6) infinite}@keyframes rmcf{0%{transform:translate(0,-4px)}25%{transform:translate(2px,22px)}50%{transform:translate(-1px,48px)}75%{transform:translate(2px,74px)}100%{transform:translate(0,100px)}}.xlA{animation:rmxl 1.4s steps(1) infinite}.xlB{animation:rmxl 1.4s steps(1) infinite .7s}@keyframes rmxl{0%{opacity:1}50%{opacity:.2}}.wsn{animation:rmws 5s steps(14) infinite}@keyframes rmws{0%{transform:translate(0,0)}100%{transform:translate(3px,30px)}}#rmsa.go{animation:rmsa 7s steps(40) 1 forwards}@keyframes rmsa{0%{transform:translate(50px,19px)}50%{transform:translate(78px,13px)}100%{transform:translate(110px,19px)}}.mrs{animation:rmmr 30s steps(30) 1 forwards}@keyframes rmmr{0%{transform:translate(0,27px)}100%{transform:translate(0,0)}}.mrt{animation:rmmt 30s linear 1 forwards}@keyframes rmmt{0%{opacity:1}100%{opacity:0}}.rmhm{display:none}.hm .rmhm{display:block}.rhn{fill:#b794ff;animation:rmhn 1.6s steps(8) infinite}.rhn2{animation-delay:.8s}@keyframes rmhn{0%{transform:translate(0,4px);opacity:0}20%{opacity:1}100%{transform:translate(3px,-8px);opacity:0}}.hm .rlw{transform-box:fill-box;transform-origin:50% 100%;animation:rmlsw .8s steps(4) infinite}@keyframes rmlsw{0%{transform:rotate(-28deg)}50%{transform:rotate(28deg)}100%{transform:rotate(-28deg)}}" +
+    ".rcfs{pointer-events:none}.rcf{animation:rmcf 6s steps(6) infinite}@keyframes rmcf{0%{transform:translate(0,-4px)}25%{transform:translate(2px,22px)}50%{transform:translate(-1px,48px)}75%{transform:translate(2px,74px)}100%{transform:translate(0,100px)}}.xlA{animation:rmxl 1.4s steps(1) infinite}.xlB{animation:rmxl 1.4s steps(1) infinite .7s}@keyframes rmxl{0%{opacity:1}50%{opacity:.2}}.wsn{animation:rmws 5s steps(14) infinite}@keyframes rmws{0%{transform:translate(0,0)}100%{transform:translate(3px,30px)}}#rmsa.go{animation:rmsa 7s steps(40) 1 forwards}@keyframes rmsa{0%{transform:translate(50px,19px)}50%{transform:translate(78px,13px)}100%{transform:translate(110px,19px)}}.a-flash{animation:rmfl .9s steps(1) 1}@keyframes rmfl{0%{opacity:1}15%{opacity:.25}30%{opacity:1}45%{opacity:.25}60%{opacity:1}100%{opacity:1}}.pend .slg{opacity:0}.go .slg{opacity:0;animation:rmslg .4s steps(4) forwards;animation-delay:calc(var(--i) * .28s)}@keyframes rmslg{0%{opacity:0}100%{opacity:1}}.mrs{animation:rmmr 30s steps(30) 1 forwards}@keyframes rmmr{0%{transform:translate(0,27px)}100%{transform:translate(0,0)}}.mrt{animation:rmmt 30s linear 1 forwards}@keyframes rmmt{0%{opacity:1}100%{opacity:0}}.rmhm{display:none}.hm .rmhm{display:block}.rhn{fill:#b794ff;animation:rmhn 1.6s steps(8) infinite}.rhn2{animation-delay:.8s}@keyframes rmhn{0%{transform:translate(0,4px);opacity:0}20%{opacity:1}100%{transform:translate(3px,-8px);opacity:0}}.hm .rlw{transform-box:fill-box;transform-origin:50% 100%;animation:rmlsw .8s steps(4) infinite}@keyframes rmlsw{0%{transform:rotate(-28deg)}50%{transform:rotate(28deg)}100%{transform:rotate(-28deg)}}" +
     ".rlA{animation:rmpa 1.4s steps(1) infinite}.rlB{opacity:0;animation:rmpb 1.4s steps(1) infinite}@media(prefers-reduced-motion:reduce){.rlA,.rlB{animation:none}.rlB{opacity:1}}" +
     ".rflA{opacity:1;animation:rmpa .6s steps(1) infinite}.rflB{opacity:0;animation:rmpb .6s steps(1) infinite}" +
     ".a-eq .rsb{animation:rseq .45s steps(3) 3}.rsb{transform-box:fill-box;transform-origin:50% 100%}@keyframes rseq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}" +
@@ -2080,7 +2094,7 @@
     ".rmnx{position:absolute;inset:0;z-index:2;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.6)}.rmnc{width:100%;max-width:340px;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:16px;text-align:center}.rmnc svg{width:64px;height:64px;margin-bottom:6px}.rmnc b{display:block;font-size:17px;color:var(--dark);margin-bottom:6px}.rmnc p{margin:0 0 12px;font-size:13px;line-height:1.5}.rmna{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.rmna button{font:inherit;font-size:13px;font-weight:800;padding:6px 12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.rmna button[data-a=go]{background:var(--dark);border-color:var(--dark);color:var(--darkInk)}" +
     ".up .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(-1px) rotate(-7deg)}.lw .rmwb{transform-box:fill-box;transform-origin:50% 100%;transform:translateY(1px) rotate(7deg)}" +
     ".rmtk{display:none;pointer-events:none}.tk .rmtk{display:block}.rth{transform-box:fill-box;transform-origin:50% 50%;animation:rmth .6s steps(1) infinite}@keyframes rmth{0%{transform:scale(1)}50%{transform:scale(1.2)}}@media(prefers-reduced-motion:reduce){.rth{animation:none}}" +
-    "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}.xlA,.xlB,.wsn{animation:none}.mrs,.rhn,.hm .rlw,#rmng.mg:not(.wk) .rmbw{animation:none}.mrt{animation:none;opacity:0}}" +
+    "@media(prefers-reduced-motion:reduce){.rpb.go{display:none}.rbal{animation:none}.rbA,.rbB,.rbm,.rcl,.tr .rpg,.rsp,.rdp,.rflA,.rflB{animation:none}.rbB,.rflB{opacity:0}.rbm{opacity:1}.rcfs{display:none}.xlA,.xlB,.wsn{animation:none}.mrs,.rhn,.hm .rlw,#rmng.mg:not(.wk) .rmbw{animation:none}.a-flash{animation:none}.go .slg,.pend .slg{animation:none;opacity:1}.mrt{animation:none;opacity:0}}" +
     "@media(prefers-reduced-motion:reduce){.a-eq .rsb,.a-flash .rfl,.dn .rmwb,.rmdb{animation:none}}" +
     "#roomBtn{position:relative}.rmli{position:absolute;top:10px;right:10px;width:34px;height:34px;display:block;pointer-events:none}.rmli svg{display:block;width:100%;height:100%;image-rendering:pixelated}.entry .et em.rmlb{display:flex!important;flex-wrap:nowrap;align-items:center;gap:6px;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;width:min(300px,100%)}.entry .et em.rmlb>span,.entry .et em.rmlb>b{display:inline-block!important;flex:none;width:auto!important;margin:0;background:none;border:0;white-space:nowrap}.entry .et em.rmlb>span.rmlc{background:#7b4fd6!important;color:#fff!important;padding:1px 6px!important}.entry .et em.rmpb{display:flex!important;flex-wrap:nowrap;align-items:center;gap:8px}.entry .et em.rmpb>span{display:inline-block!important;flex:none;width:auto!important;margin:0;white-space:nowrap}.entry .et em.rmpb>i.rmpx{flex:1 1 auto;min-width:0;margin-top:0}.rmlb{display:block;width:min(240px,100%);box-sizing:border-box;margin-top:6px;font-style:normal;font-size:12px;font-weight:800;line-height:1.5}.rmlc{background:#7b4fd6;color:#fff;padding:1px 6px;font-size:11px;letter-spacing:.5px}.rmlb b{font-weight:800}";
   document.head.appendChild(css);
@@ -2272,6 +2286,7 @@
         if (sv) sv.classList.toggle("lon", S.lamp);
       }
       else if (on) pop(g, it);
+      if (on && it.k === "sneon" && S.night) S.slReq = performance.now() / 1000 + 0.1;
       /* 有功能入口的物品：第一次點先顯示說明和「再點一次」提示，4 秒內再點一次才真的離開小窩去那個功能，避免誤觸跳走 */
       var ac = on ? actOf(it.k) : null, now = performance.now() / 1000;
       if (ac && S.armK === it.k && now < S.armT) { S.armK = ""; leaveAnd(ac.run); return; }
@@ -2796,6 +2811,20 @@
       /* 從別的房間帶過來的動作（走向毛巾、出門…）在這裡沒有意義，直接回到散步 */
       if (S.wst !== "walk" && S.wst !== "sr") { S.wst = "walk"; S.wuntil = 0; S.wot = 0; S.wdep = 0; S.wd = S.wd || 1; }
       ITEMS3.forEach(function (it) { if (S.st[it.b]) anyOn = true; });
+      /* 全類型收集的點亮儀式（約 4 秒）：串燈和人行道的光由左到右一段段亮起、小人停下來抬頭看、最後霓虹招牌閃一下、字幕寫「整條街都亮了」。
+         條件：夜晚、拿到全類型收集；第一次（新解鎖）會自動播，之後點霓虹招牌可以重播；預覽時每 45 秒播一次 */
+      if (S.st["t-all"] && S.night && !S.sl && ((S.nw && S.nw["t-all"] && !S.slDone) || (S.slReq && now >= S.slReq) || (PV && now >= (S.slNext || (S.slNext = now + 5))))) {
+        S.slDone = 1; S.slReq = 0; S.slNext = now + 45; S.sl = { t: now, neon: false };
+        var lt = o.querySelector("#rmsl");
+        if (lt) { lt.classList.remove("pend"); lt.classList.remove("go"); void lt.getBoundingClientRect(); lt.classList.add("go"); }
+        S.wst = "sr"; S.wsk = "lit"; S.wuntil = now + 4.5;
+        var lcp = document.getElementById("rmcap");
+        if (lcp) { lcp.innerHTML = "<b>" + esc(t("整條街都亮了！")) + "</b><br>" + esc(t("每一種應援都集齊了，謝謝你一個一個打卡。")); S.capK = ""; S.cph = now + 7; }
+      }
+      if (S.sl) {
+        if (!S.sl.neon && now - S.sl.t >= 3.2) { S.sl.neon = true; popK("sneon"); }
+        if (now - S.sl.t > 4) S.sl = null;
+      }
       px = S.wx; qok = now >= (S.wq || 0);
       if (S.wst === "walk") {
         S.wx += S.wd * SPD * dt;
@@ -2815,7 +2844,7 @@
       g.setAttribute("transform", "translate(" + S.wx.toFixed(2) + ",0)");
       g.classList.toggle("pz", S.wst === "sr");
       g.classList.toggle("po", S.wst === "sr" && S.wsk === "slb");
-      g.classList.toggle("up", S.wst === "sr" && S.wsk === "sled");
+      g.classList.toggle("up", S.wst === "sr" && (S.wsk === "sled" || S.wsk === "lit"));
       var f = g.querySelector(".rmwf"), want = S.wd < 0;
       if (f && f.__fl !== want) {
         f.__fl = want;
