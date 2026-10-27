@@ -1425,7 +1425,7 @@ function step(k){idx+=k*(wide()?2:1);draw(k)}
 function close(){if(!ov)return;clearTimeout(flT);shown=-1;ov.remove();ov=null;document.removeEventListener("keydown",key);window.removeEventListener("resize",rs);if(last&&last.focus)last.focus()}
 function stamp(id){
   if(typeof FPV==="undefined"||FPV[id])return;
-  var n=new Date();FPV[id]=n.getFullYear()+"/"+(n.getMonth()+1)+"/"+n.getDate();
+  var n=typeof tpe==="function"?tpe():new Date();FPV[id]=n.getFullYear()+"/"+(n.getMonth()+1)+"/"+n.getDate();
   try{fpSave()}catch(x){}try{badgeSync()}catch(x){}try{toast("已記錄這個足跡")}catch(x){}try{fpR()}catch(x){}
   pages=build();draw();
   var c=ov&&ov.querySelector('.ppc[data-pid-done="'+id+'"]');if(c)c.classList.add("slam");
