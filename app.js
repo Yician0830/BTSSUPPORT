@@ -2,7 +2,7 @@ try{window.__PV=new URLSearchParams(location.search).get("preview")||""}catch(e)
 <div class="hd"><div class="top"><div class="tags">${d.type.map((t)=>`<span class="tag">${t}</span>`).join("")}${nw(d)}${(d.tags||[]).filter((x)=>x!=="免費"&&x!=="須配合店家低銷").map((x)=>`<span class="pill">${x}</span>`).join("")}</div>
 <button class="heart" data-f="${d.id}" aria-pressed="${favs.has(d.id)}" aria-label="收藏">${favs.has(d.id)?"♥":"♡"}</button></div>
 <h2>${esc(d.title)}</h2><div class="by">主辦：${esc(d.by)}</div>${descTxt(d)?`<p class="desc">${esc(descTxt(d))}</p>`:""}</div>
-${d.chg?`<div class="chg-alert" role="alert"><b>⚠ 異動</b><span>${esc(d.chg)}</span></div>`:""}
+${d.chg?`<div class="chg-alert${/^取消/.test(d.chg)?" cx":""}" role="alert"><b>${/^取消/.test(d.chg)?"取消":"異動"}</b><span>${esc(d.chg)}</span></div>`:""}
 <div class="box">${[["地點",d.place],["時間",timeTxt(d)],["備註",tipTxt(d)]].filter((r)=>r[1]&&r[1]!=="—").map((r)=>`<div><span>${r[0]}</span><span>${esc(r[1])}</span></div>`).join("")}</div>
 <div class="act">${d.chg&&/^取消/.test(d.chg)&&!done.has(d.id)?"":`<button class="btn ${done.has(d.id)?"ok":"main"}" data-c="${d.id}">${done.has(d.id)?"✔ 已打卡"+(dd[d.id]?" "+dd[d.id]:""):d.sec==="birthday"?"\uD83C\uDF82 我打卡了":"\uD83D\uDCA3 我打卡了"}</button>`}
 ${d.map?`<a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.map)}">\uD83D\uDCCD 地圖</a>`:""}
