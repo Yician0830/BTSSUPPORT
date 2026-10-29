@@ -372,6 +372,8 @@ I18N.add("把任一天分頁的應援全部打卡","Check in every project on an
 I18N.add("連抽三天","3-Day Draw Streak","3일 연속 뽑기","3日連続おみくじ");
 I18N.add("連抽七天","7-Day Draw Streak","7일 연속 뽑기","7日連続おみくじ");
 I18N.add("熱心站民","Helpful Member","열정 멤버","お助けメンバー");
+I18N.add("導覽達人","Guide Master","가이드 달인","ガイドの達人");
+I18N.add("把每一頁的新手導覽都看完（走到最後一步按「完成」）","Finish the beginner's guide on every page (tap “Done” on the last step)","모든 페이지의 가이드를 끝까지 보기 (마지막 단계에서 '완료' 누르기)","すべてのページのガイドを最後まで見る（最後のステップで「完了」を押す）");
 I18N.add("點開「我要投稿」或「錯誤回報」表單","Open the “Submit a project” or “Report an error” form","'응원 정보 제보' 또는 '오류 신고' 양식 열기","「投稿する」または「エラー報告」フォームを開く");
 I18N.add("普通","Common","일반","ノーマル");
 I18N.add("稀有","Rare","희귀","レア");
