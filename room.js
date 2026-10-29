@@ -55,6 +55,13 @@
     "愛心送給你！": ["Here's a heart for you!", "하트를 보내요!", "ハートをあげる！"],
     "今天也要一起幸福！": ["Let's be happy together today, too!", "오늘도 같이 행복해요!", "今日も一緒に幸せになろう！"],
     "彩蛋小窩": ["Easter Egg Room", "에그 룸", "たまごのお部屋"],
+    "公告": ["Announcement", "공지", "お知らせ"],
+    "新功能": ["New feature", "새 기능", "新機能"],
+    "彩蛋小窩開放了！": ["The Easter Egg Room is open!", "에그 룸이 열렸어요!", "たまごのお部屋がオープン！"],
+    "解鎖徽章和彩蛋，房間就會多一件物品，慢慢布置你自己的 ARMY 小窩。": ["Unlock badges and eggs and a new item appears in your room. Take your time decorating your own ARMY room.", "배지와 에그를 해제할 때마다 방에 아이템이 하나씩 늘어나요. 나만의 아미 방을 천천히 꾸며 보세요.", "バッジやたまごを解除するたびに、お部屋にアイテムがひとつ増えます。自分だけの ARMY ルームをゆっくり飾ろう。"],
+    "在首頁點「彩蛋小窩」就能進去。": ["Tap “Easter Egg Room” on the home page to go in.", "홈 화면에서 ‘에그 룸’을 누르면 들어갈 수 있어요.", "ホームの「たまごのお部屋」をタップすると入れます。"],
+    "進去看看": ["Take a look", "들어가 보기", "のぞいてみる"],
+    "公告視窗": ["Announcement window", "공지 창", "お知らせウィンドウ"],
     "解鎖徽章和彩蛋，布置你自己的 ARMY 小窩": ["Unlock badges and eggs to fill your own ARMY room", "배지와 에그를 해제해 나만의 아미 방을 꾸며 보세요", "バッジやたまごを解除して、自分だけの ARMY ルームを飾ろう"],
     "新功能／暫未開放": ["New feature / not open yet", "새 기능 / 아직 열리지 않았어요", "新機能／まだ公開前です"],
     "新功能，暫未開放": ["New feature, not open yet", "새 기능이에요. 아직 열리지 않았어요", "新機能です。まだ公開前です"],
@@ -625,7 +632,7 @@
   /* 彩蛋小窩開關：跟「藝人同款足跡」一樣的鎖法。
      ROOM_PUBLIC=false＝對一般使用者鎖起來（首頁入口灰色＋鎖頭＋「新功能／暫未開放」）；要正式開放就改成 true，並把 sw.js 的 VER 換一個值。
      自己預覽：用 ?preview=room 開一次，這台裝置就會解鎖（存在 localStorage: room-preview）；用 ?preview=off 關掉預覽 */
-  var ROOM_PUBLIC = false;
+  var ROOM_PUBLIC = true;
   var ROOM_OPEN = ROOM_PUBLIC || (function () {
     try {
       var v = PV;
@@ -3212,6 +3219,64 @@
   });
   setTimeout(function () { try { tag(getBs()); } catch (e) {} }, 1200);
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { try { tag(getBs()); } catch (e) {} } });
+
+  /* ===== 公告：小窩開放的一次性彈窗 =====
+     第一次進站（或換了公告編號）才跳一次，看過就記在 localStorage: room-ann。
+     之後要發新公告：改 ANN.id 和 ANN 的文字（文字記得同時加進上面的 LT 翻譯），舊使用者就會再看到一次。
+     自己預覽：網址加 ?preview=ann 會無視「看過了」強制跳出（不會存任何東西）。 */
+  var ANN = { id: "room-open-1", tag: "新功能", title: "彩蛋小窩開放了！", body: ["解鎖徽章和彩蛋，房間就會多一件物品，慢慢布置你自己的 ARMY 小窩。", "在首頁點「彩蛋小窩」就能進去。"], go: "進去看看", close: "關閉" };
+  function annSeen() { try { return localStorage.getItem("room-ann") === ANN.id; } catch (e) { return false; } }
+  function annMark() { try { localStorage.setItem("room-ann", ANN.id); } catch (e) {} }
+  function annShow() {
+    if (document.getElementById("roomAnn")) return;
+    if (!document.getElementById("roomAnnCss")) {
+      var st = document.createElement("style");
+      st.id = "roomAnnCss";
+      st.textContent = "#roomAnn{position:fixed;inset:0;z-index:1001;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.72)}" +
+        "#roomAnn .ac{width:100%;max-width:380px;max-height:90vh;overflow:auto;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:18px;display:grid;gap:12px}" +
+        "#roomAnn .ah{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--sub)}" +
+        "#roomAnn .at{display:inline-block;padding:2px 10px;font-size:13px;font-weight:800;color:#fff;background:var(--accent);border:2px solid var(--navy)}" +
+        "#roomAnn h2{margin:0;font-family:var(--px,inherit);font-weight:400;font-size:24px;line-height:1.25;color:var(--dark);text-align:center;padding:14px 8px;border:3px dashed var(--line);background:var(--box)}" +
+        "#roomAnn p{margin:0;font-size:14px;line-height:1.7}" +
+        "#roomAnn .aa{display:flex;gap:8px}#roomAnn .aa .btn{flex:1;justify-content:center}";
+      document.head.appendChild(st);
+    }
+    var o = document.createElement("div");
+    o.id = "roomAnn";
+    o.innerHTML = '<div class="ac" role="dialog" aria-modal="true" aria-label="' + esc(t("公告視窗")) + '">' +
+      '<div class="ah"><span class="at">' + esc(t(ANN.tag)) + '</span><span>' + esc(t("公告")) + '</span></div>' +
+      '<h2>' + esc(t(ANN.title)) + '</h2>' +
+      ANN.body.map(function (x) { return "<p>" + esc(t(x)) + "</p>"; }).join("") +
+      '<div class="aa"><button type="button" class="btn" data-a="x">' + esc(t(ANN.close)) + '</button><button type="button" class="btn main" data-a="go">' + esc(t(ANN.go)) + '</button></div></div>';
+    document.body.appendChild(o);
+    var prevFocus = document.activeElement;
+    function done(go) {
+      annMark();
+      document.removeEventListener("keydown", kd, true);
+      if (o.parentNode) o.parentNode.removeChild(o);
+      if (go) { var rb2 = document.getElementById("roomBtn"); if (rb2) rb2.click(); }
+      else if (prevFocus && prevFocus.focus) { try { prevFocus.focus(); } catch (e) {} }
+    }
+    function kd(ev) { if (ev.key === "Escape") { ev.preventDefault(); done(false); } }
+    document.addEventListener("keydown", kd, true);
+    o.addEventListener("click", function (ev) {
+      var b2 = ev.target.closest && ev.target.closest("[data-a]");
+      if (b2) done(b2.getAttribute("data-a") === "go");
+      else if (ev.target === o) done(false);
+    });
+    var gb = o.querySelector('[data-a="go"]');
+    if (gb) gb.focus();
+  }
+  /* 有別的視窗（導覽、護照、小窩本身）開著就先等，最多等 4 次，不去蓋掉使用者正在做的事 */
+  function annTry(n) {
+    try {
+      if (!ROOM_OPEN) return;
+      if (PV !== "ann" && annSeen()) return;
+      if (document.querySelector('#ftn,#ftimg,#rmo,.ppo,[role="dialog"]')) { if (n < 4) setTimeout(function () { annTry(n + 1); }, 4000); return; }
+      annShow();
+    } catch (e) {}
+  }
+  setTimeout(function () { annTry(0); }, 1800);
 
   /* 註冊到網站的翻譯機制。全部／關閉原本就有翻譯，不重複加，避免蓋掉其他地方的用法 */
   try {
