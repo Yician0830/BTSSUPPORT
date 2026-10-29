@@ -3217,16 +3217,48 @@
   /* ===== 掛到首頁 ===== */
   document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("#roomBtn");
-    if (b && ROOM_OPEN) open();
+    if (b && ROOM_OPEN) { newDismiss(); open(); }
   });
   setTimeout(function () { try { tag(getBs()); } catch (e) {} }, 1200);
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { try { tag(getBs()); } catch (e) {} } });
+
+  /* ===== 首頁入口的 NEW 小徽章 =====
+     小窩開放後，「彩蛋小窩」按鈕左上角掛一個 NEW。看過公告（按任何一個按鈕或關掉）或點進小窩，就收掉，記在 localStorage: room-new。
+     之後想重新亮起來：把 NEWB_ID 換成新的值即可。預覽：網址加 ?preview=new 會無視「已收掉」強制顯示（只有你點了按鈕才會記成已收掉）。 */
+  var NEWB_ID = "1";
+  function newSeen() { try { return localStorage.getItem("room-new") === NEWB_ID; } catch (e) { return false; } }
+  function newDismiss() {
+    try { localStorage.setItem("room-new", NEWB_ID); } catch (e) {}
+    var nb = document.getElementById("roomNewB");
+    if (nb && nb.parentNode) nb.parentNode.removeChild(nb);
+  }
+  function newShow() {
+    try {
+      if (!ROOM_OPEN) return;
+      if (PV !== "new" && newSeen()) return;
+      var b = document.getElementById("roomBtn");
+      if (!b || document.getElementById("roomNewB")) return;
+      if (!document.getElementById("roomNewCss")) {
+        var st = document.createElement("style");
+        st.id = "roomNewCss";
+        st.textContent = "#roomNewB{position:absolute;top:-10px;left:14px;z-index:2;pointer-events:none;padding:1px 8px;font:400 14px/1.5 var(--px,inherit);letter-spacing:.08em;color:#fff;background:var(--accent);border:2px solid var(--navy);box-shadow:2px 2px 0 var(--navy);animation:roomNewBob 1s steps(2,end) infinite}" +
+          "@keyframes roomNewBob{50%{transform:translateY(-3px)}}@media (prefers-reduced-motion:reduce){#roomNewB{animation:none}}";
+        document.head.appendChild(st);
+      }
+      var nb = document.createElement("span");
+      nb.id = "roomNewB";
+      nb.setAttribute("aria-hidden", "true");
+      nb.textContent = "NEW";
+      b.appendChild(nb);
+    } catch (e) {}
+  }
+  setTimeout(newShow, 300);
 
   /* ===== 公告：小窩開放的一次性彈窗 =====
      第一次進站（或換了公告編號）才跳一次，看過就記在 localStorage: room-ann。
      之後要發新公告：改 ANN.id 和 ANN 的文字（文字記得同時加進上面的 LT 翻譯），舊使用者就會再看到一次。
      自己預覽：網址加 ?preview=ann 會無視「看過了」強制跳出（不會存任何東西）。 */
-  var ANN = { id: "room-open-2", tag: "新功能", title: "小窩開門啦！", body: ["你的 ARMY 小窩正式開張，裡面還空空的，等你一件一件填滿。", "解鎖徽章、抓到彩蛋，房間就會長出新東西，連小人都會跑來散步！", "點首頁的「彩蛋小窩」，現在就去逛逛 💜"], go: "衝進小窩！", close: "晚點再說" };
+  var ANN = { id: "room-open-2", tag: "NEW", title: "小窩開門啦！", body: ["你的 ARMY 小窩正式開張，裡面還空空的，等你一件一件填滿。", "解鎖徽章、抓到彩蛋，房間就會長出新東西，連小人都會跑來散步！", "點首頁的「彩蛋小窩」，現在就去逛逛 💜"], go: "衝進小窩！", close: "晚點再說" };
   function annSeen() { try { return localStorage.getItem("room-ann") === ANN.id; } catch (e) { return false; } }
   function annMark() { try { localStorage.setItem("room-ann", ANN.id); } catch (e) {} }
   function annShow() {
@@ -3237,7 +3269,8 @@
       st.textContent = "#roomAnn{position:fixed;inset:0;z-index:1001;display:grid;place-items:center;padding:16px;background:rgba(6,24,58,.72)}" +
         "#roomAnn .ac{width:100%;max-width:380px;max-height:90vh;overflow:auto;background:var(--card);color:var(--ink);border:3px solid var(--dark);box-shadow:6px 6px 0 var(--line);padding:18px;display:grid;gap:12px}" +
         "#roomAnn .ah{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--sub)}" +
-        "#roomAnn .at{display:inline-block;padding:2px 10px;font-size:13px;font-weight:800;color:#fff;background:var(--accent);border:2px solid var(--navy)}" +
+        "#roomAnn .at{display:inline-block;padding:2px 10px;font-size:13px;font-weight:800;letter-spacing:.08em;color:#fff;background:var(--accent);border:2px solid var(--navy);animation:roomNewBlink 1s steps(2,end) infinite}" +
+        "@keyframes roomNewBlink{50%{background:#ff8fb3}}@media (prefers-reduced-motion:reduce){#roomAnn .at{animation:none}}" +
         "#roomAnn h2{margin:0;font-family:var(--px,inherit);font-weight:400;font-size:24px;line-height:1.25;color:var(--dark);text-align:center;padding:14px 8px;border:3px dashed var(--line);background:var(--box)}" +
         "#roomAnn p{margin:0;font-size:14px;line-height:1.7}" +
         "#roomAnn .ae{display:block;width:56px;height:56px;margin:2px auto -2px;animation:roomAnnBob 1.2s steps(2,end) infinite}" +
@@ -3257,6 +3290,7 @@
     var prevFocus = document.activeElement;
     function done(go) {
       annMark();
+      newDismiss();
       document.removeEventListener("keydown", kd, true);
       if (o.parentNode) o.parentNode.removeChild(o);
       if (go) { var rb2 = document.getElementById("roomBtn"); if (rb2) rb2.click(); }
