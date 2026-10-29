@@ -57,10 +57,12 @@
     "彩蛋小窩": ["Easter Egg Room", "에그 룸", "たまごのお部屋"],
     "公告": ["Announcement", "공지", "お知らせ"],
     "新功能": ["New feature", "새 기능", "新機能"],
-    "彩蛋小窩開放了！": ["The Easter Egg Room is open!", "에그 룸이 열렸어요!", "たまごのお部屋がオープン！"],
-    "解鎖徽章和彩蛋，房間就會多一件物品，慢慢布置你自己的 ARMY 小窩。": ["Unlock badges and eggs and a new item appears in your room. Take your time decorating your own ARMY room.", "배지와 에그를 해제할 때마다 방에 아이템이 하나씩 늘어나요. 나만의 아미 방을 천천히 꾸며 보세요.", "バッジやたまごを解除するたびに、お部屋にアイテムがひとつ増えます。自分だけの ARMY ルームをゆっくり飾ろう。"],
-    "在首頁點「彩蛋小窩」就能進去。": ["Tap “Easter Egg Room” on the home page to go in.", "홈 화면에서 ‘에그 룸’을 누르면 들어갈 수 있어요.", "ホームの「たまごのお部屋」をタップすると入れます。"],
-    "進去看看": ["Take a look", "들어가 보기", "のぞいてみる"],
+    "小窩開門啦！": ["The nest is open!", "둥지 문이 열렸어요!", "小窩オープン！"],
+    "你的 ARMY 小窩正式開張，裡面還空空的，等你一件一件填滿。": ["Your ARMY nest is officially open. It's still empty, waiting for you to fill it one piece at a time.", "나만의 아미 방이 정식으로 문을 열었어요. 아직 텅 비어 있으니 하나씩 채워 보세요.", "あなたの ARMY ルームがついにオープン！まだ空っぽだから、ひとつずつ埋めていこう。"],
+    "解鎖徽章、抓到彩蛋，房間就會長出新東西，連小人都會跑來散步！": ["Unlock badges, catch eggs, and new things pop up in the room. Even the little walkers drop by for a stroll!", "배지를 해제하고 에그를 잡으면 방에 새 물건이 쑥쑥! 꼬마들도 산책하러 와요!", "バッジを解除してたまごを見つけると、お部屋に新しいものが登場。ミニキャラもお散歩にやってくるよ！"],
+    "點首頁的「彩蛋小窩」，現在就去逛逛 💜": ["Tap “Easter Egg Room” on the home page and take a look now 💜", "홈 화면의 ‘에그 룸’을 눌러 지금 바로 구경해 보세요 💜", "ホームの「たまごのお部屋」をタップして、今すぐのぞいてみよう 💜"],
+    "衝進小窩！": ["Rush in!", "들어가자!", "飛び込もう！"],
+    "晚點再說": ["Maybe later", "나중에 할게요", "あとにする"],
     "公告視窗": ["Announcement window", "공지 창", "お知らせウィンドウ"],
     "解鎖徽章和彩蛋，布置你自己的 ARMY 小窩": ["Unlock badges and eggs to fill your own ARMY room", "배지와 에그를 해제해 나만의 아미 방을 꾸며 보세요", "バッジやたまごを解除して、自分だけの ARMY ルームを飾ろう"],
     "新功能／暫未開放": ["New feature / not open yet", "새 기능 / 아직 열리지 않았어요", "新機能／まだ公開前です"],
@@ -3224,7 +3226,7 @@
      第一次進站（或換了公告編號）才跳一次，看過就記在 localStorage: room-ann。
      之後要發新公告：改 ANN.id 和 ANN 的文字（文字記得同時加進上面的 LT 翻譯），舊使用者就會再看到一次。
      自己預覽：網址加 ?preview=ann 會無視「看過了」強制跳出（不會存任何東西）。 */
-  var ANN = { id: "room-open-1", tag: "新功能", title: "彩蛋小窩開放了！", body: ["解鎖徽章和彩蛋，房間就會多一件物品，慢慢布置你自己的 ARMY 小窩。", "在首頁點「彩蛋小窩」就能進去。"], go: "進去看看", close: "關閉" };
+  var ANN = { id: "room-open-2", tag: "新功能", title: "小窩開門啦！", body: ["你的 ARMY 小窩正式開張，裡面還空空的，等你一件一件填滿。", "解鎖徽章、抓到彩蛋，房間就會長出新東西，連小人都會跑來散步！", "點首頁的「彩蛋小窩」，現在就去逛逛 💜"], go: "衝進小窩！", close: "晚點再說" };
   function annSeen() { try { return localStorage.getItem("room-ann") === ANN.id; } catch (e) { return false; } }
   function annMark() { try { localStorage.setItem("room-ann", ANN.id); } catch (e) {} }
   function annShow() {
@@ -3238,6 +3240,9 @@
         "#roomAnn .at{display:inline-block;padding:2px 10px;font-size:13px;font-weight:800;color:#fff;background:var(--accent);border:2px solid var(--navy)}" +
         "#roomAnn h2{margin:0;font-family:var(--px,inherit);font-weight:400;font-size:24px;line-height:1.25;color:var(--dark);text-align:center;padding:14px 8px;border:3px dashed var(--line);background:var(--box)}" +
         "#roomAnn p{margin:0;font-size:14px;line-height:1.7}" +
+        "#roomAnn .ae{display:block;width:56px;height:56px;margin:2px auto -2px;animation:roomAnnBob 1.2s steps(2,end) infinite}" +
+        "@keyframes roomAnnBob{0%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-6px) rotate(6deg)}100%{transform:translateY(0) rotate(-6deg)}}" +
+        "@media (prefers-reduced-motion:reduce){#roomAnn .ae{animation:none}}" +
         "#roomAnn .aa{display:flex;gap:8px}#roomAnn .aa .btn{flex:1;justify-content:center}";
       document.head.appendChild(st);
     }
@@ -3245,7 +3250,7 @@
     o.id = "roomAnn";
     o.innerHTML = '<div class="ac" role="dialog" aria-modal="true" aria-label="' + esc(t("公告視窗")) + '">' +
       '<div class="ah"><span class="at">' + esc(t(ANN.tag)) + '</span><span>' + esc(t("公告")) + '</span></div>' +
-      '<h2>' + esc(t(ANN.title)) + '</h2>' +
+      '<svg class="ae" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="2" height="1" fill="#b794ff"/><rect x="3" y="1" width="4" height="1" fill="#b794ff"/><rect x="2" y="2" width="6" height="2" fill="#b794ff"/><rect x="1" y="4" width="8" height="4" fill="#b794ff"/><rect x="2" y="8" width="6" height="1" fill="#b794ff"/><rect x="3" y="9" width="4" height="1" fill="#b794ff"/><rect x="3" y="3" width="1" height="1" fill="#fff"/><rect x="2" y="5" width="6" height="1" fill="#ffd23f"/><rect x="2" y="7" width="6" height="1" fill="#ff8fb3"/><rect x="6" y="2" width="1" height="1" fill="#fff"/></svg>' + '<h2>' + esc(t(ANN.title)) + '</h2>' +
       ANN.body.map(function (x) { return "<p>" + esc(t(x)) + "</p>"; }).join("") +
       '<div class="aa"><button type="button" class="btn" data-a="x">' + esc(t(ANN.close)) + '</button><button type="button" class="btn main" data-a="go">' + esc(t(ANN.go)) + '</button></div></div>';
     document.body.appendChild(o);
