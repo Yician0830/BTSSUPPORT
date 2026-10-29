@@ -754,6 +754,7 @@ body[data-sec="tour"] .hero{--hz1w:240px}body[data-sec="songs"] .hero{--hz1w:200
 :root[data-theme="dark"] .sgt .cl.b,:root[data-theme="dark"] .sgt .ib{color:#6aa5ff}:root[data-theme="dark"] .sgt .cl.r,:root[data-theme="dark"] .sgt .ir{color:#ff6f9f}:root[data-theme="dark"] .sgt .cl.o,:root[data-theme="dark"] .sgt .io{color:#ffb347}
 
 .upd:empty{display:none}
+.grid>.areah{grid-column:1/-1;display:flex;align-items:baseline;gap:10px;margin:14px 0 0;padding:6px 12px;font-family:var(--px);font-weight:400;font-size:18px;letter-spacing:.04em;background:var(--card);border:2px solid var(--dark);border-left-width:10px;box-shadow:3px 3px 0 var(--line)}.grid>.areah:first-child{margin-top:0}.areah small{font-family:"Noto Sans TC",system-ui,sans-serif;font-size:13px;font-weight:700;color:var(--sub);letter-spacing:0}
 .pre-inner #homeBox,.pre-inner #notesBox{display:none}
 .pre-inner .hero h1,.pre-inner .script,.pre-inner .show{visibility:hidden}
 
@@ -1088,6 +1089,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <button class="back" data-go="home">← 回首頁</button>
 <div class="chips cities" id="cities" role="group" aria-label="選擇城市"></div>
 <div class="chips cities" id="days" role="group" aria-label="選擇日期"></div>
+<div class="chips cities" id="areas" role="group" aria-label="選擇區域" hidden></div>
 <div class="chips cities" id="members" role="group" aria-label="選擇成員"></div><div class="next" id="nextBd" hidden></div>
 <div class="book" id="book" hidden></div>
 <div class="tools">
@@ -1147,7 +1149,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 <script>
 /* ===== 讀取 Google 試算表（網址設定在 data.js 的 SHEET_CSV_URL；讀不到就用 data.js 內建資料） ===== */
 (function(){
-const H={"id":"id","區塊":"sec","城市":"city","成員":"member","類型":"type","名稱":"title","主辦":"by","簡介":"desc","日期":"dates","開始":"start","結束":"end","狀態":"status","標籤":"tags","地點":"place","時間":"time","備註":"tip","地圖":"map","連結":"links","圖片":"img","更新":"upd","座標":"ll","新舊":"added","異動":"chg"};
+const H={"id":"id","區塊":"sec","城市":"city","成員":"member","類型":"type","名稱":"title","主辦":"by","簡介":"desc","日期":"dates","開始":"start","結束":"end","狀態":"status","標籤":"tags","地點":"place","時間":"time","備註":"tip","地圖":"map","連結":"links","圖片":"img","更新":"upd","座標":"ll","新舊":"added","異動":"chg","區域":"area"};
 function csv(t){const r=[];let row=[],f="",q=false;t=t.replace(/^\uFEFF/,"");
 for(let i=0;i<t.length;i++){const c=t[i];
 if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
@@ -1173,7 +1175,7 @@ d.type=toks(g("type"));if(!d.type.length)d.type=["應援企劃"];
 d.dates=toks(g("dates")).map(nmd);d.tags=toks(g("tags"));
 const s=nd(g("start")),e=nd(g("end"));if(s&&e){d.start=s;d.end=e}
 d.status=g("status")||"待補充";
-d.place=g("place");d.time=g("time")||"—";d.tip=g("tip")||"—";d.map=g("map")||g("place");
+d.area=g("area");d.place=g("place");d.time=g("time")||"—";d.tip=g("tip")||"—";d.map=g("map")||g("place");
 d.links=g("links").split(/[\n；]+/).map(x=>x.trim()).filter(Boolean).map(x=>{const k=x.indexOf("|");return k>0?{t:x.slice(0,k).trim(),u:x.slice(k+1).trim()}:{t:"連結",u:x}}).filter(l=>/^https?:\/\//.test(l.u));
 const ll=g("ll").split(/[;；\n]+/).map(x=>x.split(/[,，\s]+/).filter(Boolean).map(Number)).filter(a=>a.length===2&&a.every(isFinite));if(ll.length)d.ll=ll;
 if(g("img"))d.img=g("img");
