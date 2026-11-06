@@ -918,6 +918,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .albwall.mw .alb{min-width:0}
 @media(hover:none){.albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{transform:none}.albwall.mw .alb:hover .cv::after{transform:translateX(-130%)}}
 </style>
+<style>/* 巡演頁的成員篩選：標籤「成員」在手機版獨占一整列 */@media(max-width:720px){#members>.fpq{grid-column:1/-1}}#members>.fpq{align-self:center}</style>
 </head>
 <body>
 <div class="wrap">
@@ -1170,7 +1171,7 @@ return s}
 function item(o,i){const g=k=>String(o[k]||"").trim();const title=g("title");if(!title)return null;
 const d={id:g("id")||"row"+(i+2),title,by:g("by"),desc:g("desc")};
 const sec=g("sec");if(sec==="生日"||sec.toLowerCase()==="birthday"){d.sec="birthday";d.member=g("member");d.city=g("city")}
-else{const c=g("city").toLowerCase();let k="kh";try{k=Object.keys(CITIES).find(x=>(CITIES[x].al||[x]).some(a=>a.toLowerCase()===c))||"kh"}catch(e){k=/^(bk|bkk|th|曼谷)$/.test(c)?"bk":/^(hk|香港)$/.test(c)?"hk":/^(sg|新加坡)$/.test(c)?"sg":"kh"}d.city=k}
+else{const c=g("city").toLowerCase();let k="kh";try{k=Object.keys(CITIES).find(x=>(CITIES[x].al||[x]).some(a=>a.toLowerCase()===c))||"kh"}catch(e){k=/^(bk|bkk|th|曼谷)$/.test(c)?"bk":/^(hk|香港)$/.test(c)?"hk":/^(sg|新加坡)$/.test(c)?"sg":"kh"}d.city=k;d.mem0=g("member")}
 d.type=toks(g("type"));if(!d.type.length)d.type=["應援企劃"];
 d.dates=toks(g("dates")).map(nmd);d.tags=toks(g("tags"));
 const s=nd(g("start")),e=nd(g("end"));if(s&&e){d.start=s;d.end=e}
