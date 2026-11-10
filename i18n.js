@@ -367,6 +367,17 @@ I18N.add("曼谷場限定卡","Bangkok limited cards","방콕 한정 카드","�
 I18N.add("曼谷場限定卡集滿了！","Bangkok limited cards complete!","방콕 한정 카드를 모두 모았어요!","バンコクの限定カードがそろいました！");
 I18N.add("曼谷場見證者","Bangkok Show Witness","방콕 공연 증인","バンコク公演の見届け人");
 I18N.add("★ 曼谷場限定卡 ★","★ Bangkok Show Limited Card ★","★ 방콕 공연 한정 카드 ★","★ バンコク公演 限定カード ★");
+I18N.add("官方總覽","Official overview","공식 안내도","公式マップ");
+I18N.add("點圖片放大，列表上的編號也能直接跳到對應的圖","Tap an image to enlarge it. Tap a number in the list to jump to its image.","이미지를 누르면 확대돼요. 목록의 번호를 누르면 해당 이미지로 이동해요.","画像をタップすると拡大します。リストの番号から該当の画像にも移動できます。");
+I18N.add("現場演出","Live events","라이브 이벤트","ライブイベント");
+I18N.add("地標","Landmarks","랜드마크","ランドマーク");
+I18N.add("活動","Activities","액티비티","アクティビティ");
+I18N.add("派對","Party","파티","パーティー");
+I18N.add("購物","Shopping","쇼핑","ショッピング");
+I18N.add("交通","Mobility","모빌리티","モビリティ");
+I18N.add("住宿","Stay","숙박","宿泊");
+I18N.add("餐飲","F&B","식음료","飲食");
+I18N.add("集章","Stamp Rally","스탬프 랠리","スタンプラリー");
 I18N.add("雅加達場限定卡","Jakarta limited cards","자카르타 한정 카드","ジャカルタ 限定カード");
 I18N.add("雅加達場限定卡集滿了！","Jakarta limited cards complete!","자카르타 한정 카드를 모두 모았어요!","ジャカルタの限定カードがそろいました！");
 I18N.add("雅加達場見證者","Jakarta Show Witness","자카르타 공연 증인","ジャカルタ公演の見届け人");
