@@ -909,6 +909,17 @@ add(/^去過 (\d+) \/ (\d+)$/,(i,a,b)=>E(i,"Visited "+a+" / "+b,"다녀온 곳 "
 ["七位成員的生日應援都打卡過","Check in at the birthday projects of all seven members","일곱 멤버 모두의 생일 응원 체크인","7人全員の誕生日応援でチェックイン"],
 ["每日練習","Daily Practice","매일 연습","毎日練習"],
 ["連續 7 天都有打卡","Check in 7 days in a row","7일 연속 체크인","7日連続でチェックイン"]].forEach(a=>I18N.add(...a));
+/* 天氣區塊（app.js 的 wxHTML／wxCD）：今天、星期、倒數、降雨提示、資料來源。固定字用 add，帶城市／日期／數字的句子用比對規則 */
+{const E=(i,en,ko,ja)=>i===3?ja:i===2?ko:en,add=(re,f)=>{P.push([re,(...a)=>[f(1,...a),f(2,...a)]]);PJ.push([re,(...a)=>f(3,...a)])},
+cn=(c,i)=>i===3?(JA[c]||c):((D[c]||[])[i-1]||c),
+td=(s,i)=>s.replace(/今天/g,E(i,"Today","오늘","今日")).replace(/、/g,i===3?"、":", ");
+I18N.add("新加坡","Singapore","싱가포르","シンガポール");
+[["今天","Today","오늘","今日"],["週日","Sun","일","日"],["週一","Mon","월","月"],["週二","Tue","화","火"],["週三","Wed","수","水"],["週四","Thu","목","木"],["週五","Fri","금","金"],["週六","Sat","토","土"],
+["天氣預報","Weather forecast","날씨 예보","天気予報"],["天氣資料：","Weather data: ","날씨 데이터: ","天気データ："]].forEach(a=>I18N.add(...a));
+add(/^距離(.+)場 (\S+) 還有$/,(i,c,d)=>E(i,cn(c,i)+" show ("+d+") is in",cn(c,i)+" 공연("+d+")까지",cn(c,i)+"公演（"+d+"）まであと"));
+add(/^下一場 (\S+) 還有$/,(i,d)=>E(i,"Next show ("+d+") is in","다음 공연("+d+")까지","次の公演（"+d+"）まであと"));
+add(/^🎉 今天就是(.+)場演出日！$/,(i,c)=>E(i,"🎉 Today is the "+cn(c,i)+" show day!","🎉 오늘은 "+cn(c,i)+" 공연일이에요!","🎉 今日は"+cn(c,i)+"公演の日！"));
+add(/^☂ 降雨機率偏高：(.+)，出門記得帶雨具$/,(i,l)=>E(i,"☂ High chance of rain: "+td(l,i)+". Bring rain gear.","☂ 비 올 확률이 높아요: "+td(l,i)+". 우산을 챙기세요.","☂ 降水確率が高め："+td(l,i)+"。雨具をお忘れなく。"));}
 document.querySelector(".hero").appendChild(sel);
 window.addEventListener("load",pass);pass();
 })();
