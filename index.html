@@ -1426,29 +1426,9 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 .entry .et{flex:1 1 0;min-width:0}
 .entry .wtb em{font-style:normal;letter-spacing:.2em;opacity:.85}
 .srcn{margin:0 0 8px;font-size:12px;font-weight:700;opacity:.75}
-/* ===== 按鈕美化 v3 ===== */
-#cities .chip[aria-pressed="true"]::before,
-#days .chip[aria-pressed="true"]::before,
-#areas .chip[aria-pressed="true"]::before,
-#chips .chip[aria-pressed="true"]::before{
-  content:"";display:inline-block;width:6px;height:9px;margin-right:6px;
-  background:currentColor;clip-path:polygon(0 0,100% 50%,0 100%);vertical-align:-1px}
-#cities .chip,#days .chip{min-width:64px;padding:8px 18px;font-size:15px}
-#book{gap:8px}
-#book .sbtn{min-height:40px;padding:6px 14px;font-size:13px}
-#book #bkTog{width:40px;min-width:40px;padding:0}
-#book #allOn{background:var(--blue-btn);color:#fff;border-color:var(--navy);box-shadow:3px 3px 0 var(--navy)}
-#book #allOff{background:transparent;color:var(--tagInk);border:2px dashed var(--tagInk);box-shadow:none}
-#book #allOff:hover{background:var(--tag)}
-#book #badgeBtn{background:var(--gold);color:#4a3500;border-color:#8a5a00;box-shadow:3px 3px 0 #8a5a00}
-#book .sbtn:active{transform:translate(3px,3px);box-shadow:none}
-.tbtns .sbtn{min-height:40px;padding:6px 14px}
-.tbtns .sbtn[aria-expanded="true"]{background:var(--dark);color:var(--darkInk);border-color:var(--navy);box-shadow:none;transform:translate(2px,2px)}
-#clr{border:2px dashed var(--tagInk);padding:2px 10px;font-size:12px}
-#clr::before{content:"× "}
-#clr:hover{background:var(--tag)}
-#tourBtn,.tourBtn2{min-height:30px;padding:2px 12px;box-shadow:2px 2px 0 var(--line)}
-#tourBtn:active,.tourBtn2:active{transform:translate(2px,2px);box-shadow:none}
+/* ===== 按鈕微調（保留原本配色與尺寸）===== */
+#book .sbtn:active,.tbtns .sbtn:active{transform:translate(2px,2px);box-shadow:none}
+.tbtns .sbtn[aria-expanded="true"]{background:var(--dark);color:var(--darkInk);box-shadow:none;transform:translate(2px,2px)}
 @media(max-width:720px){
   .chip,.sbtn{min-height:44px}
   #areas .chip,#chips .chip,#members:not(:has(.mav)) .chip{min-height:38px!important}
