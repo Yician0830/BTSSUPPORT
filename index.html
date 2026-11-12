@@ -1427,6 +1427,12 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 .entry .wtb em{font-style:normal;letter-spacing:.2em;opacity:.85}
 .srcn{margin:0 0 8px;font-size:12px;font-weight:700;opacity:.75}
 /* ===== 按鈕微調（保留原本配色與尺寸）===== */
+/* 電腦版區域／成員按鈕維持白底（與手機版一致） */
+@media(min-width:721px){
+.fltR .cities#areas .chip.chip[aria-pressed="false"],.fltR .cities#members .chip.chip[aria-pressed="false"]{background:var(--card)!important;color:var(--ink)!important;border:2px solid var(--ctl)!important;box-shadow:0 3px 0 var(--ctl)!important}
+}
+#book{margin-bottom:14px!important}
+#book .sbtn{padding:7px 12px;font-size:13px;line-height:1.2}
 #book .sbtn:active,.tbtns .sbtn:active{transform:translate(2px,2px);box-shadow:none}
 .tbtns .sbtn[aria-expanded="true"]{background:var(--dark);color:var(--darkInk);box-shadow:none;transform:translate(2px,2px)}
 @media(max-width:720px){
