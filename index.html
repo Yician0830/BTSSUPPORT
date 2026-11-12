@@ -934,9 +934,15 @@ html,body{max-width:100%;overflow-x:hidden}
 .fltL .wxd b{font-size:13px}.fltL .wxd small,.fltL .wxd em{font-size:11px}.fltL .wxd .t{font-size:12px}
 .fltL .wxi{width:28px;height:28px;margin:3px 0}
 .fltL .wxc{margin-top:6px}
+/* 區域／成員篩選：按鈕放大、每顆等寬（依寬度自動換行） */
+.fltR #areas.cities,.fltR #members.cities{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px!important;overflow:visible;margin-bottom:12px}
+.fltR #areas[hidden],.fltR #members[hidden]{display:none!important}
+.fltR .fpq{grid-column:1/-1;padding:0;font-size:12px!important}
+.fltR .cities#areas .chip.chip,.fltR .cities#members .chip.chip{width:100%;min-width:0;box-sizing:border-box;padding:8px 6px!important;font-size:15px!important;line-height:1.3;text-align:center;justify-content:center}
 </style>
 
 
+<style>/* 集章圖預覽：只有一張時不要放到跟原圖一樣大 */#stampPv .spv-pg img:only-child{max-width:min(calc(100vw - 28px),640px)}</style>
 </head>
 <body>
 <div class="wrap">
