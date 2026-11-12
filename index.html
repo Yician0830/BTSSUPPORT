@@ -1435,6 +1435,11 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 #book #allOn{background:var(--blue-btn);color:#fff;border-color:var(--navy);box-shadow:0 3px 0 var(--navy)}
 #tourBtn,.tourBtn2{background:none!important;border:0!important;box-shadow:none!important;color:var(--dark)!important;text-decoration:underline;text-underline-offset:3px}
 #book #bkTog{min-width:32px;width:32px;height:32px;min-height:32px;padding:0;font-size:12px;box-shadow:0 2px 0 var(--ctl)}
+/* 按鈕去陰影：靠邊框＋底色表達層次，滑過淡藍、按下加深邊框 */
+.chip,.sbtn,.btn,#book #allOn,#book #bkTog,.tbtns .sbtn[aria-expanded="true"]{box-shadow:none!important}
+.chip:hover,.chip:active,.sbtn:hover,.sbtn:active,.btn:hover,.btn:active{transform:none!important;box-shadow:none!important}
+.chip[aria-pressed="false"]:hover,.sbtn:not([aria-expanded="true"]):not(#allOn):hover,.btn:hover{background:var(--pill)!important}
+.chip:active,.sbtn:active,.btn:active{border-color:var(--dark)!important}
 #book{margin-bottom:14px!important}
 #book .sbtn{padding:7px 12px;font-size:13px;line-height:1.2}
 #book .sbtn:active,.tbtns .sbtn:active{transform:translate(2px,2px);box-shadow:none}
