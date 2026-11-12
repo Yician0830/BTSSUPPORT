@@ -920,6 +920,7 @@ html,body{max-width:100%;overflow-x:hidden}
 @media(hover:none){.albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{transform:none}.albwall.mw .alb:hover .cv::after{transform:translateX(-130%)}}
 </style>
 <style>/* 巡演頁的成員篩選：標籤「成員」在手機版獨占一整列 */@media(max-width:720px){#members>.fpq{grid-column:1/-1}}#members>.fpq{align-self:center}</style>
+<style>/* 集章簿在最上方；天氣（左）與區域／成員篩選（右）並排，窄螢幕自動上下堆疊 */.fltrow{display:flex;flex-wrap:wrap;gap:4px 24px;align-items:flex-start}.fltL{flex:0 0 auto;max-width:100%;min-width:0}.fltL:not(:has(#wx:not([hidden]))){display:none}.fltR{flex:1 1 380px;min-width:0}.fltL .wx{margin-bottom:8px}</style>
 </head>
 <body>
 <div class="wrap">
@@ -1091,9 +1092,14 @@ html,body{max-width:100%;overflow-x:hidden}
 <button class="back" data-go="home">← 回首頁</button>
 <div class="chips cities" id="cities" role="group" aria-label="選擇城市"></div>
 <div class="chips cities" id="days" role="group" aria-label="選擇日期"></div>
+<div class="book" id="book" hidden></div>
+<div class="fltrow" id="fltrow">
+<div class="fltL" id="wxSlot"></div>
+<div class="fltR">
 <div class="chips cities" id="areas" role="group" aria-label="選擇區域" hidden></div>
 <div class="chips cities" id="members" role="group" aria-label="選擇成員"></div><div class="next" id="nextBd" hidden></div>
-<div class="book" id="book" hidden></div>
+</div>
+</div>
 <div class="tools">
 <div class="chips" id="chips" role="group" aria-label="依類型篩選"></div>
 <div class="tbtns"><button class="sbtn" id="mapTgl" aria-expanded="false" aria-controls="mapBox"><i class="ei">🗺</i>地圖總覽</button><button class="sbtn" id="routeTgl" aria-expanded="false" aria-controls="route"><i class="ei">🧭</i>路線規劃</button><button class="sbtn" id="tgl" aria-expanded="false" aria-controls="panel"><i class="ei">🔍</i>搜尋及排序</button></div>
