@@ -1379,6 +1379,11 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)chk(
 .entry{--ep:18px;flex-wrap:wrap!important;padding:0 var(--ep) 16px!important;align-content:flex-start}
 .entry .wtb{flex:0 0 calc(100% + 2*var(--ep));display:flex;align-items:center;justify-content:space-between;margin:0 calc(-1*var(--ep)) 14px;padding:0 10px;height:26px;background:var(--dark);color:var(--darkInk,#fff);font-family:var(--px);font-size:12px;letter-spacing:.06em;line-height:26px;text-transform:none}
 .entry,.entry.tour,.entry.bd,.entry.songs,.entry.foot,.entry.fx,.entry.ach,.entry.room{border-left:2px solid var(--dark)!important}
+/* 區域／成員／類型篩選按鈕：縮小 */
+#areas,#chips,#members:not(:has(.mav)){gap:6px!important;margin-bottom:8px}
+#areas .chip,#chips .chip,#members:not(:has(.mav)) .chip{padding:3px 11px!important;font-size:13px!important;line-height:1.35;box-shadow:2px 2px 0 var(--line)!important}
+#areas .chip[aria-pressed="true"],#chips .chip[aria-pressed="true"],#members:not(:has(.mav)) .chip[aria-pressed="true"]{box-shadow:2px 2px 0 var(--navy,#062a6e)!important}
+#areas .fpq,#members:not(:has(.mav)) .fpq{font-size:11px}
 .entry .et{flex:1 1 0;min-width:0}
 .entry .wtb em{font-style:normal;letter-spacing:.2em;opacity:.85}
 .srcn{margin:0 0 8px;font-size:12px;font-weight:700;opacity:.75}
