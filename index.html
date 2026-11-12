@@ -1150,7 +1150,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 <script>
 /* ===== 讀取 Google 試算表（網址設定在 data.js 的 SHEET_CSV_URL；讀不到就用 data.js 內建資料） ===== */
 (function(){
-const H={"id":"id","區塊":"sec","城市":"city","成員":"member","類型":"type","名稱":"title","主辦":"by","簡介":"desc","日期":"dates","開始":"start","結束":"end","狀態":"status","標籤":"tags","地點":"place","時間":"time","備註":"tip","地圖":"map","連結":"links","圖片":"img","更新":"upd","座標":"ll","新舊":"added","異動":"chg","區域":"area"};
+const H={"id":"id","區塊":"sec","城市":"city","成員":"member","類型":"type","名稱":"title","主辦":"by","簡介":"desc","日期":"dates","開始":"start","結束":"end","狀態":"status","標籤":"tags","地點":"place","時間":"time","備註":"tip","地圖":"map","連結":"links","圖片":"img","更新":"upd","新增日期":"since","座標":"ll","新舊":"added","異動":"chg","區域":"area"};
 function csv(t){const r=[];let row=[],f="",q=false;t=t.replace(/^\uFEFF/,"");
 for(let i=0;i<t.length;i++){const c=t[i];
 if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
@@ -1181,7 +1181,7 @@ d.links=g("links").split(/[\n；]+/).map(x=>x.trim()).filter(Boolean).map(x=>{co
 const ll=g("ll").split(/[;；\n]+/).map(x=>x.split(/[,，\s]+/).filter(Boolean).map(Number)).filter(a=>a.length===2&&a.every(isFinite));if(ll.length)d.ll=ll;
 if(g("img"))d.img=g("img");
 if(g("chg"))d.chg=g("chg");
-const u=nd(g("upd"));if(u)d.upd=u;
+const u=nd(g("upd"));if(u)d.upd=u;const sn=nd(g("since"));if(sn)d.since=sn;
 d.added=Number(g("added"))||1000+i;return d}
 function parse(t){const R=csv(t);if(R.length<2)return[];const hd=R[0].map(x=>H[x.trim()]||"");
 const seen=new Set();return R.slice(1).map((r,i)=>{const o={};hd.forEach((k,j)=>{if(k)o[k]=r[j]});return item(o,i)}).filter(d=>{if(!d||seen.has(d.id))return false;seen.add(d.id);return true})}
