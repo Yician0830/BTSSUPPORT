@@ -920,21 +920,22 @@ html,body{max-width:100%;overflow-x:hidden}
 @media(hover:none){.albwall .alb:hover .cv,.albwall .alb:focus-visible .cv{transform:none}.albwall.mw .alb:hover .cv::after{transform:translateX(-130%)}}
 </style>
 <style>/* 巡演頁的成員篩選：標籤「成員」在手機版獨占一整列 */@media(max-width:720px){#members>.fpq{grid-column:1/-1}}#members>.fpq{align-self:center}</style>
-<style>/* 集章簿在最上方；天氣（左）與區域／成員篩選（右）做成同高的兩張卡片並排，窄螢幕自動上下堆疊 */
-.fltrow{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px 16px;margin:0 0 12px}
-.fltL,.fltR{box-sizing:border-box;min-width:0;padding:10px 14px;border:2px solid var(--line);background:var(--card);box-shadow:3px 3px 0 var(--line)}
+<style>/* 集章簿在最上方；天氣（左）與區域／成員篩選（右）並排，窄螢幕自動上下堆疊 */
+.fltrow{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px 28px;margin:0 0 12px}
+.fltL,.fltR{box-sizing:border-box;min-width:0}
 .fltL{flex:1 1 460px;max-width:640px;display:flex;flex-direction:column}
 .fltL:not(:has(#wx:not([hidden]))){display:none}
 .fltR{flex:2 1 380px;display:flex;flex-direction:column;justify-content:center}
 .fltR .cities{margin-bottom:8px}.fltR>:last-child{margin-bottom:0}
 .fltL .wx{margin:0;flex:1;display:flex;flex-direction:column}
 .fltL .wxcd{margin:0 0 8px}
-.fltL .wxrow{display:flex;width:100%;flex:1;border:0;box-shadow:none;background:none}
+.fltL .wxrow{display:flex;width:100%;flex:1}
 .fltL .wxd{flex:1 0 64px;padding:8px 4px 6px;justify-content:center}
 .fltL .wxd b{font-size:13px}.fltL .wxd small,.fltL .wxd em{font-size:11px}.fltL .wxd .t{font-size:12px}
 .fltL .wxi{width:28px;height:28px;margin:3px 0}
 .fltL .wxc{margin-top:6px}
 </style>
+
 
 </head>
 <body>
