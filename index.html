@@ -402,6 +402,7 @@ body.tr-on #bgm{bottom:auto;top:calc(16px + env(safe-area-inset-top,0px))}
 #stampPv{position:fixed;inset:0;z-index:10000;background:rgba(4,16,40,.88);display:flex;align-items:center;justify-content:center;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
 #stampPv .spv-box{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:100%;max-height:100%}
 #stampPv img{display:block;max-width:100%;max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px);object-fit:contain;border:3px solid #fff;box-shadow:5px 5px 0 rgba(0,0,0,.35);-webkit-touch-callout:default;-webkit-user-select:auto;user-select:auto}
+#stampPv .spv-pg{display:flex;gap:12px;max-width:100%;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 2px 6px}#stampPv .spv-pg img{flex:0 0 auto;scroll-snap-align:center;max-width:calc(100vw - 28px)}
 #stampPv .spv-tip{margin:0;color:#d6edff;font-size:13px;font-weight:700}
 #stampPv .spv-act{display:flex;gap:10px}
 .lgd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin:0 0 12px;padding:8px 14px;background:var(--card);border:2px solid var(--dark);box-shadow:3px 3px 0 var(--line);font-size:14px;font-weight:800;line-height:1.5}
