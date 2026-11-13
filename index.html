@@ -361,12 +361,15 @@ span.pill.st{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 
 span.pill.st::before{content:"";width:7px;height:7px;flex:none;background:currentColor}
 span.pill.st.st-on{background:var(--ok);color:var(--okbg);border-color:var(--ok)}
 span.pill.st.st-on::before{animation:cvblink 1.2s steps(1,end) infinite}
-span.pill.st.st-soon{background:var(--dark);color:var(--darkInk);border-color:var(--darkInk)}
+span.pill.st.st-soon{background:var(--dark);color:var(--darkInk);border-color:var(--dark)}
 span.pill.st.st-later{background:var(--card);color:var(--dark);border-color:var(--dark)}
 span.pill.st.st-later::before{width:5px;height:5px;margin:1px}
 span.pill.st.st-end{background:var(--box);color:var(--sub);border-color:var(--line)}
 span.pill.st.st-end::before{background:none;border:2px solid currentColor;width:7px;height:7px}
 @keyframes cvblink{50%{opacity:.2}}
+/* 倒數／剩 N 天標籤：跟狀態標籤同一套形狀（粗體、2px 邊框、無陰影） */
+span.pill.cd{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 7px;font-size:12px;font-weight:800;letter-spacing:.04em;line-height:1.4;border:2px solid var(--dark);box-shadow:none}
+span.pill.cd.endsoon{border-color:var(--accent)}
 @media(prefers-reduced-motion:reduce){span.pill.st.st-on::before{animation:none}}
 
 #list.is-city .tag.cv-hide{display:none}
@@ -840,7 +843,7 @@ body[data-sec="tour"] .hero{--hz1w:240px}body[data-sec="songs"] .hero{--hz1w:200
 .badges .pill{font-size:12px;padding:3px 10px;border:2px solid currentColor;box-shadow:2px 2px 0 rgba(6,26,64,.45)}
 .badges .pill.cd{background:var(--card);color:var(--dark);border-color:var(--dark)}
 .badges .pill.st-on{background:var(--okbg);color:var(--ok)}
-.badges .pill.st-soon{border-color:var(--darkInk)}
+.badges .pill.st-soon{border-color:var(--dark)}
 /* 子頁窄版 hero：只留標題（巡演頁多留一行場次資訊），收藏鈕和標題同一列 */
 :is(body:has(#app:not([hidden])),body:has(#songs:not([hidden])),body:has(#foot:not([hidden]))) .hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;padding:12px 16px;margin:10px 0 12px}
 :is(body:has(#app:not([hidden])),body:has(#songs:not([hidden])),body:has(#foot:not([hidden]))) .hero h1{font-size:clamp(20px,5vw,26px);margin:0;line-height:1.25}
