@@ -1657,7 +1657,7 @@ window.addEventListener("load",center);center();
 })();
 </script>
 <script>
-/* 城市應援：左地圖＋右橫列。選到「城市應援」才啟用；點卡片聚焦地圖標記，點標記捲到卡片 */
+/* 左地圖＋右橫列：巡演頁選到任一「類型」（城市應援、燈箱/看板、LED電視牆…）就啟用；選「全部」維持原本總覽；點卡片聚焦地圖標記，點標記捲到卡片 */
 (function(){
 var list=document.getElementById("list"),chips=document.getElementById("chips");if(!list||!chips)return;
 var lay=null,map=null,layer=null,markers={},nos={},sel=null,busy=false,lp=null,tools=document.querySelector(".tools");
@@ -1665,14 +1665,16 @@ var zh=function(){return /^zh/i.test(document.documentElement.lang||"zh")};
 var esc=function(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
 var byId=function(id){try{return DATA.find(function(x){return String(x.id)===id})}catch(e){return null}};
 var cards=function(){return list.querySelectorAll(":scope>.card[data-id]:not(.oc)")};
-function isCity(){return !!chips.querySelector('.chip[aria-pressed="true"][data-t="城市應援"]')&&list.offsetParent!==null}
+function selType(){var b=chips.querySelector('.chip[aria-pressed="true"][data-t]');return b?b.getAttribute("data-t"):""}
+function selStat(){try{return typeof st==="string"?st:"全部"}catch(e){return"全部"}}
+function isCity(){var s=selStat();return(!!selType()||(s!=="全部"&&s!=="已結束"))&&document.body.dataset.sec==="tour"&&list.offsetParent!==null}
 function loadL(){if(window.L)return Promise.resolve();if(lp)return lp;lp=new Promise(function(ok,no){var l=document.createElement("link");l.rel="stylesheet";l.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(l);var j=document.createElement("script");j.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";j.onload=ok;j.onerror=function(){lp=null;no()};document.head.appendChild(j)});return lp}
 function sizes(){try{if(tools)document.documentElement.style.setProperty("--toolsH",tools.offsetHeight+"px");var b=document.getElementById("cityMapBox");document.documentElement.style.setProperty("--mapH",(window.innerWidth<720&&b?b.offsetHeight:0)+"px")}catch(e){}}
 function mount(){if(!lay){lay=document.createElement("div");lay.id="cityLayout";lay.innerHTML='<section id="cityMapBox" aria-label="map"><div id="cityMap" role="region" aria-label="map"></div><small id="cityNote"></small></section>'}
 if(list.parentNode!==lay){list.parentNode.insertBefore(lay,list);lay.appendChild(list)}list.classList.add("is-city")}
 function unmount(){list.classList.remove("is-city");if(lay&&list.parentNode===lay){lay.parentNode.insertBefore(list,lay);lay.remove()}sel=null}
 function decorate(){var seen={};cards().forEach(function(c){var id=c.dataset.id;if(seen[id]){c.remove();return}seen[id]=1;var d=byId(id),tg=c.querySelector(".tags");if(!tg)return;
-tg.querySelectorAll(".tag").forEach(function(t){if(t.textContent.trim()==="城市應援")t.classList.add("cv-hide")});
+tg.querySelectorAll(".tag").forEach(function(t){if(selType()&&t.textContent.trim()===selType())t.classList.add("cv-hide")});
 if(d&&!tg.querySelector(".area")){var a=String(d.area||"").split(/[、,，\/／&＆]+/).map(function(x){return x.trim()}).filter(Boolean);if(a.length){var s=document.createElement("span");s.className="tag area";s.textContent="\uD83D\uDCCD "+a.join("、");tg.insertBefore(s,tg.firstChild)}}
 var b=c.querySelector(".pic .badges");if(b)tg.appendChild(b)})}
 function icon(n,on){return L.divIcon({className:"cv-pinw",html:'<span class="cv-pin'+(on?" on":"")+'">'+n+"</span>",iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-14]})}
