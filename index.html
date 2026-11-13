@@ -356,16 +356,18 @@ footer{border-top:2px dashed var(--line)}
 #list.is-city>.card>:not(.pic){grid-column:2;min-width:0}
 #list.is-city .tags .badges{position:static;display:contents;max-width:none}
 #list.is-city .tags .pill,#list.is-city .tags .tag{font-size:11px;padding:2px 6px}
-/* 城市應援：狀態標籤（進行中／即將開始／已結束） */
-#list.is-city .tags .pill.st{display:inline-flex;align-items:center;gap:5px;padding:2px 8px 2px 6px;font-size:11px;font-weight:800;letter-spacing:.04em;line-height:1.4;border:2px solid var(--ok);box-shadow:2px 2px 0 var(--line)}
-#list.is-city .tags .pill.st::before{content:"";width:7px;height:7px;flex:none;background:currentColor}
-#list.is-city .tags .pill.st-on{background:var(--ok);color:var(--okbg);border-color:var(--ok)}
-#list.is-city .tags .pill.st-on::before{animation:cvblink 1.2s steps(1,end) infinite}
-#list.is-city .tags .pill.st-soon{background:var(--dark);color:var(--darkInk);border-color:var(--dark)}
-#list.is-city .tags .pill.st-end{background:var(--box);color:var(--sub);border-color:var(--line);box-shadow:none}
-#list.is-city .tags .pill.st-end::before{background:none;border:2px solid currentColor;width:7px;height:7px}
+/* 狀態標籤（進行中／即將開始／已結束）：所有分頁共用，無陰影 */
+span.pill.st{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 7px;font-size:12px;font-weight:800;letter-spacing:.04em;line-height:1.4;border:2px solid var(--ok);box-shadow:none}
+span.pill.st::before{content:"";width:7px;height:7px;flex:none;background:currentColor}
+span.pill.st.st-on{background:var(--ok);color:var(--okbg);border-color:var(--ok)}
+span.pill.st.st-on::before{animation:cvblink 1.2s steps(1,end) infinite}
+span.pill.st.st-soon{background:var(--dark);color:var(--darkInk);border-color:var(--darkInk)}
+span.pill.st.st-later{background:var(--card);color:var(--dark);border-color:var(--dark)}
+span.pill.st.st-later::before{width:5px;height:5px;margin:1px}
+span.pill.st.st-end{background:var(--box);color:var(--sub);border-color:var(--line)}
+span.pill.st.st-end::before{background:none;border:2px solid currentColor;width:7px;height:7px}
 @keyframes cvblink{50%{opacity:.2}}
-@media(prefers-reduced-motion:reduce){#list.is-city .tags .pill.st-on::before{animation:none}}
+@media(prefers-reduced-motion:reduce){span.pill.st.st-on::before{animation:none}}
 
 #list.is-city .tag.cv-hide{display:none}
 #list.is-city .heart{width:30px;height:30px;font-size:15px}
@@ -1642,6 +1644,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 })();
 </script>
 <script>
+try{window.I18N&&I18N.add("尚未開始","Not started yet","시작 전","開始前")}catch(e){}
 /* 類型列：重畫後把選中的分頁捲到置中，並依捲動位置顯示左右淡出 */
 (function(){
 var bar=document.getElementById("chips");if(!bar)return;
