@@ -370,6 +370,10 @@ span.pill.st.st-end::before{background:none;border:2px solid currentColor;width:
 /* 倒數／剩 N 天標籤：跟狀態標籤同一套形狀（粗體、2px 邊框、無陰影） */
 span.pill.cd{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 7px;font-size:12px;font-weight:800;letter-spacing:.04em;line-height:1.4;border:2px solid var(--dark);box-shadow:none}
 span.pill.cd.endsoon{border-color:var(--accent)}
+/* 地圖樣式：照片高度跟整張卡片一樣高（不再是固定正方形，下面不留空白） */
+#list.is-city>article.card>div.pic{grid-row:1/span 12;align-self:stretch;height:auto;aspect-ratio:auto;min-height:92px;position:relative}
+#list.is-city>article.card>div.pic img:not(.pbg){position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+@media(min-width:720px){#list.is-city>article.card>div.pic{min-height:110px}}
 @media(prefers-reduced-motion:reduce){span.pill.st.st-on::before{animation:none}}
 
 #list.is-city .tag.cv-hide{display:none}
