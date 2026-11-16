@@ -1301,9 +1301,9 @@ d.status=g("status")||"待補充";
 d.area=g("area");d.place=g("place");d.time=g("time")||"—";d.tip=g("tip")||"—";d.map=g("map")||g("place");
 d.links=g("links").split(/[\n；]+/).map(x=>x.trim()).filter(Boolean).map(x=>{const k=x.indexOf("|");return k>0?{t:x.slice(0,k).trim(),u:x.slice(k+1).trim()}:{t:"連結",u:x}}).filter(l=>/^https?:\/\//.test(l.u));
 const ll=g("ll").split(/[;；\n]+/).map(x=>x.split(/[,，\s]+/).filter(Boolean).map(Number)).filter(a=>a.length===2&&a.every(isFinite));if(ll.length)d.ll=ll;
-const rt=[],rn=[],ln=[],CR="-?\\d{1,3}\\.\\d+";g("route").replace(/([｜|])[ \t]*\n+/g,"$1 ").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{if(ln.length&&new RegExp("^[｜|]?\\s*"+CR+"\\s*[,，]\\s*"+CR+"$").test(x))ln[ln.length-1]+=" "+x;else ln.push(x)});
-ln.forEach(x=>{let ll=null,body=x;const c=body.match(new RegExp("[｜|]?\\s*("+CR+")\\s*[,，]\\s*("+CR+")\\s*$"));if(c){ll=[+c[1],+c[2]];body=body.slice(0,c.index)}body=body.replace(/[｜|]/g," ").replace(/\s+/g," ").trim();const m=body.match(/^(?:(\d{1,2})\/(\d{1,2})\s+)?(\d{1,2}:\d{2})\s*[-–~～]\s*(\d{1,2}:\d{2})\s*(.*)$/);if(m)rt.push({d:m[1]?m[1]*1+"/"+m[2]*1:d.dates.length===1?d.dates[0]:"",s:m[3],e:m[4],p:m[5].trim(),ll});else rn.push(x)});
-if(rt.length){d.route=rt;if(rn.length)d.routeNote=rn.join(" ");if(!d.ll){const l=rt.filter(r=>r.ll).map(r=>r.ll);if(l.length)d.ll=l}}
+const rt=[],rn=[],ln=[],CR="-?\\d{1,3}\\.\\d+",PR="(?:"+CR+"\\s*[,，]\\s*"+CR+")",SQ=PR+"(?:\\s*[;；]\\s*"+PR+")*";g("route").replace(/([｜|;；])[ \t]*\n+/g,"$1 ").split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{if(ln.length&&new RegExp("^[｜|;；]?\\s*"+SQ+"$").test(x))ln[ln.length-1]+=" "+x;else ln.push(x)});
+ln.forEach(x=>{let ll=null,path=null,body=x;const c=body.match(new RegExp("[｜|]?\\s*("+SQ+")\\s*$"));if(c){const q=c[1].split(/[;；]/).map(s=>s.split(/[,，]/).map(Number)).filter(a=>a.length===2&&a.every(isFinite));if(q.length>1){path=q;ll=q[0]}else if(q.length)ll=q[0];body=body.slice(0,c.index)}body=body.replace(/[｜|]/g," ").replace(/：/g,":").replace(/\s+/g," ").trim();const m=body.match(/^(?:(\d{1,2})\/(\d{1,2})\s+)?(\d{1,2}:\d{2})\s*[-–—－~～]\s*(\d{1,2}:\d{2})\s*(.*)$/);if(m){const o={d:m[1]?m[1]*1+"/"+m[2]*1:d.dates.length===1?d.dates[0]:"",s:m[3],e:m[4],p:m[5].trim(),ll};if(path)o.path=path;rt.push(o)}else rn.push(x)});
+if(rt.length){d.route=rt;if(rn.length)d.routeNote=rn.join(" ");if(!d.ll){const l=rt.filter(r=>r.ll).flatMap(r=>r.path||[r.ll]);if(l.length)d.ll=l}}
 if(g("img"))d.img=g("img");
 if(g("chg"))d.chg=g("chg");
 const u=nd(g("upd"));if(u)d.upd=u;const sn=nd(g("since"));if(sn)d.since=sn;
