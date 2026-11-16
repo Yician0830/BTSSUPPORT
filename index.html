@@ -397,7 +397,7 @@ span.pill.cd.endsoon{border-color:var(--accent)}
 #cityMapBox{box-shadow:4px 4px 0 var(--line)}
 #cityMapBox small{padding:0 2px}
 .cv-pinw{background:none!important;border:0!important}
-.cv-pin{display:grid;place-items:center;width:28px;height:28px;background:var(--accent,#e0245e);color:#fff;font:700 13px/1 system-ui,sans-serif;border:3px solid #08439a;box-shadow:2px 2px 0 rgba(0,0,0,.35);transition:transform .12s}
+.cv-pin{position:relative;display:grid;place-items:center;width:28px;height:28px;background:var(--accent,#e0245e);color:#fff;font:700 13px/1 system-ui,sans-serif;border:3px solid #08439a;box-shadow:2px 2px 0 rgba(0,0,0,.35);transition:transform .12s}
 .cv-pin.on{background:#ffd23f;color:#08439a;transform:scale(1.3);border-color:#08439a}
 .cv-no{position:absolute;left:0;top:0;z-index:2;min-width:22px;height:22px;padding:0 4px;display:grid;place-items:center;background:var(--accent,#e0245e);color:#fff;font:700 12px/1 system-ui,sans-serif;border-right:2px solid #08439a;border-bottom:2px solid #08439a}
 .leaflet-popup-content{font-size:13px;line-height:1.5}
@@ -1687,23 +1687,26 @@ function decorate(){var seen={};cards().forEach(function(c){var id=c.dataset.id;
 tg.querySelectorAll(".tag").forEach(function(t){if(selType()&&t.textContent.trim()===selType())t.classList.add("cv-hide")});
 if(d&&!tg.querySelector(".area")){var a=String(d.area||"").split(/[、,，\/／&＆]+/).map(function(x){return x.trim()}).filter(Boolean);if(a.length){var s=document.createElement("span");s.className="tag area";s.textContent="\uD83D\uDCCD "+a.join("、");tg.insertBefore(s,tg.firstChild)}}
 var b=c.querySelector(".pic .badges");if(b)tg.appendChild(b)})}
-function icon(n,on){return L.divIcon({className:"cv-pinw",html:'<span class="cv-pin'+(on?" on":"")+'">'+n+"</span>",iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-14]})}
+function icon(n,on,plus){return L.divIcon({className:"cv-pinw",html:'<span class="cv-pin'+(on?" on":"")+'">'+n+(plus?'<b style="position:absolute;top:-9px;right:-14px;background:#fff;color:#c2185b;border:1.5px solid #c2185b;border-radius:9px;font-size:11px;line-height:14px;padding:0 4px;font-weight:700">+'+plus+"</b>":"")+"</span>",iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-14]})}
 function pick(id,fromCard){sel=id;cards().forEach(function(c){c.classList.toggle("cv-on",c.dataset.id===id)});
-Object.keys(markers).forEach(function(k){markers[k].forEach(function(m){var on=k===id;m.setIcon(icon(nos[k],on));m.setZIndexOffset(on?1000:0)})});
+Object.keys(markers).forEach(function(k){markers[k].forEach(function(m){var on=k===id;m.setIcon(icon(nos[k],on,m._plus||0));if(m._hid&&m._icon)m._icon.style.pointerEvents="none";m.setZIndexOffset(on?1000:0)})});
 var c=list.querySelector('.card[data-id="'+(window.CSS&&CSS.escape?CSS.escape(id):id)+'"]'),m=(markers[id]||[])[0];
 if(fromCard&&m&&map){map.flyTo(m._o||m.getLatLng(),Math.max(map.getZoom(),15),{duration:.5});m.openPopup()}
 if(!fromCard&&c)c.scrollIntoView({block:"start",behavior:"smooth"})}
-function spread(){if(!map||!window.L)return;var all=[];Object.keys(markers).forEach(function(k){markers[k].forEach(function(m){if(m._o)all.push({m:m,p:map.latLngToContainerPoint(m._o),u:false})})});
+function spread(){if(!map||!window.L)return;var all=[];Object.keys(markers).forEach(function(k){markers[k].forEach(function(m){if(m._o){m._k=k;all.push({m:m,p:map.latLngToContainerPoint(m._o),u:false})}})});
+all.sort(function(x,y){return nos[x.m._k]-nos[y.m._k]});
 var R=30;all.forEach(function(a){if(a.u)return;var g=[a];a.u=true;all.forEach(function(b){if(!b.u&&a.p.distanceTo(b.p)<R){b.u=true;g.push(b)}});
-if(g.length<2){a.m.setLatLng(a.m._o);return}
-var cx=0,cy=0;g.forEach(function(x){cx+=x.p.x;cy+=x.p.y});cx/=g.length;cy/=g.length;
-var r=Math.max(22,g.length*32/(2*Math.PI));
-g.forEach(function(x,i){var ang=-Math.PI/2+i*2*Math.PI/g.length;x.m.setLatLng(map.containerPointToLatLng(L.point(cx+r*Math.cos(ang),cy+r*Math.sin(ang))))})})}
+g.forEach(function(x,i){var m=x.m,lead=i===0;m._hid=!lead;m._plus=lead?g.length-1:0;m._grp=lead?g.map(function(y){return y.m}):null;m.setOpacity(lead?1:0);
+m.setIcon(icon(nos[m._k],sel===m._k,m._plus));if(m._icon)m._icon.style.pointerEvents=lead?"":"none";
+if(m._pop){m.setPopupContent(lead&&g.length>1?g.map(function(y){return"<b>"+nos[y.m._k]+". "+esc((byId(y.m._k)||{}).title||"")+"</b>"}).join("<br>"):m._pop)}})})}
 var lastSig="";
 function draw(){if(!map||!window.L)return;var sig=cards().length+"|"+Array.prototype.map.call(cards(),function(c){return c.dataset.id}).join(",");
 if(sig===lastSig&&Object.keys(markers).length){cards().forEach(function(c){var id=c.dataset.id,pc=c.querySelector(".pic");if(pc&&nos[id]&&!pc.querySelector(".cv-no")){var b=document.createElement("span");b.className="cv-no";b.textContent=nos[id];pc.appendChild(b)}});map.invalidateSize({animate:false});if(sel&&markers[sel])pick(sel,false);return}
 lastSig=sig;layer.clearLayers();markers={};nos={};var pts=[],n=0,tot=0;
-cards().forEach(function(c){tot++;var id=c.dataset.id,d=byId(id),pc=c.querySelector(".pic"),o=c.querySelector(".cv-no");if(o)o.remove();if(!d||!d.ll||!d.ll.length)return;n++;nos[id]=n;if(pc){var b=document.createElement("span");b.className="cv-no";b.textContent=n;pc.appendChild(b)}d.ll.forEach(function(p){pts.push(p);var m=L.marker(p,{icon:icon(n,false)}).addTo(layer);m._o=L.latLng(p);m.bindPopup("<b>"+n+". "+esc(d.title)+"</b>");m.on("click",function(){pick(id,false)});(markers[id]=markers[id]||[]).push(m)})});
+cards().forEach(function(c){tot++;var id=c.dataset.id,d=byId(id),pc=c.querySelector(".pic"),o=c.querySelector(".cv-no");if(o)o.remove();if(!d)return;var rs=(d.route||[]).filter(function(r){return r&&(r.path&&r.path.length>1||r.ll)}),mp=(d.ll&&d.ll.length)?d.ll:(rs.length?[rs[0].path?rs[0].path[0]:rs[0].ll]:[]);if(!mp.length)return;n++;nos[id]=n;
+rs.forEach(function(r){var tip="<b>"+esc(d.title)+"</b><br>"+esc((r.d?r.d+" ":"")+(r.s||"")+"–"+(r.e||""))+(r.p?"<br>"+esc(r.p):"");
+if(r.path&&r.path.length>1){r.path.forEach(function(q){pts.push(q)});L.polyline(r.path,{color:"#7b4fd6",weight:4,opacity:.85}).addTo(layer).bindPopup(tip);L.circleMarker(r.path[0],{radius:5,color:"#08439a",weight:2,fillColor:"#7b4fd6",fillOpacity:1}).addTo(layer).bindPopup(tip)}
+else if(r.ll){pts.push(r.ll);L.circleMarker(r.ll,{radius:5,color:"#08439a",weight:2,fillColor:"#7b4fd6",fillOpacity:1}).addTo(layer).bindPopup(tip)}});if(pc){var b=document.createElement("span");b.className="cv-no";b.textContent=n;pc.appendChild(b)}mp.forEach(function(p){pts.push(p);var m=L.marker(p,{icon:icon(n,false)}).addTo(layer);m._o=L.latLng(p);m._pop="<b>"+n+". "+esc(d.title)+"</b>";m.bindPopup("<b>"+n+". "+esc(d.title)+"</b>");m.on("click",function(){if(m._grp&&m._grp.length>1&&map.getZoom()<17){var bb=L.latLngBounds(m._grp.map(function(y){return y._o}));setTimeout(function(){map.closePopup();map.fitBounds(bb,{padding:[60,60],maxZoom:17})},0);return}pick(id,false)});(markers[id]=markers[id]||[]).push(m)})});
 var nt=document.getElementById("cityNote");if(nt)nt.textContent=zh()?"地圖顯示 "+n+" / "+tot+" 個有座標的應援，座標為大略位置。點卡片可在地圖上定位。":"Map shows "+n+" / "+tot+" projects that have coordinates (approximate). Tap a card to locate it.";
 map.invalidateSize({animate:false});if(pts.length)map.fitBounds(pts,{padding:[30,30],maxZoom:15,animate:false});else map.setView([22.65,120.3],11,{animate:false});
 spread();if(sel&&markers[sel])pick(sel,false)}
