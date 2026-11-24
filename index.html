@@ -1721,5 +1721,14 @@ sync();
 try{(window.requestIdleCallback||function(f){setTimeout(f,1500)})(function(){loadL().catch(function(){})})}catch(e){}
 })();
 </script>
+<style id="fp-textonly">
+#fpl{gap:14px}
+#fpl .fpc{display:flex;flex-direction:column;grid-row:auto;grid-template-rows:none;padding:14px;border-radius:10px;box-shadow:none;transform:none!important}
+#fpl .fpc:hover{box-shadow:0 6px 16px rgba(30,80,150,.18)}
+#fpl .fpc>.box{min-height:0!important}
+#fpl .fpc>.act{margin-top:auto;padding-top:12px}
+#fpl .fpc>.pic{display:none!important}
+@media(min-width:1600px){#fpl{grid-template-columns:repeat(6,minmax(0,1fr))}}
+</style>
 </body>
 </html>
